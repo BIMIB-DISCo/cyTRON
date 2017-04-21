@@ -13,11 +13,13 @@ public class CyActivator extends AbstractCyActivator {
 		
 		CyApplicationManager cyApplicationManager = getService(context, CyApplicationManager.class);
 		
-		MenuAction action = new MenuAction(cyApplicationManager, "Hello World App");
+		//MenuAction action = new MenuAction(cyApplicationManager, "Hello World App");
 		
 		Properties properties = new Properties();
+		properties.setProperty("menu", "Apps");
 		
-		registerAllServices(context, action, properties);
+		
+		//registerAllServices(context, action, properties);
 	}
 
 }
