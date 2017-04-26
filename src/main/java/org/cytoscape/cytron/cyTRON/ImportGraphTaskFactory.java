@@ -1,10 +1,10 @@
-package org.cytoscape.cytron.cyTRON.internal;
+package org.cytoscape.cytron.cyTRON;
 
 
 import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.command.AvailableCommands;
 import org.cytoscape.command.CommandExecutorTaskFactory;
-import org.cytoscape.cytron.cyTRON.internal.ImportGraphTask;
+import org.cytoscape.cytron.cyTRON.ImportGraphTask;
 import org.cytoscape.service.util.CyServiceRegistrar;
 import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
 import org.cytoscape.view.vizmap.VisualMappingManager;

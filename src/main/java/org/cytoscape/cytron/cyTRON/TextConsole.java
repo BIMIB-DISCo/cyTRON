@@ -1,4 +1,4 @@
-/*package org.cytoscape.cytron.cyTRON.internal;
+package org.cytoscape.cytron.cyTRON;
 
 import java.awt.FileDialog;
 import java.awt.Frame;
@@ -53,4 +53,4 @@ class TextConsole implements RMainLoopCallbacks {
 
 	public void rSaveHistory(Rengine re, String filename) {
 	}
-}*/
+}

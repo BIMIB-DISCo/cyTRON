@@ -1,4 +1,4 @@
-package org.cytoscape.cytron.cyTRON.internal;
+package org.cytoscape.cytron.cyTRON;
 
 
 import java.awt.Color;

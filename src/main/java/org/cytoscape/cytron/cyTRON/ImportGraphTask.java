@@ -1,4 +1,4 @@
-package org.cytoscape.cytron.cyTRON.internal;
+package org.cytoscape.cytron.cyTRON;
 
 import java.io.File;
 import java.util.HashMap;
@@ -69,7 +69,7 @@ public class ImportGraphTask extends AbstractTask {
 	
 
 	public void run(TaskMonitor monitor) {
-		/*
+		
 		if (!Rengine.versionCheck()) {
 		    System.err.println("** Version mismatch - Java files don't match library version.");
 		    System.exit(1);
@@ -82,9 +82,9 @@ public class ImportGraphTask extends AbstractTask {
             System.out.println("Cannot load R");
             return;
         }
+		System.out.println("path:" + f.getAbsolutePath());
+		re.eval("source('" + f.getAbsolutePath().replace('\\', '/' ) + "')");
 		
-		re.eval("source('" + f.getAbsolutePath() + "')");
-		*/
 		TaskObserver t = new TaskObserver(){
 			@Override
 			public void taskFinished(ObservableTask arg0) {
