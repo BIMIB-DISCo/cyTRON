@@ -36,9 +36,9 @@ public class ImportGraphTask extends AbstractTask {
 	private CyNetworkViewManager cyNetworkViewManagerServiceRef;
 	private CyServiceRegistrar serviceRegistrar ;
 	
-	CommandExecutorTaskFactory commandTaskFactory = null;
-	SynchronousTaskManager taskManager = null;
-	AvailableCommands availableCommands = null;
+	private CommandExecutorTaskFactory commandTaskFactory = null;
+	private SynchronousTaskManager taskManager = null;
+	private AvailableCommands availableCommands = null;
 
 	
 	public ImportGraphTask(CyApplicationManager cyApplicationManagerServiceRef,
@@ -46,7 +46,10 @@ public class ImportGraphTask extends AbstractTask {
 			VisualStyleFactory visualStyleFactoryServiceRef,
 			VisualMappingFunctionFactory vmfFactoryC, 
 			VisualMappingFunctionFactory vmfFactoryP,
-			CyServiceRegistrar registrar) {
+			CyServiceRegistrar registrar,
+			CommandExecutorTaskFactory commandTaskFactory,
+			AvailableCommands availableCommands,
+			SynchronousTaskManager taskManager) {
 		
 		this.cyApplicationManagerServiceRef = cyApplicationManagerServiceRef;
 		this.vmmServiceRef = vmmServiceRef;
@@ -54,6 +57,9 @@ public class ImportGraphTask extends AbstractTask {
 		this.vmfFactoryC = vmfFactoryC;
 		this.vmfFactoryP = vmfFactoryP;
 		this.serviceRegistrar = registrar;
+		this.commandTaskFactory = commandTaskFactory;
+		this.availableCommands = availableCommands;
+		this.taskManager = taskManager;
 
 	}
 
@@ -93,24 +99,16 @@ public class ImportGraphTask extends AbstractTask {
 		
 		HashMap<String, Object> mappa = new HashMap<String, Object>();
 		mappa.put("file", f.getAbsolutePath());
+		System.out.println(f.getAbsolutePath());
 		executeCommand("network", "load file", mappa, t);
+		System.out.println("Command executed");
 		
-	}
-	
-	public <S> S getService(Class<S> serviceClass) {
-		return getService(serviceClass);
 	}
 
 	public void executeCommand(String namespace, String command, Map<String, Object> args, TaskObserver observer) {
-		if (commandTaskFactory == null)
-			commandTaskFactory = getService(CommandExecutorTaskFactory.class);
-		if (availableCommands == null)
-			availableCommands = getService(AvailableCommands.class);
-		if (taskManager == null)
-			taskManager = getService(SynchronousTaskManager.class);
 		if (!availableCommands.getNamespaces().contains(namespace)
 				|| !availableCommands.getCommands(namespace).contains(command))
-			throw new RuntimeException("Can’t find command " + namespace + " " + command);
+			throw new RuntimeException("Can't find command " + namespace + " " + command);
 		TaskIterator ti = commandTaskFactory.createTaskIterator(namespace, command, args, observer);
 		taskManager.execute(ti);
 	}

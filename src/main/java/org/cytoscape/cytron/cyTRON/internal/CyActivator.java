@@ -3,6 +3,8 @@ package org.cytoscape.cytron.cyTRON.internal;
 import java.util.Properties;
 
 import org.cytoscape.application.CyApplicationManager;
+import org.cytoscape.command.AvailableCommands;
+import org.cytoscape.command.CommandExecutorTaskFactory;
 import org.cytoscape.service.util.AbstractCyActivator;
 import org.cytoscape.service.util.CyServiceRegistrar;
 import org.cytoscape.view.layout.CyLayoutAlgorithmManager;
@@ -12,6 +14,7 @@ import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
 import org.cytoscape.view.vizmap.VisualMappingManager;
 import org.cytoscape.view.vizmap.VisualStyleFactory;
 import org.cytoscape.work.ServiceProperties;
+import org.cytoscape.work.SynchronousTaskManager;
 import org.cytoscape.work.TaskManager;
 import org.osgi.framework.BundleContext;
 
@@ -61,6 +64,12 @@ public class CyActivator extends AbstractCyActivator {
 		
 		CyServiceRegistrar registrar = getService(context, CyServiceRegistrar.class);
 		
+		CommandExecutorTaskFactory commandFactory = getService(context, CommandExecutorTaskFactory.class);
+		
+		AvailableCommands availableCommands = getService(context, AvailableCommands.class);
+		
+		SynchronousTaskManager synchTaskManager = getService(context, SynchronousTaskManager.class);
+		
 		SetLayoutPropertiesListener listener = new SetLayoutPropertiesListener(networkViewManager, 
 				networkViewFactory,
 				algorithmManager, 
@@ -77,7 +86,10 @@ public class CyActivator extends AbstractCyActivator {
 				visualStyleFactoryServiceRef, 
 				vmfFactoryC, 
 				vmfFactoryP,
-				registrar);
+				registrar,
+				commandFactory,
+				availableCommands,
+				synchTaskManager);
 		
 		registerAllServices(context, factory, importGraphProperties);
 		registerAllServices(context, listener, listenerProperties);
