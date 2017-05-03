@@ -2,6 +2,7 @@ package org.cytoscape.cytron.cyTRON;
 
 import java.util.Properties;
 
+import org.cytoscape.app.swing.CySwingAppAdapter;
 import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.command.AvailableCommands;
 import org.cytoscape.command.CommandExecutorTaskFactory;
@@ -70,6 +71,11 @@ public class CyActivator extends AbstractCyActivator {
 		
 		SynchronousTaskManager synchTaskManager = getService(context, SynchronousTaskManager.class);
 		
+		CommandExecutor commandExecutor = new CommandExecutor(commandFactory,
+				availableCommands,
+				synchTaskManager);
+		
+		CySwingAppAdapter adapter = getService(context, CySwingAppAdapter.class);
 		SetLayoutPropertiesListener listener = new SetLayoutPropertiesListener(networkViewManager, 
 				networkViewFactory,
 				algorithmManager, 
@@ -91,10 +97,16 @@ public class CyActivator extends AbstractCyActivator {
 				availableCommands,
 				synchTaskManager);
 		
+		MenuAction m = new MenuAction(cyApplicationManager, adapter, commandExecutor, "ciao");
+		
 		registerAllServices(context, factory, importGraphProperties);
 		registerAllServices(context, listener, listenerProperties);
 		
-		//registerAllServices(context, action, properties);
+		Properties menuProperties = new Properties();
+		menuProperties.setProperty("preferredMenu", "Apps");
+		menuProperties.setProperty("title", "cacca");
+		
+		registerAllServices(context, m, new Properties());
 	}
 
 }

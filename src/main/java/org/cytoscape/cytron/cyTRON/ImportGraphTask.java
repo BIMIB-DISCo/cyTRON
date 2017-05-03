@@ -1,6 +1,8 @@
 package org.cytoscape.cytron.cyTRON;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,11 +65,18 @@ public class ImportGraphTask extends AbstractTask {
 
 	}
 
-	@Tunable(description = "Network file", params = "fileCategory=network;input=true")
-	public File f;
+	@Tunable(description = "Input file", params = "fileCategory=unspecified;input=true")
+	public File inputFile;
+	/*
+	@Tunable(description = "Output file", params = "fileCategory=unspecified;input=true")
+	public File outputFile;
 	
-	
+	@Tunable(description="Type")
+	   public boolean type = false;
 
+	   @Tunable(description="Host name",dependsOn="type=true")
+	   public String hostname="";
+	*/
 	public void run(TaskMonitor monitor) {
 		
 		if (!Rengine.versionCheck()) {
@@ -82,8 +91,8 @@ public class ImportGraphTask extends AbstractTask {
             System.out.println("Cannot load R");
             return;
         }
-		System.out.println("path:" + f.getAbsolutePath());
-		re.eval("source('" + f.getAbsolutePath().replace('\\', '/' ) + "')");
+		System.out.println("path:" + inputFile.getAbsolutePath());
+		re.eval("source('" + inputFile.getAbsolutePath().replace('\\', '/' ) + "')");
 		
 		TaskObserver t = new TaskObserver(){
 			@Override
@@ -96,15 +105,29 @@ public class ImportGraphTask extends AbstractTask {
 				
 			}
 		};
+		/*
+		try{
+			BufferedReader br = new BufferedReader(new FileReader(inputFile.getAbsolutePath()));
+			
+			
+			 String line;
+	         while ((line = br.readLine()) != null) {
+	            if (line.contains("1313131"))
+	               line = line.replace("1313131", ""+System.currentTimeMillis());
+	            bw.write(line+"\n");
+	         }
+			
+		}catch(Exception e){
+			
+		}*/
 		
 		HashMap<String, Object> mappa = new HashMap<String, Object>();
-		mappa.put("file", f.getAbsolutePath());
-		System.out.println(f.getAbsolutePath());
-		executeCommand("network", "load file", mappa, t);
+		mappa.put("file", inputFile.getAbsolutePath());
+		//executeCommand("network", "load file", mappa, t);
 		System.out.println("Command executed");
 		
 	}
-
+	
 	public void executeCommand(String namespace, String command, Map<String, Object> args, TaskObserver observer) {
 		if (!availableCommands.getNamespaces().contains(namespace)
 				|| !availableCommands.getCommands(namespace).contains(command))
