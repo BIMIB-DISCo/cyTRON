@@ -84,7 +84,9 @@ public class SetLayoutPropertiesListener implements NetworkAddedListener {
 		}
 		
 		
-		CyLayoutAlgorithm layout = layoutAlgorithmManager.getLayout("force-directed");
+		CyLayoutAlgorithm layout = layoutAlgorithmManager.getLayout("yFiles.hierarchic");
+		for(CyLayoutAlgorithm ciao : layoutAlgorithmManager.getAllLayouts())
+			System.out.println(ciao.getName());
 		if (layout == null)
 			layout = layoutAlgorithmManager.getDefaultLayout();
 		// cambio layout a tutti i nodi;

@@ -122,8 +122,8 @@ public class ImportGraphTask extends AbstractTask {
 		}*/
 		
 		HashMap<String, Object> mappa = new HashMap<String, Object>();
-		mappa.put("file", inputFile.getAbsolutePath());
-		//executeCommand("network", "load file", mappa, t);
+		mappa.put("file", "/home/matteo/test.graphml");
+		executeCommand("network", "load file", mappa, t);
 		System.out.println("Command executed");
 		
 	}
