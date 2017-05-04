@@ -84,7 +84,7 @@ public class SetLayoutPropertiesListener implements NetworkAddedListener {
 		}
 		
 		
-		CyLayoutAlgorithm layout = layoutAlgorithmManager.getLayout("yFiles.hierarchic");
+		CyLayoutAlgorithm layout = layoutAlgorithmManager.getLayout("hierarchic");
 		for(CyLayoutAlgorithm ciao : layoutAlgorithmManager.getAllLayouts())
 			System.out.println(ciao.getName());
 		if (layout == null)

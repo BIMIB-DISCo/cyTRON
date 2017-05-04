@@ -1,14 +1,12 @@
 package org.cytoscape.cytron.cyTRON;
 
-import javax.swing.JPanel;
-
-import org.cytoscape.work.FinishStatus;
-import org.cytoscape.work.ObservableTask;
-import org.cytoscape.work.TaskObserver;
-
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -18,13 +16,18 @@ import java.io.Writer;
 import java.util.HashMap;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import java.awt.GridBagConstraints;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-import java.awt.Insets;
+
+import org.cytoscape.work.FinishStatus;
+import org.cytoscape.work.ObservableTask;
+import org.cytoscape.work.TaskObserver;
 
 public class Panel extends JPanel {
 	private CommandExecutor commandExecutor;
@@ -42,25 +45,52 @@ public class Panel extends JPanel {
 		modelFile = null;
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
+		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0, 82, 74, 0 };
 		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
-		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
+		
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		GridBagConstraints tabbedPaneC = new GridBagConstraints();
+		tabbedPaneC.ipadx = 10;
+		tabbedPaneC.gridwidth = 10;
+		tabbedPaneC.gridheight = 10;
+		tabbedPaneC.ipady = 10;
+		tabbedPaneC.insets = new Insets(0, 0, 5, 5);
+		tabbedPaneC.fill = GridBagConstraints.BOTH;
+		tabbedPaneC.gridx = 0;
+		tabbedPaneC.gridy = 0;
+		add(tabbedPane, tabbedPaneC);
+		
+		JComponent panel1 = makeTextPanel();
+		tabbedPane.addTab("Input/output file options", panel1);
+		tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
+		JComponent panel2 = makeTextPanel();
+		tabbedPane.addTab("export.graphml parameters", panel2);
+		tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 
 		JButton modelButton = new JButton("Choose model");
 		GridBagConstraints modellButtonC = new GridBagConstraints();
 		modellButtonC.insets = new Insets(0, 0, 5, 0);
 		modellButtonC.gridx = 6;
 		modellButtonC.gridy = 1;
-		add(modelButton, modellButtonC);
+		panel1.add(modelButton, modellButtonC);
+		
+		JLabel lblGraphmlOutput = new JLabel("Graphml output");
+		GridBagConstraints gbc_lblGraphmlOutput = new GridBagConstraints();
+		gbc_lblGraphmlOutput.insets = new Insets(0, 0, 5, 5);
+		gbc_lblGraphmlOutput.anchor = GridBagConstraints.EAST;
+		gbc_lblGraphmlOutput.gridx = 5;
+		gbc_lblGraphmlOutput.gridy = 3;
+		panel1.add(lblGraphmlOutput, gbc_lblGraphmlOutput);
 
 		JButton loadButton = new JButton("Load");
 		GridBagConstraints loadButtonC = new GridBagConstraints();
 		loadButtonC.insets = new Insets(0, 0, 5, 0);
 		loadButtonC.gridx = 6;
 		loadButtonC.gridy = 5;
-		add(loadButton, loadButtonC);
+		panel1.add(loadButton, loadButtonC);
 
 		outputFileText = new JTextField();
 		outputFileText.setText(System.getProperty("user.home"));
@@ -69,15 +99,22 @@ public class Panel extends JPanel {
 		outputFileTextC.fill = GridBagConstraints.HORIZONTAL;
 		outputFileTextC.gridx = 6;
 		outputFileTextC.gridy = 3;
-		add(outputFileText, outputFileTextC);
 		outputFileText.setColumns(10);
+		panel1.add(outputFileText, outputFileTextC);
 		
 		JButton btnHelp = new JButton("Help");
 		GridBagConstraints gbc_btnHelp = new GridBagConstraints();
 		gbc_btnHelp.insets = new Insets(0, 0, 0, 5);
 		gbc_btnHelp.gridx = 5;
 		gbc_btnHelp.gridy = 6;
-		add(btnHelp, gbc_btnHelp);
+		panel1.add(btnHelp, gbc_btnHelp);
+		
+		JButton modelButton2 = new JButton("Choose model");
+		GridBagConstraints modellButtonC2 = new GridBagConstraints();
+		modellButtonC2.insets = new Insets(0, 0, 5, 0);
+		modellButtonC2.gridx = 6;
+		modellButtonC2.gridy = 1;
+		panel2.add(modelButton2, modellButtonC2);
 
 		modelButton.addActionListener(new ActionListener() {
 
@@ -194,4 +231,15 @@ public class Panel extends JPanel {
 		return outputFile;
 	}
 
+	
+	protected JComponent makeTextPanel() {
+		JPanel panel = new JPanel(false);
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0, 82, 74, 0 };
+		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
+		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+        panel.setLayout(gridBagLayout);
+        return panel;				
+	}
 }
