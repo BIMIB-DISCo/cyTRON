@@ -20,6 +20,7 @@ import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
@@ -42,9 +43,9 @@ public class Panel extends JPanel {
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
 		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
 		JButton modelButton = new JButton("Choose model");
@@ -56,6 +57,7 @@ public class Panel extends JPanel {
 
 		JButton loadButton = new JButton("Load");
 		GridBagConstraints loadButtonC = new GridBagConstraints();
+		loadButtonC.insets = new Insets(0, 0, 5, 0);
 		loadButtonC.gridx = 6;
 		loadButtonC.gridy = 5;
 		add(loadButton, loadButtonC);
@@ -69,6 +71,13 @@ public class Panel extends JPanel {
 		outputFileTextC.gridy = 3;
 		add(outputFileText, outputFileTextC);
 		outputFileText.setColumns(10);
+		
+		JButton btnHelp = new JButton("Help");
+		GridBagConstraints gbc_btnHelp = new GridBagConstraints();
+		gbc_btnHelp.insets = new Insets(0, 0, 0, 5);
+		gbc_btnHelp.gridx = 5;
+		gbc_btnHelp.gridy = 6;
+		add(btnHelp, gbc_btnHelp);
 
 		modelButton.addActionListener(new ActionListener() {
 
@@ -108,6 +117,36 @@ public class Panel extends JPanel {
 				commandExecutor.executeCommand("cytron", "import", mappa, observer);
 				frame.dispose();
 
+			}
+		});
+		
+		btnHelp.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				StringBuilder parameters = new StringBuilder();
+				parameters.append("model: a reconstructed model\n");
+				parameters.append("models: a vector containing the name of the algorithms used\n");
+				parameters.append("fontsize: for node names\n");
+				parameters.append("height: for node height\n");
+				parameters.append("width: for node width\n");
+				parameters.append("height.logic: for logical nodes\n");
+				parameters.append("pf: should I print Prima Facie?\n");
+				parameters.append("disconnected: should I print disconnected nodes?\n");
+				parameters.append("scale.nodes: node scaling coefficient\n");
+				parameters.append("title: title of the plot\n");
+				parameters.append("confidence: should I add confidence information?\n");
+				parameters.append("pmin: p-value cutoff\n");
+				parameters.append("label.edge.size: size of edge labels\n");
+				parameters.append("expand: should I expand hypotheses?\n");
+				parameters.append("genes: visualise only genes in this list\n");
+				parameters.append("edge.color: edge color\n");
+				parameters.append("file: string containing file name for PDF output\n");
+				parameters.append("pathways: a vetor containing pathways information\n");
+				parameters.append("lwd: edge base lwd\n");
+				parameters.append("samples.annotation\n");
+				JOptionPane.showMessageDialog(null, parameters.toString(), "Parametri disponibili", JOptionPane.QUESTION_MESSAGE);
+				
 			}
 		});
 
