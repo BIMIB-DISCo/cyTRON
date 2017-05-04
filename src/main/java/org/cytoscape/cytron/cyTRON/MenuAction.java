@@ -50,7 +50,7 @@ public class MenuAction extends AbstractCyAction {
 		frame.addWindowListener(distruttore);
 		frame.setVisible(true);*/
 		JFrame frame = new JFrame();
-		Panel panel = new Panel(commandExecutor, frame);
+		OptionPanel panel = new OptionPanel();
 		frame.getContentPane().add(panel);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.pack();
