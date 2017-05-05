@@ -85,8 +85,6 @@ public class SetLayoutPropertiesListener implements NetworkAddedListener {
 		
 		
 		CyLayoutAlgorithm layout = layoutAlgorithmManager.getLayout("hierarchic");
-		for(CyLayoutAlgorithm ciao : layoutAlgorithmManager.getAllLayouts())
-			System.out.println(ciao.getName());
 		if (layout == null)
 			layout = layoutAlgorithmManager.getDefaultLayout();
 		// cambio layout a tutti i nodi;
@@ -168,7 +166,7 @@ public class SetLayoutPropertiesListener implements NetworkAddedListener {
 		
 		vs.addVisualMappingFunction(p_edgeFontColor);
 		
-		PassthroughMapping p_edgeLabel = (PassthroughMapping) vmfFactoryP.createVisualMappingFunction("label2", 
+		PassthroughMapping p_edgeLabel = (PassthroughMapping) vmfFactoryP.createVisualMappingFunction("edgelabel", 
 				String.class, BasicVisualLexicon.EDGE_LABEL);
 		
 		vs.addVisualMappingFunction(p_edgeLabel);

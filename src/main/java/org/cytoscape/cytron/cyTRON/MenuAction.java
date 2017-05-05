@@ -24,7 +24,7 @@ public class MenuAction extends AbstractCyAction {
 			CySwingAppAdapter adapter, 
 			CommandExecutor commandExecutor,
 			final String menuTitle) {
-		super("cacca");
+		super("cyTRON-2");
 		//super(menuTitle, cyApplicationManager, null, null);
 		setPreferredMenu("Apps");
 		this.adapter = adapter;
@@ -50,7 +50,7 @@ public class MenuAction extends AbstractCyAction {
 		frame.addWindowListener(distruttore);
 		frame.setVisible(true);*/
 		JFrame frame = new JFrame();
-		OptionPanel panel = new OptionPanel();
+		OptionPanel panel = new OptionPanel(commandExecutor, frame);
 		frame.getContentPane().add(panel);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.pack();

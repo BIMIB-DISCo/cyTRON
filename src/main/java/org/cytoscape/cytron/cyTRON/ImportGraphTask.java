@@ -26,9 +26,10 @@ import org.cytoscape.work.Tunable;
 
 
 import org.rosuda.JRI.Rengine;
+import org.rosuda.REngine.REngine;
 
 public class ImportGraphTask extends AbstractTask {
-
+	private static Rengine re = null;
 	
 	private CyApplicationManager cyApplicationManagerServiceRef;
 	private VisualMappingManager vmmServiceRef;
@@ -84,7 +85,9 @@ public class ImportGraphTask extends AbstractTask {
 		    System.exit(1);
 		}
 		
-		Rengine re = new Rengine(null, false, new TextConsole());
+		if(re == null) {
+			re = new Rengine(null, false, new TextConsole());
+		}
 		
 		
 		if (!re.waitForR()) {
