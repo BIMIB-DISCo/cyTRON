@@ -54,7 +54,9 @@ public class MenuAction extends AbstractCyAction {
 		frame.getContentPane().add(panel);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.pack();
-		
+                
+		//a = panel.script;
+                //taskFactory.createTaskIterator(a)
 		final JFrame desktop = adapter.getCySwingApplication().getJFrame();
 		frame.setLocationRelativeTo(desktop);
 		frame.setVisible(true);
