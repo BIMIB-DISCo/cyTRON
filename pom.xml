@@ -3,12 +3,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<properties>
-		<bundle.symbolicName>org.cytoscape.cytron.cyTRON</bundle.symbolicName>
-		<bundle.namespace>org.cytoscape.cytron.cyTRON</bundle.namespace>
+		<bundle.symbolicName>it.unimib.disco.bimib.cyTRON</bundle.symbolicName>
+		<bundle.namespace>it.unimib.disco.bimib.cyTRON</bundle.namespace>
 	</properties>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.cytoscape.cytron</groupId>
+	<groupId>it.unimib.disco.bimib.cyTRON</groupId>
 	<artifactId>cyTRON</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 

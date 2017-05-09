@@ -1,4 +1,7 @@
 /target/
 /.classpath
 /.project
+/.idea
+/.settings
+cyTRON.iml
 install.sh

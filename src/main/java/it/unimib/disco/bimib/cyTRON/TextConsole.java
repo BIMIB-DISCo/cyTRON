@@ -1,4 +1,4 @@
-package org.cytoscape.cytron.cyTRON;
+package it.unimib.disco.bimib.cyTRON;
 
 import java.awt.FileDialog;
 import java.awt.Frame;

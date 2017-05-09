@@ -1,10 +1,9 @@
-package org.cytoscape.cytron.cyTRON;
+package it.unimib.disco.bimib.cyTRON;
 
 
 import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.command.AvailableCommands;
 import org.cytoscape.command.CommandExecutorTaskFactory;
-import org.cytoscape.cytron.cyTRON.ImportGraphTask;
 import org.cytoscape.service.util.CyServiceRegistrar;
 import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
 import org.cytoscape.view.vizmap.VisualMappingManager;
@@ -12,6 +11,8 @@ import org.cytoscape.view.vizmap.VisualStyleFactory;
 import org.cytoscape.work.AbstractTaskFactory;
 import org.cytoscape.work.SynchronousTaskManager;
 import org.cytoscape.work.TaskIterator;
+
+import it.unimib.disco.bimib.cyTRON.ImportGraphTask;
 
 public class ImportGraphTaskFactory extends AbstractTaskFactory {
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.cytoscape.cytron.cyTRON;
+package it.unimib.disco.bimib.cyTRON;
 
 import java.awt.event.ItemEvent;
 import java.io.BufferedWriter;
