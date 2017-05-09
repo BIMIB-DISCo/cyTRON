@@ -92,11 +92,11 @@ public class CyActivator extends AbstractCyActivator {
 
 		registerAllServices(context, factory, importGraphProperties);
 		registerAllServices(context, listener, listenerProperties);
-
+                /*
 		Properties menuProperties = new Properties();
 		menuProperties.setProperty("preferredMenu", "Apps");
 		menuProperties.setProperty("title", "cacca");
-
+                */
 		registerAllServices(context, m, new Properties());
 		
 		final NetworkViewTaskFactory hierarchic = getService(context, NetworkViewTaskFactory.class,

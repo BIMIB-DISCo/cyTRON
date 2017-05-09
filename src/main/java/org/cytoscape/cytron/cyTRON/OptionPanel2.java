@@ -15,8 +15,10 @@ import java.io.Writer;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JTextField;
 import org.cytoscape.work.FinishStatus;
 import org.cytoscape.work.ObservableTask;
 import org.cytoscape.work.TaskObserver;
@@ -27,10 +29,23 @@ import org.cytoscape.work.TaskObserver;
  */
 public class OptionPanel2 extends javax.swing.JPanel {
 
+    enum FieldTitle{
+        MODEL("model"), GRAPHML("graphml"), PDF("pdf"), HG("hg"), TP("tp"), 
+        PR("pr"), SCALE_NODES("scale.nodes"), HEIGHT("height"), WIDTH("width"),
+        DISCONNECTED_NODES("disconnectedNodes"), PMIN("pmin"), EDGE_CEX("edge.cex"),
+        LABEL_EDGE_SIZE("label.edge.size"), EDGE_COLOR("edge.color"),
+        EDGE_LWD("edge.lwd");
+        private String title;
+        private FieldTitle(String title){
+            this.title = title;
+        }
+        
+    };
     private File modelFile;
     private CommandExecutor commandExecutor;
     private JFrame frame;
-
+    private Map<FieldTitle, String> parameters = new HashMap<>();
+    
     /**
      * Creates new form OptionPanel2
      */
@@ -38,6 +53,7 @@ public class OptionPanel2 extends javax.swing.JPanel {
         this.commandExecutor = commandExecutor;
         this.frame = frame;
         initComponents();
+      
     }
 
     /**
@@ -52,7 +68,7 @@ public class OptionPanel2 extends javax.swing.JPanel {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         modelButton = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        outputCB = new javax.swing.JCheckBox();
         outputFileText = new javax.swing.JTextField();
         exportPdfCB = new javax.swing.JCheckBox();
         outputPdf = new javax.swing.JTextField();
@@ -88,7 +104,7 @@ public class OptionPanel2 extends javax.swing.JPanel {
             }
         });
 
-        jCheckBox1.setText("Choose graphml output file");
+        outputCB.setText("Choose graphml output file");
 
         outputFileText.setText(System.getProperty("user.home") + "/test.graphml");
 
@@ -118,7 +134,7 @@ public class OptionPanel2 extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(exportPdfCB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jCheckBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(outputCB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(outputFileText, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
@@ -140,7 +156,7 @@ public class OptionPanel2 extends javax.swing.JPanel {
                 .addComponent(modelButton)
                 .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox1)
+                    .addComponent(outputCB)
                     .addComponent(outputFileText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -362,12 +378,32 @@ public class OptionPanel2 extends javax.swing.JPanel {
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             modelFile = fc.getSelectedFile();
+            
         }
+        
     }//GEN-LAST:event_modelButtonActionPerformed
 
     private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
-        File scriptFile = generateScript();
-
+        //File scriptFile = generateScript();
+        parameters.put(FieldTitle.MODEL, modelFile.getAbsolutePath());
+        if (outputCB.isEnabled()) {
+            parameters.put(FieldTitle.GRAPHML, outputFileText.getText());
+        }
+        if (exportPdfCB.isEnabled()) {
+            parameters.put(FieldTitle.PDF, outputPdf.getText());
+        }
+        if (hgCB.isEnabled()) {
+            parameters.put(FieldTitle.HG, "true");
+        }
+        if (tpCB.isEnabled()) {
+            parameters.put(FieldTitle.TP, "true");
+        }
+        if (prCB.isEnabled()) {
+            parameters.put(FieldTitle.PR, "true");
+        }
+        if (scaleNodesCB.isEnabled()) {
+            parameters.put(FieldTitle.SCALE_NODES, scaleNodesTB.getText());
+        }
         TaskObserver observer = new TaskObserver() {
             @Override
             public void taskFinished(ObservableTask arg0) {
@@ -382,7 +418,7 @@ public class OptionPanel2 extends javax.swing.JPanel {
         };
 
         HashMap<String, Object> mappa = new HashMap<String, Object>();
-        mappa.put("inputFile", scriptFile.getAbsolutePath());
+        //mappa.put("inputFile", scriptFile.getAbsolutePath());
         commandExecutor.executeCommand("cytron", "import", mappa, observer);
         frame.dispose();
     }//GEN-LAST:event_loadButtonActionPerformed
@@ -460,6 +496,8 @@ public class OptionPanel2 extends javax.swing.JPanel {
 
         return outputFile;
     }
+    
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox disconnectedNodesCB;
@@ -469,7 +507,6 @@ public class OptionPanel2 extends javax.swing.JPanel {
     private javax.swing.JFormattedTextField heightTB;
     private javax.swing.JButton helpButton;
     private javax.swing.JCheckBox hgCB;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -486,6 +523,7 @@ public class OptionPanel2 extends javax.swing.JPanel {
     private javax.swing.JButton loadButton;
     private javax.swing.JFormattedTextField lwdTB;
     private javax.swing.JButton modelButton;
+    private javax.swing.JCheckBox outputCB;
     private javax.swing.JTextField outputFileText;
     private javax.swing.JTextField outputPdf;
     private javax.swing.JCheckBox prCB;
