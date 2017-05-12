@@ -334,11 +334,6 @@
               </Events>
             </Component>
             <Component class="javax.swing.JFormattedTextField" name="scaleNodesTB">
-              <Properties>
-                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                  <Format subtype="0" type="0"/>
-                </Property>
-              </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="scaleNodesTB.setEnabled(false);&#xd;&#xa;"/>
               </AuxValues>

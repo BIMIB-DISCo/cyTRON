@@ -30,102 +30,127 @@ import org.osgi.framework.BundleContext;
 
 public class CyActivator extends AbstractCyActivator {
 
-	@Override
-	public void start(BundleContext context) throws Exception {
+    @Override
+    public void start(BundleContext context) throws Exception {
+        // ImportGraphTask Properties
+        Properties importGraphProperties = new Properties();
+        importGraphProperties.put(ServiceProperties.COMMAND_NAMESPACE, "cytron");
+        importGraphProperties.put(ServiceProperties.COMMAND, "import");
+        
+        // SetLayoutPropertiesListener Properties
+        Properties listenerProperties = new Properties();
+        
+        // MenuAction Properties
+        Properties menuActionProperties = new Properties();
+        
+        // Layout Properties
+        Properties layoutProperties = new Properties();
+        
+        
+        // Services used in SetLayoutPropertiesListener
+        VisualMappingManager vmmServiceRef = getService(context,
+                VisualMappingManager.class);
+        VisualStyleFactory visualStyleFactoryServiceRef
+                = getService(context, VisualStyleFactory.class);
 
-		CyApplicationManager cyApplicationManager = getService(context, CyApplicationManager.class);
+        VisualMappingFunctionFactory vmfFactoryC = getService(context,
+                VisualMappingFunctionFactory.class, "(mapping.type=continuous)");
 
-		// MenuAction action = new MenuAction(cyApplicationManager, "Hello World
-		// App");
+        VisualMappingFunctionFactory vmfFactoryP = getService(context,
+                VisualMappingFunctionFactory.class, "(mapping.type=passthrough)");
 
-		Properties importGraphProperties = new Properties();
-		importGraphProperties.setProperty("preferredMenu", "Apps");
-		importGraphProperties.setProperty("title", "cyTRON");
-		importGraphProperties.put(ServiceProperties.COMMAND, "import");
-		importGraphProperties.put(ServiceProperties.COMMAND_NAMESPACE, "cytron");
+        VisualMappingFunctionFactory vmfFactoryD = getService(context,
+                VisualMappingFunctionFactory.class, "(mapping.type=discrete)");
 
-		Properties listenerProperties = new Properties();
+        CyNetworkViewManager networkViewManager = getService(context,
+                CyNetworkViewManager.class);
 
-		VisualMappingManager vmmServiceRef = getService(context, VisualMappingManager.class);
-		VisualStyleFactory visualStyleFactoryServiceRef = getService(context, VisualStyleFactory.class);
+        CyNetworkViewFactory networkViewFactory = getService(context,
+                CyNetworkViewFactory.class);
 
-		VisualMappingFunctionFactory vmfFactoryC = getService(context, VisualMappingFunctionFactory.class,
-				"(mapping.type=continuous)");
+        CyLayoutAlgorithmManager algorithmManager = getService(context,
+                CyLayoutAlgorithmManager.class);
 
-		VisualMappingFunctionFactory vmfFactoryP = getService(context, VisualMappingFunctionFactory.class,
-				"(mapping.type=passthrough)");
+        TaskManager taskManager = getService(context,
+                TaskManager.class);
 
-		VisualMappingFunctionFactory vmfFactoryD = getService(context, VisualMappingFunctionFactory.class,
-				"(mapping.type=discrete)");
+        VisualStyleFactory vsFactory = getService(context,
+                VisualStyleFactory.class);
 
-		CyNetworkViewManager networkViewManager = getService(context, CyNetworkViewManager.class);
+        VisualMappingManager vmManager = getService(context,
+                VisualMappingManager.class);
 
-		CyNetworkViewFactory networkViewFactory = getService(context, CyNetworkViewFactory.class);
+        CyServiceRegistrar registrar = getService(context,
+                CyServiceRegistrar.class);
 
-		CyLayoutAlgorithmManager algorithmManager = getService(context, CyLayoutAlgorithmManager.class);
+        CommandExecutorTaskFactory commandFactory = getService(context,
+                CommandExecutorTaskFactory.class);
 
-		TaskManager taskManager = getService(context, TaskManager.class);
+        AvailableCommands availableCommands = getService(context,
+                AvailableCommands.class);
 
-		VisualStyleFactory vsFactory = getService(context, VisualStyleFactory.class);
+        SynchronousTaskManager synchTaskManager = getService(context,
+                SynchronousTaskManager.class);
 
-		VisualMappingManager vmManager = getService(context, VisualMappingManager.class);
+        // Service used in MenuAction and ImportGraphTask
+        CommandExecutor commandExecutor = new CommandExecutor(commandFactory,
+                availableCommands, synchTaskManager);
 
-		CyServiceRegistrar registrar = getService(context, CyServiceRegistrar.class);
+        // Services used in MenuAction
+        CySwingAppAdapter adapter = getService(context, CySwingAppAdapter.class);
+        
+        CyApplicationManager cyApplicationManager = getService(context,
+                CyApplicationManager.class);
 
-		CommandExecutorTaskFactory commandFactory = getService(context, CommandExecutorTaskFactory.class);
+        // New services objects creation
+        SetLayoutPropertiesListener listener = new SetLayoutPropertiesListener(
+                        networkViewManager,
+                        networkViewFactory,
+                        algorithmManager,
+                        taskManager,
+                        visualStyleFactoryServiceRef,
+                        vmmServiceRef,
+                        vmfFactoryD,
+                        vmfFactoryP);
 
-		AvailableCommands availableCommands = getService(context, AvailableCommands.class);
+        ImportGraphTaskFactory factory;
+        factory = new ImportGraphTaskFactory(commandExecutor);
 
-		SynchronousTaskManager synchTaskManager = getService(context, SynchronousTaskManager.class);
+        MenuAction m = new MenuAction(cyApplicationManager,
+                adapter, commandExecutor, "ciao");
 
-		CommandExecutor commandExecutor = new CommandExecutor(commandFactory, availableCommands, synchTaskManager);
+        // Retrivial of the yFiles -> hierarchic layout
+        final NetworkViewTaskFactory hierarchic = getService(context,
+                NetworkViewTaskFactory.class, "(title=Hierarchic)");
 
-		CySwingAppAdapter adapter = getService(context, CySwingAppAdapter.class);
-		SetLayoutPropertiesListener listener = new SetLayoutPropertiesListener(networkViewManager, networkViewFactory,
-				algorithmManager, taskManager, visualStyleFactoryServiceRef, vmmServiceRef, vmfFactoryD, vmfFactoryP);
+        final DummyLayoutWrapper wrapped = new DummyLayoutWrapper(hierarchic,
+                "hierarchic", "yFiles Hierarchic Layout",
+                getService(context, UndoSupport.class));
+        
+        registerAllServices(context, factory, importGraphProperties);
+        registerAllServices(context, listener, listenerProperties);
+        registerAllServices(context, m, menuActionProperties);
+        registerService(context, wrapped, CyLayoutAlgorithm.class, layoutProperties);
+    }
 
-		ImportGraphTaskFactory factory = new ImportGraphTaskFactory(cyApplicationManager, vmmServiceRef,
-				visualStyleFactoryServiceRef, vmfFactoryC, vmfFactoryP, registrar, commandFactory, availableCommands,
-				synchTaskManager);
+    // Wrapper used to encapsulate the yFiles -> hierarchic layout
+    private static final class DummyLayoutWrapper extends AbstractLayoutAlgorithm {
 
-		MenuAction m = new MenuAction(cyApplicationManager, adapter, commandExecutor, "ciao");
+        private final NetworkViewTaskFactory tf;
 
-		registerAllServices(context, factory, importGraphProperties);
-		registerAllServices(context, listener, listenerProperties);
-                /*
-		Properties menuProperties = new Properties();
-		menuProperties.setProperty("preferredMenu", "Apps");
-		menuProperties.setProperty("title", "cacca");
-                */
-		registerAllServices(context, m, new Properties());
-		
-		final NetworkViewTaskFactory hierarchic = getService(context, NetworkViewTaskFactory.class,
-				"(title=Hierarchic)");
+        public DummyLayoutWrapper(final NetworkViewTaskFactory tf,
+                String computerName, String humanName,
+                UndoSupport undoSupport) {
+            super(computerName, humanName, undoSupport);
+            this.tf = tf;
+        }
 
-		final DummyLayoutWrapper wrapped = new DummyLayoutWrapper(hierarchic, "hierarchic", "yFiles Hierarchic Layout",
-				getService(context, UndoSupport.class));
-
-		registerService(context, wrapped, CyLayoutAlgorithm.class, new Properties());
-	}
-	
-	
-	private static final class DummyLayoutWrapper extends AbstractLayoutAlgorithm {
-
-		private final NetworkViewTaskFactory tf;
-
-		public DummyLayoutWrapper(final NetworkViewTaskFactory tf, String computerName, String humanName,
-				UndoSupport undoSupport) {
-			super(computerName, humanName, undoSupport);
-			this.tf = tf;
-
-		}
-
-		@Override
-		public TaskIterator createTaskIterator(CyNetworkView networkView, Object arg1, Set<View<CyNode>> arg2,
-				String arg3) {
-			return tf.createTaskIterator(networkView);
-		}
-
-	}
-
+        @Override
+        public TaskIterator createTaskIterator(CyNetworkView networkView,
+                Object arg1,
+                Set<View<CyNode>> arg2,
+                String arg3) {
+            return tf.createTaskIterator(networkView);
+        }
+    }
 }
