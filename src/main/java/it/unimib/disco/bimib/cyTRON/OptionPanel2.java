@@ -423,13 +423,13 @@ public class OptionPanel2 extends javax.swing.JPanel {
             parameters.put(FieldTitle.PDF, outputPdf.getText());
         }
         if (hgCB.isEnabled()) {
-            parameters.put(FieldTitle.HG, "TRUE");
+            parameters.put(FieldTitle.HG, "hg");
         }
         if (tpCB.isEnabled()) {
-            parameters.put(FieldTitle.TP, "TRUE");
+            parameters.put(FieldTitle.TP, "tp");
         }
         if (prCB.isEnabled()) {
-            parameters.put(FieldTitle.PR, "TRUE");
+            parameters.put(FieldTitle.PR, "pr");
         }
         if (scaleNodesCB.isEnabled()) {
             parameters.put(FieldTitle.SCALE_NODES, scaleNodesTB.getText());
