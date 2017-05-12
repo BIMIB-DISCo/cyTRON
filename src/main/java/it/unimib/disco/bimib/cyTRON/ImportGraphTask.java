@@ -68,10 +68,12 @@ public class ImportGraphTask extends AbstractTask {
 
 	@Tunable(description = "Input file", params = "fileCategory=unspecified;input=true")
 	public File inputFile;
-	/*
+
+	
 	@Tunable(description = "Output file", params = "fileCategory=unspecified;input=true")
 	public File outputFile;
 	
+	/*
 	@Tunable(description="Type")
 	   public boolean type = false;
 

@@ -35,7 +35,7 @@ public class OptionPanel2 extends javax.swing.JPanel {
     public enum FieldTitle {
         MODEL("model"), GRAPHML("graphml"), PDF("pdf"), HG("hg"), TP("tp"),
         PR("pr"), SCALE_NODES("scale.nodes"), HEIGHT("height"), WIDTH("width"),
-        DISCONNECTED_NODES("disconnectedNodes"), PMIN("pmin"), EDGE_CEX("edge.cex"),
+        DISCONNECTED_NODES("disconnected"), PMIN("pmin"), EDGE_CEX("edge.cex"),
         LABEL_EDGE_SIZE("label.edge.size"), EDGE_COLOR("edge.color"),
         EDGE_LWD("edge.lwd");
         private String title;
@@ -412,8 +412,7 @@ public class OptionPanel2 extends javax.swing.JPanel {
     }//GEN-LAST:event_modelButtonActionPerformed
 
     private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
-        //File scriptFile = generateScript();
-    	
+   	
         parameters.put(FieldTitle.MODEL, modelFile.getAbsolutePath());
         
         if (outputCB.isEnabled()) {
@@ -423,13 +422,13 @@ public class OptionPanel2 extends javax.swing.JPanel {
             parameters.put(FieldTitle.PDF, outputPdf.getText());
         }
         if (hgCB.isEnabled()) {
-            parameters.put(FieldTitle.HG, "hg");
+            parameters.put(FieldTitle.HG, "'hg'");
         }
         if (tpCB.isEnabled()) {
-            parameters.put(FieldTitle.TP, "tp");
+            parameters.put(FieldTitle.TP, "'tp'");
         }
         if (prCB.isEnabled()) {
-            parameters.put(FieldTitle.PR, "pr");
+            parameters.put(FieldTitle.PR, "'pr'");
         }
         if (scaleNodesCB.isEnabled()) {
             parameters.put(FieldTitle.SCALE_NODES, scaleNodesTB.getText());
@@ -446,7 +445,7 @@ public class OptionPanel2 extends javax.swing.JPanel {
             parameters.put(FieldTitle.LABEL_EDGE_SIZE, lesTB.getText());
         }
 
-        parameters.put(FieldTitle.EDGE_COLOR, edgeColorTB.getText());
+        parameters.put(FieldTitle.EDGE_COLOR, "'" + edgeColorTB.getText() + "'");
 
         parameters.put(FieldTitle.EDGE_LWD, lwdTB.getText());
 
@@ -539,70 +538,6 @@ public class OptionPanel2 extends javax.swing.JPanel {
 
     }//GEN-LAST:event_helpButtonActionPerformed
 
-    private File generateScript() {
-        StringBuilder scriptBuilder = new StringBuilder();
-        String modelPath = modelFile.getAbsolutePath().replace('\\', '/');
-        String outputPath = outputFileText.getText().replace('\\', '/');
-
-        String modelName = "";
-        int lastDot = modelPath.lastIndexOf('.');
-        if (modelPath.contains("\\")) {
-            int lastBackslash = modelPath.lastIndexOf('\\');
-
-            if (lastBackslash < lastDot) {
-                modelName = modelPath.substring(lastBackslash + 1, lastDot);
-            } else {
-                modelName = modelPath.substring(lastBackslash + 1);
-            }
-        } else {
-            int lastSlash = modelPath.lastIndexOf('/');
-
-            if (lastSlash == -1) {
-                modelName = modelPath;
-            } else if (lastSlash < lastDot) {
-                modelName = modelPath.substring(lastSlash + 1, lastDot);
-            } else {
-                modelName = modelName.substring(lastSlash + 1);
-            }
-        }
-
-        scriptBuilder.append("library('TRONCO')\n");
-        scriptBuilder.append("load('" + modelPath + "')\n");
-        scriptBuilder.append("export.graphml(" + modelName + ", '"
-                + outputPath + "'");
-        scriptBuilder.append(scaleNodesCB.isEnabled() ? "" : ", scale.nodes = "
-                + scaleNodesTB.getText());
-        scriptBuilder.append(", confidence = c(");
-        scriptBuilder.append(hgCB.isSelected() ? "'hg'" : "");
-        if (tpCB.isSelected() && hgCB.isSelected()) {
-            scriptBuilder.append(", 'tp'");
-        } else if (tpCB.isSelected()) {
-            scriptBuilder.append("'tp'");
-        }
-        if ((tpCB.isSelected() || hgCB.isSelected()) && prCB.isSelected()) {
-            scriptBuilder.append(", 'pr'");
-        } else if (prCB.isSelected()) {
-            scriptBuilder.append("'pr'");
-        }
-        scriptBuilder.append(")");
-        scriptBuilder.append(")");
-
-        System.out.println("-----------------------------\n\n");
-        System.out.println(scriptBuilder.toString());
-        System.out.println("-----------------------------\n\n");
-
-        File outputFile = null;
-        try {
-            outputFile = File.createTempFile("cytron_script", "R");
-            Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile)));
-            writer.write(scriptBuilder.toString());
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return outputFile;
-    }
     
     public Map<FieldTitle, String> getParameters() {
     	return parameters;
