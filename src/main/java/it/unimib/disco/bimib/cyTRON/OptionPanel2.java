@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import org.cytoscape.work.FinishStatus;
 import org.cytoscape.work.ObservableTask;
@@ -29,23 +30,24 @@ import org.cytoscape.work.TaskObserver;
  */
 public class OptionPanel2 extends javax.swing.JPanel {
 
-    enum FieldTitle{
-        MODEL("model"), GRAPHML("graphml"), PDF("pdf"), HG("hg"), TP("tp"), 
+    enum FieldTitle {
+        MODEL("model"), GRAPHML("graphml"), PDF("pdf"), HG("hg"), TP("tp"),
         PR("pr"), SCALE_NODES("scale.nodes"), HEIGHT("height"), WIDTH("width"),
         DISCONNECTED_NODES("disconnectedNodes"), PMIN("pmin"), EDGE_CEX("edge.cex"),
         LABEL_EDGE_SIZE("label.edge.size"), EDGE_COLOR("edge.color"),
         EDGE_LWD("edge.lwd");
         private String title;
-        private FieldTitle(String title){
+
+        private FieldTitle(String title) {
             this.title = title;
         }
-        
+
     };
     private File modelFile;
     private CommandExecutor commandExecutor;
     private JFrame frame;
     private Map<FieldTitle, String> parameters = new HashMap<>();
-    
+
     /**
      * Creates new form OptionPanel2
      */
@@ -53,7 +55,7 @@ public class OptionPanel2 extends javax.swing.JPanel {
         this.commandExecutor = commandExecutor;
         this.frame = frame;
         initComponents();
-      
+
     }
 
     /**
@@ -85,7 +87,7 @@ public class OptionPanel2 extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         widthTB = new javax.swing.JFormattedTextField();
         jLabel4 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        pminTB = new javax.swing.JFormattedTextField();
         edgeCexTB = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
         disconnectedNodesCB = new javax.swing.JCheckBox();
@@ -105,10 +107,17 @@ public class OptionPanel2 extends javax.swing.JPanel {
         });
 
         outputCB.setText("Choose graphml output file");
+        outputCB.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                outputCBItemStateChanged(evt);
+            }
+        });
 
         outputFileText.setText(System.getProperty("user.home") + "/test.graphml");
+        outputFileText.setEnabled(false);
 
         exportPdfCB.setText("Export PDF");
+        outputPdf.setEnabled(false);
         exportPdfCB.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 exportPdfCBItemStateChanged(evt);
@@ -178,6 +187,11 @@ public class OptionPanel2 extends javax.swing.JPanel {
         prCB.setText("pr");
 
         scaleNodesCB.setText("scale.nodes");
+        scaleNodesCB.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                scaleNodesCBItemStateChanged(evt);
+            }
+        });
         scaleNodesCB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 scaleNodesCBActionPerformed(evt);
@@ -185,6 +199,7 @@ public class OptionPanel2 extends javax.swing.JPanel {
         });
 
         scaleNodesTB.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        scaleNodesTB.setEnabled(false);
 
         jLabel2.setText("height");
 
@@ -198,8 +213,8 @@ public class OptionPanel2 extends javax.swing.JPanel {
 
         jLabel4.setText("pmin");
 
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
-        jFormattedTextField1.setText("0.05");
+        pminTB.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        pminTB.setText("0.05");
 
         edgeCexTB.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         edgeCexTB.setText("1.0");
@@ -210,6 +225,11 @@ public class OptionPanel2 extends javax.swing.JPanel {
         disconnectedNodesCB.setToolTipText("");
 
         labelEdgeSizeCB.setText("labels.edge.size");
+        labelEdgeSizeCB.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                labelEdgeSizeCBItemStateChanged(evt);
+            }
+        });
         labelEdgeSizeCB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 labelEdgeSizeCBActionPerformed(evt);
@@ -217,6 +237,7 @@ public class OptionPanel2 extends javax.swing.JPanel {
         });
 
         lesTB.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        lesTB.setEnabled(false);
 
         jLabel6.setText("edge.color");
 
@@ -233,6 +254,11 @@ public class OptionPanel2 extends javax.swing.JPanel {
         lwdTB.setText("3");
 
         helpButton.setText("Help");
+        helpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                helpButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -263,7 +289,7 @@ public class OptionPanel2 extends javax.swing.JPanel {
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(107, 107, 107)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(pminTB, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(widthTB, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(edgeCexTB, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -335,7 +361,7 @@ public class OptionPanel2 extends javax.swing.JPanel {
                         .addGap(7, 7, 7)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(pminTB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(edgeCexTB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -378,9 +404,9 @@ public class OptionPanel2 extends javax.swing.JPanel {
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             modelFile = fc.getSelectedFile();
-            
+
         }
-        
+
     }//GEN-LAST:event_modelButtonActionPerformed
 
     private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
@@ -393,17 +419,33 @@ public class OptionPanel2 extends javax.swing.JPanel {
             parameters.put(FieldTitle.PDF, outputPdf.getText());
         }
         if (hgCB.isEnabled()) {
-            parameters.put(FieldTitle.HG, "true");
+            parameters.put(FieldTitle.HG, "TRUE");
         }
         if (tpCB.isEnabled()) {
-            parameters.put(FieldTitle.TP, "true");
+            parameters.put(FieldTitle.TP, "TRUE");
         }
         if (prCB.isEnabled()) {
-            parameters.put(FieldTitle.PR, "true");
+            parameters.put(FieldTitle.PR, "TRUE");
         }
         if (scaleNodesCB.isEnabled()) {
             parameters.put(FieldTitle.SCALE_NODES, scaleNodesTB.getText());
         }
+        parameters.put(FieldTitle.HEIGHT, heightTB.getText());
+        parameters.put(FieldTitle.WIDTH, widthTB.getText());
+
+        parameters.put(FieldTitle.DISCONNECTED_NODES,
+                disconnectedNodesCB.isEnabled() ? "TRUE" : "FALSE");
+        parameters.put(FieldTitle.PMIN, pminTB.getText());
+        parameters.put(FieldTitle.EDGE_CEX, edgeCexTB.getText());
+
+        if (labelEdgeSizeCB.isEnabled()) {
+            parameters.put(FieldTitle.LABEL_EDGE_SIZE, lesTB.getText());
+        }
+
+        parameters.put(FieldTitle.EDGE_COLOR, edgeColorTB.getText());
+
+        parameters.put(FieldTitle.EDGE_LWD, lwdTB.getText());
+
         TaskObserver observer = new TaskObserver() {
             @Override
             public void taskFinished(ObservableTask arg0) {
@@ -434,6 +476,65 @@ public class OptionPanel2 extends javax.swing.JPanel {
         repaint();
     }//GEN-LAST:event_exportPdfCBItemStateChanged
 
+    private void outputCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_outputCBItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            outputFileText.setEnabled(true);
+        } else if (evt.getStateChange() == ItemEvent.DESELECTED) {
+            outputFileText.setEnabled(false);
+        }
+
+        validate();
+        repaint();
+    }//GEN-LAST:event_outputCBItemStateChanged
+
+    private void scaleNodesCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_scaleNodesCBItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            scaleNodesTB.setEnabled(true);
+        } else if (evt.getStateChange() == ItemEvent.DESELECTED) {
+            scaleNodesTB.setEnabled(false);
+        }
+
+        validate();
+        repaint();
+    }//GEN-LAST:event_scaleNodesCBItemStateChanged
+
+    private void labelEdgeSizeCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_labelEdgeSizeCBItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            lesTB.setEnabled(true);
+        } else if (evt.getStateChange() == ItemEvent.DESELECTED) {
+            lesTB.setEnabled(false);
+        }
+
+        validate();
+        repaint();
+    }//GEN-LAST:event_labelEdgeSizeCBItemStateChanged
+
+    private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpButtonActionPerformed
+        StringBuilder parameters = new StringBuilder();
+        parameters.append("model: a reconstructed model\n");
+        parameters.append("models: a vector containing the name of the algorithms used\n");
+        parameters.append("fontsize: for node names\n");
+        parameters.append("height: for node height\n");
+        parameters.append("width: for node width\n");
+        parameters.append("height.logic: for logical nodes\n");
+        parameters.append("pf: should I print Prima Facie?\n");
+        parameters.append("disconnected: should I print disconnected nodes?\n");
+        parameters.append("scale.nodes: node scaling coefficient\n");
+        parameters.append("title: title of the plot\n");
+        parameters.append("confidence: should I add confidence information?\n");
+        parameters.append("pmin: p-value cutoff\n");
+        parameters.append("label.edge.size: size of edge labels\n");
+        parameters.append("expand: should I expand hypotheses?\n");
+        parameters.append("genes: visualise only genes in this list\n");
+        parameters.append("edge.color: edge color\n");
+        parameters.append("file: string containing file name for PDF output\n");
+        parameters.append("pathways: a vetor containing pathways information\n");
+        parameters.append("lwd: edge base lwd\n");
+        parameters.append("samples.annotation\n");
+        JOptionPane.showMessageDialog(null, parameters.toString(), "Parametri disponibili", JOptionPane.QUESTION_MESSAGE);
+
+    }//GEN-LAST:event_helpButtonActionPerformed
+
     private File generateScript() {
         StringBuilder scriptBuilder = new StringBuilder();
         String modelPath = modelFile.getAbsolutePath().replace('\\', '/');
@@ -463,8 +564,10 @@ public class OptionPanel2 extends javax.swing.JPanel {
 
         scriptBuilder.append("library('TRONCO')\n");
         scriptBuilder.append("load('" + modelPath + "')\n");
-        scriptBuilder.append("export.graphml(" + modelName + ", '" + outputPath + "'");
-        scriptBuilder.append(scaleNodesCB.isEnabled() ? "" : ", scale.nodes = " + scaleNodesTB.getText());
+        scriptBuilder.append("export.graphml(" + modelName + ", '"
+                + outputPath + "'");
+        scriptBuilder.append(scaleNodesCB.isEnabled() ? "" : ", scale.nodes = "
+                + scaleNodesTB.getText());
         scriptBuilder.append(", confidence = c(");
         scriptBuilder.append(hgCB.isSelected() ? "'hg'" : "");
         if (tpCB.isSelected() && hgCB.isSelected()) {
@@ -496,8 +599,7 @@ public class OptionPanel2 extends javax.swing.JPanel {
 
         return outputFile;
     }
-    
-   
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox disconnectedNodesCB;
@@ -507,7 +609,6 @@ public class OptionPanel2 extends javax.swing.JPanel {
     private javax.swing.JFormattedTextField heightTB;
     private javax.swing.JButton helpButton;
     private javax.swing.JCheckBox hgCB;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -526,6 +627,7 @@ public class OptionPanel2 extends javax.swing.JPanel {
     private javax.swing.JCheckBox outputCB;
     private javax.swing.JTextField outputFileText;
     private javax.swing.JTextField outputPdf;
+    private javax.swing.JFormattedTextField pminTB;
     private javax.swing.JCheckBox prCB;
     private javax.swing.JCheckBox scaleNodesCB;
     private javax.swing.JFormattedTextField scaleNodesTB;

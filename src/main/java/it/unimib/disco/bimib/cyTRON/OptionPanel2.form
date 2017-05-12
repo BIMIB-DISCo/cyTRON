@@ -106,6 +106,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Choose graphml output file"/>
               </Properties>
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="outputCBItemStateChanged"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="outputFileText">
               <Properties>
@@ -113,6 +116,9 @@
                   <Connection code="System.getProperty(&quot;user.home&quot;) + &quot;/test.graphml&quot;" type="code"/>
                 </Property>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="outputFileText.setEnabled(false);&#xd;&#xa;"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JCheckBox" name="exportPdfCB">
               <Properties>
@@ -121,6 +127,9 @@
               <Events>
                 <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="exportPdfCBItemStateChanged"/>
               </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="outputPdf.setEnabled(false);"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="outputPdf">
               <Properties>
@@ -182,7 +191,7 @@
                                       </Group>
                                       <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="jFormattedTextField1" min="-2" pref="36" max="-2" attributes="0"/>
+                                          <Component id="pminTB" min="-2" pref="36" max="-2" attributes="0"/>
                                           <Component id="widthTB" min="-2" pref="36" max="-2" attributes="0"/>
                                           <Component id="edgeCexTB" min="-2" pref="36" max="-2" attributes="0"/>
                                       </Group>
@@ -276,7 +285,7 @@
                               <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jFormattedTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="pminTB" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -320,6 +329,7 @@
                 <Property name="text" type="java.lang.String" value="scale.nodes"/>
               </Properties>
               <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="scaleNodesCBItemStateChanged"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="scaleNodesCBActionPerformed"/>
               </Events>
             </Component>
@@ -329,6 +339,9 @@
                   <Format subtype="0" type="0"/>
                 </Property>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="scaleNodesTB.setEnabled(false);&#xd;&#xa;"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
@@ -361,7 +374,7 @@
                 <Property name="text" type="java.lang.String" value="pmin"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField1">
+            <Component class="javax.swing.JFormattedTextField" name="pminTB">
               <Properties>
                 <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
                   <Format subtype="0" type="0"/>
@@ -393,6 +406,7 @@
                 <Property name="text" type="java.lang.String" value="labels.edge.size"/>
               </Properties>
               <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="labelEdgeSizeCBItemStateChanged"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="labelEdgeSizeCBActionPerformed"/>
               </Events>
             </Component>
@@ -402,6 +416,9 @@
                   <Format subtype="0" type="0"/>
                 </Property>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="lesTB.setEnabled(false);"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel6">
               <Properties>
@@ -433,6 +450,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Help"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="helpButtonActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
