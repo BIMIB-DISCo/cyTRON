@@ -16,6 +16,8 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -30,7 +32,7 @@ import org.cytoscape.work.TaskObserver;
  */
 public class OptionPanel2 extends javax.swing.JPanel {
 
-    enum FieldTitle {
+    public enum FieldTitle {
         MODEL("model"), GRAPHML("graphml"), PDF("pdf"), HG("hg"), TP("tp"),
         PR("pr"), SCALE_NODES("scale.nodes"), HEIGHT("height"), WIDTH("width"),
         DISCONNECTED_NODES("disconnectedNodes"), PMIN("pmin"), EDGE_CEX("edge.cex"),
@@ -411,7 +413,9 @@ public class OptionPanel2 extends javax.swing.JPanel {
 
     private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
         //File scriptFile = generateScript();
+    	
         parameters.put(FieldTitle.MODEL, modelFile.getAbsolutePath());
+        
         if (outputCB.isEnabled()) {
             parameters.put(FieldTitle.GRAPHML, outputFileText.getText());
         }
@@ -598,6 +602,10 @@ public class OptionPanel2 extends javax.swing.JPanel {
         }
 
         return outputFile;
+    }
+    
+    public Map<FieldTitle, String> getParameters() {
+    	return parameters;
     }
 
 
