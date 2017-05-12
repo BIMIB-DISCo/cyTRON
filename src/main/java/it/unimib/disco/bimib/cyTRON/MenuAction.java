@@ -58,7 +58,7 @@ public class MenuAction extends AbstractCyAction {
 		System.out.println("ActionPerformed MenuAction");
 		
 		int result = JOptionPane.showConfirmDialog(null, panel,
-                "cyTRON", JOptionPane.OK_CANCEL_OPTION,
+                "cyTRON",
                 JOptionPane.PLAIN_MESSAGE);
 		if (result == JOptionPane.OK_OPTION) {
 			
@@ -95,6 +95,7 @@ public class MenuAction extends AbstractCyAction {
 	}
 	
 	private File generateScript() {
+		
         StringBuilder scriptBuilder = new StringBuilder();
         File outputFile = null;
         
@@ -108,7 +109,7 @@ public class MenuAction extends AbstractCyAction {
         } else {
         	File tmpGraphml = null;
     		try {
-    			tmpGraphml = File.createTempFile("graph", "graphml");
+    			tmpGraphml = File.createTempFile("graph", ".graphml");
     			Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(tmpGraphml)));
     			writer.write(scriptBuilder.toString());
     			writer.close();	
@@ -162,27 +163,36 @@ public class MenuAction extends AbstractCyAction {
         scriptBuilder.append("export.graphml(" + modelName + ", '" + outputPath + "'");
         scriptBuilder.append(pdfPath.isEmpty() ? "" : ", file = '" + pdfPath + "'");
         
-        scriptBuilder.append(", confidence = (");
+        scriptBuilder.append(", confidence = c(");
         if(hg != null) {
+        	System.out.println("hg: " + hg);
         	scriptBuilder.append(hg);
         }
         if (tp != null && hg != null) {
+        	System.out.println("tp: " + tp);
             scriptBuilder.append(", " + tp);
         } else if (tp != null) {
+        	System.out.println("tp: " + tp);
             scriptBuilder.append(tp);
         }
         if ((tp != null || hg != null) && pr != null) {
+        	System.out.println("pr: " + pr);
             scriptBuilder.append(", " + pr);
         } else if (pr != null) {
+        	System.out.println("pr: " + pr);
             scriptBuilder.append(pr);
         }
         scriptBuilder.append(")");
         
         
+        for (FieldTitle field : parameters.keySet()) {
+        	scriptBuilder.append(", " + field.getTitle() + " = " + parameters.get(field));
+        }
+        /*
         parameters.forEach((key, value) -> { 
         	scriptBuilder.append(", " + key.name() + " = " + value);
         });
-        
+        */
  
         scriptBuilder.append(")");
 
@@ -192,7 +202,7 @@ public class MenuAction extends AbstractCyAction {
 
         
         try {
-            outputFile = File.createTempFile("cytron_script", "R");
+            outputFile = File.createTempFile("cytron_script", ".R");
             Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile)));
             writer.write(scriptBuilder.toString());
             writer.close();
