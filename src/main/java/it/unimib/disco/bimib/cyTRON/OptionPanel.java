@@ -69,28 +69,27 @@ public class OptionPanel extends javax.swing.JPanel {
         outputFileText = new javax.swing.JTextField();
         exportPdfCB = new javax.swing.JCheckBox();
         outputPdf = new javax.swing.JTextField();
-        loadButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        confidenceLabel = new javax.swing.JLabel();
         tpCB = new javax.swing.JCheckBox();
         hgCB = new javax.swing.JCheckBox();
         prCB = new javax.swing.JCheckBox();
         scaleNodesCB = new javax.swing.JCheckBox();
         scaleNodesTB = new javax.swing.JFormattedTextField();
-        jLabel2 = new javax.swing.JLabel();
+        heightLabel = new javax.swing.JLabel();
         heightTB = new javax.swing.JFormattedTextField();
-        jLabel3 = new javax.swing.JLabel();
+        widthLabel = new javax.swing.JLabel();
         widthTB = new javax.swing.JFormattedTextField();
-        jLabel4 = new javax.swing.JLabel();
+        pminLabel = new javax.swing.JLabel();
         pminTB = new javax.swing.JFormattedTextField();
         edgeCexTB = new javax.swing.JFormattedTextField();
-        jLabel5 = new javax.swing.JLabel();
+        edgeCexLabel = new javax.swing.JLabel();
         disconnectedNodesCB = new javax.swing.JCheckBox();
         labelEdgeSizeCB = new javax.swing.JCheckBox();
         lesTB = new javax.swing.JFormattedTextField();
-        jLabel6 = new javax.swing.JLabel();
+        edgeColorLabel = new javax.swing.JLabel();
         edgeColorTB = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
+        edgeLwdLabel = new javax.swing.JLabel();
         lwdTB = new javax.swing.JFormattedTextField();
         helpButton = new javax.swing.JButton();
 
@@ -121,13 +120,6 @@ public class OptionPanel extends javax.swing.JPanel {
 
         outputPdf.setText(System.getProperty("user.home") + "/output.pdf");
 
-        loadButton.setText("Load");
-        loadButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loadButtonActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -148,10 +140,6 @@ public class OptionPanel extends javax.swing.JPanel {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(modelButton)
                         .addGap(32, 32, 32))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(loadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,14 +154,12 @@ public class OptionPanel extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(exportPdfCB)
                     .addComponent(outputPdf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addComponent(loadButton)
-                .addContainerGap(149, Short.MAX_VALUE))
+                .addContainerGap(199, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("input/output file options", jPanel1);
 
-        jLabel1.setText("Confidence");
+        confidenceLabel.setText("Confidence");
 
         tpCB.setText("tp");
 
@@ -195,17 +181,17 @@ public class OptionPanel extends javax.swing.JPanel {
 
         scaleNodesTB.setEnabled(false);
 
-        jLabel2.setText("height");
+        heightLabel.setText("height");
 
         heightTB.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         heightTB.setText("2.0");
 
-        jLabel3.setText("width");
+        widthLabel.setText("width");
 
         widthTB.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         widthTB.setText("3.0");
 
-        jLabel4.setText("pmin");
+        pminLabel.setText("pmin");
 
         pminTB.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         pminTB.setText("0.05");
@@ -213,7 +199,7 @@ public class OptionPanel extends javax.swing.JPanel {
         edgeCexTB.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         edgeCexTB.setText("1.0");
 
-        jLabel5.setText("edge.cex");
+        edgeCexLabel.setText("edge.cex");
 
         disconnectedNodesCB.setText("Show disconnected nodes");
         disconnectedNodesCB.setToolTipText("");
@@ -233,7 +219,7 @@ public class OptionPanel extends javax.swing.JPanel {
         lesTB.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         lesTB.setEnabled(false);
 
-        jLabel6.setText("edge.color");
+        edgeColorLabel.setText("edge.color");
 
         edgeColorTB.setText("black");
         edgeColorTB.addActionListener(new java.awt.event.ActionListener() {
@@ -242,7 +228,7 @@ public class OptionPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel7.setText("edge.lwd");
+        edgeLwdLabel.setText("edge.lwd");
 
         lwdTB.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         lwdTB.setText("3");
@@ -264,7 +250,7 @@ public class OptionPanel extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                                .addComponent(heightLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
                                 .addGap(107, 107, 107))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(scaleNodesCB, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -278,9 +264,9 @@ public class OptionPanel extends javax.swing.JPanel {
                             .addComponent(disconnectedNodesCB)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(pminLabel)
+                                    .addComponent(edgeCexLabel)
+                                    .addComponent(widthLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(107, 107, 107)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(pminTB, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -288,7 +274,7 @@ public class OptionPanel extends javax.swing.JPanel {
                                     .addComponent(edgeCexTB, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(confidenceLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(prCB)
@@ -300,8 +286,8 @@ public class OptionPanel extends javax.swing.JPanel {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(12, 12, 12)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel6))))
+                                    .addComponent(edgeLwdLabel)
+                                    .addComponent(edgeColorLabel))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(edgeColorTB)
@@ -323,18 +309,18 @@ public class OptionPanel extends javax.swing.JPanel {
                             .addComponent(lesTB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(10, 10, 10)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
+                            .addComponent(edgeColorLabel)
                             .addComponent(edgeColorTB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
+                            .addComponent(edgeLwdLabel)
                             .addComponent(lwdTB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(hgCB)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
+                            .addComponent(confidenceLabel)
                             .addComponent(tpCB))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(prCB)
@@ -344,22 +330,22 @@ public class OptionPanel extends javax.swing.JPanel {
                             .addComponent(scaleNodesTB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
+                            .addComponent(heightLabel)
                             .addComponent(heightTB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(widthTB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
+                            .addComponent(widthLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(disconnectedNodesCB)
                         .addGap(7, 7, 7)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
+                            .addComponent(pminLabel)
                             .addComponent(pminTB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(edgeCexTB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
+                            .addComponent(edgeCexLabel))
                         .addContainerGap(60, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -380,85 +366,25 @@ public class OptionPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void edgeColorTBActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_edgeColorTBActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_edgeColorTBActionPerformed
+    private void edgeColorTBActionPerformed(java.awt.event.ActionEvent evt) {
+    }
 
-    private void labelEdgeSizeCBActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_labelEdgeSizeCBActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_labelEdgeSizeCBActionPerformed
+    private void labelEdgeSizeCBActionPerformed(java.awt.event.ActionEvent evt) {
+    }
 
-    private void scaleNodesCBActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_scaleNodesCBActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_scaleNodesCBActionPerformed
+    private void scaleNodesCBActionPerformed(java.awt.event.ActionEvent evt) {
+    }
 
-    private void modelButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_modelButtonActionPerformed
+    private void modelButtonActionPerformed(java.awt.event.ActionEvent evt) {
         final JFileChooser fc = new JFileChooser();
-        int returnVal = fc.showOpenDialog(loadButton);
+        int returnVal = fc.showOpenDialog(this);
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             modelFile = fc.getSelectedFile();
-
         }
+    }
 
-    }// GEN-LAST:event_modelButtonActionPerformed
-
-    private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_loadButtonActionPerformed
-
-        parameters.put(FieldTitle.MODEL, modelFile.getAbsolutePath());
-
-        if (outputCB.isEnabled()) {
-            parameters.put(FieldTitle.GRAPHML, outputFileText.getText());
-        }
-        if (exportPdfCB.isEnabled()) {
-            parameters.put(FieldTitle.PDF, outputPdf.getText());
-        }
-        if (hgCB.isEnabled()) {
-            parameters.put(FieldTitle.HG, "'hg'");
-        }
-        if (tpCB.isEnabled()) {
-            parameters.put(FieldTitle.TP, "'tp'");
-        }
-        if (prCB.isEnabled()) {
-            parameters.put(FieldTitle.PR, "'pr'");
-        }
-        if (scaleNodesCB.isEnabled()) {
-            parameters.put(FieldTitle.SCALE_NODES, scaleNodesTB.getText());
-        }
-        parameters.put(FieldTitle.HEIGHT, heightTB.getText());
-        parameters.put(FieldTitle.WIDTH, widthTB.getText());
-
-        parameters.put(FieldTitle.DISCONNECTED_NODES, disconnectedNodesCB.isEnabled() ? "TRUE" : "FALSE");
-        parameters.put(FieldTitle.PMIN, pminTB.getText());
-        parameters.put(FieldTitle.EDGE_CEX, edgeCexTB.getText());
-
-        if (labelEdgeSizeCB.isEnabled()) {
-            parameters.put(FieldTitle.LABEL_EDGE_SIZE, lesTB.getText());
-        }
-
-        parameters.put(FieldTitle.EDGE_COLOR, "'" + edgeColorTB.getText() + "'");
-
-        parameters.put(FieldTitle.EDGE_LWD, lwdTB.getText());
-        /*
-		 * TaskObserver observer = new TaskObserver() {
-		 * 
-		 * @Override public void taskFinished(ObservableTask arg0) {
-		 * System.out.println("TaskFinished"); }
-		 * 
-		 * @Override public void allFinished(FinishStatus arg0) {
-		 * System.out.println("TaskAllFinished");
-		 * 
-		 * } };
-		 * 
-		 * HashMap<String, Object> mappa = new HashMap<String, Object>();
-		 * //mappa.put("inputFile", scriptFile.getAbsolutePath());
-		 * commandExecutor.executeCommand("cytron", "import", mappa, observer);
-         */
-        frame.dispose();
-
-    }// GEN-LAST:event_loadButtonActionPerformed
-
-    private void exportPdfCBItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_exportPdfCBItemStateChanged
+    private void exportPdfCBItemStateChanged(java.awt.event.ItemEvent evt) {
         if (evt.getStateChange() == ItemEvent.SELECTED) {
             outputPdf.setEnabled(true);
         } else if (evt.getStateChange() == ItemEvent.DESELECTED) {
@@ -467,9 +393,9 @@ public class OptionPanel extends javax.swing.JPanel {
 
         validate();
         repaint();
-    }// GEN-LAST:event_exportPdfCBItemStateChanged
+    }
 
-    private void outputCBItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_outputCBItemStateChanged
+    private void outputCBItemStateChanged(java.awt.event.ItemEvent evt) {
         if (evt.getStateChange() == ItemEvent.SELECTED) {
             outputFileText.setEnabled(true);
         } else if (evt.getStateChange() == ItemEvent.DESELECTED) {
@@ -478,9 +404,9 @@ public class OptionPanel extends javax.swing.JPanel {
 
         validate();
         repaint();
-    }// GEN-LAST:event_outputCBItemStateChanged
+    }
 
-    private void scaleNodesCBItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_scaleNodesCBItemStateChanged
+    private void scaleNodesCBItemStateChanged(java.awt.event.ItemEvent evt) {
         if (evt.getStateChange() == ItemEvent.SELECTED) {
             scaleNodesTB.setEnabled(true);
         } else if (evt.getStateChange() == ItemEvent.DESELECTED) {
@@ -489,9 +415,9 @@ public class OptionPanel extends javax.swing.JPanel {
 
         validate();
         repaint();
-    }// GEN-LAST:event_scaleNodesCBItemStateChanged
+    }
 
-    private void labelEdgeSizeCBItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_labelEdgeSizeCBItemStateChanged
+    private void labelEdgeSizeCBItemStateChanged(java.awt.event.ItemEvent evt) {
         if (evt.getStateChange() == ItemEvent.SELECTED) {
             lesTB.setEnabled(true);
         } else if (evt.getStateChange() == ItemEvent.DESELECTED) {
@@ -500,9 +426,9 @@ public class OptionPanel extends javax.swing.JPanel {
 
         validate();
         repaint();
-    }// GEN-LAST:event_labelEdgeSizeCBItemStateChanged
+    }
 
-    private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_helpButtonActionPerformed
+    private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
         StringBuilder parameters = new StringBuilder();
         parameters.append("model: a reconstructed model\n");
         parameters.append("models: a vector containing the name of the algorithms used\n");
@@ -526,8 +452,7 @@ public class OptionPanel extends javax.swing.JPanel {
         parameters.append("samples.annotation\n");
         JOptionPane.showMessageDialog(null, parameters.toString(), "Parametri disponibili",
                 JOptionPane.QUESTION_MESSAGE);
-
-    }// GEN-LAST:event_helpButtonActionPerformed
+    }
 
     public Map<FieldTitle, String> getParameters() {
         if (parameters == null) {
@@ -539,26 +464,36 @@ public class OptionPanel extends javax.swing.JPanel {
         if (outputCB.isSelected()) {
             parameters.put(FieldTitle.GRAPHML, outputFileText.getText());
         }
+        
         if (exportPdfCB.isSelected()) {
             parameters.put(FieldTitle.PDF, outputPdf.getText());
         }
+        
         if (hgCB.isSelected()) {
             parameters.put(FieldTitle.HG, "'hg'");
         }
+        
         if (tpCB.isSelected()) {
             parameters.put(FieldTitle.TP, "'tp'");
         }
+        
         if (prCB.isSelected()) {
             parameters.put(FieldTitle.PR, "'pr'");
         }
+        
         if (scaleNodesCB.isSelected()) {
             parameters.put(FieldTitle.SCALE_NODES, scaleNodesTB.getText());
         }
+        
         parameters.put(FieldTitle.HEIGHT, heightTB.getText());
+        
         parameters.put(FieldTitle.WIDTH, widthTB.getText());
 
-        parameters.put(FieldTitle.DISCONNECTED_NODES, disconnectedNodesCB.isSelected() ? "TRUE" : "FALSE");
+        parameters.put(FieldTitle.DISCONNECTED_NODES, 
+                disconnectedNodesCB.isSelected() ? "TRUE" : "FALSE");
+        
         parameters.put(FieldTitle.PMIN, pminTB.getText());
+        
         parameters.put(FieldTitle.EDGE_CEX, edgeCexTB.getText());
 
         if (labelEdgeSizeCB.isSelected()) {
@@ -568,40 +503,40 @@ public class OptionPanel extends javax.swing.JPanel {
         parameters.put(FieldTitle.EDGE_COLOR, "'" + edgeColorTB.getText() + "'");
 
         parameters.put(FieldTitle.EDGE_LWD, lwdTB.getText());
+        
         return parameters;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel confidenceLabel;
     private javax.swing.JCheckBox disconnectedNodesCB;
+    private javax.swing.JLabel edgeCexLabel;
     private javax.swing.JFormattedTextField edgeCexTB;
+    private javax.swing.JLabel edgeColorLabel;
     private javax.swing.JTextField edgeColorTB;
+    private javax.swing.JLabel edgeLwdLabel;
     private javax.swing.JCheckBox exportPdfCB;
+    private javax.swing.JLabel heightLabel;
     private javax.swing.JFormattedTextField heightTB;
     private javax.swing.JButton helpButton;
     private javax.swing.JCheckBox hgCB;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JCheckBox labelEdgeSizeCB;
     private javax.swing.JFormattedTextField lesTB;
-    private javax.swing.JButton loadButton;
     private javax.swing.JFormattedTextField lwdTB;
     private javax.swing.JButton modelButton;
     private javax.swing.JCheckBox outputCB;
     private javax.swing.JTextField outputFileText;
     private javax.swing.JTextField outputPdf;
+    private javax.swing.JLabel pminLabel;
     private javax.swing.JFormattedTextField pminTB;
     private javax.swing.JCheckBox prCB;
     private javax.swing.JCheckBox scaleNodesCB;
     private javax.swing.JFormattedTextField scaleNodesTB;
     private javax.swing.JCheckBox tpCB;
+    private javax.swing.JLabel widthLabel;
     private javax.swing.JFormattedTextField widthTB;
     // End of variables declaration//GEN-END:variables
 }
