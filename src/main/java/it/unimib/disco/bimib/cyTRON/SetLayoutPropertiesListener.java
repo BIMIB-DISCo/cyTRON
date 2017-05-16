@@ -91,7 +91,7 @@ public class SetLayoutPropertiesListener implements NetworkAddedListener {
         
         // Set graph visualization rules based on its attributes
         VisualStyle vs = visualStyleFactory.createVisualStyle("StyleSet");
-        visualMappingManager.addVisualStyle(vs);
+        
 
         // Set node shape
         DiscreteMapping d
@@ -220,7 +220,7 @@ public class SetLayoutPropertiesListener implements NetworkAddedListener {
         // Set edge thickness
         PassthroughMapping p_edgeThick
                 = (PassthroughMapping) vmfFactoryP.createVisualMappingFunction(
-                        "thickness",
+                        "width",
                         Double.class,
                         BasicVisualLexicon.EDGE_WIDTH);
         vs.addVisualMappingFunction(p_edgeThick);
@@ -236,10 +236,10 @@ public class SetLayoutPropertiesListener implements NetworkAddedListener {
         d_edge.putMapValue("Solid", LineTypeVisualProperty.SOLID);
 
         vs.addVisualMappingFunction(d_edge);
-
+        visualMappingManager.addVisualStyle(vs);
         // Apply the visual style to the network
         vs.apply(view);
-
+        view.updateView();
 
     }
 
