@@ -147,8 +147,23 @@ public class MenuAction extends AbstractCyAction {
         String pr = parameters.remove(FieldTitle.PR);
 
         scriptBuilder.append("library('TRONCO')\n")
-                .append("load('").append(modelPath).append("')\n")
-                .append("export.graphml(")
+                .append("load('").append(modelPath).append("')\n");
+        
+        boolean statisticalBoot = parameters.remove(FieldTitle.STATISTICAL_BOOTSTRAP) != null;
+        boolean nonParametricBoot = parameters.remove(FieldTitle.NON_PARAMETRIC_BOOTSTRAP) != null;
+        if (statisticalBoot || nonParametricBoot) {
+            scriptBuilder.append(modelName + "=tronco.bootstrap(" + modelName)
+                        .append(", nboot=" + parameters.remove(FieldTitle.N_BOOT))
+                        .append(", cores.ratio=" + parameters.remove(FieldTitle.CORES_RATIO));
+            if (statisticalBoot){
+                scriptBuilder.append(", type = 'statistical'");
+            } else {
+                scriptBuilder.append(", type = 'non-parametric'");
+            } 
+            scriptBuilder.append(")\n");
+        }
+        
+        scriptBuilder.append("export.graphml(")
                 .append(modelName)
                 .append(", '").append(outputPath).append("'")
                 .append(pdfPath.isEmpty() ? "" : ", file = '" + pdfPath + "'");
@@ -166,6 +181,17 @@ public class MenuAction extends AbstractCyAction {
             scriptBuilder.append(", ").append(pr);
         } else if (pr != null) {
             scriptBuilder.append(pr);
+        }
+        if (statisticalBoot || nonParametricBoot) {
+           if (tp != null || hg != null || pr != null) {
+               scriptBuilder.append(", ");
+            }
+           if (statisticalBoot) {
+               scriptBuilder.append("'sb'");
+           } else {
+               scriptBuilder.append("'npb'");
+           }
+               
         }
         scriptBuilder.append(")");
 

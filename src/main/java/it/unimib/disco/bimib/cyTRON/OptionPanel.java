@@ -7,12 +7,16 @@ package it.unimib.disco.bimib.cyTRON;
 
 import java.awt.event.ItemEvent;
 import java.io.File;
+import java.text.NumberFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.NumberFormatter;
 
 /**
  *
@@ -24,7 +28,10 @@ public class OptionPanel extends javax.swing.JPanel {
         MODEL("model"), GRAPHML("graphml"), PDF("pdf"), HG("hg"), TP("tp"), PR("pr"), 
         SCALE_NODES("scale.nodes"), HEIGHT("height"), WIDTH("width"), 
         DISCONNECTED_NODES("disconnected"), PMIN("pmin"), EDGE_CEX("edge.cex"), 
-        LABEL_EDGE_SIZE("label.edge.size"), EDGE_COLOR("edge.color"), EDGE_LWD("edge.lwd");
+        LABEL_EDGE_SIZE("label.edge.size"), EDGE_COLOR("edge.color"), EDGE_LWD("edge.lwd"),
+        STATISTICAL_BOOTSTRAP("sb"), NON_PARAMETRIC_BOOTSTRAP("npb"),
+        CORES_RATIO("cores.ratio"),
+        N_BOOT("nboot");
         
         private String title;
 
@@ -62,6 +69,7 @@ public class OptionPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         modelButton = new javax.swing.JButton();
@@ -92,6 +100,21 @@ public class OptionPanel extends javax.swing.JPanel {
         edgeLwdLabel = new javax.swing.JLabel();
         lwdTB = new javax.swing.JFormattedTextField();
         helpButton = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        parametricButton = new javax.swing.JRadioButton();
+        statisticalButton = new javax.swing.JRadioButton();
+        noBootstrapButton = new javax.swing.JRadioButton();
+        bootstrapAlreadyCB = new javax.swing.JCheckBox();
+        jLabel1 = new javax.swing.JLabel();
+        nBootTF = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        coreRatioTF = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+
+        buttonGroup1.add(parametricButton);
+        buttonGroup1.add(statisticalButton);
+        buttonGroup1.add(noBootstrapButton);
+        buttonGroup1.setSelected(noBootstrapButton.getModel(), true);
 
         modelButton.setText("Choose Model");
         modelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -179,24 +202,25 @@ public class OptionPanel extends javax.swing.JPanel {
             }
         });
 
+        scaleNodesTB.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(NumberFormat.getNumberInstance(Locale.US))));
         scaleNodesTB.setEnabled(false);
 
         heightLabel.setText("height");
 
-        heightTB.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        heightTB.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(NumberFormat.getNumberInstance(Locale.US))));
         heightTB.setText("2.0");
 
         widthLabel.setText("width");
 
-        widthTB.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        widthTB.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(NumberFormat.getNumberInstance(Locale.US))));
         widthTB.setText("3.0");
 
         pminLabel.setText("pmin");
 
-        pminTB.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        pminTB.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(NumberFormat.getNumberInstance(Locale.US))));
         pminTB.setText("0.05");
 
-        edgeCexTB.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        edgeCexTB.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(NumberFormat.getNumberInstance(Locale.US))));
         edgeCexTB.setText("1.0");
 
         edgeCexLabel.setText("edge.cex");
@@ -216,7 +240,7 @@ public class OptionPanel extends javax.swing.JPanel {
             }
         });
 
-        lesTB.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        lesTB.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(NumberFormat.getNumberInstance(Locale.US))));
         lesTB.setEnabled(false);
 
         edgeColorLabel.setText("edge.color");
@@ -230,7 +254,7 @@ public class OptionPanel extends javax.swing.JPanel {
 
         edgeLwdLabel.setText("edge.lwd");
 
-        lwdTB.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        lwdTB.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(NumberFormat.getNumberInstance(Locale.US))));
         lwdTB.setText("3");
 
         helpButton.setText("Help");
@@ -354,6 +378,97 @@ public class OptionPanel extends javax.swing.JPanel {
 
         jTabbedPane1.addTab("export.graphml parameters", jPanel2);
 
+        parametricButton.setLabel("parametric bootstrap");
+
+        statisticalButton.setLabel("statistical bootstrap");
+
+        noBootstrapButton.setLabel("no bootstrap");
+        noBootstrapButton.setEnabled(true);
+        noBootstrapButton.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                noBootstrapStateChanged(evt);
+            }
+        });
+
+        bootstrapAlreadyCB.setLabel("bootstrap already prepared");
+        bootstrapAlreadyCB.setEnabled(false);
+        bootstrapAlreadyCB.setSelected(true);
+        bootstrapAlreadyCB.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                boostrapAlreadyStateChanged(evt);
+            }
+        });
+        bootstrapAlreadyCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bootstrapAlreadyCBActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("number of bootstraps sampling to be performed");
+
+        nBootTF.setText("100");
+        nBootTF.setEnabled(false);
+
+        jLabel2.setText("core.ratio");
+
+        coreRatioTF.setText("100");
+        coreRatioTF.setEnabled(false);
+
+        jLabel3.setText("%");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(bootstrapAlreadyCB))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(nBootTF, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                            .addComponent(coreRatioTF))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(173, 173, 173)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(statisticalButton)
+                            .addComponent(parametricButton)
+                            .addComponent(noBootstrapButton))))
+                .addContainerGap(152, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(noBootstrapButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(statisticalButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(parametricButton)
+                .addGap(44, 44, 44)
+                .addComponent(bootstrapAlreadyCB)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(nBootTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(coreRatioTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addContainerGap(100, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("bootstrap options", jPanel3);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -365,6 +480,32 @@ public class OptionPanel extends javax.swing.JPanel {
             .addComponent(jTabbedPane1)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void bootstrapAlreadyCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bootstrapAlreadyCBActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bootstrapAlreadyCBActionPerformed
+
+    private void boostrapAlreadyStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_boostrapAlreadyStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            coreRatioTF.setEnabled(false);
+            nBootTF.setEnabled(false);
+        } else if (evt.getStateChange() == ItemEvent.DESELECTED) {
+            coreRatioTF.setEnabled(true);
+            nBootTF.setEnabled(true);
+        }
+    }//GEN-LAST:event_boostrapAlreadyStateChanged
+
+    private void noBootstrapStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_noBootstrapStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            bootstrapAlreadyCB.setSelected(true);
+            bootstrapAlreadyCB.setEnabled(false);
+        } else if (evt.getStateChange() == ItemEvent.DESELECTED) {
+            bootstrapAlreadyCB.setEnabled(true);
+            bootstrapAlreadyCB.setSelected(false);
+            
+        }
+        
+    }//GEN-LAST:event_noBootstrapStateChanged
 
     private void edgeColorTBActionPerformed(java.awt.event.ActionEvent evt) {
     }
@@ -504,11 +645,26 @@ public class OptionPanel extends javax.swing.JPanel {
 
         parameters.put(FieldTitle.EDGE_LWD, lwdTB.getText());
         
+        if (buttonGroup1.isSelected(parametricButton.getModel())) {
+            parameters.put(FieldTitle.NON_PARAMETRIC_BOOTSTRAP, "true");
+        } else  if (buttonGroup1.isSelected(statisticalButton.getModel())) {
+            parameters.put(FieldTitle.STATISTICAL_BOOTSTRAP, "true");
+        }
+        
+        if (!bootstrapAlreadyCB.isSelected()) {
+            double ratio = Double.parseDouble(coreRatioTF.getText()) / 100;
+            parameters.put(FieldTitle.CORES_RATIO, String.valueOf(ratio));
+            parameters.put(FieldTitle.N_BOOT, nBootTF.getText());
+        }
+        
         return parameters;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox bootstrapAlreadyCB;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel confidenceLabel;
+    private javax.swing.JTextField coreRatioTF;
     private javax.swing.JCheckBox disconnectedNodesCB;
     private javax.swing.JLabel edgeCexLabel;
     private javax.swing.JFormattedTextField edgeCexTB;
@@ -520,21 +676,29 @@ public class OptionPanel extends javax.swing.JPanel {
     private javax.swing.JFormattedTextField heightTB;
     private javax.swing.JButton helpButton;
     private javax.swing.JCheckBox hgCB;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JCheckBox labelEdgeSizeCB;
     private javax.swing.JFormattedTextField lesTB;
     private javax.swing.JFormattedTextField lwdTB;
     private javax.swing.JButton modelButton;
+    private javax.swing.JTextField nBootTF;
+    private javax.swing.JRadioButton noBootstrapButton;
     private javax.swing.JCheckBox outputCB;
     private javax.swing.JTextField outputFileText;
     private javax.swing.JTextField outputPdf;
+    private javax.swing.JRadioButton parametricButton;
     private javax.swing.JLabel pminLabel;
     private javax.swing.JFormattedTextField pminTB;
     private javax.swing.JCheckBox prCB;
     private javax.swing.JCheckBox scaleNodesCB;
     private javax.swing.JFormattedTextField scaleNodesTB;
+    private javax.swing.JRadioButton statisticalButton;
     private javax.swing.JCheckBox tpCB;
     private javax.swing.JLabel widthLabel;
     private javax.swing.JFormattedTextField widthTB;
