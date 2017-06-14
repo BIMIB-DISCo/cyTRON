@@ -205,7 +205,8 @@ public class SetLayoutPropertiesListener implements NetworkAddedListener {
         
         // Apply the visual style
         this.visualMappingManager.addVisualStyle(visualStyle);
-        visualStyle.apply(view);
-        view.updateView();
+        
+        visualMappingManager.setVisualStyle(visualStyle, view);
+        
     }
 }
