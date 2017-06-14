@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.unimib.disco.bimib.cyTRON;
+package it.unimib.disco.bimib.cyTRON.view;
 
 import java.awt.event.ItemEvent;
 import java.io.File;
@@ -17,6 +17,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
+
+import it.unimib.disco.bimib.cyTRON.controller.CommandExecutor;
 
 /**
  *
@@ -47,16 +49,13 @@ public class OptionPanel extends javax.swing.JPanel {
     private File modelFile;
     private final CommandExecutor commandExecutor;
     private final JFrame frame;
-    private Map<FieldTitle, String> parameters = new HashMap<>();
+    private Map<FieldTitle, String> parameters;
 
-    /**
-     * Creates new form OptionPanel2
-     */
     public OptionPanel(CommandExecutor commandExecutor, JFrame frame) {
         this.commandExecutor = commandExecutor;
         this.frame = frame;
+        this.parameters = new HashMap<>();
         initComponents();
-
     }
 
     /**
@@ -506,7 +505,8 @@ public class OptionPanel extends javax.swing.JPanel {
         }
         
     }//GEN-LAST:event_noBootstrapStateChanged
-
+    
+    // TODO: capire quale codice è autogenerato e quale no a partire da qui
     private void edgeColorTBActionPerformed(java.awt.event.ActionEvent evt) {
     }
 
