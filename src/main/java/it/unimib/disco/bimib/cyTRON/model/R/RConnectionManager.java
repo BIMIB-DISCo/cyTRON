@@ -1,5 +1,6 @@
-package it.unimib.disco.bimib.cyTRON.model;
+package it.unimib.disco.bimib.cyTRON.model.R;
 
+import org.rosuda.JRI.REXP;
 import org.rosuda.JRI.Rengine;
 
 public class RConnectionManager {
@@ -15,10 +16,16 @@ public class RConnectionManager {
 				String[] args = new String[]{"--quiet", "--vanilla", "--no-save"};
 				rEngine = new Rengine(args, false, new TextConsole());
 			}
+                        rEngine.eval("library('TRONCO')");
 		}
 		
 		return rEngine;
 	}
+        
+        // Execute a command
+        public static REXP eval(String command) {
+            return getConnection().eval(command);
+        }
 	
 	// Check libraries consistency
 	public static Boolean versionCheck() {

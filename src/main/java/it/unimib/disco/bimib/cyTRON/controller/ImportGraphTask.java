@@ -12,7 +12,7 @@ import org.cytoscape.work.Tunable;
 
 import org.rosuda.JRI.Rengine;
 
-import it.unimib.disco.bimib.cyTRON.model.RConnectionManager;
+import it.unimib.disco.bimib.cyTRON.model.R.RConnectionManager;
 
 public class ImportGraphTask extends AbstractTask {
 

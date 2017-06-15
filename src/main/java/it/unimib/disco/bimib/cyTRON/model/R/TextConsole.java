@@ -1,4 +1,4 @@
-package it.unimib.disco.bimib.cyTRON.model;
+package it.unimib.disco.bimib.cyTRON.model.R;
 
 import java.awt.FileDialog;
 import java.awt.Frame;
