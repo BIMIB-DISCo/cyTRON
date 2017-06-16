@@ -33,12 +33,24 @@ public class MainFrame extends javax.swing.JFrame {
         datasetsList = new javax.swing.JList<>();
         importDatasetButton = new javax.swing.JButton();
         deleteDatasetButton = new javax.swing.JButton();
+        bindEventsButton = new javax.swing.JButton();
+        bindSamplesButton = new javax.swing.JButton();
         currentDatasetPanel = new javax.swing.JPanel();
         genesPanelList = new javax.swing.JPanel();
         renameGeneButton = new javax.swing.JButton();
         deleteGeneButton = new javax.swing.JButton();
         genesScrollPane = new javax.swing.JScrollPane();
         genesList = new javax.swing.JList<>();
+        typesPanelList = new javax.swing.JPanel();
+        renameTypeButton = new javax.swing.JButton();
+        deleteTypeButton = new javax.swing.JButton();
+        joinTypesButton = new javax.swing.JButton();
+        typesScrollPane = new javax.swing.JScrollPane();
+        typesList = new javax.swing.JList<>();
+        samplesPanelList = new javax.swing.JPanel();
+        samplesScrollPane = new javax.swing.JScrollPane();
+        samplesList = new javax.swing.JList<>();
+        deteleButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("cyTRON");
@@ -55,7 +67,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
         datasetsListScrollPane.setViewportView(datasetsList);
 
-        importDatasetButton.setText("Import");
+        importDatasetButton.setText("Import...");
         importDatasetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 importDatasetButtonActionPerformed(evt);
@@ -66,6 +78,20 @@ public class MainFrame extends javax.swing.JFrame {
         deleteDatasetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteDatasetButtonActionPerformed(evt);
+            }
+        });
+
+        bindEventsButton.setText("Bind Events with...");
+        bindEventsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bindEventsButtonActionPerformed(evt);
+            }
+        });
+
+        bindSamplesButton.setText("Bind Samples with...");
+        bindSamplesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bindSamplesButtonActionPerformed(evt);
             }
         });
 
@@ -80,14 +106,23 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(datasetsPanelListLayout.createSequentialGroup()
                         .addComponent(importDatasetButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(deleteDatasetButton)))
+                        .addComponent(deleteDatasetButton))
+                    .addGroup(datasetsPanelListLayout.createSequentialGroup()
+                        .addGroup(datasetsPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(bindEventsButton)
+                            .addComponent(bindSamplesButton))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         datasetsPanelListLayout.setVerticalGroup(
             datasetsPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(datasetsPanelListLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(datasetsListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(datasetsListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52)
+                .addComponent(bindSamplesButton)
+                .addGap(18, 18, 18)
+                .addComponent(bindEventsButton)
                 .addGap(18, 18, 18)
                 .addGroup(datasetsPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(importDatasetButton)
@@ -100,7 +135,7 @@ public class MainFrame extends javax.swing.JFrame {
         genesPanelList.setBorder(javax.swing.BorderFactory.createTitledBorder("Genes"));
         genesPanelList.setPreferredSize(new java.awt.Dimension(300, 320));
 
-        renameGeneButton.setText("Rename");
+        renameGeneButton.setText("Rename as...");
         renameGeneButton.setToolTipText("");
         renameGeneButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,10 +160,10 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(genesPanelListLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(genesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(genesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(genesScrollPane)
                     .addGroup(genesPanelListLayout.createSequentialGroup()
                         .addComponent(renameGeneButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(deleteGeneButton)))
                 .addContainerGap())
         );
@@ -136,11 +171,103 @@ public class MainFrame extends javax.swing.JFrame {
             genesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, genesPanelListLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(genesScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                .addComponent(genesScrollPane)
                 .addGap(18, 18, 18)
                 .addGroup(genesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(renameGeneButton)
                     .addComponent(deleteGeneButton))
+                .addContainerGap())
+        );
+
+        typesPanelList.setBorder(javax.swing.BorderFactory.createTitledBorder("Types"));
+
+        renameTypeButton.setText("Rename as...");
+        renameTypeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                renameTypeButtonActionPerformed(evt);
+            }
+        });
+
+        deleteTypeButton.setText("Delete");
+        deleteTypeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteTypeButtonActionPerformed(evt);
+            }
+        });
+
+        joinTypesButton.setText("Join with...");
+        joinTypesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                joinTypesButtonActionPerformed(evt);
+            }
+        });
+
+        typesList.setModel(datasetController.getTypesListModel());
+        typesScrollPane.setViewportView(typesList);
+
+        javax.swing.GroupLayout typesPanelListLayout = new javax.swing.GroupLayout(typesPanelList);
+        typesPanelList.setLayout(typesPanelListLayout);
+        typesPanelListLayout.setHorizontalGroup(
+            typesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(typesPanelListLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(typesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(typesScrollPane)
+                    .addGroup(typesPanelListLayout.createSequentialGroup()
+                        .addComponent(renameTypeButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(deleteTypeButton))
+                    .addGroup(typesPanelListLayout.createSequentialGroup()
+                        .addComponent(joinTypesButton)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        typesPanelListLayout.setVerticalGroup(
+            typesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, typesPanelListLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(typesScrollPane)
+                .addGap(18, 18, 18)
+                .addComponent(joinTypesButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(typesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(renameTypeButton)
+                    .addComponent(deleteTypeButton))
+                .addContainerGap())
+        );
+
+        samplesPanelList.setBorder(javax.swing.BorderFactory.createTitledBorder("Samples"));
+
+        samplesList.setModel(datasetController.getSampltListModel());
+        samplesScrollPane.setViewportView(samplesList);
+
+        deteleButton.setText("Delete");
+        deteleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deteleButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout samplesPanelListLayout = new javax.swing.GroupLayout(samplesPanelList);
+        samplesPanelList.setLayout(samplesPanelListLayout);
+        samplesPanelListLayout.setHorizontalGroup(
+            samplesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(samplesPanelListLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(samplesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(samplesScrollPane)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, samplesPanelListLayout.createSequentialGroup()
+                        .addGap(0, 189, Short.MAX_VALUE)
+                        .addComponent(deteleButton)))
+                .addContainerGap())
+        );
+        samplesPanelListLayout.setVerticalGroup(
+            samplesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(samplesPanelListLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(samplesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(deteleButton)
                 .addContainerGap())
         );
 
@@ -150,14 +277,21 @@ public class MainFrame extends javax.swing.JFrame {
             currentDatasetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(currentDatasetPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(genesPanelList, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(632, Short.MAX_VALUE))
+                .addComponent(genesPanelList, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(typesPanelList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(samplesPanelList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         currentDatasetPanelLayout.setVerticalGroup(
             currentDatasetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(currentDatasetPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(genesPanelList, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(currentDatasetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(samplesPanelList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(typesPanelList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(genesPanelList, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -203,7 +337,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    // ************ DATASETS ************ \\
     private void importDatasetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importDatasetButtonActionPerformed
         ImportDatasetFrame importDatasetFrame = new ImportDatasetFrame(datasetController);
         importDatasetFrame.setLocationRelativeTo(null);
@@ -218,6 +353,7 @@ public class MainFrame extends javax.swing.JFrame {
         datasetController.updateLists(datasetsList.getSelectedIndex());
     }//GEN-LAST:event_datasetsListMouseClicked
 
+    // ************ GENES ************ \\
     private void renameGeneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renameGeneButtonActionPerformed
         RenameGeneFrame renameGeneFrame = new RenameGeneFrame(datasetController, genesList.getSelectedIndex(), datasetsList.getSelectedIndex());
         renameGeneFrame.setLocationRelativeTo(null);
@@ -228,7 +364,42 @@ public class MainFrame extends javax.swing.JFrame {
         datasetController.deleteGene(genesList.getSelectedIndex(), datasetsList.getSelectedIndex());
     }//GEN-LAST:event_deleteGeneButtonActionPerformed
 
+    // ************ TYPES ************ \\
+    private void deleteTypeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteTypeButtonActionPerformed
+        datasetController.deleteType(typesList.getSelectedIndex(), datasetsList.getSelectedIndex());
+    }//GEN-LAST:event_deleteTypeButtonActionPerformed
+
+    private void renameTypeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renameTypeButtonActionPerformed
+        RenameTypeFrame renameTypeFrame = new RenameTypeFrame(datasetController, typesList.getSelectedIndex(), datasetsList.getSelectedIndex());
+        renameTypeFrame.setLocationRelativeTo(null);
+	renameTypeFrame.setVisible(true);
+    }//GEN-LAST:event_renameTypeButtonActionPerformed
+
+    private void joinTypesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joinTypesButtonActionPerformed
+        JoinTypesFrame joinTypesFrame = new JoinTypesFrame(datasetController, typesList.getSelectedIndex(), datasetsList.getSelectedIndex());
+        joinTypesFrame.setLocationRelativeTo(null);
+	joinTypesFrame.setVisible(true);
+    }//GEN-LAST:event_joinTypesButtonActionPerformed
+
+    private void deteleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deteleButtonActionPerformed
+        datasetController.deleteSample(samplesList.getSelectedIndex(), datasetsList.getSelectedIndex());
+    }//GEN-LAST:event_deteleButtonActionPerformed
+
+    private void bindEventsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bindEventsButtonActionPerformed
+        BindDatasetsFrame bindDatasetsFrame = new BindDatasetsFrame(datasetController, datasetsList.getSelectedIndex(), DatasetController.EVENTS);
+        bindDatasetsFrame.setLocationRelativeTo(null);
+	bindDatasetsFrame.setVisible(true);
+    }//GEN-LAST:event_bindEventsButtonActionPerformed
+
+    private void bindSamplesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bindSamplesButtonActionPerformed
+        BindDatasetsFrame bindDatasetsFrame = new BindDatasetsFrame(datasetController, datasetsList.getSelectedIndex(), DatasetController.SAMPLES);
+        bindDatasetsFrame.setLocationRelativeTo(null);
+	bindDatasetsFrame.setVisible(true);
+    }//GEN-LAST:event_bindSamplesButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bindEventsButton;
+    private javax.swing.JButton bindSamplesButton;
     private javax.swing.JPanel currentDatasetPanel;
     private javax.swing.JList<String> datasetsList;
     private javax.swing.JScrollPane datasetsListScrollPane;
@@ -236,11 +407,21 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel datasetsPanelList;
     private javax.swing.JButton deleteDatasetButton;
     private javax.swing.JButton deleteGeneButton;
+    private javax.swing.JButton deleteTypeButton;
+    private javax.swing.JButton deteleButton;
     private javax.swing.JList<String> genesList;
     private javax.swing.JPanel genesPanelList;
     private javax.swing.JScrollPane genesScrollPane;
     private javax.swing.JButton importDatasetButton;
+    private javax.swing.JButton joinTypesButton;
     private javax.swing.JButton renameGeneButton;
+    private javax.swing.JButton renameTypeButton;
+    private javax.swing.JList<String> samplesList;
+    private javax.swing.JPanel samplesPanelList;
+    private javax.swing.JScrollPane samplesScrollPane;
     private javax.swing.JTabbedPane tabbedPane;
+    private javax.swing.JList<String> typesList;
+    private javax.swing.JPanel typesPanelList;
+    private javax.swing.JScrollPane typesScrollPane;
     // End of variables declaration//GEN-END:variables
 }

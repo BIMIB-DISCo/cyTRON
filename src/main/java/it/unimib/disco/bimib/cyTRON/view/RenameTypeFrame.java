@@ -1,31 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unimib.disco.bimib.cyTRON.view;
 
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
-import it.unimib.disco.bimib.cyTRON.model.Gene;
 
-
-/**
- *
- * @author edotony
- */
-public class RenameGeneFrame extends javax.swing.JFrame {
+public class RenameTypeFrame extends javax.swing.JFrame {
 
     private final DatasetController datasetController;
-    private final int geneIndex;
+    private final int typeIndex;
     private final int datasetIndex;
     
     /**
      * Creates new form RenameGeneFrame
      */
-    public RenameGeneFrame(DatasetController datasetController, int geneIndex, int datasetIndex) {
+    public RenameTypeFrame(DatasetController datasetController, int typeIndex, int datasetIndex) {
         // get the variables
         this.datasetController = datasetController;
-        this.geneIndex = geneIndex;
+        this.typeIndex = typeIndex;
         this.datasetIndex = datasetIndex;
         
         // draw the interface
@@ -49,20 +38,19 @@ public class RenameGeneFrame extends javax.swing.JFrame {
         renameButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Rename Gene");
+        setTitle("Rename Type");
         setMinimumSize(new java.awt.Dimension(640, 360));
         setSize(new java.awt.Dimension(640, 360));
 
         renameLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
-        renameLabel.setText("Rename Gene");
+        renameLabel.setText("Rename Type");
 
         nameLabel.setText("Name:");
 
         newNameLabel.setText("New name:");
 
         nameTextField.setEditable(false);
-        nameTextField.setText(((Gene) datasetController.getGenesListModel().get(geneIndex)).toString()
-        );
+        nameTextField.setText(((it.unimib.disco.bimib.cyTRON.model.Type) datasetController.getTypesListModel().get(typeIndex)).toString());
 
         renameButton.setText("Rename");
         renameButton.addActionListener(new java.awt.event.ActionListener() {
@@ -100,9 +88,9 @@ public class RenameGeneFrame extends javax.swing.JFrame {
                 .addGap(124, 124, 124)
                 .addComponent(renameLabel)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nameLabel)
-                    .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nameLabel))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(newNameLabel)
@@ -120,7 +108,7 @@ public class RenameGeneFrame extends javax.swing.JFrame {
         String newName = newNameTextField.getText();
 
         // rename the gene
-        datasetController.renameGene(geneIndex, datasetIndex, newName);
+        datasetController.renameType(typeIndex, datasetIndex, newName);
 
         // close the frame
         dispose();

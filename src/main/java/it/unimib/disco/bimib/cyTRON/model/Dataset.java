@@ -13,12 +13,12 @@ public class Dataset {
     private String path;
     
     private Set<Gene> genes;
+    private Set<Type> types;
+    private Set<Sample> samples;
     
     public Dataset(String name, String path, String type) {
         this.name = name;
         this.path = path;
-        
-        this.genes = new HashSet();
     	
     	switch (type) {
             case DatasetController.GENOTYPES:
@@ -35,6 +35,8 @@ public class Dataset {
         }
     	
     	retrieveGenes();
+    	retrieveTypes();
+    	retrieveSamples();
     }
     
     public void deleteDataset() {
@@ -64,6 +66,9 @@ public class Dataset {
     
     // ************ GENES ************ \\
     private void retrieveGenes() {
+    	// initialize the structure
+    	genes = new HashSet();
+    	
     	// create and execute the command
         String command = "as.genes(" + name + ")";
         REXP rexp = RConnectionManager.eval(command);
@@ -101,7 +106,95 @@ public class Dataset {
     public Set<Gene> getGenes() {
         return genes;
     }
-
+    
+    // ************ TYPES ************ \\
+    private void retrieveTypes() {
+    	// initialize the structure
+    	types = new HashSet();
+    	
+    	// create and execute the command
+        String command = "as.types(" + name + ")";
+        REXP rexp = RConnectionManager.eval(command);
+        
+        // get the names of the genes
+        String[] names = rexp.asStringArray();
+        
+        // instantiate the genes and add them to the map
+        for (int i = 0; i < names.length; i++) {
+            String name = names[i];
+            types.add(new Type(name));
+        }
+    }
+    
+    public void renameType(Type type, String newName) {
+    	// create and execute the command
+        String command = name + " = rename.type(" + name + ", '" + type.getName() + "', '" + newName + "')";
+        RConnectionManager.eval(command);
+        
+        // rename the type
+        type.setName(newName);
+        // TODO: update other variables
+    }
+    
+    public void deleteType(Type type) {
+    	// create and execute the command
+        String command = this.name + " = delete.type(" + name + ", '" + type.getName() + "')";
+        RConnectionManager.eval(command);
+        
+        // delete the type from the set
+        types.remove(type);
+        // TODO: update other variables
+    }
+    
+    public void joinTypes(Type type1, Type type2, String newName) {
+    	// create and execute the command
+        String command = "join.types(" + name + ", '" + type1.getName() + "', '" + type2.getName() + "', new.type='" + newName + "')";
+        RConnectionManager.eval(command);
+    	
+        // rename the first type
+        type1.setName(newName);
+        // remove the second type
+        types.remove(type2);
+        // TODO: update other variables
+    }
+    
+    public Set<Type> getTypes() {
+        return types;
+    } 
+    
+    // ************ SAMPLES ************ \\
+    private void retrieveSamples() {
+    	// initialize the structure
+    	samples = new HashSet();
+    	
+    	// create and execute the command
+        String command = "as.samples(" + name + ")";
+        REXP rexp = RConnectionManager.eval(command);
+        
+        // get the names of the genes
+        String[] names = rexp.asStringArray();
+        
+        // instantiate the genes and add them to the map
+        for (int i = 0; i < names.length; i++) {
+            String name = names[i];
+            samples.add(new Sample(name));
+        }
+    }
+    
+    public void deleteSample(Sample sample) {
+    	// create and execute the command
+        String command = this.name + " = delete.samples(" + name + ", c('" + sample.getName() + "'))";
+        RConnectionManager.eval(command);
+        
+        // delete the type from the set
+        samples.remove(sample);
+        // TODO: update other variables
+    }
+    
+    public Set<Sample> getSamples() {
+        return samples;
+    } 
+    
     @Override
     public String toString() {
         return name;
