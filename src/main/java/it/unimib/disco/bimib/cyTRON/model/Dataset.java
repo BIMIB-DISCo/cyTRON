@@ -71,7 +71,8 @@ public class Dataset {
     
     public void bindSamples(Dataset dataset, String newName) {
     	// create and execute the command
-        String command = newName + " = sbind(c(" + name + ", " + dataset.getName() + "))";
+        String command = newName + " = sbind(c(" + name + ", " + dataset.getName() + "))" + 
+        		"\n rm(" + name + ")";
         RConnectionManager.eval(command);
         
         // update the name
@@ -84,7 +85,22 @@ public class Dataset {
     
     public void bindEvents(Dataset dataset, String newName) {
     	// create and execute the command
-        String command = newName + " = ebind(c(" + name + ", " + dataset.getName() + "))";
+        String command = newName + " = ebind(c(" + name + ", " + dataset.getName() + "))" + 
+        		"\n rm(" + name + ")";
+        RConnectionManager.eval(command);
+        
+        // update the name
+        name = newName;
+        
+        // update the samples and the events
+        retrieveSamples();
+        retrieveEvents();
+    }
+    
+    public void intersect(Dataset dataset, String newName) {
+    	// create and execute the command
+        String command = newName + " = intersect.datasets(" + name + ", " + dataset.getName() + ")" + 
+        		"\n rm(" + name + ")";
         RConnectionManager.eval(command);
         
         // update the name
@@ -121,6 +137,22 @@ public class Dataset {
         
         // delete the sample from the map
         samples.remove(sample.getName());
+    }
+    
+    public void samplesSelection(Sample[] samples) {
+    	// create and execute the command
+        String command = name + " = samples.selection(" + name + ", c(";
+        for (int i = 0; i < samples.length; i++) {
+        	command += "'" + samples[i].getName() + "'";
+        	if (i < samples.length - 1) {
+        		command += ", ";
+        	}
+		}
+        command += "))";
+        RConnectionManager.eval(command);
+        
+        // reload the samples
+        retrieveSamples();
     }
     
     public Collection<Sample> getSamples() {
@@ -266,6 +298,39 @@ public class Dataset {
     	RConnectionManager.eval(command);
     	
     	// reload the events
+        retrieveEvents();
+    }
+    
+    public void eventsSelection(String frequence, Event[] selectedEvents, Event[] filteredEvents) {
+    	// create and execute the command
+        String command = name + " = events.selection(" + name;
+        if (frequence.length() > 0) {
+			command += ", filter.freq=" + frequence;
+		}
+        if (selectedEvents.length > 0) {
+        	command += ", filter.in.names=c(";
+        	for (int i = 0; i < selectedEvents.length; i++) {
+        		command += "'" + selectedEvents[i].getGene().getName() + "'";
+        		if (i < selectedEvents.length - 1) {
+            		command += ", ";
+            	}
+			}
+        	command += ")";
+		}
+        if (filteredEvents.length > 0) {
+        	command += ", filter.out.names=c(";
+        	for (int i = 0; i < filteredEvents.length; i++) {
+        		command += "'" + filteredEvents[i].getGene().getName() + "'";
+        		if (i < filteredEvents.length - 1) {
+            		command += ", ";
+            	}
+			}
+        	command += ")";
+		}
+        command += ")";
+        RConnectionManager.eval(command);
+        
+        // reload the events
         retrieveEvents();
     }
     

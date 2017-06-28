@@ -106,11 +106,13 @@
                                   <Component id="deleteDatasetButton" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="bindEventsButton" min="-2" max="-2" attributes="0"/>
-                                      <Component id="bindSamplesButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="intersectButton" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="bindEventsButton" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="bindSamplesButton" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -121,15 +123,18 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="datasetsListScrollPane" min="-2" pref="473" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="bindSamplesButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="bindEventsButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="importDatasetButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="deleteDatasetButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="datasetsListScrollPane" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="intersectButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="bindEventsButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="bindSamplesButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -149,7 +154,7 @@
                         <Property name="selectionMode" type="int" value="0"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="datasetsListMouseClicked"/>
+                        <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="datasetsListValueChanged"/>
                       </Events>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -175,7 +180,7 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="bindEventsButton">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Bind Events with..."/>
+                    <Property name="text" type="java.lang.String" value="Bind events..."/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bindEventsButtonActionPerformed"/>
@@ -183,10 +188,18 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="bindSamplesButton">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Bind Samples with..."/>
+                    <Property name="text" type="java.lang.String" value="Bind samples..."/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bindSamplesButtonActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="intersectButton">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Intersect..."/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="intersectButtonActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>
@@ -278,7 +291,7 @@
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="genesScrollPane" max="32767" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="renameGeneButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="deleteGeneButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -291,7 +304,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JButton" name="renameGeneButton">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Rename as..."/>
+                        <Property name="text" type="java.lang.String" value="Rename..."/>
                         <Property name="toolTipText" type="java.lang.String" value=""/>
                       </Properties>
                       <Events>
@@ -361,8 +374,8 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="typesScrollPane" pref="158" max="32767" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="typesScrollPane" pref="170" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="joinTypesButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -377,7 +390,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JButton" name="renameTypeButton">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Rename as..."/>
+                        <Property name="text" type="java.lang.String" value="Rename..."/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="renameTypeButtonActionPerformed"/>
@@ -393,7 +406,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="joinTypesButton">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Join with..."/>
+                        <Property name="text" type="java.lang.String" value="Join..."/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="joinTypesButtonActionPerformed"/>
@@ -434,7 +447,8 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="samplesScrollPane" max="32767" attributes="0"/>
                                   <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      <Component id="samplesSelectionButton" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
                                       <Component id="deteleSampleButton" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -447,8 +461,11 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="samplesScrollPane" max="32767" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="deteleSampleButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="deteleSampleButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="samplesSelectionButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -479,6 +496,14 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deteleSampleButtonActionPerformed"/>
                       </Events>
                     </Component>
+                    <Component class="javax.swing.JButton" name="samplesSelectionButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Selection..."/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="samplesSelectionButtonActionPerformed"/>
+                      </Events>
+                    </Component>
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="eventsPanelList">
@@ -502,6 +527,10 @@
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Component id="deleteEventButton" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="eventsSelectionButton" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -511,8 +540,10 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="eventsScrollPane" max="32767" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="eventsScrollPane" min="-2" pref="170" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="eventsSelectionButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="deleteEventButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="joinEventsButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -549,10 +580,18 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="joinEventsButton">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Join with..."/>
+                        <Property name="text" type="java.lang.String" value="Join..."/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="joinEventsButtonActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="eventsSelectionButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Selection..."/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="eventsSelectionButtonActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>

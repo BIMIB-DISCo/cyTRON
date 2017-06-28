@@ -92,9 +92,25 @@ public class DatasetController {
 			dataset1.bindEvents(dataset2, newName);
 		}
         
-        // remove the second dataset form the list model
+        // remove the second dataset form the list model and from R
         datasetsListModel.remove(datasetIndex2);
-        // TODO: rimuovere il dataset anche da R
+        dataset2.deleteDataset();
+        
+        // update the lists
+        updateLists(datasetIndex1);
+    }
+    
+    public void intersect(int datasetIndex1, int datasetIndex2, String newName) {
+    	// get the datasets
+        Dataset dataset1 = datasetsListModel.get(datasetIndex1);
+        Dataset dataset2 = datasetsListModel.get(datasetIndex2);
+        
+        // execute the intersection
+        dataset1.intersect(dataset2, newName);
+        
+        // remove the second dataset form the list model and from R
+        datasetsListModel.remove(datasetIndex2);
+        dataset2.deleteDataset();
         
         // update the lists
         updateLists(datasetIndex1);
@@ -111,6 +127,21 @@ public class DatasetController {
         
         // remove the sample from the list model
         samplesListModel.remove(sampleIndex);
+    }
+    
+    public void selectSamples(int[] samplesIndex, int datasetIndex) {
+    	// get the samples and the dataset
+    	Sample[] samples = new Sample[samplesIndex.length];
+    	for (int i = 0; i < samplesIndex.length; i++) {
+    		samples[i] = samplesListModel.get(samplesIndex[i]);
+		}
+    	Dataset dataset = datasetsListModel.get(datasetIndex);
+    	
+    	// select the samples
+    	dataset.samplesSelection(samples);
+    	
+    	// update the sample list
+    	updateSamplesList(dataset);
     }
     
     // ************ GENES ************ \\
@@ -206,10 +237,31 @@ public class DatasetController {
         updateEventsList(dataset);
     }
     
+    public void selectEvents(String frequence, int[] selectedEventsIndex, int[] filteredEventsIndex, int datasetIndex) {
+    	// get the events and the dataset
+    	Event[] selectedEvents = new Event[selectedEventsIndex.length];
+    	for (int i = 0; i < selectedEventsIndex.length; i++) {
+    		selectedEvents[i] = eventsListModel.get(selectedEventsIndex[i]);
+		}
+    	Event[] filteredEvents = new Event[filteredEventsIndex.length];
+    	for (int i = 0; i < filteredEventsIndex.length; i++) {
+    		filteredEvents[i] = eventsListModel.get(filteredEventsIndex[i]);
+		}
+    	Dataset dataset = datasetsListModel.get(datasetIndex);
+    	
+    	// select the samples
+    	dataset.eventsSelection(frequence, selectedEvents, filteredEvents);
+    	
+    	// update lists
+        updateGenesList(dataset);
+        updateTypesList(dataset);
+        updateEventsList(dataset);
+    }
+    
     // ************ LIST UPDATES ************ \\
-    public void updateLists(int index) {
+    public void updateLists(int datasetIndex) {
         // get the dataset
-        Dataset dataset = datasetsListModel.get(index);
+        Dataset dataset = datasetsListModel.get(datasetIndex);
         
         // update samples list
         updateSamplesList(dataset);

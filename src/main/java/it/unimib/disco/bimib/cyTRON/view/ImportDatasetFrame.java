@@ -11,17 +11,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 
-/**
- *
- * @author edotony
- */
 public class ImportDatasetFrame extends javax.swing.JFrame {
 
     DatasetController datasetController;
-    
-    /**
-     * Creates new form ImportDataset
-     */
+
     public ImportDatasetFrame(DatasetController datasetController) {
         // get the controller
         this.datasetController = datasetController;
