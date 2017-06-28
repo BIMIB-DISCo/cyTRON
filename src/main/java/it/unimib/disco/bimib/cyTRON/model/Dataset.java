@@ -4,21 +4,28 @@ import org.rosuda.JRI.REXP;
 
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.model.R.RConnectionManager;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class Dataset {
     
     private String name;
-    private String path;
-    
-    private Set<Gene> genes;
-    private Set<Type> types;
-    private Set<Sample> samples;
+
+	private Map<String, Gene> genes;
+    private Map<String, Type> types;
+    private Map<String, Sample> samples;
+    private Set<Event> events;
     
     public Dataset(String name, String path, String type) {
         this.name = name;
-        this.path = path;
     	
     	switch (type) {
             case DatasetController.GENOTYPES:
@@ -34,9 +41,8 @@ public class Dataset {
                 break;
         }
     	
-    	retrieveGenes();
-    	retrieveTypes();
     	retrieveSamples();
+    	retrieveEvents();
     }
     
     public void deleteDataset() {
@@ -60,112 +66,39 @@ public class Dataset {
     private void importMaf(String name, String path) {
         // create and execute the command
         String command = name + " = import.MAF('" + path + "', sep = ';')";
-        
         RConnectionManager.eval(command);
     }
     
-    // ************ GENES ************ \\
-    private void retrieveGenes() {
-    	// initialize the structure
-    	genes = new HashSet();
-    	
+    public void bindSamples(Dataset dataset, String newName) {
     	// create and execute the command
-        String command = "as.genes(" + name + ")";
-        REXP rexp = RConnectionManager.eval(command);
-        
-        // get the names of the genes
-        String[] names = rexp.asStringArray();
-        
-        // instantiate the genes and add them to the map
-        for (int i = 0; i < names.length; i++) {
-            String name = names[i];
-            genes.add(new Gene(name));
-        }
-    }
-    
-    public void renameGene(Gene gene, String newName) {
-    	// create and execute the command
-        String command = name + " = rename.gene(" + name + ", '" + gene.getName() + "', '" + newName + "')";
+        String command = newName + " = sbind(c(" + name + ", " + dataset.getName() + "))";
         RConnectionManager.eval(command);
         
-        // rename the gene
-        gene.setName(newName);
-        // TODO: update other variables
+        // update the name
+        name = newName;
+        
+        // update the samples and the events
+        retrieveSamples();
+        retrieveEvents();
     }
     
-    public void deleteGene(Gene gene) {
+    public void bindEvents(Dataset dataset, String newName) {
     	// create and execute the command
-        String command = this.name + " = delete.gene(" + name + ", '" + gene.getName() + "')";
+        String command = newName + " = ebind(c(" + name + ", " + dataset.getName() + "))";
         RConnectionManager.eval(command);
         
-        // delete the gene from the set
-        genes.remove(gene);
-        // TODO: update other variables
-    }
-    
-    public Set<Gene> getGenes() {
-        return genes;
-    }
-    
-    // ************ TYPES ************ \\
-    private void retrieveTypes() {
-    	// initialize the structure
-    	types = new HashSet();
-    	
-    	// create and execute the command
-        String command = "as.types(" + name + ")";
-        REXP rexp = RConnectionManager.eval(command);
+        // update the name
+        name = newName;
         
-        // get the names of the genes
-        String[] names = rexp.asStringArray();
-        
-        // instantiate the genes and add them to the map
-        for (int i = 0; i < names.length; i++) {
-            String name = names[i];
-            types.add(new Type(name));
-        }
+        // update the samples and the events
+        retrieveSamples();
+        retrieveEvents();
     }
-    
-    public void renameType(Type type, String newName) {
-    	// create and execute the command
-        String command = name + " = rename.type(" + name + ", '" + type.getName() + "', '" + newName + "')";
-        RConnectionManager.eval(command);
-        
-        // rename the type
-        type.setName(newName);
-        // TODO: update other variables
-    }
-    
-    public void deleteType(Type type) {
-    	// create and execute the command
-        String command = this.name + " = delete.type(" + name + ", '" + type.getName() + "')";
-        RConnectionManager.eval(command);
-        
-        // delete the type from the set
-        types.remove(type);
-        // TODO: update other variables
-    }
-    
-    public void joinTypes(Type type1, Type type2, String newName) {
-    	// create and execute the command
-        String command = "join.types(" + name + ", '" + type1.getName() + "', '" + type2.getName() + "', new.type='" + newName + "')";
-        RConnectionManager.eval(command);
-    	
-        // rename the first type
-        type1.setName(newName);
-        // remove the second type
-        types.remove(type2);
-        // TODO: update other variables
-    }
-    
-    public Set<Type> getTypes() {
-        return types;
-    } 
     
     // ************ SAMPLES ************ \\
     private void retrieveSamples() {
     	// initialize the structure
-    	samples = new HashSet();
+    	samples = new HashMap<>();
     	
     	// create and execute the command
         String command = "as.samples(" + name + ")";
@@ -177,27 +110,194 @@ public class Dataset {
         // instantiate the genes and add them to the map
         for (int i = 0; i < names.length; i++) {
             String name = names[i];
-            samples.add(new Sample(name));
+            samples.put(name, new Sample(name));
         }
     }
     
     public void deleteSample(Sample sample) {
     	// create and execute the command
-        String command = this.name + " = delete.samples(" + name + ", c('" + sample.getName() + "'))";
+        String command = name + " = delete.samples(" + name + ", c('" + sample.getName() + "'))";
         RConnectionManager.eval(command);
         
-        // delete the type from the set
-        samples.remove(sample);
-        // TODO: update other variables
+        // delete the sample from the map
+        samples.remove(sample.getName());
     }
     
-    public Set<Sample> getSamples() {
-        return samples;
-    } 
+    public Collection<Sample> getSamples() {
+    	// order and return the list
+    	List<Sample> samplesList = new ArrayList<>(samples.values());
+    	Collections.sort(samplesList, new ToStringComparator());
+    	return samplesList;
+    }
+    
+    // ************ GENES ************ \\    
+    public void renameGene(Gene gene, String newName) {
+    	// create and execute the command
+        String command = name + " = rename.gene(" + name + ", '" + gene.getName() + "', '" + newName + "')";
+        RConnectionManager.eval(command);
+        
+        // rename the gene
+        gene.setName(newName);
+    }
+    
+    public void deleteGene(Gene gene) {
+    	// create and execute the command
+        String command = name + " = delete.gene(" + name + ", '" + gene.getName() + "')";
+        RConnectionManager.eval(command);
+        
+        // delete the gene from the map
+        genes.remove(gene.getName());
+        
+        // reload the events
+        retrieveEvents();
+    }
+    
+    public Collection<Gene> getGenes() {
+    	// order and return the list
+    	List<Gene> genesList = new ArrayList<>(genes.values());
+    	Collections.sort(genesList, new ToStringComparator());
+    	return genesList;
+    }
+    
+    // ************ TYPES ************ \\    
+    public void renameType(Type type, String newName) {
+    	// create and execute the command
+        String command = name + " = rename.type(" + name + ", '" + type.getName() + "', '" + newName + "')";
+        RConnectionManager.eval(command);
+        
+        // rename the type
+        type.setName(newName);
+    }
+    
+    public void deleteType(Type type) {
+    	// create and execute the command
+        String command = name + " = delete.type(" + name + ", '" + type.getName() + "')";
+        RConnectionManager.eval(command);
+        
+        // delete the type from the map
+        types.remove(type.getName());
+        
+        // reload the events
+        retrieveEvents();
+    }
+    
+    public void joinTypes(Type type1, Type type2, String newName) {
+    	// create and execute the command
+        String command = name + " = join.types(" + name + ", '" + type1.getName() + "', '" + type2.getName() + "', new.type='" + newName + "')";
+        RConnectionManager.eval(command);
+        
+        // reload the events
+        retrieveEvents();
+    }
+    
+    public Collection<Type> getTypes() {
+    	// order and return the list
+    	List<Type> typesList = new ArrayList<>(types.values());
+    	Collections.sort(typesList, new ToStringComparator());
+    	return typesList;
+    }
+    
+    // ************ EVENTS ************ \\
+    private void retrieveEvents() {
+    	// initialize the structures
+    	events = new HashSet<>();
+    	types = new HashMap<>();
+    	genes = new HashMap<>();
+    	
+    	// create and execute the commands
+    	String command = "row.names(as.events(" + name + "))";
+        REXP rexp = RConnectionManager.eval(command);
+        String commandAttributes = "as.events(" + name + ")";
+        REXP rexpAttributes = RConnectionManager.eval(commandAttributes);
+        
+        // get the events and its attributes
+        String[] names = rexp.asStringArray();
+        String[] attributes = rexpAttributes.asStringArray();
+        
+        // if the output of R is null
+        if (names == null || attributes == null) {
+        	// return
+			return;
+		}
+        
+        // instantiate the events and add them to the map
+        for (int i = 0; i < names.length; i++) {
+        	// get the name, the type and the gene
+        	String name = names[i];
+        	String typeName = attributes[i];
+        	String geneName = attributes[i + names.length];
+        	
+        	// get the type
+        	Type type;
+        	if (types.containsKey(typeName)) {
+				type = types.get(typeName);
+			} else {
+				type = new Type(typeName);
+				types.put(typeName, type);
+			}
+        	
+        	// get the gene
+        	Gene gene;
+        	if (genes.containsKey(geneName)) {
+        		gene = genes.get(geneName);
+			} else {
+				gene = new Gene(geneName);
+				genes.put(geneName, gene);
+			}
+        	
+        	// add the event
+        	events.add(new Event(name, type, gene));
+        }
+    }
+    
+    public void deleteEvent(Event event) {
+    	// create and execute the command
+        String command = name + " = delete.event(" + name + ", '" + event.getGene().getName() + "', '" + event.getType().getName() + "')";
+        RConnectionManager.eval(command);
+        
+        // reload the events
+        retrieveEvents();
+    }
+    
+    public void joinEvents(Event event1, Event event2, String geneName, String typeName, String colorName) {
+    	// create and execute the command
+    	String command = name + " = join.events(" + name + ", '" + event1.getName() + "', '" + event2.getName() +
+    			"', new.event='" + geneName + "', new.type='" + typeName + "', event.color='" + colorName + "')";
+    	RConnectionManager.eval(command);
+    	
+    	// reload the events
+        retrieveEvents();
+    }
+    
+    public Collection<Event> getEvents() {
+    	// order and return the list
+    	List<Event> eventsList = new ArrayList<>(events);
+    	Collections.sort(eventsList, new Comparator<Event>() {
+			@Override
+			public int compare(Event e1, Event e2) {
+				Integer index1 = Integer.parseInt(e1.getName().substring(1));
+				Integer index2 = Integer.parseInt(e2.getName().substring(1));
+				return index1.compareTo(index2);
+			}
+		});
+    	return eventsList;
+    }
+    
+    // ************ OTHERS ************ \\
+    public String getName() {
+		return name;
+	}
     
     @Override
     public String toString() {
         return name;
+    }
+    
+    private class ToStringComparator implements Comparator<Object> {
+		@Override
+		public int compare(Object o1, Object o2) {
+			return o1.toString().compareTo(o2.toString());
+		}
     }
     
 }

@@ -5,6 +5,7 @@ import javax.swing.DefaultComboBoxModel;
 
 public class JoinTypesFrame extends javax.swing.JFrame {
 
+    private final MainFrame mainFrame;
     private final DatasetController datasetController;
     private final int typeIndex1;
     private final int datasetIndex;
@@ -14,8 +15,9 @@ public class JoinTypesFrame extends javax.swing.JFrame {
     /**
      * Creates new form RenameGeneFrame
      */
-    public JoinTypesFrame(DatasetController datasetController, int typeIndex1, int datasetIndex) {
+    public JoinTypesFrame(MainFrame mainFrame, DatasetController datasetController, int typeIndex1, int datasetIndex) {
         // get the variables
+        this.mainFrame = mainFrame;
         this.datasetController = datasetController;
         this.typeIndex1 = typeIndex1;
         this.datasetIndex = datasetIndex;
@@ -136,6 +138,9 @@ public class JoinTypesFrame extends javax.swing.JFrame {
         // rename the gene
         datasetController.joinTypes(typeIndex1, typeIndex2, datasetIndex, newName);
 
+        // update the main frame
+        mainFrame.updateNumberLabels();
+        
         // close the frame
         dispose();
     }//GEN-LAST:event_joinButtonActionPerformed

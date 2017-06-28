@@ -29,7 +29,6 @@ import org.osgi.framework.BundleContext;
 import it.unimib.disco.bimib.cyTRON.controller.CommandExecutor;
 import it.unimib.disco.bimib.cyTRON.controller.ImportGraphTaskFactory;
 import it.unimib.disco.bimib.cyTRON.controller.MenuAction;
-import it.unimib.disco.bimib.cyTRON.controller.MenuAction3;
 import it.unimib.disco.bimib.cyTRON.controller.SetLayoutPropertiesListener;
 
 public class CyActivator extends AbstractCyActivator {
@@ -68,16 +67,19 @@ public class CyActivator extends AbstractCyActivator {
         CyLayoutAlgorithmManager cyLayoutAlgorithmManager = getService(bundleContext, CyLayoutAlgorithmManager.class);
 
         // Task services
-        TaskManager taskManager = getService(bundleContext, TaskManager.class);
+        @SuppressWarnings("rawtypes")
+		TaskManager taskManager = getService(bundleContext, TaskManager.class);
         CommandExecutorTaskFactory commandExecutorTaskFactory = getService(bundleContext, CommandExecutorTaskFactory.class);
         
         // Command
-        SynchronousTaskManager synchTaskManager = getService(bundleContext, SynchronousTaskManager.class);
+        @SuppressWarnings("rawtypes")
+		SynchronousTaskManager synchTaskManager = getService(bundleContext, SynchronousTaskManager.class);
         AvailableCommands availableCommands = getService(bundleContext, AvailableCommands.class);
         CommandExecutor commandExecutor = new CommandExecutor(commandExecutorTaskFactory, availableCommands, synchTaskManager);
 
         // MenuAction
-        CyApplicationManager cyApplicationManager = getService(bundleContext, CyApplicationManager.class);
+        @SuppressWarnings("unused")
+		CyApplicationManager cyApplicationManager = getService(bundleContext, CyApplicationManager.class);
         //MenuAction3 menuAction = new MenuAction3(cyApplicationManager, commandExecutor, "menuAction");
         
         // Layout properties listener

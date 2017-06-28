@@ -5,6 +5,7 @@ import javax.swing.DefaultComboBoxModel;
 
 public class BindDatasetsFrame extends javax.swing.JFrame {
 
+    private final MainFrame mainFrame;
     private final DatasetController datasetController;
     private final int datasetIndex1;
     private final String bind;
@@ -14,8 +15,9 @@ public class BindDatasetsFrame extends javax.swing.JFrame {
     /**
      * Creates new form RenameGeneFrame
      */
-    public BindDatasetsFrame(DatasetController datasetController, int datasetIndex1, String bind) {
+    public BindDatasetsFrame(MainFrame mainFrame, DatasetController datasetController, int datasetIndex1, String bind) {
         // get the variables
+        this.mainFrame = mainFrame;
         this.datasetController = datasetController;
         this.datasetIndex1 = datasetIndex1;
         this.bind = bind;
@@ -136,6 +138,9 @@ public class BindDatasetsFrame extends javax.swing.JFrame {
         // bind the datasets
         this.datasetController.bind(datasetIndex1, datasetIndex2, newName, this.bind);
        
+        // update the main frame
+        mainFrame.updateNumberLabels();
+        
         // close the frame
         dispose();
     }//GEN-LAST:event_bindButtonActionPerformed

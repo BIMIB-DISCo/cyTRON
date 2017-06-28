@@ -1,6 +1,7 @@
 package it.unimib.disco.bimib.cyTRON.controller;
 
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
+import it.unimib.disco.bimib.cyTRON.model.Event;
 import it.unimib.disco.bimib.cyTRON.model.Gene;
 import it.unimib.disco.bimib.cyTRON.model.Sample;
 import it.unimib.disco.bimib.cyTRON.model.Type;
@@ -23,13 +24,15 @@ public class DatasetController {
     private final DefaultListModel<Dataset> datasetsListModel;
     private final DefaultListModel<Gene> genesListModel;
     private final DefaultListModel<Type> typesListModel;
-    private final DefaultListModel<Sample> sampleListModel;
+    private final DefaultListModel<Sample> samplesListModel;
+    private final DefaultListModel<Event> eventsListModel;
     
     public DatasetController() {
-        datasetsListModel = new DefaultListModel();
-        genesListModel = new DefaultListModel();
-        typesListModel = new DefaultListModel();
-        sampleListModel = new DefaultListModel();
+        datasetsListModel = new DefaultListModel<>();
+        genesListModel = new DefaultListModel<>();
+        typesListModel = new DefaultListModel<>();
+        samplesListModel = new DefaultListModel<>();
+        eventsListModel = new DefaultListModel<>();
     }
     
     // ************ DATASETS ************ \\
@@ -69,10 +72,45 @@ public class DatasetController {
         
         // delete the R object
         dataset.deleteDataset();
+        
+        // clear the lists
+        samplesListModel.clear();
+        genesListModel.clear();
+        typesListModel.clear();
+        eventsListModel.clear();
     }
     
     public void bind(int datasetIndex1, int datasetIndex2, String newName, String bind) {
-    	
+    	// get the datasets
+        Dataset dataset1 = datasetsListModel.get(datasetIndex1);
+        Dataset dataset2 = datasetsListModel.get(datasetIndex2);
+        
+        // execute the bind
+        if (bind.equals(SAMPLES)) {
+			dataset1.bindSamples(dataset2, newName);
+		} else if (bind.equals(EVENTS)) {
+			dataset1.bindEvents(dataset2, newName);
+		}
+        
+        // remove the second dataset form the list model
+        datasetsListModel.remove(datasetIndex2);
+        // TODO: rimuovere il dataset anche da R
+        
+        // update the lists
+        updateLists(datasetIndex1);
+    }
+    
+    // ************ SAMPLES ************ \\
+    public void deleteSample(int sampleIndex, int datasetIndex) {
+        // get the sample and the dataset
+        Sample sample = samplesListModel.get(sampleIndex);
+        Dataset dataset = datasetsListModel.get(datasetIndex);
+        
+        // remove the sample in the dataset
+        dataset.deleteSample(sample);
+        
+        // remove the sample from the list model
+        samplesListModel.remove(sampleIndex);
     }
     
     // ************ GENES ************ \\
@@ -83,7 +121,6 @@ public class DatasetController {
         
         // rename the gene
         dataset.renameGene(gene, newName);
-        // TODO: update other variables
     }
     
     public void deleteGene(int geneIndex, int datasetIndex) {
@@ -94,9 +131,10 @@ public class DatasetController {
         // remove the gene in the dataset
         dataset.deleteGene(gene);
         
-        // remove the gene from the list model
-        genesListModel.remove(geneIndex);
-        // TODO: update other variables
+        // update lists
+        updateGenesList(dataset);
+        updateTypesList(dataset);
+        updateEventsList(dataset);
     }
     
     // ************ TYPES ************ \\
@@ -107,7 +145,6 @@ public class DatasetController {
         
         // rename the gene
         dataset.renameType(type, newName);
-        // TODO: update other variables
     }
     
     public void deleteType(int typeIndex, int datasetIndex) {
@@ -118,9 +155,10 @@ public class DatasetController {
         // remove the type in the dataset
         dataset.deleteType(type);
         
-        // remove the type from the list model
-        typesListModel.remove(typeIndex);
-        // TODO: update other variables
+        // update lists
+        updateGenesList(dataset);
+        updateTypesList(dataset);
+        updateEventsList(dataset);
     }
     
     public void joinTypes(int typeIndex1, int typeIndex2, int datasetIndex, String newName) {
@@ -132,29 +170,49 @@ public class DatasetController {
         // join the types in the dataset
         dataset.joinTypes(type1, type2, newName);
         
-        // remove the second type from the list
-        typesListModel.remove(typeIndex2);
-        // TODO: update other variables
+        // update lists
+        updateGenesList(dataset);
+        updateTypesList(dataset);
+        updateEventsList(dataset);
     }
     
-    // ************ SAMPLES ************ \\
-    public void deleteSample(int sampleIndex, int datasetIndex) {
-        // get the type and the dataset
-        Sample sample = sampleListModel.get(sampleIndex);
+    // ************ EVENTS ************ \\
+    public void deleteEvent(int eventIndex, int datasetIndex) {
+        // get the event and the dataset
+        Event event = eventsListModel.get(eventIndex);
         Dataset dataset = datasetsListModel.get(datasetIndex);
         
-        // remove the type in the dataset
-        dataset.deleteSample(sample);
+        // remove the event in the dataset
+        dataset.deleteEvent(event);
         
-        // remove the type from the list model
-        sampleListModel.remove(sampleIndex);
-        // TODO: update other variables
+        // update lists
+        updateGenesList(dataset);
+        updateTypesList(dataset);
+        updateEventsList(dataset);
+    }
+    
+    public void joinEvents(int eventIndex1, int eventIndex2, int datasetIndex, String geneName, String typeName, String colorName) {
+    	// get the event and the dataset
+        Event event1 = eventsListModel.get(eventIndex1);
+        Event event2 = eventsListModel.get(eventIndex2);
+        Dataset dataset = datasetsListModel.get(datasetIndex);
+        
+        // join the events in the dataset
+        dataset.joinEvents(event1, event2, geneName, typeName, colorName);
+        
+        // update lists
+        updateGenesList(dataset);
+        updateTypesList(dataset);
+        updateEventsList(dataset);
     }
     
     // ************ LIST UPDATES ************ \\
     public void updateLists(int index) {
         // get the dataset
         Dataset dataset = datasetsListModel.get(index);
+        
+        // update samples list
+        updateSamplesList(dataset);
         
         // update genes list
         updateGenesList(dataset);
@@ -163,9 +221,16 @@ public class DatasetController {
         updateTypesList(dataset);
         
         // update samples list
-        updateSamplesList(dataset);
+        updateEventsList(dataset);
     }
  
+    private void updateSamplesList(Dataset dataset) {
+    	samplesListModel.clear();
+        for (Sample sample : dataset.getSamples()) {
+            samplesListModel.addElement(sample);
+        }
+    }
+    
     private void updateGenesList(Dataset dataset) {
     	genesListModel.clear();
         for (Gene gene : dataset.getGenes()) {
@@ -180,28 +245,36 @@ public class DatasetController {
         }
     }
     
-    private void updateSamplesList(Dataset dataset) {
-    	sampleListModel.clear();
-        for (Sample sample : dataset.getSamples()) {
-            sampleListModel.addElement(sample);
+    private void updateEventsList(Dataset dataset) {
+    	eventsListModel.clear();
+        for (Event event : dataset.getEvents()) {
+        	eventsListModel.addElement(event);
         }
     }
     
     // ************ LIST GETTERS ************ \\
-    public DefaultListModel getDatasetsListModel() {
+	@SuppressWarnings("rawtypes")
+	public DefaultListModel getDatasetsListModel() {
         return datasetsListModel;
     }
     
-    public DefaultListModel getGenesListModel() {
+    @SuppressWarnings("rawtypes")
+	public DefaultListModel getGenesListModel() {
         return genesListModel;
     }
     
-    public DefaultListModel getTypesListModel() {
+    @SuppressWarnings("rawtypes")
+	public DefaultListModel getTypesListModel() {
         return typesListModel;
     }
     
-    public DefaultListModel getSampltListModel() {
-        return sampleListModel;
+    @SuppressWarnings("rawtypes")
+	public DefaultListModel getSamplesListModel() {
+        return samplesListModel;
     }
     
+    @SuppressWarnings("rawtypes")
+	public DefaultListModel getEventsListModel() {
+        return eventsListModel;
+    }
 }
