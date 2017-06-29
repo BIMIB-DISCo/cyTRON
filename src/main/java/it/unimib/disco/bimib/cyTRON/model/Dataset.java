@@ -334,6 +334,15 @@ public class Dataset {
         retrieveEvents();
     }
     
+    public void trim() {
+    	// create and execute the command
+        String command = name + " = trim(" + name + ")";
+        RConnectionManager.eval(command);
+        
+        // reload the events
+        retrieveEvents();
+    }
+    
     public Collection<Event> getEvents() {
     	// order and return the list
     	List<Event> eventsList = new ArrayList<>(events);

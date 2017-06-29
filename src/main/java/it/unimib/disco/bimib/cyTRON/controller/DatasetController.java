@@ -258,6 +258,19 @@ public class DatasetController {
         updateEventsList(dataset);
     }
     
+    public void trim(int datasetIndex) {
+    	// get the dataset
+    	Dataset dataset = datasetsListModel.get(datasetIndex);
+    	
+    	// trim the events
+    	dataset.trim();
+    	
+    	// update lists
+        updateGenesList(dataset);
+        updateTypesList(dataset);
+        updateEventsList(dataset);
+    }
+    
     // ************ LIST UPDATES ************ \\
     public void updateLists(int datasetIndex) {
         // get the dataset
