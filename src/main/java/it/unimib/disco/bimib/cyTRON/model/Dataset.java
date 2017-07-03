@@ -357,6 +357,23 @@ public class Dataset {
     	return eventsList;
     }
     
+    // ************ HYPOTHESES AND PATTERNS ************ \\
+    public void addHypothesis() {
+    	
+    }
+    
+    public void addGroupHypothesis() {
+    	
+    }
+    
+    public void addHomologousHypothesis() {
+    	
+    }
+    
+    public void deleteHypothesis() {
+    	
+    }
+    
     // ************ OTHERS ************ \\
     public String getName() {
 		return name;

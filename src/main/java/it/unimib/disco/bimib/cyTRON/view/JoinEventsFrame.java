@@ -23,11 +23,11 @@ public class JoinEventsFrame extends javax.swing.JFrame {
         this.datasetIndex = datasetIndex;
         
         // create the default combo box model from the list of types
-        this.defaultComboBoxModel = new DefaultComboBoxModel();
-        for (Object type : this.datasetController.getEventsListModel().toArray()) {
-            this.defaultComboBoxModel.addElement(type.toString());
+        defaultComboBoxModel = new DefaultComboBoxModel();
+        for (Object type : datasetController.getEventsListModel().toArray()) {
+            defaultComboBoxModel.addElement(type.toString());
         }
-        this.defaultComboBoxModel.removeElementAt(this.eventIndex1);
+        defaultComboBoxModel.removeElementAt(this.eventIndex1);
         
         // draw the interface
         initComponents();
