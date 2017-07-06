@@ -288,6 +288,20 @@ public class DatasetController {
         // update samples list
         updateEventsList(dataset);
     }
+    
+    public void updateLists(Dataset dataset) {
+        // update samples list
+        updateSamplesList(dataset);
+        
+        // update genes list
+        updateGenesList(dataset);
+        
+        // update types list
+        updateTypesList(dataset);
+        
+        // update samples list
+        updateEventsList(dataset);
+    }
  
     private void updateSamplesList(Dataset dataset) {
     	samplesListModel.clear();

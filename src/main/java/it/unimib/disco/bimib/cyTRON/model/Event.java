@@ -30,6 +30,6 @@ public class Event {
 	
     @Override
     public String toString() {
-        return name + " (" + type.toString() + ", " + gene.toString() + ")";
+        return name + " (" + type + ", " + gene + ")";
     }
 }

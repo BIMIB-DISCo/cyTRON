@@ -9,7 +9,10 @@
     <Property name="defaultCloseOperation" type="int" value="2"/>
     <Property name="title" type="java.lang.String" value="Events Selection"/>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[640, 360]"/>
+      <Dimension value="[670, 400]"/>
+    </Property>
+    <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[670, 400]"/>
     </Property>
   </Properties>
   <SyntheticProperties>
@@ -57,30 +60,25 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="selectedEventsLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="filteredEventsScrollPane" alignment="0" min="-2" pref="527" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="selectedEventsScrollPane" alignment="0" min="-2" pref="527" max="-2" attributes="0"/>
-                                      <Component id="ctrlLabel1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="ctrlLabel2" min="-2" pref="209" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                      </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           <Component id="selectButton" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="selectedEventsLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="filteredEventsScrollPane" alignment="0" min="-2" pref="527" max="-2" attributes="0"/>
+                                      <Component id="selectedEventsScrollPane" alignment="0" min="-2" pref="527" max="-2" attributes="0"/>
+                                      <Component id="ctrlLabel1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="ctrlLabel2" min="-2" pref="209" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                               <Component id="selectionLabel" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="frequenceLabel" min="-2" max="-2" attributes="0"/>
