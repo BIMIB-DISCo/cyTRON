@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unimib.disco.bimib.cyTRON.view;
 
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
@@ -44,9 +39,12 @@ public class HypothesesPanel extends javax.swing.JPanel {
         patternsScrollPane = new javax.swing.JScrollPane();
         patternsList = new javax.swing.JList<>();
         deletePatternButton = new javax.swing.JButton();
+        addGroupButton = new javax.swing.JButton();
+        addHomologousButton = new javax.swing.JButton();
         hypothesesPanel = new javax.swing.JPanel();
         hypothesesScrollPane = new javax.swing.JScrollPane();
         hypothesesList = new javax.swing.JList<>();
+        deleteHypothesisButton = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(941, 662));
         setPreferredSize(new java.awt.Dimension(941, 662));
@@ -92,7 +90,9 @@ public class HypothesesPanel extends javax.swing.JPanel {
             }
         });
 
-        patternsList.setModel(hypothesesController.getPatternsListModel());
+        try {
+        	patternsList.setModel(hypothesesController.getPatternsListModel());
+        } catch (Exception e) {}
         patternsList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 patternsListValueChanged(evt);
@@ -107,6 +107,20 @@ public class HypothesesPanel extends javax.swing.JPanel {
             }
         });
 
+        addGroupButton.setText("Add group...");
+        addGroupButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addGroupButtonActionPerformed(evt);
+            }
+        });
+
+        addHomologousButton.setText("Add homologous...");
+        addHomologousButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addHomologousButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout patternsPanelLayout = new javax.swing.GroupLayout(patternsPanel);
         patternsPanel.setLayout(patternsPanelLayout);
         patternsPanelLayout.setHorizontalGroup(
@@ -118,13 +132,22 @@ public class HypothesesPanel extends javax.swing.JPanel {
                     .addGroup(patternsPanelLayout.createSequentialGroup()
                         .addComponent(addPatternButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(deletePatternButton)))
+                        .addComponent(deletePatternButton))
+                    .addGroup(patternsPanelLayout.createSequentialGroup()
+                        .addGroup(patternsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(addGroupButton)
+                            .addComponent(addHomologousButton))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         patternsPanelLayout.setVerticalGroup(
             patternsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, patternsPanelLayout.createSequentialGroup()
-                .addComponent(patternsScrollPane)
+                .addComponent(patternsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(addHomologousButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(addGroupButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(patternsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addPatternButton)
@@ -134,8 +157,12 @@ public class HypothesesPanel extends javax.swing.JPanel {
 
         hypothesesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Hypotheses"));
 
-        hypothesesList.setModel(hypothesesController.getHypothesesListModel());
+        try {
+        	hypothesesList.setModel(hypothesesController.getHypothesesListModel());
+        } catch (Exception e) {}
         hypothesesScrollPane.setViewportView(hypothesesList);
+
+        deleteHypothesisButton.setText("Delete");
 
         javax.swing.GroupLayout hypothesesPanelLayout = new javax.swing.GroupLayout(hypothesesPanel);
         hypothesesPanel.setLayout(hypothesesPanelLayout);
@@ -143,14 +170,20 @@ public class HypothesesPanel extends javax.swing.JPanel {
             hypothesesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(hypothesesPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(hypothesesScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
+                .addGroup(hypothesesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(hypothesesScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, hypothesesPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(deleteHypothesisButton)))
                 .addContainerGap())
         );
         hypothesesPanelLayout.setVerticalGroup(
             hypothesesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(hypothesesPanelLayout.createSequentialGroup()
-                .addComponent(hypothesesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 143, Short.MAX_VALUE))
+                .addComponent(hypothesesScrollPane)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(deleteHypothesisButton)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -199,6 +232,18 @@ public class HypothesesPanel extends javax.swing.JPanel {
         hypothesesNumberLabel.setText("");
     }//GEN-LAST:event_deletePatternButtonActionPerformed
 
+    private void addGroupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addGroupButtonActionPerformed
+        AddGroupHypothesisFrame addGroupHypothesisFrame = new AddGroupHypothesisFrame(hypothesesController, datasetController, mainFrame, this);
+        addGroupHypothesisFrame.setLocationRelativeTo(null);
+	addGroupHypothesisFrame.setVisible(true);
+    }//GEN-LAST:event_addGroupButtonActionPerformed
+
+    private void addHomologousButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addHomologousButtonActionPerformed
+        AddHomologousHypothesisFrame addHomologousHypothesisFrame = new AddHomologousHypothesisFrame(hypothesesController, datasetController, mainFrame, this);
+        addHomologousHypothesisFrame.setLocationRelativeTo(null);
+	addHomologousHypothesisFrame.setVisible(true);
+    }//GEN-LAST:event_addHomologousButtonActionPerformed
+
     private void patternsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_patternsListValueChanged
         hypothesesController.updateHypothesesList(patternsList.getSelectedIndex());
         hypothesesNumberLabel.setText(String.valueOf(hypothesesController.getHypothesesListModel().size()));
@@ -223,7 +268,10 @@ public class HypothesesPanel extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addGroupButton;
+    private javax.swing.JButton addHomologousButton;
     private javax.swing.JButton addPatternButton;
+    private javax.swing.JButton deleteHypothesisButton;
     private javax.swing.JButton deletePatternButton;
     private javax.swing.JLabel hypothesesLabel;
     private javax.swing.JList<String> hypothesesList;

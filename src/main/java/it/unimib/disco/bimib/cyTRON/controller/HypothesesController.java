@@ -14,6 +14,8 @@ import javax.swing.tree.DefaultTreeModel;
 
 public class HypothesesController {
 	
+	public static final String[] OPERATIONS = new String[]{"AND", "OR", "XOR"};
+	
 	private DefaultTreeModel patternTreeModel;
 	private final DefaultListModel<Pattern> patternsListModel;
 	private final DefaultListModel<Hypothesis> hypothesesListModel;
@@ -61,12 +63,26 @@ public class HypothesesController {
     	datasetController.updateLists(dataset);
     }
     
-    public void addGroupHypothesis() {
+    public void addGroupHypothesis(Dataset dataset, String operation, List<Gene> genes, List<Event> effect, List<Event> cause, String minimumCardinality, String maximumCardinality, String minimumProbability, DatasetController datasetController) {
+    	// add the group
+    	dataset.addGroupHypothesis(operation, genes, effect, cause, minimumCardinality, maximumCardinality, minimumProbability);
     	
+    	// update the pattern list
+    	updatePatternsList(dataset);
+    	
+    	// update the lists of events and types
+    	datasetController.updateLists(dataset);
     }
     
-    public void addHomologousHypothesis() {
+    public void addHomologousHypothesis(Dataset dataset, List<Event> effect, List<Event> cause, List<Gene> genes, String operation, DatasetController datasetController) {
+    	// add the homologous
+    	dataset.addHomologousHypothesis(effect, cause, genes, operation);
     	
+    	// update the pattern list
+    	updatePatternsList(dataset);
+    	
+    	// update the lists of events and types
+    	datasetController.updateLists(dataset);
     }
     
     public void deletePattern(Dataset dataset, int patternIndex, DatasetController datasetController) {
@@ -123,20 +139,18 @@ public class HypothesesController {
     public void updateHypothesesList(int patternIndex) {
     	hypothesesListModel.clear();
     	if (patternIndex != -1) {
-    		for (Hypothesis hypothesis : patternsListModel.get(patternIndex).getHypotheses()) {
-        		hypothesesListModel.addElement(hypothesis);
-        	}
-		}
+            for (Hypothesis hypothesis : patternsListModel.get(patternIndex).getHypotheses()) {
+        	hypothesesListModel.addElement(hypothesis);
+            }
+	}
     }
     
     // ************ LIST GETTERS ************ \\
-    @SuppressWarnings("rawtypes")
-	public DefaultListModel getPatternsListModel() {
+    public DefaultListModel getPatternsListModel() {
         return patternsListModel;
     }
     
-    @SuppressWarnings("rawtypes")
-	public DefaultListModel getHypothesesListModel() {
+    public DefaultListModel getHypothesesListModel() {
         return hypothesesListModel;
     }
 }

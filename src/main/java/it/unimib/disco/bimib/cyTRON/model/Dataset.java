@@ -443,7 +443,7 @@ public class Dataset {
         	command += ", pattern.effect=list(" + getStringOfEvents(effect) + ")";
 		}
         if (cause.size() > 0) {
-        	command += ", pattern.effect=list(" + getStringOfEvents(cause) + ")";
+        	command += ", pattern.cause=list(" + getStringOfEvents(cause) + ")";
 		}		
         command += ")";
         RConnectionManager.eval(command);
@@ -462,12 +462,50 @@ public class Dataset {
         retrievePatterns();
     }
     
-    public void addGroupHypothesis() {
-    	
+    public void addGroupHypothesis(String operation, List<Gene> genes, List<Event> effect, List<Event> cause, String minimumCardinality, String maximumCardinality, String minimumProbability) {
+    	// create and execute the command
+        String command = name + " = hypothesis.add.group(" + name + ", " + operation + ", list(" + getStringOfGenes(genes) + ")";
+        if (effect.size() > 0) {
+        	command += ", pattern.effect=list(" + getStringOfEvents(effect) + ")";
+		}
+        if (cause.size() > 0) {
+        	command += ", pattern.cause=list(" + getStringOfEvents(cause) + ")";
+		}
+        if (minimumCardinality.length() > 0) {
+        	command += ", dim.min=" + minimumCardinality;
+		}
+        if (maximumCardinality.length() > 0) {
+        	command += ", dim.max=" + maximumCardinality;
+		}
+        if (minimumProbability.length() > 0) {
+        	command += ", min.prob=" + minimumProbability;
+		}
+        command += ", silent=TRUE)";
+        RConnectionManager.eval(command);
+        
+        // update the patterns and the events 
+        retrieveEvents();
+        retrievePatterns();
     }
     
-    public void addHomologousHypothesis() {
-    	
+    public void addHomologousHypothesis(List<Event> effect, List<Event> cause, List<Gene> genes, String operation) {
+    	// create and execute the command
+        String command = name + " = hypothesis.add.homologous(" + name;
+        if (effect.size() > 0) {
+        	command += ", pattern.effect=list(" + getStringOfEvents(effect) + ")";
+		}
+        if (cause.size() > 0) {
+        	command += ", pattern.cause=list(" + getStringOfEvents(cause) + ")";
+		}
+        if (genes.size() > 0) {
+        	command += ", genes=list(" + getStringOfGenes(genes) + ")";
+		}
+        command += ", FUN=" + operation + ", silent=TRUE)";
+        RConnectionManager.eval(command);
+        
+        // update the patterns and the events 
+        retrieveEvents();
+        retrievePatterns();
     }
     
     public void deletePattern(Pattern pattern) {
@@ -507,6 +545,18 @@ public class Dataset {
 			if (iterator.hasNext()) {
 				string += ", ";
         	}
+		}
+    	return string;
+    }
+    
+    private String getStringOfGenes(List<Gene> genes) {
+    	String string = "";
+    	for (Iterator<Gene> iterator = genes.iterator(); iterator.hasNext();) {
+			Gene gene = (Gene) iterator.next();
+			string += "'" + gene.getName() + "'"; 
+			if (iterator.hasNext()) {
+				string += ", ";
+		    }
 		}
     	return string;
     }

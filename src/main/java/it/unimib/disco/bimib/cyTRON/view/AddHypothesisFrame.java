@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unimib.disco.bimib.cyTRON.view;
 
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
@@ -41,7 +36,7 @@ public class AddHypothesisFrame extends javax.swing.JFrame {
         defaultTreeCellRenderer.setClosedIcon(null);
         
         // create the default combo box models
-        operationsDefaultComboBoxModel = new DefaultComboBoxModel(new String[]{"AND", "OR", "XOR"});
+        operationsDefaultComboBoxModel = new DefaultComboBoxModel(HypothesesController.OPERATIONS);
         genesDefaultComboBoxModel = new DefaultComboBoxModel(datasetController.getGenesListModel().toArray());
         eventsDefaultComboBoxModel = new DefaultComboBoxModel(datasetController.getEventsListModel().toArray());
         

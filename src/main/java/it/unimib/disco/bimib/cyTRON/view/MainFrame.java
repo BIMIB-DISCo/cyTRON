@@ -53,7 +53,7 @@ public class MainFrame extends javax.swing.JFrame {
         genesNumberLabel = new javax.swing.JLabel();
         eventsNumberLabel = new javax.swing.JLabel();
         samplesNumberLabel = new javax.swing.JLabel();
-        hypothesesPanel = new HypothesesPanel(datasetController, this) ;
+        hypothesesPanel = new HypothesesPanel(datasetController, this);
         externalToolsPanel = new javax.swing.JPanel();
         visualizationPanel = new javax.swing.JPanel();
         inferencePanel = new javax.swing.JPanel();
