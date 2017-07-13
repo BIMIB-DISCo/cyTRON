@@ -90,9 +90,7 @@ public class HypothesesPanel extends javax.swing.JPanel {
             }
         });
 
-        try {
-        	patternsList.setModel(hypothesesController.getPatternsListModel());
-        } catch (Exception e) {}
+        patternsList.setModel(hypothesesController.getPatternsListModel());
         patternsList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 patternsListValueChanged(evt);
@@ -157,12 +155,15 @@ public class HypothesesPanel extends javax.swing.JPanel {
 
         hypothesesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Hypotheses"));
 
-        try {
-        	hypothesesList.setModel(hypothesesController.getHypothesesListModel());
-        } catch (Exception e) {}
+        hypothesesList.setModel(hypothesesController.getHypothesesListModel());
         hypothesesScrollPane.setViewportView(hypothesesList);
 
-        deleteHypothesisButton.setText("Delete");
+        deleteHypothesisButton.setText("Delete...");
+        deleteHypothesisButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteHypothesisButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout hypothesesPanelLayout = new javax.swing.GroupLayout(hypothesesPanel);
         hypothesesPanel.setLayout(hypothesesPanelLayout);
@@ -248,6 +249,12 @@ public class HypothesesPanel extends javax.swing.JPanel {
         hypothesesController.updateHypothesesList(patternsList.getSelectedIndex());
         hypothesesNumberLabel.setText(String.valueOf(hypothesesController.getHypothesesListModel().size()));
     }//GEN-LAST:event_patternsListValueChanged
+
+    private void deleteHypothesisButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteHypothesisButtonActionPerformed
+        DeleteHypothesesFrame deleteHypothesesFrame = new DeleteHypothesesFrame(hypothesesController, datasetController, mainFrame, this);
+        deleteHypothesesFrame.setLocationRelativeTo(null);
+	deleteHypothesesFrame.setVisible(true);
+    }//GEN-LAST:event_deleteHypothesisButtonActionPerformed
 
     // ************ OTHERS ************ \\
     public void updatePatternsNumberLabel() {

@@ -23,7 +23,7 @@ public class AddHypothesisFrame extends javax.swing.JFrame {
     private final DefaultComboBoxModel<Event> eventsDefaultComboBoxModel;
     
     public AddHypothesisFrame(HypothesesController hypothesesController, DatasetController datasetController, MainFrame mainFrame, HypothesesPanel hypothesesPanel) {
-        // instantiate the controllers and the dataset index
+        // instantiate the controllers
         this.hypothesesController = hypothesesController;
         this.datasetController = datasetController;
         this.mainFrame = mainFrame;

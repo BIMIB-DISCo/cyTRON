@@ -161,7 +161,7 @@ public class ImportDatasetFrame extends javax.swing.JFrame {
         String path = pathTextField.getText();
         
         if (genotypesRadioButton.isSelected()) {
-            datasetController.importDataset(name, path,DatasetController.GENOTYPES);
+            datasetController.importDataset(name, path, DatasetController.GENOTYPES);
         } else if (gisticRadioButton.isSelected()) {
             datasetController.importDataset(name, path, DatasetController.GISTIC);
         } else if (mafRadioButton.isSelected()) {
