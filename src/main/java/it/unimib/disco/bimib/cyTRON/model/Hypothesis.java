@@ -14,6 +14,14 @@ public class Hypothesis {
 		this.effectEvent = effectEvent;
 	}
 	
+	public Object getCauseEvent() {
+		return causeEvent;
+	}
+
+	public Object getEffectEvent() {
+		return effectEvent;
+	}
+	
 	@Override
 	public String toString() {
 		return "(" + causeType + ", " + causeEvent + ") --> (" + effectType + ", " + effectEvent + ")";

@@ -73,12 +73,12 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="effectRadioButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="causeRadioButton" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="bothRadioButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="307" max="32767" attributes="0"/>
+                                  <Component id="effectRadioButton" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="eventRadioButton" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="157" max="32767" attributes="0"/>
                               </Group>
                               <Component id="eventComboBox" max="32767" attributes="0"/>
                           </Group>
@@ -96,9 +96,9 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="deletionLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="effectRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="causeRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="bothRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="effectRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="eventRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -131,29 +131,35 @@
             <Property name="text" type="java.lang.String" value="Deletion:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="effectRadioButton">
-          <Properties>
-            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-              <ComponentRef name="typeButtonGroup"/>
-            </Property>
-            <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" value="Effect"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JRadioButton" name="causeRadioButton">
           <Properties>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="typeButtonGroup"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Cause"/>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="CAUSE" type="code"/>
+            </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="bothRadioButton">
+        <Component class="javax.swing.JRadioButton" name="effectRadioButton">
           <Properties>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="typeButtonGroup"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Both"/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="EFFECT" type="code"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="eventRadioButton">
+          <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="typeButtonGroup"/>
+            </Property>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="EVENT" type="code"/>
+            </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="deleteButton">

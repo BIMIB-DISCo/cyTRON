@@ -99,8 +99,12 @@ public class HypothesesController {
     	datasetController.updateLists(dataset);
     }
     
-    public void deleteHypothesis() {
+    public void deleteHypothesis(Dataset dataset, String deletion, Object event, int patternIndex) {
+    	// delete the hypotheses from the dataset
+    	dataset.deleteHypothesis(deletion, event);
     	
+    	// update the hypotheses list
+    	updateHypothesesList(patternIndex);
     }
     
     // ************ OTHERS ************ \\
@@ -142,7 +146,7 @@ public class HypothesesController {
             for (Hypothesis hypothesis : patternsListModel.get(patternIndex).getHypotheses()) {
         	hypothesesListModel.addElement(hypothesis);
             }
-	}
+    	}
     }
     
     // ************ LIST GETTERS ************ \\

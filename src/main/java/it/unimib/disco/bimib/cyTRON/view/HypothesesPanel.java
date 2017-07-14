@@ -247,7 +247,7 @@ public class HypothesesPanel extends javax.swing.JPanel {
 
     private void patternsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_patternsListValueChanged
         hypothesesController.updateHypothesesList(patternsList.getSelectedIndex());
-        hypothesesNumberLabel.setText(String.valueOf(hypothesesController.getHypothesesListModel().size()));
+        updateHypothesesNumberLabel();
     }//GEN-LAST:event_patternsListValueChanged
 
     private void deleteHypothesisButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteHypothesisButtonActionPerformed
@@ -261,6 +261,10 @@ public class HypothesesPanel extends javax.swing.JPanel {
         patternsNumberLabel.setText(String.valueOf(hypothesesController.getPatternsListModel().size()));
     }
     
+    public void updateHypothesesNumberLabel() {
+    	hypothesesNumberLabel.setText(String.valueOf(hypothesesController.getHypothesesListModel().size()));
+    }
+    
     public void updateSelectedDataset(int datasetIndex) {
         // get the dataset
         Dataset dataset = (Dataset) datasetController.getDatasetsListModel().get(mainFrame.getDatasetSelectedIndex());
@@ -272,6 +276,10 @@ public class HypothesesPanel extends javax.swing.JPanel {
         // update the number labels
         updatePatternsNumberLabel();
         hypothesesNumberLabel.setText("");
+    }
+    
+    public int getPatternsSelectedIndex() {
+        return patternsList.getSelectedIndex();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

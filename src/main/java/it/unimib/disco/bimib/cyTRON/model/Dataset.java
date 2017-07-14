@@ -5,6 +5,7 @@ import org.rosuda.JRI.REXP;
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.controller.ToStringComparator;
 import it.unimib.disco.bimib.cyTRON.model.R.RConnectionManager;
+import it.unimib.disco.bimib.cyTRON.view.DeleteHypothesesFrame;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -525,8 +526,31 @@ public class Dataset {
 		}
     }
     
-    public void deleteHypothesis() {
-
+    public void deleteHypothesis(String deletion, Object event) {
+    	// get the name of the event
+    	String eventName;
+    	if (event instanceof Gene) {
+			eventName = ((Gene) event).getName();
+		} else {
+			eventName = ((Pattern) event).getLabel();
+		}
+    	
+    	// create and execute the command
+    	String command = name + " = delete.hypothesis(" + name + ", " + deletion.toLowerCase() + "='" + eventName + "')";
+        RConnectionManager.eval(command);
+    	
+        // update the list of hypothesis    
+    	for (Pattern pattern : patterns.values()) {
+    		for (Hypothesis hypothesis : pattern.getHypotheses()) {
+    			// if one of the three condition holds (depending on the type of deletion)
+    			if ((deletion.equals(DeleteHypothesesFrame.CAUSE) && event.equals(hypothesis.getCauseEvent())) ||
+    					(deletion.equals(DeleteHypothesesFrame.EFFECT) && event.equals(hypothesis.getEffectEvent())) ||
+    					(deletion.equals(DeleteHypothesesFrame.EVENT) && (event.equals(hypothesis.getCauseEvent()) || event.equals(hypothesis.getEffectEvent())))) {
+    				// delete the hypothesis
+    				pattern.deleteHypothesis(hypothesis);
+    			}
+			}
+		}
     }
     
     public Collection<Pattern> getPatterns() {

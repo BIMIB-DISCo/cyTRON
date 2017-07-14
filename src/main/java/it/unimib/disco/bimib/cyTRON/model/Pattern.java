@@ -23,6 +23,10 @@ public class Pattern {
 		hypotheses.add(hypothesis);
 	}
 	
+	public void deleteHypothesis(Hypothesis hypothesis) {
+		hypotheses.remove(hypothesis);
+	}
+	
 	public Collection<Hypothesis> getHypotheses() {
 		// order and return the list
     	List<Hypothesis> hypothesesList = new ArrayList<>(hypotheses);

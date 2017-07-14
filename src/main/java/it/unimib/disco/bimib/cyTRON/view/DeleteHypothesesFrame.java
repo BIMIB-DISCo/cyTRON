@@ -2,10 +2,15 @@ package it.unimib.disco.bimib.cyTRON.view;
 
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.controller.HypothesesController;
+import it.unimib.disco.bimib.cyTRON.model.Dataset;
 import javax.swing.DefaultComboBoxModel;
 
 public class DeleteHypothesesFrame extends javax.swing.JFrame {
 
+    public static final String EFFECT = "Effect";
+    public static final String CAUSE = "Cause";
+    public static final String EVENT = "Event";
+    
     private final HypothesesController hypothesesController;
     private final DatasetController datasetController;
     private final MainFrame mainFrame;
@@ -39,9 +44,9 @@ public class DeleteHypothesesFrame extends javax.swing.JFrame {
         deleteLabel = new javax.swing.JLabel();
         eventLabel = new javax.swing.JLabel();
         deletionLabel = new javax.swing.JLabel();
-        effectRadioButton = new javax.swing.JRadioButton();
         causeRadioButton = new javax.swing.JRadioButton();
-        bothRadioButton = new javax.swing.JRadioButton();
+        effectRadioButton = new javax.swing.JRadioButton();
+        eventRadioButton = new javax.swing.JRadioButton();
         deleteButton = new javax.swing.JButton();
         eventComboBox = new javax.swing.JComboBox<>();
 
@@ -56,15 +61,15 @@ public class DeleteHypothesesFrame extends javax.swing.JFrame {
 
         deletionLabel.setText("Deletion:");
 
-        typeButtonGroup.add(effectRadioButton);
-        effectRadioButton.setSelected(true);
-        effectRadioButton.setText("Effect");
-
         typeButtonGroup.add(causeRadioButton);
-        causeRadioButton.setText("Cause");
+        causeRadioButton.setSelected(true);
+        causeRadioButton.setText(CAUSE);
 
-        typeButtonGroup.add(bothRadioButton);
-        bothRadioButton.setText("Both");
+        typeButtonGroup.add(effectRadioButton);
+        effectRadioButton.setText(EFFECT);
+
+        typeButtonGroup.add(eventRadioButton);
+        eventRadioButton.setText(EVENT);
 
         deleteButton.setText("Delete");
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
@@ -95,12 +100,12 @@ public class DeleteHypothesesFrame extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelLayout.createSequentialGroup()
-                                .addComponent(effectRadioButton)
-                                .addGap(18, 18, 18)
                                 .addComponent(causeRadioButton)
                                 .addGap(18, 18, 18)
-                                .addComponent(bothRadioButton)
-                                .addGap(0, 307, Short.MAX_VALUE))
+                                .addComponent(effectRadioButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(eventRadioButton)
+                                .addGap(0, 157, Short.MAX_VALUE))
                             .addComponent(eventComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
@@ -112,9 +117,9 @@ public class DeleteHypothesesFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(deletionLabel)
-                    .addComponent(effectRadioButton)
                     .addComponent(causeRadioButton)
-                    .addComponent(bothRadioButton))
+                    .addComponent(effectRadioButton)
+                    .addComponent(eventRadioButton))
                 .addGap(14, 14, 14)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(eventLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -145,22 +150,27 @@ public class DeleteHypothesesFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        
-        
-        
-        if (effectRadioButton.isSelected()) {
-            // datasetController.importDataset(name, path,DatasetController.GENOTYPES);
-        } else if (bothRadioButton.isSelected()) {
-            // datasetController.importDataset(name, path, DatasetController.GISTIC);
-        } else if (causeRadioButton.isSelected()) {
-            // datasetController.importDataset(name, path, DatasetController.MAF);
+        // get the event and the dataset
+        Object event = eventComboBox.getSelectedItem();
+        Dataset dataset = (Dataset) datasetController.getDatasetsListModel().get(mainFrame.getDatasetSelectedIndex());
+                
+        // delete the hypothesis
+        if (causeRadioButton.isSelected()) {
+            hypothesesController.deleteHypothesis(dataset, CAUSE, event, hypothesesPanel.getPatternsSelectedIndex());
+        } else if (effectRadioButton.isSelected()) {
+            hypothesesController.deleteHypothesis(dataset, EFFECT, event, hypothesesPanel.getPatternsSelectedIndex());
+        } else if (eventRadioButton.isSelected()) {
+            hypothesesController.deleteHypothesis(dataset, EVENT, event, hypothesesPanel.getPatternsSelectedIndex());
         }
         
+        // update the number of patterns and hypotheses
+        hypothesesPanel.updateHypothesesNumberLabel();
+        
+        // close the frame
         dispose();
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JRadioButton bothRadioButton;
     private javax.swing.JRadioButton causeRadioButton;
     private javax.swing.JButton deleteButton;
     private javax.swing.JLabel deleteLabel;
@@ -168,6 +178,7 @@ public class DeleteHypothesesFrame extends javax.swing.JFrame {
     private javax.swing.JRadioButton effectRadioButton;
     private javax.swing.JComboBox<Object> eventComboBox;
     private javax.swing.JLabel eventLabel;
+    private javax.swing.JRadioButton eventRadioButton;
     private javax.swing.JPanel panel;
     private javax.swing.ButtonGroup typeButtonGroup;
     // End of variables declaration//GEN-END:variables
