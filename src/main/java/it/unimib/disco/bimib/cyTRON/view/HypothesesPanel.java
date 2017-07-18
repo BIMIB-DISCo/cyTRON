@@ -1,5 +1,7 @@
 package it.unimib.disco.bimib.cyTRON.view;
 
+import javax.swing.DefaultComboBoxModel;
+
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.controller.HypothesesController;
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
@@ -11,6 +13,11 @@ public class HypothesesPanel extends javax.swing.JPanel {
     private MainFrame mainFrame;
     
     public HypothesesPanel() {
+    	// instantiate empty variables
+    	hypothesesController = new HypothesesController();
+    	datasetController = new DatasetController();
+    	mainFrame = new MainFrame();
+    	
         // draws the interface
         initComponents();
     }
@@ -46,8 +53,8 @@ public class HypothesesPanel extends javax.swing.JPanel {
         hypothesesList = new javax.swing.JList<>();
         deleteHypothesisButton = new javax.swing.JButton();
 
-        setMinimumSize(new java.awt.Dimension(941, 662));
-        setPreferredSize(new java.awt.Dimension(941, 662));
+        setMinimumSize(new java.awt.Dimension(940, 660));
+        setPreferredSize(new java.awt.Dimension(940, 660));
 
         infoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Info"));
 
@@ -91,6 +98,7 @@ public class HypothesesPanel extends javax.swing.JPanel {
         });
 
         patternsList.setModel(hypothesesController.getPatternsListModel());
+		
         patternsList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 patternsListValueChanged(evt);
@@ -141,7 +149,7 @@ public class HypothesesPanel extends javax.swing.JPanel {
         patternsPanelLayout.setVerticalGroup(
             patternsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, patternsPanelLayout.createSequentialGroup()
-                .addComponent(patternsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
+                .addComponent(patternsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(addHomologousButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -156,6 +164,7 @@ public class HypothesesPanel extends javax.swing.JPanel {
         hypothesesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Hypotheses"));
 
         hypothesesList.setModel(hypothesesController.getHypothesesListModel());
+
         hypothesesScrollPane.setViewportView(hypothesesList);
 
         deleteHypothesisButton.setText("Delete...");
@@ -172,7 +181,7 @@ public class HypothesesPanel extends javax.swing.JPanel {
             .addGroup(hypothesesPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(hypothesesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(hypothesesScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
+                    .addComponent(hypothesesScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, hypothesesPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(deleteHypothesisButton)))

@@ -53,8 +53,6 @@ public class MainFrame extends javax.swing.JFrame {
         genesNumberLabel = new javax.swing.JLabel();
         eventsNumberLabel = new javax.swing.JLabel();
         samplesNumberLabel = new javax.swing.JLabel();
-        hypothesesPanel = new HypothesesPanel(datasetController, this);
-        externalToolsPanel = new javax.swing.JPanel();
         visualizationPanel = new javax.swing.JPanel();
         inferencePanel = new javax.swing.JPanel();
         datasetsPanelList = new javax.swing.JPanel();
@@ -391,20 +389,6 @@ public class MainFrame extends javax.swing.JFrame {
         );
 
         tabbedPane.addTab("Edit", editPanel);
-        tabbedPane.addTab("Hypotheses", hypothesesPanel);
-
-        javax.swing.GroupLayout externalToolsPanelLayout = new javax.swing.GroupLayout(externalToolsPanel);
-        externalToolsPanel.setLayout(externalToolsPanelLayout);
-        externalToolsPanelLayout.setHorizontalGroup(
-            externalToolsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 941, Short.MAX_VALUE)
-        );
-        externalToolsPanelLayout.setVerticalGroup(
-            externalToolsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 662, Short.MAX_VALUE)
-        );
-
-        tabbedPane.addTab("External Tools", externalToolsPanel);
 
         javax.swing.GroupLayout visualizationPanelLayout = new javax.swing.GroupLayout(visualizationPanel);
         visualizationPanel.setLayout(visualizationPanelLayout);
@@ -645,7 +629,7 @@ public class MainFrame extends javax.swing.JFrame {
         updateNumberLabels();
         
         // update the hypotheses panel
-        hypothesesPanel.updateSelectedDataset(datasetsList.getSelectedIndex());
+        // hypothesesPanel.updateSelectedDataset(datasetsList.getSelectedIndex());
     }//GEN-LAST:event_datasetsListValueChanged
 
     private void samplesSelectionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_samplesSelectionButtonActionPerformed
@@ -702,13 +686,11 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel eventsPanelList;
     private javax.swing.JScrollPane eventsScrollPane;
     private javax.swing.JButton eventsSelectionButton;
-    private javax.swing.JPanel externalToolsPanel;
     private javax.swing.JLabel genesLabel;
     private javax.swing.JList<String> genesList;
     private javax.swing.JLabel genesNumberLabel;
     private javax.swing.JPanel genesPanelList;
     private javax.swing.JScrollPane genesScrollPane;
-    private it.unimib.disco.bimib.cyTRON.view.HypothesesPanel hypothesesPanel;
     private javax.swing.JButton importDatasetButton;
     private javax.swing.JPanel inferencePanel;
     private javax.swing.JPanel infoPanel;

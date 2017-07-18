@@ -20,11 +20,11 @@ public class JoinTypesFrame extends javax.swing.JFrame {
         this.datasetIndex = datasetIndex;
         
         // create the default combo box model from the list of types
-        this.defaultComboBoxModel = new DefaultComboBoxModel();
+        defaultComboBoxModel = new DefaultComboBoxModel();
         for (Object type : this.datasetController.getTypesListModel().toArray()) {
-            this.defaultComboBoxModel.addElement(type.toString());
+            defaultComboBoxModel.addElement(type.toString());
         }
-        this.defaultComboBoxModel.removeElementAt(this.typeIndex1);
+        defaultComboBoxModel.removeElementAt(this.typeIndex1);
         
         // draw the interface
         initComponents();
