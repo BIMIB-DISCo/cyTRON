@@ -1,6 +1,8 @@
 package it.unimib.disco.bimib.cyTRON.view;
 
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
+import it.unimib.disco.bimib.cyTRON.model.Dataset;
+import it.unimib.disco.bimib.cyTRON.model.Gene;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -12,6 +14,7 @@ public class MainFrame extends javax.swing.JFrame {
         
         // draws the interface
         initComponents();
+        initCustomComponents();
     }
     
     @SuppressWarnings("unchecked")
@@ -527,6 +530,14 @@ public class MainFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
+    private void initCustomComponents() {
+    	hypothesesPanel = new HypothesesPanel(datasetController, this);
+    	externalToolsPanel = new ExternalToolsPanel(datasetController, this);
+    	
+    	tabbedPane.addTab("Hypotheses", hypothesesPanel);
+    	tabbedPane.addTab("External Tools", externalToolsPanel);
+    }
+    
     // ************ DATASETS ************ \\
     private void importDatasetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importDatasetButtonActionPerformed
         ImportDatasetFrame importDatasetFrame = new ImportDatasetFrame(datasetController);
@@ -628,8 +639,10 @@ public class MainFrame extends javax.swing.JFrame {
         // update the number labels
         updateNumberLabels();
         
-        // update the hypotheses panel
-        // hypothesesPanel.updateSelectedDataset(datasetsList.getSelectedIndex());
+        // update the other panels
+        hypothesesPanel.updateSelectedDataset(datasetsList.getSelectedIndex());
+        externalToolsPanel.updateSelectedDataset();
+        
     }//GEN-LAST:event_datasetsListValueChanged
 
     private void samplesSelectionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_samplesSelectionButtonActionPerformed
@@ -663,8 +676,8 @@ public class MainFrame extends javax.swing.JFrame {
         samplesNumberLabel.setText("");
     }
     
-    public int getDatasetSelectedIndex() {
-        return datasetsList.getSelectedIndex();
+    public Dataset getSelectedDataset() {
+    	return (Dataset) datasetController.getDatasetsListModel().get(datasetsList.getSelectedIndex());
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -687,7 +700,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane eventsScrollPane;
     private javax.swing.JButton eventsSelectionButton;
     private javax.swing.JLabel genesLabel;
-    private javax.swing.JList<String> genesList;
+    private javax.swing.JList<Gene> genesList;
     private javax.swing.JLabel genesNumberLabel;
     private javax.swing.JPanel genesPanelList;
     private javax.swing.JScrollPane genesScrollPane;
@@ -708,10 +721,12 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTabbedPane tabbedPane;
     private javax.swing.JButton trimButton;
     private javax.swing.JLabel typesLabel;
-    private javax.swing.JList<String> typesList;
+    private javax.swing.JList<it.unimib.disco.bimib.cyTRON.model.Type> typesList;
     private javax.swing.JLabel typesNumberLabel;
     private javax.swing.JPanel typesPanelList;
     private javax.swing.JScrollPane typesScrollPane;
     private javax.swing.JPanel visualizationPanel;
     // End of variables declaration//GEN-END:variables
+    private HypothesesPanel hypothesesPanel;
+    private ExternalToolsPanel externalToolsPanel;
 }

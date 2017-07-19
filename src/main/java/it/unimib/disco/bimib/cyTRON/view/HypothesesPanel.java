@@ -1,7 +1,5 @@
 package it.unimib.disco.bimib.cyTRON.view;
 
-import javax.swing.DefaultComboBoxModel;
-
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.controller.HypothesesController;
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
@@ -11,17 +9,7 @@ public class HypothesesPanel extends javax.swing.JPanel {
     private HypothesesController hypothesesController;
     private DatasetController datasetController;
     private MainFrame mainFrame;
-    
-    public HypothesesPanel() {
-    	// instantiate empty variables
-    	hypothesesController = new HypothesesController();
-    	datasetController = new DatasetController();
-    	mainFrame = new MainFrame();
-    	
-        // draws the interface
-        initComponents();
-    }
-    
+        
     public HypothesesPanel(DatasetController datasetController, MainFrame mainFrame) {
         // get the main frame and the controllers
         hypothesesController = new HypothesesController();
@@ -231,7 +219,7 @@ public class HypothesesPanel extends javax.swing.JPanel {
 
     private void deletePatternButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletePatternButtonActionPerformed
         // get the dataset
-        Dataset dataset = (Dataset) datasetController.getDatasetsListModel().get(mainFrame.getDatasetSelectedIndex());
+        Dataset dataset = mainFrame.getSelectedDataset();
 
         // delete the pattern
         hypothesesController.deletePattern(dataset, patternsList.getSelectedIndex(), datasetController);
@@ -276,7 +264,7 @@ public class HypothesesPanel extends javax.swing.JPanel {
     
     public void updateSelectedDataset(int datasetIndex) {
         // get the dataset
-        Dataset dataset = (Dataset) datasetController.getDatasetsListModel().get(mainFrame.getDatasetSelectedIndex());
+        Dataset dataset = mainFrame.getSelectedDataset();
         
         // update lists
         hypothesesController.updatePatternsList(dataset);

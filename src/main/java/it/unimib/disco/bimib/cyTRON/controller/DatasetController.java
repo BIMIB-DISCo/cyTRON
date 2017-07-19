@@ -337,13 +337,11 @@ public class DatasetController {
         return datasetsListModel;
     }
     
-    @SuppressWarnings("rawtypes")
-	public DefaultListModel getGenesListModel() {
+	public DefaultListModel<Gene> getGenesListModel() {
         return genesListModel;
     }
     
-    @SuppressWarnings("rawtypes")
-	public DefaultListModel getTypesListModel() {
+    public DefaultListModel<Type> getTypesListModel() {
         return typesListModel;
     }
     

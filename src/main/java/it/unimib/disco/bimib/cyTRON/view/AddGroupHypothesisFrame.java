@@ -227,7 +227,7 @@ public class AddGroupHypothesisFrame extends javax.swing.JFrame {
         String minimumProbability = minimumProbabilityTextField.getText();
         
         // add the hypothesis
-        hypothesesController.addGroupHypothesis((Dataset) datasetController.getDatasetsListModel().get(mainFrame.getDatasetSelectedIndex()), operation, genes, effect, cause, minimumCardinality, maximumCardinality, minimumProbability, datasetController);
+        hypothesesController.addGroupHypothesis(mainFrame.getSelectedDataset(), operation, genes, effect, cause, minimumCardinality, maximumCardinality, minimumProbability, datasetController);
         
         // update the number labels
         mainFrame.updateNumberLabels();

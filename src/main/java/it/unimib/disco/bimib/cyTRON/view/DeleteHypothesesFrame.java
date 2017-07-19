@@ -152,7 +152,7 @@ public class DeleteHypothesesFrame extends javax.swing.JFrame {
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // get the event and the dataset
         Object event = eventComboBox.getSelectedItem();
-        Dataset dataset = (Dataset) datasetController.getDatasetsListModel().get(mainFrame.getDatasetSelectedIndex());
+        Dataset dataset = mainFrame.getSelectedDataset();
                 
         // delete the hypothesis
         if (causeRadioButton.isSelected()) {

@@ -312,7 +312,7 @@ public class AddHypothesisFrame extends javax.swing.JFrame {
         List<Event> cause = causeList.getSelectedValuesList();
         
         // add the hypothesis
-        hypothesesController.addHypothesis((Dataset) datasetController.getDatasetsListModel().get(mainFrame.getDatasetSelectedIndex()), label, effect, cause, datasetController);
+        hypothesesController.addHypothesis(mainFrame.getSelectedDataset(), label, effect, cause, datasetController);
         
         // update the number labels
         mainFrame.updateNumberLabels();

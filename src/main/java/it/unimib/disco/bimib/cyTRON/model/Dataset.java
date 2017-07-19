@@ -560,6 +560,47 @@ public class Dataset {
     	return patternsList;
     }
     
+    // ************ EXTERNAL TOOLS ************ \\
+    public void exportMutex(String fileName, String filePath, Type mutation, List<Type> amplification, List<Type> deletion) {
+    	// create and execute the command
+    	String command = "export.mutex(" + name;
+    	if (fileName.length() > 0) {
+    		command += ", filename='" + fileName + "'";
+		}
+    	if (filePath.length() > 0) {
+    		command += ", filepath='" + filePath + "'";
+		}
+    	if (mutation != null) {
+			command += ", label.mutation='" + mutation.getName() + "'";
+		}
+    	if (amplification.size() > 0) {
+			command += ", label.amplification=list(" + getStringOfTypes(amplification) + ")";
+		}
+    	if (deletion.size() > 0) {
+    		command += ", label.deletion=list(" + getStringOfTypes(deletion) + ")";
+		}
+    	command += ")";
+    	RConnectionManager.eval(command);
+    }
+    
+    public void exportNbs(String file, List<Gene> genes, HashMap<String, String> entrezIds) {
+    	// create and execute the command
+    	String command = "export.nbs.input(" + name + ", list(";
+    	for (Iterator<Gene> iterator = genes.iterator(); iterator.hasNext();) {
+			Gene gene = (Gene) iterator.next();
+			command += "c(" + gene.getName() + ", " + entrezIds.get(gene.getName()) + ")";
+			if (iterator.hasNext()) {
+				command += ", ";
+			}
+		}
+    	command += ")";
+    	if (file.length() > 0) {
+			command += ", file='" + file + "'";
+		}
+    	command += ")";
+    	RConnectionManager.eval(command);
+    }
+    
     // ************ UTILITIES ************ \\
     private String getStringOfEvents(List<Event> events) {
     	String string = "";
@@ -578,6 +619,18 @@ public class Dataset {
     	for (Iterator<Gene> iterator = genes.iterator(); iterator.hasNext();) {
 			Gene gene = (Gene) iterator.next();
 			string += "'" + gene.getName() + "'"; 
+			if (iterator.hasNext()) {
+				string += ", ";
+		    }
+		}
+    	return string;
+    }
+    
+    private String getStringOfTypes(List<Type> types) {
+    	String string = "";
+    	for (Iterator<Type> iterator = types.iterator(); iterator.hasNext();) {
+			Type type = (Type) iterator.next();
+			string += "'" + type.getName() + "'"; 
 			if (iterator.hasNext()) {
 				string += ", ";
 		    }

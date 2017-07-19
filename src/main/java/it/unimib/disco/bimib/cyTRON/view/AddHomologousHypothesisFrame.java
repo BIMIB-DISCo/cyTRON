@@ -178,7 +178,7 @@ public class AddHomologousHypothesisFrame extends javax.swing.JFrame {
         String operation = (String) operationComboBox.getSelectedItem();
         
         // add the hypothesis
-        hypothesesController.addHomologousHypothesis((Dataset) datasetController.getDatasetsListModel().get(mainFrame.getDatasetSelectedIndex()), effect, cause, genes, operation, datasetController); 
+        hypothesesController.addHomologousHypothesis(mainFrame.getSelectedDataset(), effect, cause, genes, operation, datasetController); 
         
         // update the number labels
         mainFrame.updateNumberLabels();
