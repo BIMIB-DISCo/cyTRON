@@ -6,18 +6,30 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.swing.DefaultListModel;
+
+import org.rosuda.JRI.REXP;
+import org.rosuda.JRI.RList;
+
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
 import it.unimib.disco.bimib.cyTRON.model.Gene;
 import it.unimib.disco.bimib.cyTRON.model.Type;
+import it.unimib.disco.bimib.cyTRON.model.R.RConnectionManager;
 
 public class ExternalToolsController {
+	
+	private final DefaultListModel<String> groupsListModel;
+	
+	public ExternalToolsController() {
+		groupsListModel = new DefaultListModel<>();
+	}
 
 	public void exportMutex(Dataset dataset, String fileName, String filePath, Type mutation, List<Type> amplification, List<Type> deletion) {
 		// export the mutex file for the dataset
 		dataset.exportMutex(fileName, filePath, mutation, amplification, deletion);
 	}
 	
-	public void exportNbs(Dataset dataset, String file, String mapping, List<Gene> genes) {
+	public String exportNbs(Dataset dataset, String file, String mapping) {
 		// read the mapping
 		HashMap<String, String> entrezIds = new HashMap<>();
 		try {
@@ -29,12 +41,60 @@ public class ExternalToolsController {
 			e.printStackTrace();
 		}
 		
+		// check that every gene is in the mapping
+		for (Gene gene : dataset.getGenes()) {
+			if (!entrezIds.containsKey(gene.getName())) {
+				return "Please check the mapping!\nGene " + gene.getName() + " not found.";
+			}
+		}
+		
 		// export the nbs file for the dataset
-		dataset.exportNbs(file, genes, entrezIds);
+		String[] output = dataset.exportNbs(file, entrezIds);
+		
+		// return the output
+		if (output[output.length - 1].contains("DONE")) {
+			return "NBS file exported.";
+		} else {
+			String outputString = "";
+			for (int i = 0; i < output.length; i++) {
+				outputString += output[i];
+				if (i < output.length - 1) {
+					outputString += "\n";
+				}
+			}
+			return outputString;
+		}
 	}
 	
-	public void importMutex() {
-		
+	public void importMutex(String file, String fdr) {
+		// create and execute the command
+        String command = "import.mutex.groups('" + file + "'";
+        if (fdr.length() > 0) {
+			command += ", fdr=" + fdr;
+		}
+        command += ", display=FALSE)";
+        REXP rexp = RConnectionManager.eval(command);
+        
+        // read the output and populate the model
+        groupsListModel.clear();
+        RList groupsList = rexp.asList();
+        for (int i = 0; i < groupsList.keys().length; i++) {
+			String group = groupsList.keys()[i] + " - ";
+			
+			String[] genes = groupsList.at(i).asStringArray();
+			for (int j = 0; j < genes.length; j++) {
+				group += genes[j];
+				if (j < genes.length - 1) {
+					group += ", ";
+				}
+			}
+			
+			groupsListModel.addElement(group);
+		}
+	}
+	
+	public DefaultListModel<String> getGroupsListModel() {
+		return groupsListModel;
 	}
 	
 }

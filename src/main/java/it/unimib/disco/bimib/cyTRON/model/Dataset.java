@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Dataset {
 	
@@ -80,8 +81,9 @@ public class Dataset {
     
     public void bindSamples(Dataset dataset, String newName) {
     	// create and execute the command
-        String command = newName + " = sbind(c(" + name + ", " + dataset.getName() + "))" + 
-        		"\n rm(" + name + ")";
+        String command = newName + " = sbind(c(" + name + ", " + dataset.getName() + "))";
+        RConnectionManager.eval(command);
+        command = "rm(" + name + ")";
         RConnectionManager.eval(command);
         
         // update the name
@@ -94,8 +96,9 @@ public class Dataset {
     
     public void bindEvents(Dataset dataset, String newName) {
     	// create and execute the command
-        String command = newName + " = ebind(c(" + name + ", " + dataset.getName() + "))" + 
-        		"\n rm(" + name + ")";
+        String command = newName + " = ebind(c(" + name + ", " + dataset.getName() + "))";
+        RConnectionManager.eval(command);
+        command = "rm(" + name + ")";
         RConnectionManager.eval(command);
         
         // update the name
@@ -108,8 +111,9 @@ public class Dataset {
     
     public void intersect(Dataset dataset, String newName) {
     	// create and execute the command
-        String command = newName + " = intersect.datasets(" + name + ", " + dataset.getName() + ")" + 
-        		"\n rm(" + name + ")";
+        String command = newName + " = intersect.datasets(" + name + ", " + dataset.getName() + ")";
+        RConnectionManager.eval(command);
+        command = "rm(" + name + ")";
         RConnectionManager.eval(command);
         
         // update the name
@@ -583,22 +587,34 @@ public class Dataset {
     	RConnectionManager.eval(command);
     }
     
-    public void exportNbs(String file, List<Gene> genes, HashMap<String, String> entrezIds) {
+    public String[] exportNbs(String file, HashMap<String, String> entrezIds) {
     	// create and execute the command
-    	String command = "export.nbs.input(" + name + ", list(";
-    	for (Iterator<Gene> iterator = genes.iterator(); iterator.hasNext();) {
-			Gene gene = (Gene) iterator.next();
-			command += "c(" + gene.getName() + ", " + entrezIds.get(gene.getName()) + ")";
-			if (iterator.hasNext()) {
+    	String command = "mapping = matrix(c(";
+    	for (Iterator<String> iterator = entrezIds.keySet().iterator(); iterator.hasNext();) {
+    		String hugoSymbol = (String) iterator.next();
+    		command += "'" + hugoSymbol + "', ";
+    	}
+    	for (Iterator<String> iterator = entrezIds.keySet().iterator(); iterator.hasNext();) {
+    		String hugoSymbol = (String) iterator.next();
+    		command += "'" + entrezIds.get(hugoSymbol) + "'";
+    		if (iterator.hasNext()) {
 				command += ", ";
 			}
-		}
-    	command += ")";
+    	}
+    	command += "), ncol=2)";
+    	RConnectionManager.eval(command);
+    	
+    	command= "colnames(mapping) = c('Hugo_Symbol', 'Entrez_Gene_Id')";
+    	RConnectionManager.eval(command);
+    			
+    	command= "capture.output(export.nbs.input(" + name + ", mapping";
     	if (file.length() > 0) {
 			command += ", file='" + file + "'";
 		}
-    	command += ")";
-    	RConnectionManager.eval(command);
+    	command += "))";
+    	REXP rexp = RConnectionManager.eval(command);
+    	
+    	return rexp.asStringArray();
     }
     
     // ************ UTILITIES ************ \\

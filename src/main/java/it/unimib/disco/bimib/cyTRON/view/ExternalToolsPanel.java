@@ -3,13 +3,15 @@ package it.unimib.disco.bimib.cyTRON.view;
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.controller.ExternalToolsController;
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
-import it.unimib.disco.bimib.cyTRON.model.Gene;
 import it.unimib.disco.bimib.cyTRON.model.Type;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.management.modelmbean.ModelMBean;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -60,11 +62,16 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
         mappingTextField = new javax.swing.JTextField();
         tabLabel = new javax.swing.JLabel();
         exportNbsButton = new javax.swing.JButton();
-        genesScrollPane = new javax.swing.JScrollPane();
-        genesList = new javax.swing.JList<>();
-        genesLabel = new javax.swing.JLabel();
-        ctrlLabel3 = new javax.swing.JLabel();
         importMutexPanel = new javax.swing.JPanel();
+        importMutexParametersPanel = new javax.swing.JPanel();
+        importMutexButton = new javax.swing.JButton();
+        fileLabel = new javax.swing.JLabel();
+        fileTextField = new javax.swing.JTextField();
+        fdrLabel = new javax.swing.JLabel();
+        fdrTextField = new javax.swing.JTextField();
+        goupsMutexInfoPanel = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
 
         setMinimumSize(new java.awt.Dimension(940, 660));
 
@@ -198,7 +205,7 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
         });
 
         tabLabel.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
-        tabLabel.setText("tab-separated values file containing the mapping from Hugo symbols to Entrez gene ids");
+        tabLabel.setText("tab-separated values file containing the mapping from Hugo symbols to Entrez gene ids (without header)");
 
         exportNbsButton.setText("Export");
         exportNbsButton.addActionListener(new java.awt.event.ActionListener() {
@@ -207,19 +214,11 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
             }
         });
 
-        genesList.setModel(datasetController.getGenesListModel());
-        genesScrollPane.setViewportView(genesList);
-
-        genesLabel.setText("Genes:");
-
-        ctrlLabel3.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
-        ctrlLabel3.setText("ctrl/cmd-click to select multiple types");
-
         javax.swing.GroupLayout exportNbsPanelLayout = new javax.swing.GroupLayout(exportNbsPanel);
         exportNbsPanel.setLayout(exportNbsPanelLayout);
         exportNbsPanelLayout.setHorizontalGroup(
             exportNbsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(exportNbsPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, exportNbsPanelLayout.createSequentialGroup()
                 .addContainerGap(117, Short.MAX_VALUE)
                 .addGroup(exportNbsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, exportNbsPanelLayout.createSequentialGroup()
@@ -229,14 +228,11 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
                         .addGroup(exportNbsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(filePathLabel2)
                             .addComponent(fileNameLabel2)
-                            .addComponent(mappingLabel)
-                            .addComponent(genesLabel))
+                            .addComponent(mappingLabel))
                         .addGap(43, 43, 43)
                         .addGroup(exportNbsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ctrlLabel3)
+                            .addComponent(tabLabel)
                             .addGroup(exportNbsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(genesScrollPane)
-                                .addComponent(tabLabel)
                                 .addComponent(filePathTextField2)
                                 .addComponent(fileNameTextField2)
                                 .addComponent(mappingTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -245,7 +241,7 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
         exportNbsPanelLayout.setVerticalGroup(
             exportNbsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(exportNbsPanelLayout.createSequentialGroup()
-                .addContainerGap(158, Short.MAX_VALUE)
+                .addContainerGap(221, Short.MAX_VALUE)
                 .addGroup(exportNbsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fileNameTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fileNameLabel2))
@@ -259,28 +255,110 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
                     .addComponent(mappingLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tabLabel)
-                .addGap(18, 18, 18)
-                .addGroup(exportNbsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(genesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(genesLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ctrlLabel3)
-                .addGap(137, 137, 137)
+                .addGap(212, 212, 212)
                 .addComponent(exportNbsButton)
                 .addContainerGap())
         );
 
         tabbedPane.addTab("Export NBS", exportNbsPanel);
 
+        importMutexParametersPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Parameters"));
+
+        importMutexButton.setText("Import");
+        importMutexButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                importMutexButtonActionPerformed(evt);
+            }
+        });
+
+        fileLabel.setText("File:");
+
+        fileTextField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                fileTextFieldMouseClicked(evt);
+            }
+        });
+
+        fdrLabel.setText("FDR:");
+
+        fdrTextField.setText("0.2");
+
+        javax.swing.GroupLayout importMutexParametersPanelLayout = new javax.swing.GroupLayout(importMutexParametersPanel);
+        importMutexParametersPanel.setLayout(importMutexParametersPanelLayout);
+        importMutexParametersPanelLayout.setHorizontalGroup(
+            importMutexParametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(importMutexParametersPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(importMutexButton)
+                .addContainerGap())
+            .addGroup(importMutexParametersPanelLayout.createSequentialGroup()
+                .addGap(119, 119, 119)
+                .addGroup(importMutexParametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fileLabel)
+                    .addComponent(fdrLabel))
+                .addGap(40, 40, 40)
+                .addGroup(importMutexParametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fdrTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(125, Short.MAX_VALUE))
+        );
+        importMutexParametersPanelLayout.setVerticalGroup(
+            importMutexParametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, importMutexParametersPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(importMutexParametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fileLabel)
+                    .addComponent(fileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(importMutexParametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fdrTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fdrLabel))
+                .addGap(18, 18, 18)
+                .addComponent(importMutexButton))
+        );
+
+        goupsMutexInfoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Groups"));
+
+        jList1.setModel(externalToolsController.getGroupsListModel());
+        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(jList1);
+
+        javax.swing.GroupLayout goupsMutexInfoPanelLayout = new javax.swing.GroupLayout(goupsMutexInfoPanel);
+        goupsMutexInfoPanel.setLayout(goupsMutexInfoPanelLayout);
+        goupsMutexInfoPanelLayout.setHorizontalGroup(
+            goupsMutexInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(goupsMutexInfoPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+        );
+        goupsMutexInfoPanelLayout.setVerticalGroup(
+            goupsMutexInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(goupsMutexInfoPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout importMutexPanelLayout = new javax.swing.GroupLayout(importMutexPanel);
         importMutexPanel.setLayout(importMutexPanelLayout);
         importMutexPanelLayout.setHorizontalGroup(
             importMutexPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 907, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, importMutexPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(importMutexPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(goupsMutexInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(importMutexParametersPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         importMutexPanelLayout.setVerticalGroup(
             importMutexPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 602, Short.MAX_VALUE)
+            .addGroup(importMutexPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(importMutexParametersPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(goupsMutexInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         tabbedPane.addTab("Import Mutex", importMutexPanel);
@@ -316,7 +394,7 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
         externalToolsController.exportMutex(dataset, fileName, filePath, mutation, amplification, deletion);
         
         // show confirmation message
-        JOptionPane.showConfirmDialog(mainFrame, "Mutex file exported.", "", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showConfirmDialog(mainFrame, "Mutex file exported.", "", JOptionPane.PLAIN_MESSAGE);
     }//GEN-LAST:event_exportMutexButtonActionPerformed
 
     private void exportNbsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportNbsButtonActionPerformed
@@ -324,13 +402,16 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
     	Dataset dataset = mainFrame.getSelectedDataset();
         String file = filePathTextField2.getText() + "/" + fileNameTextField2.getText();
         String mapping = mappingTextField.getText();
-        List<Gene> genes = genesList.getSelectedValuesList();
         
         // export the nbs file
-        externalToolsController.exportNbs(dataset, file, mapping, genes);
+        String outputString = externalToolsController.exportNbs(dataset, file, mapping);
         
-        // show confirmation message
-        JOptionPane.showConfirmDialog(mainFrame, "NBS file exported.", "", JOptionPane.INFORMATION_MESSAGE);
+        // show the output message
+        if (outputString.equals("")) {
+            JOptionPane.showConfirmDialog(mainFrame, "NBS file exported.", "", JOptionPane.PLAIN_MESSAGE);
+        } else {
+            JOptionPane.showConfirmDialog(mainFrame, outputString, "", JOptionPane.PLAIN_MESSAGE);
+        }
     }//GEN-LAST:event_exportNbsButtonActionPerformed
 
     private void filePathTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_filePathTextField1MouseClicked
@@ -383,11 +464,36 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_filePathTextField2MouseClicked
 
+    private void fileTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fileTextFieldMouseClicked
+        // create the file chooser
+        JFileChooser fileChooser = new JFileChooser();
+        
+        // check the return option
+        int option = fileChooser.showOpenDialog(mainFrame);
+        if (option == JFileChooser.APPROVE_OPTION) {
+            try {
+                // update the text field
+                fileTextField.setText(fileChooser.getSelectedFile().getCanonicalPath());
+            } catch (IOException ex) {
+                Logger.getLogger(ImportDatasetFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_fileTextFieldMouseClicked
+
+    private void importMutexButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importMutexButtonActionPerformed
+        // get the parameters
+        String file = fileTextField.getText();
+        String fdr = fdrTextField.getText();
+        
+        // import mutex
+        externalToolsController.importMutex(file, fdr);
+    }//GEN-LAST:event_importMutexButtonActionPerformed
+
     public void updateSelectedDataset() {
-        DefaultComboBoxModel<Type> defaultComboBoxModel = new DefaultComboBoxModel();
-        defaultComboBoxModel.addElement(null);
-        for (Type type : (Type[]) datasetController.getTypesListModel().toArray()) {
-            defaultComboBoxModel.addElement(type);
+        DefaultComboBoxModel<Type> defaultComboBoxModel = new DefaultComboBoxModel<Type>();
+        defaultComboBoxModel.addElement(null); 
+        for (Object type : datasetController.getTypesListModel().toArray()) {
+            defaultComboBoxModel.addElement((Type) type);
         }
     	mutationComboBox.setModel(defaultComboBoxModel); 
     }
@@ -399,7 +505,6 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel blankLabel;
     private javax.swing.JLabel ctrlLabel1;
     private javax.swing.JLabel ctrlLabel2;
-    private javax.swing.JLabel ctrlLabel3;
     private javax.swing.JLabel deletionLabel;
     private javax.swing.JList<Type> deletionList;
     private javax.swing.JScrollPane deletionScrollPane;
@@ -407,6 +512,9 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
     private javax.swing.JPanel exportMutexPanel;
     private javax.swing.JButton exportNbsButton;
     private javax.swing.JPanel exportNbsPanel;
+    private javax.swing.JLabel fdrLabel;
+    private javax.swing.JTextField fdrTextField;
+    private javax.swing.JLabel fileLabel;
     private javax.swing.JLabel fileNameLabel1;
     private javax.swing.JLabel fileNameLabel2;
     private javax.swing.JTextField fileNameTextField1;
@@ -415,10 +523,13 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel filePathLabel2;
     private javax.swing.JTextField filePathTextField1;
     private javax.swing.JTextField filePathTextField2;
-    private javax.swing.JLabel genesLabel;
-    private javax.swing.JList<Gene> genesList;
-    private javax.swing.JScrollPane genesScrollPane;
+    private javax.swing.JTextField fileTextField;
+    private javax.swing.JPanel goupsMutexInfoPanel;
+    private javax.swing.JButton importMutexButton;
     private javax.swing.JPanel importMutexPanel;
+    private javax.swing.JPanel importMutexParametersPanel;
+    private javax.swing.JList<String> jList1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel mappingLabel;
     private javax.swing.JTextField mappingTextField;
     private javax.swing.JComboBox<Type> mutationComboBox;
