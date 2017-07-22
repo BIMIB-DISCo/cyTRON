@@ -3,6 +3,8 @@ package it.unimib.disco.bimib.cyTRON.view;
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
 import it.unimib.disco.bimib.cyTRON.model.Gene;
+import it.unimib.disco.bimib.cyTRON.model.Sample;
+import javax.swing.JOptionPane;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -40,6 +42,9 @@ public class MainFrame extends javax.swing.JFrame {
         samplesList = new javax.swing.JList<>();
         deteleSampleButton = new javax.swing.JButton();
         samplesSelectionButton = new javax.swing.JButton();
+        selectMultipleSamplesButton = new javax.swing.JButton();
+        deleteMultipleSamplesButton = new javax.swing.JButton();
+        shortenBarcodesButton = new javax.swing.JButton();
         eventsPanelList = new javax.swing.JPanel();
         eventsScrollPane = new javax.swing.JScrollPane();
         eventsList = new javax.swing.JList<>();
@@ -196,29 +201,62 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        selectMultipleSamplesButton.setText("Select multiple");
+        selectMultipleSamplesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectMultipleSamplesButtonActionPerformed(evt);
+            }
+        });
+
+        deleteMultipleSamplesButton.setText("Delete multiple");
+        deleteMultipleSamplesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteMultipleSamplesButtonActionPerformed(evt);
+            }
+        });
+
+        shortenBarcodesButton.setText("Shorten barcodes");
+        shortenBarcodesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                shortenBarcodesButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout samplesPanelListLayout = new javax.swing.GroupLayout(samplesPanelList);
         samplesPanelList.setLayout(samplesPanelListLayout);
         samplesPanelListLayout.setHorizontalGroup(
             samplesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(samplesPanelListLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(samplesScrollPane)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(samplesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(samplesScrollPane)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, samplesPanelListLayout.createSequentialGroup()
-                        .addComponent(samplesSelectionButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(deteleSampleButton)))
+                    .addGroup(samplesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(samplesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(samplesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(shortenBarcodesButton)
+                                .addComponent(deteleSampleButton, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(samplesSelectionButton, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addComponent(deleteMultipleSamplesButton, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(selectMultipleSamplesButton, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         samplesPanelListLayout.setVerticalGroup(
             samplesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(samplesPanelListLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(samplesScrollPane)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(samplesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(deteleSampleButton)
-                    .addComponent(samplesSelectionButton))
+                .addGroup(samplesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(samplesPanelListLayout.createSequentialGroup()
+                        .addComponent(selectMultipleSamplesButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(deleteMultipleSamplesButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(shortenBarcodesButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(samplesSelectionButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(deteleSampleButton))
+                    .addComponent(samplesScrollPane))
                 .addContainerGap())
         );
 
@@ -661,6 +699,42 @@ public class MainFrame extends javax.swing.JFrame {
         datasetController.trim(datasetsList.getSelectedIndex());
     }//GEN-LAST:event_trimButtonActionPerformed
 
+    private void selectMultipleSamplesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectMultipleSamplesButtonActionPerformed
+        // get the indexes of the multiple samples of the dataset
+    	int[] multipleSamplesIndexes = datasetController.selectMultipleSamples(datasetsList.getSelectedIndex());
+    	
+    	// select the multiple samples
+    	samplesList.setSelectedIndices(multipleSamplesIndexes);
+    }//GEN-LAST:event_selectMultipleSamplesButtonActionPerformed
+
+    private void deleteMultipleSamplesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteMultipleSamplesButtonActionPerformed
+        // get the confirmation
+        int confirmation = JOptionPane.showConfirmDialog(this, "Multiple samples will be deleted.\nAre you sure?", "", JOptionPane.OK_CANCEL_OPTION);
+        
+        // if confirmed
+        if (confirmation == JOptionPane.OK_OPTION) {
+            // remove multiple samples from the dataset
+            datasetController.removeMultipleSamples(datasetsList.getSelectedIndex());
+            
+            // update the number labels
+            updateNumberLabels();
+        }
+    }//GEN-LAST:event_deleteMultipleSamplesButtonActionPerformed
+
+    private void shortenBarcodesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_shortenBarcodesButtonActionPerformed
+        // get the confirmation
+        int confirmation = JOptionPane.showConfirmDialog(this, "Samples' names will be shortened.\nAre you sure?", "", JOptionPane.OK_CANCEL_OPTION);
+        
+        // if confirmed
+        if (confirmation == JOptionPane.OK_OPTION) {
+            // remove multiple samples from the dataset
+            datasetController.shortenBarcodes(datasetsList.getSelectedIndex());
+            
+            // update the number labels
+            updateNumberLabels();
+        }
+    }//GEN-LAST:event_shortenBarcodesButtonActionPerformed
+
     // ************ OTHERS ************ \\
     public void updateNumberLabels() {
         typesNumberLabel.setText(String.valueOf(datasetController.getTypesListModel().size()));
@@ -690,6 +764,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton deleteDatasetButton;
     private javax.swing.JButton deleteEventButton;
     private javax.swing.JButton deleteGeneButton;
+    private javax.swing.JButton deleteMultipleSamplesButton;
     private javax.swing.JButton deleteTypeButton;
     private javax.swing.JButton deteleSampleButton;
     private javax.swing.JPanel editPanel;
@@ -713,11 +788,13 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton renameGeneButton;
     private javax.swing.JButton renameTypeButton;
     private javax.swing.JLabel samplesLabel;
-    private javax.swing.JList<String> samplesList;
+    private javax.swing.JList<Sample> samplesList;
     private javax.swing.JLabel samplesNumberLabel;
     private javax.swing.JPanel samplesPanelList;
     private javax.swing.JScrollPane samplesScrollPane;
     private javax.swing.JButton samplesSelectionButton;
+    private javax.swing.JButton selectMultipleSamplesButton;
+    private javax.swing.JButton shortenBarcodesButton;
     private javax.swing.JTabbedPane tabbedPane;
     private javax.swing.JButton trimButton;
     private javax.swing.JLabel typesLabel;

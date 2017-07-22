@@ -8,6 +8,7 @@ import it.unimib.disco.bimib.cyTRON.model.Type;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -139,6 +140,45 @@ public class DatasetController {
     	
     	// select the samples
     	dataset.samplesSelection(samples);
+    	
+    	// update the sample list
+    	updateSamplesList(dataset);
+    }
+    
+    // ************ TCGA ************ \\
+    public int[] selectMultipleSamples(int datasetIndex) {
+    	// get the dataset
+    	Dataset dataset = datasetsListModel.get(datasetIndex);
+    	
+    	// get the multiple samples
+    	List<Sample> multipleSamples = dataset.getMultipleSamples();
+    	
+    	// get the indexes of the multiple samples
+    	int[] multipleSamplesIndexes = new int[multipleSamples.size()];
+    	for (int i = 0; i < multipleSamples.size(); i++) {
+			multipleSamplesIndexes[i] = samplesListModel.indexOf(multipleSamples.get(i));
+		}
+    	
+    	return multipleSamplesIndexes;
+    }
+    
+    public void removeMultipleSamples(int datasetIndex) {
+    	// get the dataset
+    	Dataset dataset = datasetsListModel.get(datasetIndex);
+    	
+    	// remove the multiple samples
+    	dataset.removeMultipleSamples();
+    	
+    	// update the sample list
+    	updateSamplesList(dataset);
+    }
+    
+    public void shortenBarcodes(int datasetIndex) {
+    	// get the dataset
+    	Dataset dataset = datasetsListModel.get(datasetIndex);
+    	
+    	// shorten the barcodes of the dataset
+    	dataset.shortenBarcodes();
     	
     	// update the sample list
     	updateSamplesList(dataset);
@@ -345,8 +385,7 @@ public class DatasetController {
         return typesListModel;
     }
     
-    @SuppressWarnings("rawtypes")
-	public DefaultListModel getSamplesListModel() {
+	public DefaultListModel<Sample> getSamplesListModel() {
         return samplesListModel;
     }
     

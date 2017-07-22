@@ -62,19 +62,18 @@
                           <Component id="selectButton" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
-                          <Component id="selectionLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="samplesLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="ctrlLabel" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="324" max="32767" attributes="0"/>
+                              <Component id="selectionLabel" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="samplesLabel" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="ctrlLabel" min="-2" max="-2" attributes="0"/>
+                                      <Component id="samplesScrollPane" min="-2" pref="527" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <Component id="samplesScrollPane" min="-2" pref="527" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace min="0" pref="15" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -121,7 +120,7 @@
                 <Property name="layoutOrientation" type="int" value="1"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Sample&gt;"/>
               </AuxValues>
             </Component>
           </SubComponents>

@@ -6,6 +6,7 @@
 package it.unimib.disco.bimib.cyTRON.view;
 
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
+import it.unimib.disco.bimib.cyTRON.model.Sample;
 
 public class SamplesSelectionFrame extends javax.swing.JFrame {
 
@@ -70,16 +71,15 @@ public class SamplesSelectionFrame extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(selectButton))
                     .addGroup(panelLayout.createSequentialGroup()
-                        .addComponent(selectionLabel)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(panelLayout.createSequentialGroup()
-                        .addComponent(samplesLabel)
-                        .addGap(18, 18, 18)
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(selectionLabel)
                             .addGroup(panelLayout.createSequentialGroup()
-                                .addComponent(ctrlLabel)
-                                .addGap(0, 324, Short.MAX_VALUE))
-                            .addComponent(samplesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(samplesLabel)
+                                .addGap(18, 18, 18)
+                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ctrlLabel)
+                                    .addComponent(samplesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 15, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelLayout.setVerticalGroup(
@@ -136,7 +136,7 @@ public class SamplesSelectionFrame extends javax.swing.JFrame {
     private javax.swing.JLabel ctrlLabel;
     private javax.swing.JPanel panel;
     private javax.swing.JLabel samplesLabel;
-    private javax.swing.JList<String> samplesList;
+    private javax.swing.JList<Sample> samplesList;
     private javax.swing.JScrollPane samplesScrollPane;
     private javax.swing.JButton selectButton;
     private javax.swing.JLabel selectionLabel;

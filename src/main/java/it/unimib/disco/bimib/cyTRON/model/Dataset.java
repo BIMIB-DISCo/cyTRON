@@ -175,6 +175,43 @@ public class Dataset {
     	return samplesList;
     }
     
+    // ************ TCGA ************ \\
+    public List<Sample> getMultipleSamples() {
+    	// create and execute the command
+        String command = "TCGA.multiple.samples(" + name + ")";
+        REXP rexp = RConnectionManager.eval(command);
+        
+        // get the multiple samples
+        String[] multipleSamplesNames = rexp.asStringArray();
+        List<Sample> multipleSamples = new ArrayList<>();
+        if (multipleSamplesNames != null && multipleSamplesNames.length > 1) {
+        	for (int i = 0; i < multipleSamplesNames.length; i++) {
+        		multipleSamples.add(samples.get(multipleSamplesNames[i]));
+			}
+		}
+        
+        // return the result list
+        return multipleSamples;
+    }
+    
+    public void removeMultipleSamples() {
+    	// create and execute the command
+        String command = name + " = TCGA.remove.multiple.samples(" + name + ")";
+        RConnectionManager.eval(command);
+        
+        // reload the samples
+        retrieveSamples();
+    }
+    
+    public void shortenBarcodes() {
+    	// create and execute the command
+        String command = name + " = TCGA.shorten.barcodes(" + name + ")";
+        RConnectionManager.eval(command);
+        
+        // reload the samples
+        retrieveSamples();
+    }
+    
     // ************ GENES ************ \\    
     public void renameGene(Gene gene, String newName) {
     	// create and execute the command
