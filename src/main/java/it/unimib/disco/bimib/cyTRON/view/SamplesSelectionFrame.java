@@ -7,6 +7,7 @@ package it.unimib.disco.bimib.cyTRON.view;
 
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.model.Sample;
+import java.awt.Color;
 
 public class SamplesSelectionFrame extends javax.swing.JFrame {
 
@@ -121,6 +122,13 @@ public class SamplesSelectionFrame extends javax.swing.JFrame {
     private void selectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectButtonActionPerformed
         // get the selected samples
         int[] samplesIndex = samplesList.getSelectedIndices();
+        
+        // if no samples are selected
+        if (samplesIndex.length == 0) {
+            // return
+            samplesList.setBackground(Color.RED);
+            return;
+        }
         
         // select the samples
         datasetController.selectSamples(samplesIndex, datasetIndex);

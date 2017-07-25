@@ -1,6 +1,7 @@
 package it.unimib.disco.bimib.cyTRON.view;
 
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
+import java.awt.Color;
 import javax.swing.DefaultComboBoxModel;
 
 public class JoinEventsFrame extends javax.swing.JFrame {
@@ -158,15 +159,28 @@ public class JoinEventsFrame extends javax.swing.JFrame {
         if (eventIndex2 >= eventIndex1) {
             eventIndex2++;
         }
-
-        // join the events
-        datasetController.joinEvents(eventIndex1, eventIndex2, datasetIndex, name, type, color);
         
-        // update the main frame
-        mainFrame.updateNumberLabels();
+        // check the parameters
+        if (name.length() == 0) {
+            nameTextField.setBackground(Color.RED);
+        }
+        if (type.length() == 0) {
+            typeTextField.setBackground(Color.RED);
+        }
+        if (color.length() == 0) {
+            colorTextField.setBackground(Color.RED);
+        }
 
-        // close the frame
-        dispose();
+        if (name.length() > 0 && type.length() > 0 && color.length() > 0) {
+            // join the events
+            datasetController.joinEvents(eventIndex1, eventIndex2, datasetIndex, name, type, color);
+        
+            // update the main frame
+            mainFrame.updateNumberLabels();
+
+            // close the frame
+            dispose();
+        }
     }//GEN-LAST:event_joinButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

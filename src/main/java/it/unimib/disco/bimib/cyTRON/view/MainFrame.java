@@ -4,7 +4,11 @@ import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
 import it.unimib.disco.bimib.cyTRON.model.Gene;
 import it.unimib.disco.bimib.cyTRON.model.Sample;
+import it.unimib.disco.bimib.cyTRON.model.R.RConnectionManager;
+
 import javax.swing.JOptionPane;
+
+import org.rosuda.REngine.REngineException;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -578,59 +582,129 @@ public class MainFrame extends javax.swing.JFrame {
     
     // ************ DATASETS ************ \\
     private void importDatasetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importDatasetButtonActionPerformed
-        ImportDatasetFrame importDatasetFrame = new ImportDatasetFrame(datasetController);
+        ImportDatasetFrame importDatasetFrame = new ImportDatasetFrame(datasetController, this);
         importDatasetFrame.setLocationRelativeTo(null);
 	importDatasetFrame.setVisible(true);
     }//GEN-LAST:event_importDatasetButtonActionPerformed
 
     private void deleteDatasetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteDatasetButtonActionPerformed
-        // execute the action
-        datasetController.deleteDataset(datasetsList.getSelectedIndex());
+        // if there is no selection
+        if (datasetsList.getSelectedIndex() == -1) {
+            // return
+            return;
+        }
+
+        // get the confirmation
+        int confirmation = JOptionPane.showConfirmDialog(this, "The dataset will be deleted.\nAre you sure?", "", JOptionPane.OK_CANCEL_OPTION);
         
-        // clear the number labels
-        clearNumberLabels();
+        try {
+            // if confirmed
+            if (confirmation == JOptionPane.OK_OPTION) {
+                // execute the action
+                datasetController.deleteDataset(datasetsList.getSelectedIndex());
+
+                // clear the number labels
+                clearNumberLabels();
+            }
+	} catch (REngineException e) {
+            JOptionPane.showConfirmDialog(this, e.getMessage() + RConnectionManager.CHECK_INPUT, RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+	}
     }//GEN-LAST:event_deleteDatasetButtonActionPerformed
 
     // ************ SAMPLES ************ \\
     private void deteleSampleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deteleSampleButtonActionPerformed
-        // excute the action
-        datasetController.deleteSample(samplesList.getSelectedIndex(), datasetsList.getSelectedIndex());
+        // if there is no selection
+        if (samplesList.getSelectedIndex() == -1) {
+            // return
+            return;
+        }
+
+        // get the confirmation
+        int confirmation = JOptionPane.showConfirmDialog(this, "The sample will be deleted.\nAre you sure?", "", JOptionPane.OK_CANCEL_OPTION);
         
+        // if confirmed
+        if (confirmation == JOptionPane.OK_OPTION) {
+            // excute the action
+            datasetController.deleteSample(samplesList.getSelectedIndex(), datasetsList.getSelectedIndex());
+        }
+
         // update the number labels
         updateNumberLabels();
     }//GEN-LAST:event_deteleSampleButtonActionPerformed
     
     // ************ GENES ************ \\
     private void renameGeneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renameGeneButtonActionPerformed
+        // if there is no selection
+        if (genesList.getSelectedIndex() == -1) {
+            // return
+            return;
+        }
+        
         RenameGeneFrame renameGeneFrame = new RenameGeneFrame(datasetController, genesList.getSelectedIndex(), datasetsList.getSelectedIndex());
         renameGeneFrame.setLocationRelativeTo(null);
 	renameGeneFrame.setVisible(true);
     }//GEN-LAST:event_renameGeneButtonActionPerformed
 
     private void deleteGeneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteGeneButtonActionPerformed
-        // execute the actioin
-        datasetController.deleteGene(genesList.getSelectedIndex(), datasetsList.getSelectedIndex());
+        // if there is no selection
+        if (genesList.getSelectedIndex() == -1) {
+            // return
+            return;
+        }
+
+        // get the confirmation
+        int confirmation = JOptionPane.showConfirmDialog(this, "The gene will be deleted.\nAre you sure?", "", JOptionPane.OK_CANCEL_OPTION);
         
-        // update the number labels
-        updateNumberLabels();
+        // if confirmed
+        if (confirmation == JOptionPane.OK_OPTION) {
+            // execute the actioin
+            datasetController.deleteGene(genesList.getSelectedIndex(), datasetsList.getSelectedIndex());
+
+            // update the number labels
+            updateNumberLabels();
+        }
     }//GEN-LAST:event_deleteGeneButtonActionPerformed
 
     // ************ TYPES ************ \\
     private void deleteTypeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteTypeButtonActionPerformed
-        // execute the action
-        datasetController.deleteType(typesList.getSelectedIndex(), datasetsList.getSelectedIndex());
+        // if there is no selection
+        if (typesList.getSelectedIndex() == -1) {
+            // return
+            return;
+        }
         
-        // update the number labels
-        updateNumberLabels();
+        // get the confirmation
+        int confirmation = JOptionPane.showConfirmDialog(this, "The type will be deleted.\nAre you sure?", "", JOptionPane.OK_CANCEL_OPTION);
+        
+        // if confirmed
+        if (confirmation == JOptionPane.OK_OPTION) {
+            // execute the action
+            datasetController.deleteType(typesList.getSelectedIndex(), datasetsList.getSelectedIndex());
+
+            // update the number labels
+            updateNumberLabels();
+        }
     }//GEN-LAST:event_deleteTypeButtonActionPerformed
 
     private void renameTypeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renameTypeButtonActionPerformed
+        // if there is no selection
+        if (typesList.getSelectedIndex() == -1) {
+            // return
+            return;
+        }
+        
         RenameTypeFrame renameTypeFrame = new RenameTypeFrame(datasetController, typesList.getSelectedIndex(), datasetsList.getSelectedIndex());
         renameTypeFrame.setLocationRelativeTo(null);
 	renameTypeFrame.setVisible(true);
     }//GEN-LAST:event_renameTypeButtonActionPerformed
 
     private void joinTypesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joinTypesButtonActionPerformed
+        // if there is no selection
+        if (typesList.getSelectedIndex() == -1 || datasetController.getTypesListModel().size() < 2) {
+            // return
+            return;
+        }
+        
         JoinTypesFrame joinTypesFrame = new JoinTypesFrame(this, datasetController, typesList.getSelectedIndex(), datasetsList.getSelectedIndex());
         joinTypesFrame.setLocationRelativeTo(null);
 	joinTypesFrame.setVisible(true);
@@ -638,14 +712,32 @@ public class MainFrame extends javax.swing.JFrame {
 
     // ************ EVENTS ************ \\
     private void deleteEventButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteEventButtonActionPerformed
-        // execute the action
-        datasetController.deleteEvent(eventsList.getSelectedIndex(), datasetsList.getSelectedIndex());
+        // if there is no selection
+        if (eventsList.getSelectedIndex() == -1) {
+            // return
+            return;
+        }
+
+        // get the confirmation
+        int confirmation = JOptionPane.showConfirmDialog(this, "The event will be deleted.\nAre you sure?", "", JOptionPane.OK_CANCEL_OPTION);
         
-        // update the number labels
-        updateNumberLabels();
+        // if confirmed
+        if (confirmation == JOptionPane.OK_OPTION) {
+            // execute the action
+            datasetController.deleteEvent(eventsList.getSelectedIndex(), datasetsList.getSelectedIndex());
+
+            // update the number labels
+            updateNumberLabels();
+        }
     }//GEN-LAST:event_deleteEventButtonActionPerformed
 
     private void joinEventsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joinEventsButtonActionPerformed
+        // if there is no selection
+        if (eventsList.getSelectedIndex() == -1 || datasetController.getEventsListModel().size() < 2) {
+            // return
+            return;
+        }
+        
         JoinEventsFrame joinEventsFrame = new JoinEventsFrame(this, datasetController, eventsList.getSelectedIndex(), datasetsList.getSelectedIndex());
         joinEventsFrame.setLocationRelativeTo(null);
 	joinEventsFrame.setVisible(true);
@@ -653,53 +745,103 @@ public class MainFrame extends javax.swing.JFrame {
     
     // ************ BINDS ************ \\
     private void bindEventsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bindEventsButtonActionPerformed
+        // if there is no selection
+        if (datasetsList.getSelectedIndex() == -1 || datasetController.getDatasetsListModel().size() < 2) {
+            // return
+            return;
+        }
+        
         BindDatasetsFrame bindDatasetsFrame = new BindDatasetsFrame(this, datasetController, datasetsList.getSelectedIndex(), DatasetController.EVENTS);
         bindDatasetsFrame.setLocationRelativeTo(null);
 	bindDatasetsFrame.setVisible(true);
     }//GEN-LAST:event_bindEventsButtonActionPerformed
 
     private void bindSamplesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bindSamplesButtonActionPerformed
+        // if there is no selection
+        if (datasetsList.getSelectedIndex() == -1 || datasetController.getDatasetsListModel().size() < 2) {
+            // return
+            return;
+        }
+        
         BindDatasetsFrame bindDatasetsFrame = new BindDatasetsFrame(this, datasetController, datasetsList.getSelectedIndex(), DatasetController.SAMPLES);
         bindDatasetsFrame.setLocationRelativeTo(null);
 	bindDatasetsFrame.setVisible(true);
     }//GEN-LAST:event_bindSamplesButtonActionPerformed
 
     private void intersectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intersectButtonActionPerformed
+        // if there is no selection
+        if (datasetsList.getSelectedIndex() == -1 || datasetController.getDatasetsListModel().size() < 2) {
+            // return
+            return;
+        }
+        
         IntersectDatasetsFrame intersectDatasetsFrame = new IntersectDatasetsFrame(this, datasetController, datasetsList.getSelectedIndex(), DatasetController.SAMPLES);
         intersectDatasetsFrame.setLocationRelativeTo(null);
 	intersectDatasetsFrame.setVisible(true);
     }//GEN-LAST:event_intersectButtonActionPerformed
 
     private void datasetsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_datasetsListValueChanged
-        // update the lists
-        datasetController.updateLists(datasetsList.getSelectedIndex());
-        
-        // update the number labels
-        updateNumberLabels();
-        
-        // update the other panels
-        hypothesesPanel.updateSelectedDataset(datasetsList.getSelectedIndex());
-        externalToolsPanel.updateSelectedDataset();
-        
+        if (datasetsList.getSelectedIndex() != -1) {
+	    	// update the lists
+	        datasetController.updateLists(datasetsList.getSelectedIndex());
+	        
+	        // update the number labels
+	        updateNumberLabels();
+	        
+	        // update the other panels
+	        hypothesesPanel.updateSelectedDataset(datasetsList.getSelectedIndex());
+	        externalToolsPanel.updateSelectedDataset();
+        }
     }//GEN-LAST:event_datasetsListValueChanged
 
     private void samplesSelectionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_samplesSelectionButtonActionPerformed
+        // if there is no selection
+        if (datasetController.getSamplesListModel().size() == 0) {
+            // return
+            return;
+        }
+        
         SamplesSelectionFrame samplesSelectionFrame = new SamplesSelectionFrame(this, datasetController, datasetsList.getSelectedIndex());
         samplesSelectionFrame.setLocationRelativeTo(null);
 	samplesSelectionFrame.setVisible(true);
     }//GEN-LAST:event_samplesSelectionButtonActionPerformed
 
     private void eventsSelectionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventsSelectionButtonActionPerformed
+        // if there is no selection
+        if (datasetController.getEventsListModel().size() == 0) {
+            // return
+            return;
+        }
+        
         EventsSelectionFrame eventsSelectionFrame = new EventsSelectionFrame(this, datasetController, datasetsList.getSelectedIndex());
         eventsSelectionFrame.setLocationRelativeTo(null);
 	eventsSelectionFrame.setVisible(true);
     }//GEN-LAST:event_eventsSelectionButtonActionPerformed
 
     private void trimButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trimButtonActionPerformed
-        datasetController.trim(datasetsList.getSelectedIndex());
+        // if there is no selection
+        if (datasetController.getEventsListModel().size() == 0) {
+            // return
+            return;
+        }
+
+        // get the confirmation
+        int confirmation = JOptionPane.showConfirmDialog(this, "Events will be trimmed.\nAre you sure?", "", JOptionPane.OK_CANCEL_OPTION);
+        
+        // if confirmed
+        if (confirmation == JOptionPane.OK_OPTION) {
+            // trim the events
+            datasetController.trim(datasetsList.getSelectedIndex());
+        }
     }//GEN-LAST:event_trimButtonActionPerformed
 
     private void selectMultipleSamplesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectMultipleSamplesButtonActionPerformed
+        // if there is no selection
+        if (datasetController.getSamplesListModel().size() < 2) {
+            // return
+            return;
+        }
+
         // get the indexes of the multiple samples of the dataset
     	int[] multipleSamplesIndexes = datasetController.selectMultipleSamples(datasetsList.getSelectedIndex());
     	
@@ -708,6 +850,12 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_selectMultipleSamplesButtonActionPerformed
 
     private void deleteMultipleSamplesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteMultipleSamplesButtonActionPerformed
+        // if there is no selection
+        if (datasetController.getSamplesListModel().size() < 2) {
+            // return
+            return;
+        }
+
         // get the confirmation
         int confirmation = JOptionPane.showConfirmDialog(this, "Multiple samples will be deleted.\nAre you sure?", "", JOptionPane.OK_CANCEL_OPTION);
         
@@ -722,6 +870,12 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteMultipleSamplesButtonActionPerformed
 
     private void shortenBarcodesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_shortenBarcodesButtonActionPerformed
+        // if there is no selection
+        if (datasetController.getSamplesListModel().size() == 0) {
+            // return
+            return;
+        }
+
         // get the confirmation
         int confirmation = JOptionPane.showConfirmDialog(this, "Samples' names will be shortened.\nAre you sure?", "", JOptionPane.OK_CANCEL_OPTION);
         

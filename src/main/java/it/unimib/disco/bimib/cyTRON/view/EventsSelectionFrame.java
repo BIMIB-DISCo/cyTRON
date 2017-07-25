@@ -64,12 +64,12 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
         frequenceLabel.setText("Minimum frequence:");
 
         ctrlLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
-        ctrlLabel1.setText("ctrl/cmd-click to select multiple events");
+        ctrlLabel1.setText("ctrl/cmd-click to select multiple events (do not select for NA)");
 
         selectedEventsLabel.setText("Selected events:");
 
         ctrlLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
-        ctrlLabel2.setText("ctrl/cmd-click to select multiple events");
+        ctrlLabel2.setText("ctrl/cmd-click to select multiple events (do not select for NA)");
 
         filteredEventsList.setModel(datasetController.getEventsListModel());
         filteredEventsList.setLayoutOrientation(javax.swing.JList.VERTICAL_WRAP);
@@ -98,12 +98,12 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
                                     .addComponent(filteredEventsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(selectedEventsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(ctrlLabel1)
-                                    .addComponent(ctrlLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(ctrlLabel2)))
                             .addComponent(selectionLabel)
                             .addGroup(panelLayout.createSequentialGroup()
                                 .addComponent(frequenceLabel)
                                 .addGap(18, 18, 18)
-                                .addComponent(frequenceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(frequenceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -155,7 +155,7 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
 
     private void selectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectButtonActionPerformed
         // get the values
-        String frequence = frequenceTextField.getText();
+        String frequence = frequenceTextField.getText().replace(",", ".");
         int[] selectedEventsIndex = selectedEventsList.getSelectedIndices();
         int[] filteredEventsIndex = filteredEventsList.getSelectedIndices();
         

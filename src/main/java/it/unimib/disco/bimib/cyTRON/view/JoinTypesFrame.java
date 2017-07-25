@@ -1,6 +1,7 @@
 package it.unimib.disco.bimib.cyTRON.view;
 
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
+import java.awt.Color;
 import javax.swing.DefaultComboBoxModel;
 
 public class JoinTypesFrame extends javax.swing.JFrame {
@@ -126,6 +127,12 @@ public class JoinTypesFrame extends javax.swing.JFrame {
         if (typeIndex2 >= typeIndex1) {
             typeIndex2++;
         }
+        
+        // check the parameters
+        if (newName.length() == 0) {
+            newNameTextField.setBackground(Color.RED);
+            return;
+	}
 
         // rename the gene
         datasetController.joinTypes(typeIndex1, typeIndex2, datasetIndex, newName);

@@ -7,11 +7,14 @@ import it.unimib.disco.bimib.cyTRON.model.Sample;
 import it.unimib.disco.bimib.cyTRON.model.Type;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+
+import org.rosuda.REngine.REngineException;
 
 public class DatasetController {
         
@@ -37,23 +40,15 @@ public class DatasetController {
     }
     
     // ************ DATASETS ************ \\
-    public void importDataset(String name, String path, String type) {
-        // check name input
+    public void importDataset(String name, String path, String type) throws REngineException, FileNotFoundException {
+        // validate name input
         name = name.trim();
         name = name.replace(" ", "_");
-        if (name.isEmpty()) {
-            return;
-        }
-        
-        // check path input
-        if (path.isEmpty()) {
-            return;
-        }
         
         // check if the corresponding file exists
         File datasetFile = new File(path);
         if (!datasetFile.exists()) {
-            return;
+            throw new FileNotFoundException();
         }
         
         try {
@@ -67,12 +62,15 @@ public class DatasetController {
         }
     }
     
-    public void deleteDataset(int datasetIndex) {
-        // remove the dataset from the model
-        Dataset dataset = datasetsListModel.remove(datasetIndex);
+    public void deleteDataset(int datasetIndex) throws REngineException {
+        // get the dataset from the model
+        Dataset dataset = datasetsListModel.get(datasetIndex);
         
         // delete the R object
         dataset.deleteDataset();
+        
+        // get the dataset from the model
+        datasetsListModel.remove(datasetIndex);
         
         // clear the lists
         samplesListModel.clear();
@@ -81,10 +79,14 @@ public class DatasetController {
         eventsListModel.clear();
     }
     
-    public void bind(int datasetIndex1, int datasetIndex2, String newName, String bind) {
+    public void bind(int datasetIndex1, int datasetIndex2, String newName, String bind) throws REngineException {
     	// get the datasets
         Dataset dataset1 = datasetsListModel.get(datasetIndex1);
         Dataset dataset2 = datasetsListModel.get(datasetIndex2);
+        
+        // validate name input
+        newName = newName.trim();
+        newName = newName.replace(" ", "_");
         
         // execute the bind
         if (bind.equals(SAMPLES)) {
@@ -98,13 +100,17 @@ public class DatasetController {
         dataset2.deleteDataset();
         
         // update the lists
-        updateLists(datasetIndex1);
+        updateLists(dataset1);
     }
     
-    public void intersect(int datasetIndex1, int datasetIndex2, String newName) {
+    public void intersect(int datasetIndex1, int datasetIndex2, String newName) throws REngineException {
     	// get the datasets
         Dataset dataset1 = datasetsListModel.get(datasetIndex1);
         Dataset dataset2 = datasetsListModel.get(datasetIndex2);
+        
+        // validate name input
+        newName = newName.trim();
+        newName = newName.replace(" ", "_");
         
         // execute the intersection
         dataset1.intersect(dataset2, newName);
@@ -114,7 +120,7 @@ public class DatasetController {
         dataset2.deleteDataset();
         
         // update the lists
-        updateLists(datasetIndex1);
+        updateLists(dataset1);
     }
     
     // ************ SAMPLES ************ \\
@@ -190,6 +196,10 @@ public class DatasetController {
         Gene gene = genesListModel.get(geneIndex);
         Dataset dataset = datasetsListModel.get(datasetIndex);
         
+        // validate name input
+        newName = newName.trim();
+        newName = newName.replace(" ", "_");
+        
         // rename the gene
         dataset.renameGene(gene, newName);
     }
@@ -214,6 +224,10 @@ public class DatasetController {
         Type type = typesListModel.get(typeIndex);
         Dataset dataset = datasetsListModel.get(datasetIndex);
         
+        // validate name input
+        newName = newName.trim();
+        newName = newName.replace(" ", "_");
+        
         // rename the gene
         dataset.renameType(type, newName);
     }
@@ -237,6 +251,10 @@ public class DatasetController {
         Type type1 = typesListModel.get(typeIndex1);
         Type type2 = typesListModel.get(typeIndex2);
         Dataset dataset = datasetsListModel.get(datasetIndex);
+        
+        // validate name input
+        newName = newName.trim();
+        newName = newName.replace(" ", "_");
         
         // join the types in the dataset
         dataset.joinTypes(type1, type2, newName);
@@ -267,6 +285,14 @@ public class DatasetController {
         Event event1 = eventsListModel.get(eventIndex1);
         Event event2 = eventsListModel.get(eventIndex2);
         Dataset dataset = datasetsListModel.get(datasetIndex);
+        
+        // validate input
+        geneName = geneName.trim();
+        geneName = geneName.replace(" ", "_");
+        typeName = typeName.trim();
+        typeName = typeName.replace(" ", "_");
+        colorName = colorName.trim();
+        colorName = colorName.replace(" ", "_");
         
         // join the events in the dataset
         dataset.joinEvents(event1, event2, geneName, typeName, colorName);

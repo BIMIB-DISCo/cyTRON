@@ -420,7 +420,7 @@
                           </Group>
                           <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="fdrTextField" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="fdrTextField" min="-2" pref="32" max="-2" attributes="0"/>
                               <Component id="fileTextField" min="-2" pref="570" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="125" max="32767" attributes="0"/>

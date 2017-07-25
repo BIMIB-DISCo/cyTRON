@@ -1,6 +1,7 @@
 package it.unimib.disco.bimib.cyTRON.model;
 
 import org.rosuda.JRI.REXP;
+import org.rosuda.REngine.REngineException;
 
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.controller.ToStringComparator;
@@ -15,7 +16,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class Dataset {
 	
@@ -29,7 +29,7 @@ public class Dataset {
     private Map<String, Event> events;
     private Map<String, Pattern> patterns;
     
-    public Dataset(String name, String path, String type) {
+    public Dataset(String name, String path, String type) throws REngineException {
         this.name = name;
         genes = new HashMap<>();
         types = new HashMap<>();
@@ -55,28 +55,56 @@ public class Dataset {
     	retrieveEvents();
     }
     
-    public void deleteDataset() {
+    public void deleteDataset() throws REngineException {
         // create and execute the command
         String command = "rm(" + name + ")";
         RConnectionManager.eval(command);
+        
+        // check if the object exists in R
+        command = "exists('" + name + "')";
+        REXP rexp = RConnectionManager.eval(command);
+        if (rexp.asBool().isTRUE()) {
+			throw new REngineException(null, "rm");
+		}
     }
     
-    private void importGenotypes(String name, String path) {
+    private void importGenotypes(String name, String path) throws REngineException {
         // create and execute the command
         String command = name + " = import.genotypes('" + path + "')";
         RConnectionManager.eval(command);
+        
+        // check if the object exists in R
+        command = "exists('" + name + "')";
+        REXP rexp = RConnectionManager.eval(command);
+        if (rexp.asBool().isFALSE()) {
+			throw new REngineException(null, "import.genotypes");
+		}
     }
     
-    private void importGistic(String name, String path) {
+    private void importGistic(String name, String path) throws REngineException {
         // create and execute the command
-        String command = name + " = import.GISTIC('" + path + "')";
+        String command = name + " = import.GISTIC('" + path + "', silent=TRUE)";
         RConnectionManager.eval(command);
+        
+        // check if the object exists in R
+        command = "exists('" + name + "')";
+        REXP rexp = RConnectionManager.eval(command);
+        if (rexp.asBool().isFALSE()) {
+			throw new REngineException(null, "import.GISTIC");
+		}
     }
     
-    private void importMaf(String name, String path) {
+    private void importMaf(String name, String path) throws REngineException {
         // create and execute the command
-        String command = name + " = import.MAF('" + path + "', sep = ';')";
+        String command = name + " = import.MAF('" + path + "', sep = ';', silent=TRUE)";
         RConnectionManager.eval(command);
+        
+        // check if the object exists in R
+        command = "exists('" + name + "')";
+        REXP rexp = RConnectionManager.eval(command);
+        if (rexp.asBool().isFALSE()) {
+			throw new REngineException(null, "import.MAF");
+		}
     }
     
     public void bindSamples(Dataset dataset, String newName) {
@@ -96,7 +124,7 @@ public class Dataset {
     
     public void bindEvents(Dataset dataset, String newName) {
     	// create and execute the command
-        String command = newName + " = ebind(c(" + name + ", " + dataset.getName() + "))";
+        String command = newName + " = ebind(c(" + name + ", " + dataset.getName() + "), silent=TRUE)";
         RConnectionManager.eval(command);
         command = "rm(" + name + ")";
         RConnectionManager.eval(command);
@@ -136,11 +164,17 @@ public class Dataset {
         // get the names of the genes
         String[] names = rexp.asStringArray();
         
-        // instantiate the genes and add them to the map
-        for (int i = 0; i < names.length; i++) {
+        // if the output of R is null
+        if (names == null) {
+        	// return
+			return;
+		}
+        
+    	// instantiate the genes and add them to the map
+    	for (int i = 0; i < names.length; i++) {
             String name = names[i];
             samples.put(name, new Sample(name));
-        }
+    	}
     }
     
     public void deleteSample(Sample sample) {
@@ -265,7 +299,7 @@ public class Dataset {
     
     public void joinTypes(Type type1, Type type2, String newName) {
     	// create and execute the command
-        String command = name + " = join.types(" + name + ", '" + type1.getName() + "', '" + type2.getName() + "', new.type='" + newName + "')";
+        String command = name + " = join.types(" + name + ", '" + type1.getName() + "', '" + type2.getName() + "', new.type='" + newName + "', silent=TRUE)";
         RConnectionManager.eval(command);
         
         // reload the events
@@ -379,7 +413,7 @@ public class Dataset {
 			}
         	command += ")";
 		}
-        command += ")";
+        command += ", silent=TRUE)";
         RConnectionManager.eval(command);
         
         // reload the events
@@ -430,6 +464,12 @@ public class Dataset {
         
         // get the hypotheses info
     	String[] hypothesesStrings = rexp.asStringArray();
+    	
+    	// if the output of R is null
+    	if (hypothesesStrings == null) {
+    		// return
+    		return;
+    	}
     	
         // instantiate and split the hypotheses by patterns
     	int numberOfHypotheses = hypothesesStrings.length / 4;

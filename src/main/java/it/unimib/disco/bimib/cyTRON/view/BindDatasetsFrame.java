@@ -1,7 +1,13 @@
 package it.unimib.disco.bimib.cyTRON.view;
 
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
+import it.unimib.disco.bimib.cyTRON.model.R.RConnectionManager;
+import java.awt.Color;
+
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+
+import org.rosuda.REngine.REngineException;
 
 public class BindDatasetsFrame extends javax.swing.JFrame {
 
@@ -134,15 +140,25 @@ public class BindDatasetsFrame extends javax.swing.JFrame {
         if (datasetIndex2 >= datasetIndex1) {
             datasetIndex2++;
         }
-
-        // bind the datasets
-        this.datasetController.bind(datasetIndex1, datasetIndex2, newName, this.bind);
-       
-        // update the main frame
-        mainFrame.updateNumberLabels();
         
-        // close the frame
-        dispose();
+        // check the input
+        if (newName.length() == 0) {
+            newNameTextField.setBackground(Color.RED);
+            return;
+        }
+
+        try {
+        	// bind the datasets
+			this.datasetController.bind(datasetIndex1, datasetIndex2, newName, this.bind);
+			
+			// update the main frame
+	        mainFrame.updateNumberLabels();
+	        
+	        // close the frame
+	        dispose();
+		} catch (REngineException e) {
+			JOptionPane.showConfirmDialog(this, e.getMessage() + RConnectionManager.CHECK_INPUT, RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+		}
     }//GEN-LAST:event_bindButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -1,6 +1,7 @@
 package it.unimib.disco.bimib.cyTRON.view;
 
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
+import java.awt.Color;
 
 public class RenameTypeFrame extends javax.swing.JFrame {
 
@@ -107,6 +108,12 @@ public class RenameTypeFrame extends javax.swing.JFrame {
         // get the new name
         String newName = newNameTextField.getText();
 
+        // check the parameters
+        if (newName.length() == 0) {
+            newNameTextField.setBackground(Color.RED);
+            return;
+        }
+        
         // rename the gene
         datasetController.renameType(typeIndex, datasetIndex, newName);
 
