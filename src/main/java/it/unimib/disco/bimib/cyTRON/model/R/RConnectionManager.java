@@ -8,14 +8,16 @@ public class RConnectionManager {
 	public static final String CHECK_INPUT = " failed!\nPlease check input parameters.";
 	public static final String ERROR = "Error!";
 
-	// singleton object
+	// singleton objects
 	private static Rengine rEngine;
+	private static TextConsole textConsole;
 	
-	// get the singleton object
+	// get the singleton objects
 	public static Rengine getConnection() {
 		if (rEngine == null) {
 			String[] args = new String[]{"--quiet", "--vanilla", "--no-save"};
-			rEngine = new Rengine(args, false, new TextConsole());
+			textConsole = new TextConsole();
+			rEngine = new Rengine(args, false, textConsole);
             rEngine.eval("library('TRONCO')");
 		}
 		
@@ -47,6 +49,11 @@ public class RConnectionManager {
 	    }
 		
 		return true;
+	}
+	
+	// get the text console
+	public static TextConsole getTextConsole() {
+		return textConsole;
 	}
 	
 }

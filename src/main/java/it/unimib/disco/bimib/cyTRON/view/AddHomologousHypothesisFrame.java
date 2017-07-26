@@ -5,8 +5,11 @@ import it.unimib.disco.bimib.cyTRON.controller.HypothesesController;
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
 import it.unimib.disco.bimib.cyTRON.model.Event;
 import it.unimib.disco.bimib.cyTRON.model.Gene;
+import it.unimib.disco.bimib.cyTRON.model.R.RConnectionManager;
+
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 public class AddHomologousHypothesisFrame extends javax.swing.JFrame {
 
@@ -180,12 +183,17 @@ public class AddHomologousHypothesisFrame extends javax.swing.JFrame {
         // add the hypothesis
         hypothesesController.addHomologousHypothesis(mainFrame.getSelectedDataset(), effect, cause, genes, operation, datasetController); 
         
-        // update the number labels
-        mainFrame.updateNumberLabels();
-        hypothesesPanel.updatePatternsNumberLabel();
-                
-        // close the frame
-        dispose();
+        // if the last console message is regular
+    	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+    		// update the number labels
+            mainFrame.updateNumberLabels();
+            hypothesesPanel.updatePatternsNumberLabel();
+                    
+            // close the frame
+            dispose();
+    	} else {
+    		JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+    	}
     }//GEN-LAST:event_addHomologousButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

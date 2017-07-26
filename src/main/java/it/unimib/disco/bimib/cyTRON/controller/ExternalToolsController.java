@@ -77,20 +77,22 @@ public class ExternalToolsController {
         
         // read the output and populate the model
         groupsListModel.clear();
-        RList groupsList = rexp.asList();
-        for (int i = 0; i < groupsList.keys().length; i++) {
-			String group = groupsList.keys()[i] + " - ";
-			
-			String[] genes = groupsList.at(i).asStringArray();
-			for (int j = 0; j < genes.length; j++) {
-				group += genes[j];
-				if (j < genes.length - 1) {
-					group += ", ";
+        try {
+			RList groupsList = rexp.asList();
+			for (int i = 0; i < groupsList.keys().length; i++) {
+				String group = groupsList.keys()[i] + " - ";
+				
+				String[] genes = groupsList.at(i).asStringArray();
+				for (int j = 0; j < genes.length; j++) {
+					group += genes[j];
+					if (j < genes.length - 1) {
+						group += ", ";
+					}
 				}
+				
+				groupsListModel.addElement(group);
 			}
-			
-			groupsListModel.addElement(group);
-		}
+		} catch (NullPointerException e) {}
 	}
 	
 	public DefaultListModel<String> getGroupsListModel() {

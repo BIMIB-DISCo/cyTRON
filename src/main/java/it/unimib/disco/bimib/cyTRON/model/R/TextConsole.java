@@ -1,54 +1,62 @@
 package it.unimib.disco.bimib.cyTRON.model.R;
 
-import java.awt.FileDialog;
-import java.awt.Frame;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
 import org.rosuda.JRI.RMainLoopCallbacks;
 import org.rosuda.JRI.Rengine;
 
-class TextConsole implements RMainLoopCallbacks {
+public class TextConsole implements RMainLoopCallbacks {
 	
+	private String lastConsoleMessage;
+	private int lastConsoleMessageType;
+	
+	public TextConsole() {
+		lastConsoleMessage = "";
+		lastConsoleMessageType = 0;
+	}
+	
+	@Override
 	public void rWriteConsole(Rengine rEngine, String text, int oType) {
+		lastConsoleMessage = text;
+		lastConsoleMessageType = oType;
 		System.out.print(text);
 	}
 
+	@Override
 	public void rBusy(Rengine rEngine, int which) {
 		System.out.println("rBusy(" + which + ")");
 	}
 
+	@Override
 	public String rReadConsole(Rengine rEngine, String prompt, int addToHistory) {
-		System.out.print(prompt);
-		try {
-			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-			String string = bufferedReader.readLine();
-			return (string == null || string.length() == 0) ? string : string + "\n";
-		} catch (Exception e) {
-			System.out.println("jriReadConsole exception: " + e.getMessage());
-		}
 		return null;
 	}
 
+	@Override
 	public void rShowMessage(Rengine rEngine, String message) {
 		System.out.println("rShowMessage \"" + message + "\"");
 	}
 
-	public String rChooseFile(Rengine rEngine, int newFile) {
-		FileDialog fileDialog = new FileDialog(new Frame(), (newFile == 0) ? "Select a file" : "Select a new file",(newFile == 0)
-				? FileDialog.LOAD : FileDialog.SAVE);
-		fileDialog.show();
-		String res = null;
-		if (fileDialog.getDirectory() != null)
-			res = fileDialog.getDirectory();
-		if (fileDialog.getFile() != null)
-			res = (res == null) ? fileDialog.getFile() : (res + fileDialog.getFile());
-		return res;
+	@Override
+	public String rChooseFile(Rengine arg0, int arg1) {
+		return null;
 	}
 
-	public void rFlushConsole(Rengine rEngine) {}
+	@Override
+	public void rFlushConsole(Rengine arg0) {}
 
-	public void rLoadHistory(Rengine rEngine, String filename) {}
+	@Override
+	public void rLoadHistory(Rengine arg0, String arg1) {}
 
-	public void rSaveHistory(Rengine rEngine, String filename) {}
+	@Override
+	public void rSaveHistory(Rengine arg0, String arg1) {}
+	
+	public String getLastConsoleMessage() {
+		String tempLastConsoleMessage = lastConsoleMessage.substring(0);
+		lastConsoleMessage = "";
+		lastConsoleMessageType = 0;
+		return tempLastConsoleMessage;
+	}
+	
+	public boolean isLastMessageRegular() {
+		return lastConsoleMessageType == 0;
+	}
 }

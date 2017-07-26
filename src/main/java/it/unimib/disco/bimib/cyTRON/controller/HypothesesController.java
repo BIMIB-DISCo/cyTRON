@@ -5,6 +5,7 @@ import it.unimib.disco.bimib.cyTRON.model.Event;
 import it.unimib.disco.bimib.cyTRON.model.Gene;
 import it.unimib.disco.bimib.cyTRON.model.Hypothesis;
 import it.unimib.disco.bimib.cyTRON.model.Pattern;
+import it.unimib.disco.bimib.cyTRON.model.R.RConnectionManager;
 
 import java.util.List;
 
@@ -36,8 +37,11 @@ public class HypothesesController {
 	}
 	
 	public void removeNode(DefaultMutableTreeNode node) {
-		// remove the node
+            try {
+                // remove the node
 		patternTreeModel.removeNodeFromParent(node);
+            } catch (IllegalArgumentException e) {
+            }	
 	}
 	
 	public void clearPatternTreeModel() {
@@ -53,36 +57,70 @@ public class HypothesesController {
     	// build the pattern
     	String pattern = buildPattern(patternTreeModel, (DefaultMutableTreeNode) patternTreeModel.getChild(patternTreeModel.getRoot(), 0));
     	
+    	// validate the input
+    	label = label.trim();
+    	label = label.replace(" ", "_");
+    	
     	// add the hypothesis
     	dataset.addHypothesis(pattern, label, effect, cause);
     	
-    	// update the pattern list
-    	updatePatternsList(dataset);
-    	
-    	// update the lists of events and types
-    	datasetController.updateLists(dataset);
+    	// if the last console message is regular
+    	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+    		// update the pattern list
+        	updatePatternsList(dataset);
+        	
+        	// update the lists of events and types
+        	datasetController.updateLists(dataset);
+    	}
     }
     
     public void addGroupHypothesis(Dataset dataset, String operation, List<Gene> genes, List<Event> effect, List<Event> cause, String minimumCardinality, String maximumCardinality, String minimumProbability, DatasetController datasetController) {
-    	// add the group
+    	// validate the input
+        int minimumCardinalityInt;
+		try {
+			minimumCardinalityInt = Integer.parseInt(minimumCardinality);
+		} catch (NumberFormatException e) {
+			minimumCardinalityInt = 2;
+		}
+        int maximumCardinalityInt;
+		try {
+			maximumCardinalityInt = Integer.parseInt(maximumCardinality);
+		} catch (NumberFormatException e) {
+			maximumCardinalityInt = genes.size();
+		}
+        
+        if (minimumCardinalityInt < 2 || minimumCardinalityInt > maximumCardinalityInt) {
+            minimumCardinality = "2";
+        }
+        if (maximumCardinalityInt > genes.size() || maximumCardinalityInt < minimumCardinalityInt) {
+            maximumCardinality = String.valueOf(genes.size());
+        }
+
+        // add the group
     	dataset.addGroupHypothesis(operation, genes, effect, cause, minimumCardinality, maximumCardinality, minimumProbability);
     	
-    	// update the pattern list
-    	updatePatternsList(dataset);
-    	
-    	// update the lists of events and types
-    	datasetController.updateLists(dataset);
+    	// if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        	// update the pattern list
+        	updatePatternsList(dataset);
+        	
+        	// update the lists of events and types
+        	datasetController.updateLists(dataset);
+        }
     }
     
     public void addHomologousHypothesis(Dataset dataset, List<Event> effect, List<Event> cause, List<Gene> genes, String operation, DatasetController datasetController) {
     	// add the homologous
     	dataset.addHomologousHypothesis(effect, cause, genes, operation);
     	
-    	// update the pattern list
-    	updatePatternsList(dataset);
-    	
-    	// update the lists of events and types
-    	datasetController.updateLists(dataset);
+    	// if the last console message is regular
+    	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+    		// update the pattern list
+        	updatePatternsList(dataset);
+        	
+        	// update the lists of events and types
+        	datasetController.updateLists(dataset);
+    	}
     }
     
     public void deletePattern(Dataset dataset, int patternIndex, DatasetController datasetController) {
@@ -130,6 +168,16 @@ public class HypothesesController {
 		}
     	
     	return objectString;
+    }
+    
+    public boolean isPatternTreeEmpty() {
+    	int rootChildNumber = patternTreeModel.getChildCount(patternTreeModel.getRoot());
+    	
+    	if (rootChildNumber == 0) {
+			return true;
+		}
+    	
+    	return false;
     }
     
     // ************ LIST UPDATES ************ \\

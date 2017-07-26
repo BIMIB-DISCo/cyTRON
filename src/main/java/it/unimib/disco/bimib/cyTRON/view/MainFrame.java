@@ -905,7 +905,13 @@ public class MainFrame extends javax.swing.JFrame {
     }
     
     public Dataset getSelectedDataset() {
-    	return (Dataset) datasetController.getDatasetsListModel().get(datasetsList.getSelectedIndex());
+        int datasetIndex = datasetsList.getSelectedIndex();
+        
+        if (datasetIndex == -1) {
+            return null;
+        }
+        
+    	return (Dataset) datasetController.getDatasetsListModel().get(datasetIndex);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

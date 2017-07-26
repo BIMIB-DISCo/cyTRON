@@ -3,6 +3,7 @@ package it.unimib.disco.bimib.cyTRON.view;
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.controller.HypothesesController;
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
+import javax.swing.JOptionPane;
 
 public class HypothesesPanel extends javax.swing.JPanel {
     
@@ -212,31 +213,61 @@ public class HypothesesPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addPatternButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPatternButtonActionPerformed
+        // check if a dataset is not selected
+        if (mainFrame.getSelectedDataset() == null) {
+            // return
+            return;
+        }
+        
         AddHypothesisFrame addHypothesisFrame = new AddHypothesisFrame(hypothesesController, datasetController, mainFrame, this);
         addHypothesisFrame.setLocationRelativeTo(null);
 	addHypothesisFrame.setVisible(true);
     }//GEN-LAST:event_addPatternButtonActionPerformed
 
     private void deletePatternButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletePatternButtonActionPerformed
-        // get the dataset
-        Dataset dataset = mainFrame.getSelectedDataset();
-
-        // delete the pattern
-        hypothesesController.deletePattern(dataset, patternsList.getSelectedIndex(), datasetController);
+        // if there is no selection
+        if (patternsList.getSelectedIndex() == -1) {
+            // return
+            return;
+        }
         
-        // update the number labels
-        mainFrame.updateNumberLabels();
-        updatePatternsNumberLabel();
-        hypothesesNumberLabel.setText("");
+        // get the confirmation
+        int confirmation = JOptionPane.showConfirmDialog(this, "The pattern will be deleted.\nAre you sure?", "", JOptionPane.OK_CANCEL_OPTION);
+        
+        // if confirmed
+        if (confirmation == JOptionPane.OK_OPTION) {
+            // get the dataset
+            Dataset dataset = mainFrame.getSelectedDataset();
+
+            // delete the pattern
+            hypothesesController.deletePattern(dataset, patternsList.getSelectedIndex(), datasetController);
+
+            // update the number labels
+            mainFrame.updateNumberLabels();
+            updatePatternsNumberLabel();
+            hypothesesNumberLabel.setText("");
+        }
     }//GEN-LAST:event_deletePatternButtonActionPerformed
 
     private void addGroupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addGroupButtonActionPerformed
+        // check if a dataset is not selected
+        if (mainFrame.getSelectedDataset() == null) {
+            // return
+            return;
+        }
+        
         AddGroupHypothesisFrame addGroupHypothesisFrame = new AddGroupHypothesisFrame(hypothesesController, datasetController, mainFrame, this);
         addGroupHypothesisFrame.setLocationRelativeTo(null);
 	addGroupHypothesisFrame.setVisible(true);
     }//GEN-LAST:event_addGroupButtonActionPerformed
 
     private void addHomologousButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addHomologousButtonActionPerformed
+        // check if a dataset is not selected
+        if (mainFrame.getSelectedDataset() == null) {
+            // return
+            return;
+        }
+        
         AddHomologousHypothesisFrame addHomologousHypothesisFrame = new AddHomologousHypothesisFrame(hypothesesController, datasetController, mainFrame, this);
         addHomologousHypothesisFrame.setLocationRelativeTo(null);
 	addHomologousHypothesisFrame.setVisible(true);
@@ -248,6 +279,12 @@ public class HypothesesPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_patternsListValueChanged
 
     private void deleteHypothesisButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteHypothesisButtonActionPerformed
+        // if there are no patterns
+        if (hypothesesController.getPatternsListModel().size() == 0) {
+            // return
+            return;
+        }
+        
         DeleteHypothesesFrame deleteHypothesesFrame = new DeleteHypothesesFrame(hypothesesController, datasetController, mainFrame, this);
         deleteHypothesesFrame.setLocationRelativeTo(null);
 	deleteHypothesesFrame.setVisible(true);

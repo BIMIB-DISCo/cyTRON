@@ -155,7 +155,7 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
 
     private void selectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectButtonActionPerformed
         // get the values
-        String frequence = frequenceTextField.getText().replace(",", ".");
+        String frequence = frequenceTextField.getText();
         int[] selectedEventsIndex = selectedEventsList.getSelectedIndices();
         int[] filteredEventsIndex = filteredEventsList.getSelectedIndices();
         

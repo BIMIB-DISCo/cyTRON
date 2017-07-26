@@ -314,6 +314,9 @@ public class DatasetController {
     		filteredEvents[i] = eventsListModel.get(filteredEventsIndex[i]);
 		}
     	Dataset dataset = datasetsListModel.get(datasetIndex);
+        
+        // validate the input
+        frequence = frequence.replace(",", ".");
     	
     	// select the samples
     	dataset.eventsSelection(frequence, selectedEvents, filteredEvents);

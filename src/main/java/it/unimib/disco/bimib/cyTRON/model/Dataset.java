@@ -530,18 +530,21 @@ public class Dataset {
         command += ")";
         RConnectionManager.eval(command);
         
-        // get the pattern type
-        Type type;
-        if (!types.containsKey(PATTERN)) {
-        	types.put(PATTERN, new Type(PATTERN));
-        }
-        type = types.get(PATTERN);
-        
-        // add the sample
-        events.put(label, new Event(label, type, new Gene(label)));
-        
-        // update the patterns
-        retrievePatterns();
+        // if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        	// get the pattern type
+            Type type;
+            if (!types.containsKey(PATTERN)) {
+            	types.put(PATTERN, new Type(PATTERN));
+            }
+            type = types.get(PATTERN);
+            
+            // add the sample
+            events.put(label, new Event(label, type, new Gene(label)));
+            
+            // update the patterns
+            retrievePatterns();
+		}
     }
     
     public void addGroupHypothesis(String operation, List<Gene> genes, List<Event> effect, List<Event> cause, String minimumCardinality, String maximumCardinality, String minimumProbability) {
@@ -565,9 +568,12 @@ public class Dataset {
         command += ", silent=TRUE)";
         RConnectionManager.eval(command);
         
-        // update the patterns and the events 
-        retrieveEvents();
-        retrievePatterns();
+        // if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+	        // update the patterns and the events 
+	        retrieveEvents();
+	        retrievePatterns();
+        }
     }
     
     public void addHomologousHypothesis(List<Event> effect, List<Event> cause, List<Gene> genes, String operation) {
@@ -585,9 +591,12 @@ public class Dataset {
         command += ", FUN=" + operation + ", silent=TRUE)";
         RConnectionManager.eval(command);
         
-        // update the patterns and the events 
-        retrieveEvents();
-        retrievePatterns();
+        // if the last console message is regular
+    	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+    		// update the patterns and the events 
+            retrieveEvents();
+            retrievePatterns();
+    	}
     }
     
     public void deletePattern(Pattern pattern) {

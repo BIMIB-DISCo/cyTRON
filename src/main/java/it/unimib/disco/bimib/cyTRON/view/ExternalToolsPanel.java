@@ -4,14 +4,13 @@ import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.controller.ExternalToolsController;
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
 import it.unimib.disco.bimib.cyTRON.model.Type;
+import java.awt.Color;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.management.modelmbean.ModelMBean;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -390,11 +389,24 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
         List<Type> amplification = amplificationList.getSelectedValuesList();
         List<Type> deletion = deletionList.getSelectedValuesList();
         
-        // export the mutex file
-        externalToolsController.exportMutex(dataset, fileName, filePath, mutation, amplification, deletion);
+        // check the parameters
+        if (dataset == null) {
+            return;
+        }
+        if (fileName.length() == 0) {
+            fileNameTextField1.setBackground(Color.RED);
+        }
+        if (filePath.length() == 0) {
+            filePathTextField1.setBackground(Color.RED);
+        }
         
-        // show confirmation message
-        JOptionPane.showConfirmDialog(mainFrame, "Mutex file exported.", "", JOptionPane.PLAIN_MESSAGE);
+        if (fileName.length() > 0 && filePath.length() > 0) {
+                // export the mutex file
+            externalToolsController.exportMutex(dataset, fileName, filePath, mutation, amplification, deletion);
+
+            // show confirmation message
+            JOptionPane.showConfirmDialog(this, "Mutex file exported.", "", JOptionPane.PLAIN_MESSAGE);
+        }
     }//GEN-LAST:event_exportMutexButtonActionPerformed
 
     private void exportNbsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportNbsButtonActionPerformed
@@ -403,15 +415,30 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
         String file = filePathTextField2.getText() + "/" + fileNameTextField2.getText();
         String mapping = mappingTextField.getText();
         
-        // export the nbs file
-        String outputString = externalToolsController.exportNbs(dataset, file, mapping);
-        
-        // show the output message
-        if (outputString.equals("")) {
-            JOptionPane.showConfirmDialog(mainFrame, "NBS file exported.", "", JOptionPane.PLAIN_MESSAGE);
-        } else {
-            JOptionPane.showConfirmDialog(mainFrame, outputString, "", JOptionPane.PLAIN_MESSAGE);
+        // check the parameters
+        if (dataset == null) {
+            return;
         }
+        if (file.trim().length() == 1) {
+            fileNameTextField2.setBackground(Color.RED);
+            filePathTextField2.setBackground(Color.RED);
+        }
+        if (mapping.length() == 0) {
+            mappingTextField.setBackground(Color.RED);
+        }
+        
+        if (file.trim().length() > 1 && mapping.length() > 0) {
+            // export the nbs file
+            String outputString = externalToolsController.exportNbs(dataset, file, mapping);
+
+            // show the output message
+            if (outputString.equals("")) {
+                JOptionPane.showConfirmDialog(this, "NBS file exported.", "", JOptionPane.PLAIN_MESSAGE);
+            } else {
+                JOptionPane.showConfirmDialog(this, outputString, "", JOptionPane.PLAIN_MESSAGE);
+            }
+        }
+        
     }//GEN-LAST:event_exportNbsButtonActionPerformed
 
     private void filePathTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_filePathTextField1MouseClicked
@@ -484,6 +511,12 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
         // get the parameters
         String file = fileTextField.getText();
         String fdr = fdrTextField.getText();
+        
+        // check the paramets
+        if (file.length() == 0) {
+            fileTextField.setBackground(Color.RED);
+            return;
+        }
         
         // import mutex
         externalToolsController.importMutex(file, fdr);

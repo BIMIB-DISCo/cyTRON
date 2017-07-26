@@ -2,11 +2,14 @@ package it.unimib.disco.bimib.cyTRON.view;
 
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.controller.HypothesesController;
-import it.unimib.disco.bimib.cyTRON.model.Dataset;
 import it.unimib.disco.bimib.cyTRON.model.Event;
 import it.unimib.disco.bimib.cyTRON.model.Gene;
+import it.unimib.disco.bimib.cyTRON.model.R.RConnectionManager;
+
+import java.awt.Color;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
@@ -60,6 +63,7 @@ public class AddHypothesisFrame extends javax.swing.JFrame {
         geneComboBox = new javax.swing.JComboBox<>();
         eventComboBox = new javax.swing.JComboBox<>();
         removeNodeButton = new javax.swing.JButton();
+        infoButton = new javax.swing.JButton();
         parametersPanel = new javax.swing.JPanel();
         labelLabel = new javax.swing.JLabel();
         labelTextField = new javax.swing.JTextField();
@@ -75,8 +79,8 @@ public class AddHypothesisFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Add Hypothesis");
+        setMaximumSize(new java.awt.Dimension(960, 540));
         setMinimumSize(new java.awt.Dimension(960, 540));
-        setPreferredSize(new java.awt.Dimension(960, 540));
         setSize(new java.awt.Dimension(960, 540));
 
         paternPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Pattern"));
@@ -113,6 +117,10 @@ public class AddHypothesisFrame extends javax.swing.JFrame {
             }
         });
 
+        infoButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/info.png"))); // NOI18N
+        infoButton.setPreferredSize(new java.awt.Dimension(29, 29));
+        infoButton.setSize(new java.awt.Dimension(29, 29));
+
         javax.swing.GroupLayout paternPanelLayout = new javax.swing.GroupLayout(paternPanel);
         paternPanel.setLayout(paternPanelLayout);
         paternPanelLayout.setHorizontalGroup(
@@ -120,7 +128,7 @@ public class AddHypothesisFrame extends javax.swing.JFrame {
             .addGroup(paternPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(paternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(patternScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                    .addComponent(patternScrollPane)
                     .addGroup(paternPanelLayout.createSequentialGroup()
                         .addGroup(paternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, paternPanelLayout.createSequentialGroup()
@@ -137,8 +145,10 @@ public class AddHypothesisFrame extends javax.swing.JFrame {
                                 .addComponent(eventComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paternPanelLayout.createSequentialGroup()
-                        .addComponent(removeNodeButton)
+                        .addComponent(infoButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(removeNodeButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(addNodeButton)))
                 .addContainerGap())
         );
@@ -146,7 +156,7 @@ public class AddHypothesisFrame extends javax.swing.JFrame {
             paternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paternPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(patternScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(patternScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(paternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(operationComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -161,8 +171,10 @@ public class AddHypothesisFrame extends javax.swing.JFrame {
                     .addComponent(eventRadioButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(paternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addNodeButton)
-                    .addComponent(removeNodeButton))
+                    .addGroup(paternPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(addNodeButton)
+                        .addComponent(removeNodeButton))
+                    .addComponent(infoButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -277,7 +289,13 @@ public class AddHypothesisFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addNodeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNodeButtonActionPerformed
-        // get the selected node
+        // if nothing is selected
+    	if (patternTree.isSelectionEmpty()) {
+			// return
+    		return;
+		}
+    	
+    	// get the selected node
         DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) patternTree.getSelectionPath().getLastPathComponent();
 
         // get the child object
@@ -298,7 +316,13 @@ public class AddHypothesisFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_addNodeButtonActionPerformed
     
     private void removeNodeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeNodeButtonActionPerformed
-        // get the selected node
+    	// if nothing is selected
+    	if (patternTree.isSelectionEmpty()) {
+			// return
+    		return;
+		}
+    	
+    	// get the selected node
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) patternTree.getSelectionPath().getLastPathComponent();
         
         // remove the node
@@ -311,18 +335,33 @@ public class AddHypothesisFrame extends javax.swing.JFrame {
         List<Event> effect = effectList.getSelectedValuesList();
         List<Event> cause = causeList.getSelectedValuesList();
         
-        // add the hypothesis
-        hypothesesController.addHypothesis(mainFrame.getSelectedDataset(), label, effect, cause, datasetController);
+        // validate input
+        if (label.length() == 0) {
+			labelTextField.setBackground(Color.RED);
+		}
+        if (hypothesesController.isPatternTreeEmpty()) {
+			patternTree.setBackground(Color.RED);
+		}
         
-        // update the number labels
-        mainFrame.updateNumberLabels();
-        hypothesesPanel.updatePatternsNumberLabel();
-        
-        // clear the pattern tree model
-        hypothesesController.clearPatternTreeModel();
-        
-        // close the frame
-        dispose();
+        if (label.length() > 0 && !hypothesesController.isPatternTreeEmpty()) {
+        	// add the hypothesis
+            hypothesesController.addHypothesis(mainFrame.getSelectedDataset(), label, effect, cause, datasetController);
+            
+            // if the last console message is regular
+        	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        		// update the number labels
+                mainFrame.updateNumberLabels();
+                hypothesesPanel.updatePatternsNumberLabel();
+                
+                // clear the pattern tree model
+                hypothesesController.clearPatternTreeModel();
+                
+                // close the frame
+                dispose();
+        	} else {
+        		JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+        	}
+        }
     }//GEN-LAST:event_addHypothesisButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -340,6 +379,7 @@ public class AddHypothesisFrame extends javax.swing.JFrame {
     private javax.swing.JRadioButton eventRadioButton;
     private javax.swing.JComboBox<Gene> geneComboBox;
     private javax.swing.JRadioButton geneRadioButton;
+    private javax.swing.JButton infoButton;
     private javax.swing.JLabel labelLabel;
     private javax.swing.JTextField labelTextField;
     private javax.swing.ButtonGroup nodeButtonGroup;

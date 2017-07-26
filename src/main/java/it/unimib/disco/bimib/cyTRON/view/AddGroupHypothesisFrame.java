@@ -2,11 +2,14 @@ package it.unimib.disco.bimib.cyTRON.view;
 
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.controller.HypothesesController;
-import it.unimib.disco.bimib.cyTRON.model.Dataset;
 import it.unimib.disco.bimib.cyTRON.model.Event;
 import it.unimib.disco.bimib.cyTRON.model.Gene;
+import it.unimib.disco.bimib.cyTRON.model.R.RConnectionManager;
+
+import java.awt.Color;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 public class AddGroupHypothesisFrame extends javax.swing.JFrame {
 
@@ -58,6 +61,7 @@ public class AddGroupHypothesisFrame extends javax.swing.JFrame {
         maximumCardinalityTextField = new javax.swing.JTextField();
         minimumProbabilityLabel = new javax.swing.JLabel();
         minimumProbabilityTextField = new javax.swing.JTextField();
+        defaultLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Add Group");
@@ -106,11 +110,14 @@ public class AddGroupHypothesisFrame extends javax.swing.JFrame {
 
         operationComboBox.setModel(operationsDefaultComboBoxModel);
 
-        minimumCardinalityLabel.setText("Minimum cardinality:");
+        minimumCardinalityLabel.setText("Minimum cardinality*:");
 
-        maximumCardinalityLabel.setText("Maximum cardinality:");
+        maximumCardinalityLabel.setText("Maximum cardinality*:");
 
-        minimumProbabilityLabel.setText("Minimum probability:");
+        minimumProbabilityLabel.setText("Minimum probability*:");
+
+        defaultLabel.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
+        defaultLabel.setText("* do not select for default");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -119,20 +126,6 @@ public class AddGroupHypothesisFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(effectLabel)
-                            .addComponent(causeLabel))
-                        .addGap(42, 42, 42)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(effectScrollPane)
-                            .addComponent(causeScrollPane)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(ctrlLabel2)
-                                    .addComponent(ctrlLabel1)
-                                    .addComponent(ctrlLabel3))
-                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -157,10 +150,26 @@ public class AddGroupHypothesisFrame extends javax.swing.JFrame {
                                 .addComponent(minimumProbabilityLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(minimumProbabilityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 282, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 270, Short.MAX_VALUE)
                         .addComponent(addGroupButton))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(effectLabel)
+                        .addGap(44, 44, 44)
+                        .addComponent(effectScrollPane))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(addLabel)
+                        .addComponent(causeLabel)
+                        .addGap(42, 42, 42)
+                        .addComponent(causeScrollPane))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(addLabel)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(84, 84, 84)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ctrlLabel1)
+                                    .addComponent(ctrlLabel2)
+                                    .addComponent(ctrlLabel3)))
+                            .addComponent(defaultLabel))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -176,30 +185,27 @@ public class AddGroupHypothesisFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(genesLabel)
-                    .addComponent(genesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(genesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ctrlLabel3)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(effectLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ctrlLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(effectScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(effectScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(effectLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ctrlLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(causeScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(causeScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(causeLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ctrlLabel2)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
                         .addComponent(addGroupButton)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(ctrlLabel2)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(minimumCardinalityLabel)
@@ -210,7 +216,9 @@ public class AddGroupHypothesisFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(minimumProbabilityLabel)
                             .addComponent(minimumProbabilityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(31, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(defaultLabel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -226,15 +234,27 @@ public class AddGroupHypothesisFrame extends javax.swing.JFrame {
         String maximumCardinality = maximumCardinalityTextField.getText();
         String minimumProbability = minimumProbabilityTextField.getText();
         
+        // if no genes are selected
+        if (genes.size() == 0) {
+            // return
+            genesList.setBackground(Color.RED);
+            return;
+        }
+        
         // add the hypothesis
         hypothesesController.addGroupHypothesis(mainFrame.getSelectedDataset(), operation, genes, effect, cause, minimumCardinality, maximumCardinality, minimumProbability, datasetController);
         
-        // update the number labels
-        mainFrame.updateNumberLabels();
-        hypothesesPanel.updatePatternsNumberLabel();
-                
-        // close the frame
-        dispose();
+        // if the last console message is regular
+    	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+    		// update the number labels
+            mainFrame.updateNumberLabels();
+            hypothesesPanel.updatePatternsNumberLabel();
+            
+            // close the frame
+            dispose();
+    	} else {
+    		JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+    	}
     }//GEN-LAST:event_addGroupButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -246,6 +266,7 @@ public class AddGroupHypothesisFrame extends javax.swing.JFrame {
     private javax.swing.JLabel ctrlLabel1;
     private javax.swing.JLabel ctrlLabel2;
     private javax.swing.JLabel ctrlLabel3;
+    private javax.swing.JLabel defaultLabel;
     private javax.swing.JLabel effectLabel;
     private javax.swing.JList<Event> effectList;
     private javax.swing.JScrollPane effectScrollPane;
