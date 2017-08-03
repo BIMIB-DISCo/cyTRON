@@ -15,7 +15,14 @@ public class MainFrame extends javax.swing.JFrame {
     private final DatasetController datasetController;
     
     public MainFrame() {
-        // instantiate the controllers
+    	try {
+			// instantiate the connection with R
+			RConnectionManager.instantiateConnection();
+		} catch (RuntimeException e) {
+			JOptionPane.showConfirmDialog(this, e.getMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+		}
+    	
+        // instantiate the controller
         datasetController = new DatasetController();
         
         // draws the interface
@@ -65,7 +72,6 @@ public class MainFrame extends javax.swing.JFrame {
         genesNumberLabel = new javax.swing.JLabel();
         eventsNumberLabel = new javax.swing.JLabel();
         samplesNumberLabel = new javax.swing.JLabel();
-        visualizationPanel = new javax.swing.JPanel();
         inferencePanel = new javax.swing.JPanel();
         datasetsPanelList = new javax.swing.JPanel();
         datasetsListScrollPane = new javax.swing.JScrollPane();
@@ -435,19 +441,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         tabbedPane.addTab("Edit", editPanel);
 
-        javax.swing.GroupLayout visualizationPanelLayout = new javax.swing.GroupLayout(visualizationPanel);
-        visualizationPanel.setLayout(visualizationPanelLayout);
-        visualizationPanelLayout.setHorizontalGroup(
-            visualizationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 941, Short.MAX_VALUE)
-        );
-        visualizationPanelLayout.setVerticalGroup(
-            visualizationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 662, Short.MAX_VALUE)
-        );
-
-        tabbedPane.addTab("Visualization", visualizationPanel);
-
         javax.swing.GroupLayout inferencePanelLayout = new javax.swing.GroupLayout(inferencePanel);
         inferencePanel.setLayout(inferencePanelLayout);
         inferencePanelLayout.setHorizontalGroup(
@@ -575,9 +568,11 @@ public class MainFrame extends javax.swing.JFrame {
     private void initCustomComponents() {
     	hypothesesPanel = new HypothesesPanel(datasetController, this);
     	externalToolsPanel = new ExternalToolsPanel(datasetController, this);
+        visualizationPanel = new VisualizationPanel(datasetController, this);
     	
     	tabbedPane.addTab("Hypotheses", hypothesesPanel);
     	tabbedPane.addTab("External Tools", externalToolsPanel);
+        tabbedPane.addTab("Visualization", visualizationPanel);
     }
     
     // ************ DATASETS ************ \\
@@ -791,6 +786,7 @@ public class MainFrame extends javax.swing.JFrame {
 	        // update the other panels
 	        hypothesesPanel.updateSelectedDataset(datasetsList.getSelectedIndex());
 	        externalToolsPanel.updateSelectedDataset();
+                visualizationPanel.updateTitleAndStages();
         }
     }//GEN-LAST:event_datasetsListValueChanged
 
@@ -962,8 +958,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel typesNumberLabel;
     private javax.swing.JPanel typesPanelList;
     private javax.swing.JScrollPane typesScrollPane;
-    private javax.swing.JPanel visualizationPanel;
     // End of variables declaration//GEN-END:variables
     private HypothesesPanel hypothesesPanel;
     private ExternalToolsPanel externalToolsPanel;
+    private VisualizationPanel visualizationPanel;
 }

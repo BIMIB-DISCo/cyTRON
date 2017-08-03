@@ -8,7 +8,15 @@ import it.unimib.disco.bimib.cyTRON.controller.ToStringComparator;
 import it.unimib.disco.bimib.cyTRON.model.R.RConnectionManager;
 import it.unimib.disco.bimib.cyTRON.view.DeleteHypothesesFrame;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -28,6 +36,8 @@ public class Dataset {
     private Map<String, Sample> samples;
     private Map<String, Event> events;
     private Map<String, Pattern> patterns;
+    private String description;
+    private boolean hasStagesAnnotation;
     
     public Dataset(String name, String path, String type) throws REngineException {
         this.name = name;
@@ -36,6 +46,8 @@ public class Dataset {
         samples = new HashMap<>();
         events = new HashMap<>();
         patterns = new HashMap<>();
+        description = "";
+        hasStagesAnnotation = false;
     	
     	switch (type) {
             case DatasetController.GENOTYPES:
@@ -701,6 +713,203 @@ public class Dataset {
     	REXP rexp = RConnectionManager.eval(command);
     	
     	return rexp.asStringArray();
+    }
+    
+    // ************ ANNOTATIONS ************ \\
+    public void annotateDescription(String description) {
+    	// create and execute the command
+    	String command = name + " = annotate.description(" + name + ", '" + description + "')";
+    	RConnectionManager.eval(command);
+    	
+    	// set the description
+    	this.description = description;
+    }
+    
+    public void annotateStages(HashMap<String, String> stages) {
+    	// create and execute the command
+    	String command = "stages = matrix(c(";
+    	for (Iterator<String> iterator = stages.keySet().iterator(); iterator.hasNext();) {
+    		String sample = (String) iterator.next();
+    		command += "'" + stages.get(sample) + "'";
+    		if (iterator.hasNext()) {
+				command += ", ";
+			}
+    	}
+    	command += "))";
+    	RConnectionManager.eval(command);
+    	
+    	command = "colnames(stages) = c('Stage')";
+    	RConnectionManager.eval(command);
+    	
+    	command = "rownames(stages) = c(";
+    	for (Iterator<String> iterator = stages.keySet().iterator(); iterator.hasNext();) {
+    		String sample = (String) iterator.next();
+    		command += "'" + sample + "'";
+    		if (iterator.hasNext()) {
+				command += ", ";
+			}
+    	}
+    	command += ")";
+    	RConnectionManager.eval(command);
+    	
+    	command = name + " = annotate.stages(" + name + ", stages)";
+    	RConnectionManager.eval(command);
+    	
+    	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+    		hasStagesAnnotation = true;
+    	}
+    }
+    
+    public void oncoprint(String path, Boolean exclusivitySort, Boolean labelSort, Boolean stageSort, Boolean clusterSamples,
+    		Boolean clusterGenes, Boolean annotateStage, Boolean annotateHits, Float fontSize, Boolean samplesName, Boolean legend,
+    		Float legendSize, HashMap<String, String> groups, Boolean pattern) {
+    	// create and execute the command
+//    	String command = "x11(type='cairo', width=14, height=14)"; // only on mac
+//    	RConnectionManager.eval(command);
+//    	
+//    	command = "oncoprint(" + name + ")";
+//    	RConnectionManager.eval(command);
+//    	
+//    	command = "savePlot(filename='" + path + "', type='png')"; // only on mac
+//    	RConnectionManager.eval(command);
+//    	System.out.println("Printing pdf...");
+//    	
+//    	command = "dev.off()";
+//    	RConnectionManager.eval(command);
+//    	command = "graphics.off()";
+//    	RConnectionManager.eval(command);
+    	
+    	// create the command
+    	String command = "oncoprint(" + name + ", file='" + path
+    			+ "', excl.sort=" + exclusivitySort.toString().toUpperCase()
+    			+ ", group.by.label=" + labelSort.toString().toUpperCase()
+    			+ ", group.by.stage=" + stageSort.toString().toUpperCase()
+    			+ ", samples.cluster=" + clusterSamples.toString().toUpperCase()
+    			+ ", genes.cluster=" + clusterGenes.toString().toUpperCase()
+    			+ ", ann.stage=" + annotateStage.toString().toUpperCase()
+    			+ ", ann.hits=" + annotateHits.toString().toUpperCase()
+    			+ ", text.cex=" + fontSize.toString().replace(",", ".")
+    			+ ", sample.id=" + samplesName.toString().toUpperCase()
+    			+ ", legend=" + legend.toString().toUpperCase()
+    			+ ", legend.cex=" + legendSize.toString().replace(",", ".")
+    			+ ", show.patterns=" + pattern.toString().toUpperCase();
+    
+    	// create the groups if provided
+    	if (groups.size() > 0) {
+    		String groupsCommand = "groups = matrix(c(";
+        	for (Iterator<String> iterator = groups.keySet().iterator(); iterator.hasNext();) {
+        		String sample = (String) iterator.next();
+        		groupsCommand += "'" + groups.get(sample) + "'";
+        		if (iterator.hasNext()) {
+    				groupsCommand += ", ";
+    			}
+        	}
+        	groupsCommand += "))";
+        	RConnectionManager.eval(groupsCommand);
+        	
+        	groupsCommand = "colnames(groups) = c('Group')";
+        	RConnectionManager.eval(groupsCommand);
+        	
+        	groupsCommand = "rownames(groups) = c(";
+        	for (Iterator<String> iterator = groups.keySet().iterator(); iterator.hasNext();) {
+        		String sample = (String) iterator.next();
+        		groupsCommand += "'" + sample + "'";
+        		if (iterator.hasNext()) {
+    				groupsCommand += ", ";
+    			}
+        	}
+        	groupsCommand += ")";
+        	RConnectionManager.eval(groupsCommand);
+        	
+        	command += ", group.samples=groups";
+		}
+    	
+    	// close the command
+    	command += ")";
+    	
+    	// if the OS is windows
+    	if (System.getProperty("os.name").toLowerCase().contains("win")) {
+			// execute the command
+    		RConnectionManager.eval(command);
+    		
+    		// close the graphics
+    		command = "dev.off()";
+        	RConnectionManager.eval(command);
+		} else {
+			String rdataPath;
+			try {
+				// create the temporary Rdata file
+				File rdataFile = File.createTempFile("oncoprint_" + name + "_", ".Rdata");
+				
+				// get the path and delete the file
+				rdataPath = rdataFile.getAbsolutePath();
+				rdataFile.delete();
+				
+				// save the dataset to the Rdata file
+				String saveCommand = "save(" + name + ", file='" + rdataPath + "')";
+				RConnectionManager.eval(saveCommand);
+			} catch (IOException e) {
+			 	e.printStackTrace();
+			 	return;
+			}
+			
+			File rFile = null;
+			try {
+				// create the temporary R file
+				rFile = File.createTempFile("oncoprint_" + name + "_", ".R");
+				
+				// get the path
+				Path rPath = rFile.toPath();
+				
+				// prepare the content of the file
+				List<String> rFileContent = Arrays.asList(
+						"library(TRONCO)",
+						"load(file='" + rdataPath + "')",
+						command);
+				
+				// write the content to the file
+				Files.write(rPath, rFileContent, Charset.forName("UTF-8"));
+			} catch (IOException e) {
+			 	e.printStackTrace();
+			 	return;
+			}
+			
+			try {
+				// create the temporary bash file
+				File shFile = File.createTempFile("oncoprint_" + name + "_", ".bash");
+				
+				// get the path
+				Path shPath = shFile.toPath();
+				
+				// prepare the content of the file
+				List<String> shFileContent = Arrays.asList(
+						"#!/bin/bash",
+						"Rscript " + rFile.getPath());
+				
+				// write the content to the file
+				Files.write(shPath, shFileContent, Charset.forName("UTF-8"));
+				
+				// instantiate the process
+				ProcessBuilder processBuilder = new ProcessBuilder("bash", shFile.toString());
+		        processBuilder.inheritIO();
+		        
+		        // start and wait for the process
+		        Process process = processBuilder.start();
+		        process.waitFor();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+    }
+    
+    public String getDescription() {
+    	return description;
+    }
+    
+    public boolean hasStagesAnnotation() {
+    	return hasStagesAnnotation;
     }
     
     // ************ UTILITIES ************ \\

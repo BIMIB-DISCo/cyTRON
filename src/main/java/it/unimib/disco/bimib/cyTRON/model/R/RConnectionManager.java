@@ -12,16 +12,43 @@ public class RConnectionManager {
 	private static Rengine rEngine;
 	private static TextConsole textConsole;
 	
-	// get the singleton objects
-	public static Rengine getConnection() {
-		if (rEngine == null) {
-			String[] args = new String[]{"--quiet", "--vanilla", "--no-save"};
-			textConsole = new TextConsole();
-			rEngine = new Rengine(args, false, textConsole);
-            rEngine.eval("library('TRONCO')");
+	// instantiate the objects
+	public static void instantiateConnection() throws RuntimeException{
+		// check libraries consistency
+    	if (!versionCheck()) {
+			throw new RuntimeException("Version mismatch - Java files don't match library version.");
 		}
 		
+    	// instantiate the objects 
+		String[] args = new String[]{"--quiet", "--vanilla"};
+		rEngine = Rengine.getMainEngine();
+		if (rEngine == null) {
+			textConsole = new TextConsole();
+			rEngine = new Rengine(args, false, textConsole);
+		}
+		
+		// check R
+        if (!waitForR()) {
+        	throw new RuntimeException("R cannot be loaded.");
+		}
+		
+		// load the TRONCO library in R
+		rEngine.eval("library('TRONCO')");
+		
+		// check TRONCO
+		if (!textConsole.isLastMessageRegular()) {
+			throw new RuntimeException(textConsole.getLastConsoleMessage());
+		}
+	}
+	
+	// get the singleton objects
+	public static Rengine getConnection() {
 		return rEngine;
+	}
+	
+	// get the text console
+	public static TextConsole getTextConsole() {
+		return textConsole;
 	}
         
     // execute a command
@@ -32,7 +59,6 @@ public class RConnectionManager {
 	// check libraries consistency
 	public static Boolean versionCheck() {
 		if (!Rengine.versionCheck()) {
-			// TODO: visualizzare l'errore nell'interfaccia
             System.err.println("Version mismatch - Java files don't match library version.");
             return false;
         }
@@ -43,17 +69,10 @@ public class RConnectionManager {
 	// check R
 	public static Boolean waitForR() {
 		if (!getConnection().waitForR()) {
-			// TODO: visualizzare l'errore nell'interfaccia
 	        System.err.println("R cannot be loaded.");
 	        return false;
 	    }
 		
 		return true;
 	}
-	
-	// get the text console
-	public static TextConsole getTextConsole() {
-		return textConsole;
-	}
-	
 }
