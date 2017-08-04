@@ -72,7 +72,6 @@ public class MainFrame extends javax.swing.JFrame {
         genesNumberLabel = new javax.swing.JLabel();
         eventsNumberLabel = new javax.swing.JLabel();
         samplesNumberLabel = new javax.swing.JLabel();
-        inferencePanel = new javax.swing.JPanel();
         datasetsPanelList = new javax.swing.JPanel();
         datasetsListScrollPane = new javax.swing.JScrollPane();
         datasetsList = new javax.swing.JList<>();
@@ -441,19 +440,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         tabbedPane.addTab("Edit", editPanel);
 
-        javax.swing.GroupLayout inferencePanelLayout = new javax.swing.GroupLayout(inferencePanel);
-        inferencePanel.setLayout(inferencePanelLayout);
-        inferencePanelLayout.setHorizontalGroup(
-            inferencePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 941, Short.MAX_VALUE)
-        );
-        inferencePanelLayout.setVerticalGroup(
-            inferencePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 662, Short.MAX_VALUE)
-        );
-
-        tabbedPane.addTab("Inference", inferencePanel);
-
         datasetsPanelList.setBorder(javax.swing.BorderFactory.createTitledBorder("Datasets"));
 
         datasetsList.setModel(datasetController.getDatasetsListModel());
@@ -568,10 +554,12 @@ public class MainFrame extends javax.swing.JFrame {
     private void initCustomComponents() {
     	hypothesesPanel = new HypothesesPanel(datasetController, this);
     	externalToolsPanel = new ExternalToolsPanel(datasetController, this);
+        inferencePanel = new InferencePanel(datasetController, this);
         visualizationPanel = new VisualizationPanel(datasetController, this);
     	
     	tabbedPane.addTab("Hypotheses", hypothesesPanel);
     	tabbedPane.addTab("External Tools", externalToolsPanel);
+        tabbedPane.addTab("Inference", inferencePanel);
         tabbedPane.addTab("Visualization", visualizationPanel);
     }
     
@@ -786,7 +774,8 @@ public class MainFrame extends javax.swing.JFrame {
 	        // update the other panels
 	        hypothesesPanel.updateSelectedDataset(datasetsList.getSelectedIndex());
 	        externalToolsPanel.updateSelectedDataset();
-                visualizationPanel.updateTitleAndStages();
+	        inferencePanel.updateSelectedDataset();
+            visualizationPanel.updateTitleAndStages();
         }
     }//GEN-LAST:event_datasetsListValueChanged
 
@@ -936,7 +925,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel genesPanelList;
     private javax.swing.JScrollPane genesScrollPane;
     private javax.swing.JButton importDatasetButton;
-    private javax.swing.JPanel inferencePanel;
     private javax.swing.JPanel infoPanel;
     private javax.swing.JButton intersectButton;
     private javax.swing.JButton joinEventsButton;
@@ -961,5 +949,6 @@ public class MainFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private HypothesesPanel hypothesesPanel;
     private ExternalToolsPanel externalToolsPanel;
+    private InferencePanel inferencePanel;
     private VisualizationPanel visualizationPanel;
 }

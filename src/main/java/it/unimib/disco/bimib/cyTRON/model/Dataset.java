@@ -4,14 +4,13 @@ import org.rosuda.JRI.REXP;
 import org.rosuda.REngine.REngineException;
 
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
+import it.unimib.disco.bimib.cyTRON.controller.InferenceController;
 import it.unimib.disco.bimib.cyTRON.controller.ToStringComparator;
 import it.unimib.disco.bimib.cyTRON.model.R.RConnectionManager;
 import it.unimib.disco.bimib.cyTRON.view.DeleteHypothesesFrame;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -38,6 +37,7 @@ public class Dataset {
     private Map<String, Pattern> patterns;
     private String description;
     private boolean hasStagesAnnotation;
+    private String inferenceAlgorithm;
     
     public Dataset(String name, String path, String type) throws REngineException {
         this.name = name;
@@ -48,6 +48,7 @@ public class Dataset {
         patterns = new HashMap<>();
         description = "";
         hasStagesAnnotation = false;
+        inferenceAlgorithm = "";
     	
     	switch (type) {
             case DatasetController.GENOTYPES:
@@ -760,25 +761,10 @@ public class Dataset {
     	}
     }
     
+    // ************ VISUALIZATION ************ \\
     public void oncoprint(String path, Boolean exclusivitySort, Boolean labelSort, Boolean stageSort, Boolean clusterSamples,
     		Boolean clusterGenes, Boolean annotateStage, Boolean annotateHits, Float fontSize, Boolean samplesName, Boolean legend,
-    		Float legendSize, HashMap<String, String> groups, Boolean pattern) {
-    	// create and execute the command
-//    	String command = "x11(type='cairo', width=14, height=14)"; // only on mac
-//    	RConnectionManager.eval(command);
-//    	
-//    	command = "oncoprint(" + name + ")";
-//    	RConnectionManager.eval(command);
-//    	
-//    	command = "savePlot(filename='" + path + "', type='png')"; // only on mac
-//    	RConnectionManager.eval(command);
-//    	System.out.println("Printing pdf...");
-//    	
-//    	command = "dev.off()";
-//    	RConnectionManager.eval(command);
-//    	command = "graphics.off()";
-//    	RConnectionManager.eval(command);
-    	
+    		Float legendSize, HashMap<String, String> groups, Boolean pattern) {    	
     	// create the command
     	String command = "oncoprint(" + name + ", file='" + path
     			+ "', excl.sort=" + exclusivitySort.toString().toUpperCase()
@@ -911,6 +897,210 @@ public class Dataset {
     public boolean hasStagesAnnotation() {
     	return hasStagesAnnotation;
     }
+    
+    // ************ INFERENCE ************ \\
+    public void caprese(Float lambda, Float falsePositive, Float falseNegative) {
+    	// create and execute the command
+    	String command = name + " = tronco.caprese(" + name
+    			+ ", lambda=" + lambda.toString().replace(",", ".")
+    			+ ", epos=" + falsePositive.toString().replace(",", ".")
+    			+ ", eneg=" + falseNegative.toString().replace(",", ".")
+    			+ ", silent=TRUE)";
+    	RConnectionManager.eval(command);
+    	
+    	// if last message is regular
+    	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+    		// set the inference algorithm
+    		inferenceAlgorithm = InferenceController.CAPRESE;
+    	}
+    	// clear the last console message
+		RConnectionManager.getTextConsole().getLastConsoleMessage();
+    }
+    
+	public void capri(String command, List<String> regularization, Boolean estimateErrorRates, Integer bootstrapSamplings,
+			Float pValue, Integer initialBootstrapSeeds, Integer restarts, Float falsePositive, Float falseNegative) {
+		// create and execute the command
+		String rCommand = name + " = tronco.capri(" + name
+    			+ ", command='" + command
+    			+ "', regularization=c(";
+		for (Iterator<String> iterator = regularization.iterator(); iterator.hasNext();) {
+			String rule = (String) iterator.next();
+			rCommand += "'" + rule + "'";
+			if (iterator.hasNext()) {
+				rCommand += ", ";
+			}
+		}
+		rCommand += ")"
+				+ ", do.boot=" + estimateErrorRates.toString().toUpperCase()
+				+ ", nboot=" + bootstrapSamplings.toString()
+				+ ", pvalue=" + pValue.toString().replace(",", ".");
+		if (initialBootstrapSeeds == 0) {
+			rCommand += ", boot.seed=NULL";
+		} else {
+			rCommand += ", boot.seed=" + initialBootstrapSeeds.toString();
+		}
+		rCommand += ", epos=" + falsePositive.toString().replace(",", ".")
+    			+ ", eneg=" + falseNegative.toString().replace(",", ".")
+    			+ ", restart=" + restarts.toString()
+    			+ ", silent=TRUE)";
+		RConnectionManager.eval(rCommand);
+		
+		// if last message is regular
+    	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+    		// set the inference algorithm
+    		inferenceAlgorithm = InferenceController.CAPRI;
+    	}
+    	// clear the last console message
+		RConnectionManager.getTextConsole().getLastConsoleMessage();
+	}
+	
+	public void chowliu(List<String> regularization, Boolean estimateErrorRates, Integer bootstrapSamplings,
+			Float pValue, Integer initialBootstrapSeeds, Float falsePositive, Float falseNegative) {
+		// create and execute the command
+		String rCommand = name + " = tronco.chowliu(" + name
+    			+ ", regularization=c(";
+		for (Iterator<String> iterator = regularization.iterator(); iterator.hasNext();) {
+			String rule = (String) iterator.next();
+			rCommand += "'" + rule + "'";
+			if (iterator.hasNext()) {
+				rCommand += ", ";
+			}
+		}
+		rCommand += ")"
+				+ ", do.boot=" + estimateErrorRates.toString().toUpperCase()
+				+ ", nboot=" + bootstrapSamplings.toString()
+				+ ", pvalue=" + pValue.toString().replace(",", ".");
+		if (initialBootstrapSeeds == 0) {
+			rCommand += ", boot.seed=NULL";
+		} else {
+			rCommand += ", boot.seed=" + initialBootstrapSeeds.toString();
+		}
+		rCommand += ", epos=" + falsePositive.toString().replace(",", ".")
+    			+ ", eneg=" + falseNegative.toString().replace(",", ".")
+    			+ ", silent=TRUE)";
+		RConnectionManager.eval(rCommand);
+		
+		// if last message is regular
+    	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+    		// set the inference algorithm
+    		inferenceAlgorithm = InferenceController.CHOWLIU;
+    	}
+    	// clear the last console message
+		RConnectionManager.getTextConsole().getLastConsoleMessage();
+	}
+	
+	public void edmonds(List<String> regularization, String score, Boolean estimateErrorRates, Integer bootstrapSamplings,
+			Float pValue, Integer initialBootstrapSeeds, Float falsePositive, Float falseNegative) {
+		// create and execute the command
+		String rCommand = name + " = tronco.edmonds(" + name
+    			+ ", regularization=c(";
+		for (Iterator<String> iterator = regularization.iterator(); iterator.hasNext();) {
+			String rule = (String) iterator.next();
+			rCommand += "'" + rule + "'";
+			if (iterator.hasNext()) {
+				rCommand += ", ";
+			}
+		}
+		rCommand += ")"
+				+ ", score='" + score
+				+ "', do.boot=" + estimateErrorRates.toString().toUpperCase()
+				+ ", nboot=" + bootstrapSamplings.toString()
+				+ ", pvalue=" + pValue.toString().replace(",", ".");
+		if (initialBootstrapSeeds == 0) {
+			rCommand += ", boot.seed=NULL";
+		} else {
+			rCommand += ", boot.seed=" + initialBootstrapSeeds.toString();
+		}
+		rCommand += ", epos=" + falsePositive.toString().replace(",", ".")
+    			+ ", eneg=" + falseNegative.toString().replace(",", ".")
+    			+ ", silent=TRUE)";
+		RConnectionManager.eval(rCommand);
+		
+		// if last message is regular
+    	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+    		// set the inference algorithm
+    		inferenceAlgorithm = InferenceController.EDMONDS;
+    	}
+    	// clear the last console message
+		RConnectionManager.getTextConsole().getLastConsoleMessage();
+	}
+	
+	public void gabow(List<String> regularization, String score, Boolean estimateErrorRates, Integer bootstrapSamplings, 
+			Float pValue, Integer initialBootstrapSeeds, Float falsePositive, Float falseNegative,
+			Boolean raisingCondition) {
+		// create and execute the command
+		String rCommand = name + " = tronco.gabow(" + name
+    			+ ", regularization=c(";
+		for (Iterator<String> iterator = regularization.iterator(); iterator.hasNext();) {
+			String rule = (String) iterator.next();
+			rCommand += "'" + rule + "'";
+			if (iterator.hasNext()) {
+				rCommand += ", ";
+			}
+		}
+		rCommand += ")"
+				+ ", score='" + score
+				+ "', do.boot=" + estimateErrorRates.toString().toUpperCase()
+				+ ", nboot=" + bootstrapSamplings.toString()
+				+ ", pvalue=" + pValue.toString().replace(",", ".");
+		if (initialBootstrapSeeds == 0) {
+			rCommand += ", boot.seed=NULL";
+		} else {
+			rCommand += ", boot.seed=" + initialBootstrapSeeds.toString();
+		}
+		rCommand += ", epos=" + falsePositive.toString().replace(",", ".")
+    			+ ", eneg=" + falseNegative.toString().replace(",", ".")
+    			+ ", do.raising=" + raisingCondition.toString().toUpperCase()
+    			+ ", silent=TRUE)";
+		RConnectionManager.eval(rCommand);
+		
+		// if last message is regular
+    	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+    		// set the inference algorithm
+    		inferenceAlgorithm = InferenceController.GABOW;
+    	}
+    	// clear the last console message
+		RConnectionManager.getTextConsole().getLastConsoleMessage();
+	}
+	
+	public void prim(List<String> regularization, Boolean estimateErrorRates, Integer bootstrapSamplings,
+			Float pValue, Integer initialBootstrapSeeds, Float falsePositive, Float falseNegative) {
+		// create and execute the command
+		String rCommand = name + " = tronco.prim(" + name
+    			+ ", regularization=c(";
+		for (Iterator<String> iterator = regularization.iterator(); iterator.hasNext();) {
+			String rule = (String) iterator.next();
+			rCommand += "'" + rule + "'";
+			if (iterator.hasNext()) {
+				rCommand += ", ";
+			}
+		}
+		rCommand += ")"
+				+ ", do.boot=" + estimateErrorRates.toString().toUpperCase()
+				+ ", nboot=" + bootstrapSamplings.toString()
+				+ ", pvalue=" + pValue.toString().replace(",", ".");
+		if (initialBootstrapSeeds == 0) {
+			rCommand += ", boot.seed=NULL";
+		} else {
+			rCommand += ", boot.seed=" + initialBootstrapSeeds.toString();
+		}
+		rCommand += ", epos=" + falsePositive.toString().replace(",", ".")
+    			+ ", eneg=" + falseNegative.toString().replace(",", ".")
+    			+ ", silent=TRUE)";
+		RConnectionManager.eval(rCommand);
+		
+		// if last message is regular
+    	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+    		// set the inference algorithm
+    		inferenceAlgorithm = InferenceController.PRIM;
+    	}
+    	// clear the last console message
+		RConnectionManager.getTextConsole().getLastConsoleMessage();
+	}
+	
+	public String getInferenceAlgorithm() {
+		return inferenceAlgorithm;
+	}
     
     // ************ UTILITIES ************ \\
     private String getStringOfEvents(List<Event> events) {
