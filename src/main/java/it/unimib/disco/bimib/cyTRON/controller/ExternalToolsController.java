@@ -25,11 +25,18 @@ public class ExternalToolsController {
 	}
 
 	public void exportMutex(Dataset dataset, String fileName, String filePath, Type mutation, List<Type> amplification, List<Type> deletion) {
+		// validate the path
+		filePath = filePath.replace("\\", "\\\\");
+		
 		// export the mutex file for the dataset
 		dataset.exportMutex(fileName, filePath, mutation, amplification, deletion);
 	}
 	
 	public String exportNbs(Dataset dataset, String file, String mapping) {
+		// validate the paths
+		file.replace("\\", "\\\\");
+		mapping.replace("\\", "\\\\");
+		
 		// read the mapping
 		HashMap<String, String> entrezIds = new HashMap<>();
 		try {
@@ -67,6 +74,9 @@ public class ExternalToolsController {
 	}
 	
 	public void importMutex(String file, String fdr) {
+		// validate the path
+		file = file.replace("\\", "\\\\");
+		
 		// create and execute the command
         String command = "import.mutex.groups('" + file + "'";
         if (fdr.length() > 0) {

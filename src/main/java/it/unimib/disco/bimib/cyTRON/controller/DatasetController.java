@@ -53,7 +53,7 @@ public class DatasetController {
         
         try {
             // create the new dataset
-            Dataset dataset = new Dataset(name, datasetFile.getCanonicalPath(), type);
+            Dataset dataset = new Dataset(name, datasetFile.getCanonicalPath().replace("\\", "\\\\"), type);
             
             // add it to the list
             datasetsListModel.addElement(dataset);

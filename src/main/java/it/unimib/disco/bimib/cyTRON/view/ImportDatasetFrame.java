@@ -156,8 +156,8 @@ public class ImportDatasetFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void importButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importButtonActionPerformed
-        // get the parameters
+    private void importButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importButtonActionPerformed    	
+    	// get the parameters
     	String name = nameTextField.getText();
         String path = pathTextField.getText();
         

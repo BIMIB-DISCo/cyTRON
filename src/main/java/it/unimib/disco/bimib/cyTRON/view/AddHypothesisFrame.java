@@ -43,7 +43,7 @@ public class AddHypothesisFrame extends javax.swing.JFrame {
         genesDefaultComboBoxModel = new DefaultComboBoxModel(datasetController.getGenesListModel().toArray());
         eventsDefaultComboBoxModel = new DefaultComboBoxModel(datasetController.getEventsListModel().toArray());
         
-        // draws the interface
+        // draw the interface
         initComponents();
     }
     

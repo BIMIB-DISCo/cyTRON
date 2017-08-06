@@ -224,16 +224,14 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.github.lucarosellini.rJava</groupId>
-			<artifactId>JRI</artifactId>
-			<version>0.9-7</version>
-			<optional>true</optional>
+		    <groupId>org.nuiton.thirdparty</groupId>
+		    <artifactId>JRI</artifactId>
+		    <version>0.9-9</version>
 		</dependency>
 		<dependency>
-			<groupId>com.github.lucarosellini.rJava</groupId>
-			<artifactId>JRIEngine</artifactId>
-			<version>0.9-7</version>
-			<optional>true</optional>
+		    <groupId>org.rosuda.REngine</groupId>
+		    <artifactId>REngine</artifactId>
+		    <version>2.1.0</version>
 		</dependency>
 	</dependencies>
 </project>

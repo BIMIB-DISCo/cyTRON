@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.ButtonGroup" name="samplesSortButtonGroup">
+    </Component>
+  </NonVisualComponents>
+  <Properties>
+    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[940, 660]"/>
+    </Property>
+  </Properties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="tabbedPane" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="tabbedPane" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JTabbedPane" name="tabbedPane">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
+      <SubComponents>
+        <Container class="javax.swing.JPanel" name="oncoprintPanel">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Oncoprint">
+                <Property name="tabTitle" type="java.lang.String" value="Oncoprint"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace pref="109" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="showOncoprintButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="annotatehitsLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="fontSizeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="titleLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="annotateStagesLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="exclusivityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="clusterSamplesLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="samplesNameLabel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="legendLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="samplesGroupLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="patternsLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="tabLabel2" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="clusterSamplesCheckBox" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Component id="clusterGenesLabel" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="exclusivitySortButton" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="labelSortRadioButton" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="clusterGenesCheckBox" min="-2" max="-2" attributes="0"/>
+                                          <Component id="stageSortRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Component id="patternsCheckBox" min="-2" max="-2" attributes="0"/>
+                                  <Component id="samplesGroupTextField" min="-2" pref="570" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="legendCheckBox" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="legendSizeLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="legendSizeSpinner" min="-2" pref="57" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="samplesNameCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="titleTextField" alignment="0" min="-2" pref="570" max="-2" attributes="0"/>
+                                  <Component id="fontSizeSpinner" alignment="0" min="-2" pref="57" max="-2" attributes="0"/>
+                                  <Component id="annotateHitsCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="annotateStageCheckBox" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="tabLabel1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="annotateStageTextField" min="-2" pref="516" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace pref="65" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="exclusivityLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="exclusivitySortButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelSortRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="stageSortRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="clusterSamplesLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="clusterSamplesCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="clusterGenesLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="clusterGenesCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="annotateStagesLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="annotateStageCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="annotateStageTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="tabLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="annotateHitsCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="annotatehitsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="fontSizeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="fontSizeSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="titleLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="titleTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="samplesNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="samplesNameCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="legendLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="legendCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="legendSizeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="legendSizeSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="samplesGroupLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="samplesGroupTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="tabLabel2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="patternsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="patternsCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                      <Component id="showOncoprintButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="exclusivityLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Samples sort:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="clusterSamplesLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Cluster samples:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="clusterSamplesCheckBox">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=" "/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="clusterGenesLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Cluster genes:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="clusterGenesCheckBox">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=" "/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="annotateStagesLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Annotate stage:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="annotateStageTextField">
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="annotateStageTextFieldMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="annotateStageCheckBox">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=" "/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="annotatehitsLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Annotate hits:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="annotateHitsCheckBox">
+              <Properties>
+                <Property name="selected" type="boolean" value="true"/>
+                <Property name="text" type="java.lang.String" value=" "/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="fontSizeLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Font size:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JSpinner" name="fontSizeSpinner">
+              <Properties>
+                <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                  <SpinnerModel initial="1.0" minimum="0.1" numberType="java.lang.Float" stepSize="0.1" type="number"/>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="titleLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Title:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="titleTextField">
+            </Component>
+            <Component class="javax.swing.JLabel" name="samplesNameLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Samples name:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="samplesNameCheckBox">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=" "/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="legendLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Legend:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="legendCheckBox">
+              <Properties>
+                <Property name="selected" type="boolean" value="true"/>
+                <Property name="text" type="java.lang.String" value=" "/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="legendSizeLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Legend size:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JSpinner" name="legendSizeSpinner">
+              <Properties>
+                <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                  <SpinnerModel initial="0.5" minimum="0.1" numberType="java.lang.Float" stepSize="0.1" type="number"/>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="exclusivitySortButton">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="samplesSortButtonGroup"/>
+                </Property>
+                <Property name="selected" type="boolean" value="true"/>
+                <Property name="text" type="java.lang.String" value="Exclusivity"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="labelSortRadioButton">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="samplesSortButtonGroup"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Label"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="stageSortRadioButton">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="samplesSortButtonGroup"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Stage"/>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="samplesGroupLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Samples group:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="samplesGroupTextField">
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="samplesGroupTextFieldMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="patternsLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Patterns:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="patternsCheckBox">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=" "/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="showOncoprintButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Show"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showOncoprintButtonActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="tabLabel1">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Lucida Grande" size="11" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="tab-separated values file containing the mapping from samples to stages (without header)"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="tabLabel2">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Lucida Grande" size="11" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="tab-separated values file containing the mapping from samples to groups (without header)"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+      </SubComponents>
+    </Container>
+  </SubComponents>
+</Form>
