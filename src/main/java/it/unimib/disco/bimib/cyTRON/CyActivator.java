@@ -35,11 +35,8 @@ public class CyActivator extends AbstractCyActivator {
 
     @Override
     public void start(BundleContext bundleContext) throws Exception {
-    	// Start printing a welcome message.
-    	System.out.println("cyTRON:\tstarting...");
-    	
     	// print java.library.path
-    	System.out.println("cyTRON:\tjava.library.path = " + System.getProperty("java.library.path"));
+    	System.out.println("java.library.path: " + System.getProperty("java.library.path"));
     	
     	// creates the menu action
     	MenuAction menuAction = new MenuAction();
