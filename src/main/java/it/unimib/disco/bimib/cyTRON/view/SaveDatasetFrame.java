@@ -37,7 +37,7 @@ public class SaveDatasetFrame extends javax.swing.JFrame {
         saveButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Import Dataset");
+        setTitle("Save Dataset");
         setMinimumSize(new java.awt.Dimension(640, 360));
 
         saveLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
@@ -154,8 +154,12 @@ public class SaveDatasetFrame extends javax.swing.JFrame {
         }
         
         if (name.length() > 0 && path.length() > 0) {
-            
+            // save the dataset
+            datasetController.save(mainFrame.getSelectedDataset(), name, path);
         }
+        
+        // close the frame
+        dispose();
     }//GEN-LAST:event_saveButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

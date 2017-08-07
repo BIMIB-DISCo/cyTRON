@@ -44,6 +44,7 @@ public class ImportDatasetFrame extends javax.swing.JFrame {
         mafRadioButton = new javax.swing.JRadioButton();
         gisticRadioButton = new javax.swing.JRadioButton();
         importButton = new javax.swing.JButton();
+        loadRadioButton = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Import Dataset");
@@ -81,6 +82,9 @@ public class ImportDatasetFrame extends javax.swing.JFrame {
             }
         });
 
+        typeButtonGroup.add(loadRadioButton);
+        loadRadioButton.setText("load");
+
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
         panelLayout.setHorizontalGroup(
@@ -104,7 +108,9 @@ public class ImportDatasetFrame extends javax.swing.JFrame {
                                 .addComponent(mafRadioButton)
                                 .addGap(18, 18, 18)
                                 .addComponent(gisticRadioButton)
-                                .addGap(0, 293, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addComponent(loadRadioButton)
+                                .addGap(0, 216, Short.MAX_VALUE))
                             .addComponent(nameTextField)
                             .addComponent(pathTextField)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
@@ -122,7 +128,8 @@ public class ImportDatasetFrame extends javax.swing.JFrame {
                     .addComponent(typeLabel)
                     .addComponent(genotypesRadioButton)
                     .addComponent(mafRadioButton)
-                    .addComponent(gisticRadioButton))
+                    .addComponent(gisticRadioButton)
+                    .addComponent(loadRadioButton))
                 .addGap(13, 13, 13)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -156,7 +163,7 @@ public class ImportDatasetFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void importButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importButtonActionPerformed    	
+    private void importButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                  
     	// get the parameters
     	String name = nameTextField.getText();
         String path = pathTextField.getText();
@@ -178,7 +185,9 @@ public class ImportDatasetFrame extends javax.swing.JFrame {
     			    datasetController.importDataset(name, path, DatasetController.GISTIC);
     			} else if (mafRadioButton.isSelected()) {
     			    datasetController.importDataset(name, path, DatasetController.MAF);
-    			}
+    			} else if (loadRadioButton.isSelected()) {
+                            datasetController.importDataset(name, path, DatasetController.LOAD);
+                    }
     			
     			// close the frame
     	        dispose();
@@ -188,7 +197,7 @@ public class ImportDatasetFrame extends javax.swing.JFrame {
 		} catch (FileNotFoundException e) {
 			JOptionPane.showConfirmDialog(this, "The specified file does not exist.", RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
 		}
-    }//GEN-LAST:event_importButtonActionPerformed
+    }                                            
 
     private void pathTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pathTextFieldMouseClicked
         // create the file chooser
@@ -211,6 +220,7 @@ public class ImportDatasetFrame extends javax.swing.JFrame {
     private javax.swing.JRadioButton gisticRadioButton;
     private javax.swing.JButton importButton;
     private javax.swing.JLabel importLabel;
+    private javax.swing.JRadioButton loadRadioButton;
     private javax.swing.JRadioButton mafRadioButton;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextField nameTextField;

@@ -124,10 +124,7 @@ public class DatasetController {
         updateLists(dataset1);
     }
     
-    public void save(int datasetIndex, String name, String path) {
-    	// get the dataset
-    	Dataset dataset = datasetsListModel.get(datasetIndex);
-    	
+    public void save(Dataset dataset, String name, String path) {    	
     	// validate the path
     	path = path.replace("\\", "\\\\") + File.separator + name + ".rds";
     	

@@ -60,12 +60,18 @@ public class Dataset {
             case DatasetController.MAF:
                 importMaf(name, path);
                 break;
+            case DatasetController.LOAD:
+                load(name, path);
+                break;
             default:
                 break;
         }
     	
     	retrieveSamples();
     	retrieveEvents();
+    	if (type.equals(DatasetController.LOAD)) {
+			retrievePatterns();
+		}
     }
     
     public void deleteDataset() throws REngineException {
