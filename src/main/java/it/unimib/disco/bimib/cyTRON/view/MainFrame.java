@@ -6,6 +6,9 @@ import it.unimib.disco.bimib.cyTRON.model.Gene;
 import it.unimib.disco.bimib.cyTRON.model.Sample;
 import it.unimib.disco.bimib.cyTRON.model.R.RConnectionManager;
 
+import java.awt.Window;
+
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import org.rosuda.REngine.REngineException;
@@ -924,6 +927,19 @@ public class MainFrame extends javax.swing.JFrame {
         }
         
     	return (Dataset) datasetController.getDatasetsListModel().get(datasetIndex);
+    }
+    
+    // dispose all option panes
+    public static void disposeJOptionPanes() {
+    	Window[] windows = Window.getWindows();
+		for (Window window : windows) {
+		    if (window instanceof JDialog) {
+		        JDialog dialog = (JDialog) window;
+		        if (dialog.getContentPane().getComponentCount() == 1 && dialog.getContentPane().getComponent(0) instanceof JOptionPane){
+		            dialog.dispose();
+		        }
+		    }
+		}
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

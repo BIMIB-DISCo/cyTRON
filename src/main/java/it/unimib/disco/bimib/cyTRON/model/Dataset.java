@@ -938,8 +938,6 @@ public class Dataset {
     		// set the inference algorithm
     		inferenceAlgorithm = InferenceController.CAPRESE;
     	}
-    	// clear the last console message
-		RConnectionManager.getTextConsole().getLastConsoleMessage();
     }
     
 	public void capri(String command, List<String> regularization, Boolean estimateErrorRates, Integer bootstrapSamplings,
@@ -975,8 +973,6 @@ public class Dataset {
     		// set the inference algorithm
     		inferenceAlgorithm = InferenceController.CAPRI;
     	}
-    	// clear the last console message
-		RConnectionManager.getTextConsole().getLastConsoleMessage();
 	}
 	
 	public void chowliu(List<String> regularization, Boolean estimateErrorRates, Integer bootstrapSamplings,
@@ -1010,8 +1006,6 @@ public class Dataset {
     		// set the inference algorithm
     		inferenceAlgorithm = InferenceController.CHOWLIU;
     	}
-    	// clear the last console message
-		RConnectionManager.getTextConsole().getLastConsoleMessage();
 	}
 	
 	public void edmonds(List<String> regularization, String score, Boolean estimateErrorRates, Integer bootstrapSamplings,
@@ -1046,8 +1040,6 @@ public class Dataset {
     		// set the inference algorithm
     		inferenceAlgorithm = InferenceController.EDMONDS;
     	}
-    	// clear the last console message
-		RConnectionManager.getTextConsole().getLastConsoleMessage();
 	}
 	
 	public void gabow(List<String> regularization, String score, Boolean estimateErrorRates, Integer bootstrapSamplings, 
@@ -1084,8 +1076,6 @@ public class Dataset {
     		// set the inference algorithm
     		inferenceAlgorithm = InferenceController.GABOW;
     	}
-    	// clear the last console message
-		RConnectionManager.getTextConsole().getLastConsoleMessage();
 	}
 	
 	public void prim(List<String> regularization, Boolean estimateErrorRates, Integer bootstrapSamplings,
@@ -1119,8 +1109,6 @@ public class Dataset {
     		// set the inference algorithm
     		inferenceAlgorithm = InferenceController.PRIM;
     	}
-    	// clear the last console message
-		RConnectionManager.getTextConsole().getLastConsoleMessage();
 	}
 	
 	public String getInferenceAlgorithm() {
@@ -1136,9 +1124,6 @@ public class Dataset {
 				+ ", cores.ratio=" + coresRatio.toString().replace(",", ".")
 				+ ", silent=TRUE)";
 		RConnectionManager.eval(command);
-		
-		// clear the last console message
-		RConnectionManager.getTextConsole().getLastConsoleMessage();
 	}
 	
 	public void eloss(Integer runs, Integer groups) {
@@ -1148,9 +1133,6 @@ public class Dataset {
 				+ ", k=" + groups.toString()
 				+ ", silent=TRUE)";
 		RConnectionManager.eval(command);
-		
-		// clear the last console message
-		RConnectionManager.getTextConsole().getLastConsoleMessage();
 	}
 	
 	public void posterr(Integer runs, Integer groups, Float coresRatio) {
@@ -1161,9 +1143,6 @@ public class Dataset {
 				+ ", cores.ratio=" + coresRatio.toString().replace(",", ".")
 				+ ", silent=TRUE)";
 		RConnectionManager.eval(command);
-		
-		// clear the last console message
-		RConnectionManager.getTextConsole().getLastConsoleMessage();
 	}
 	
 	public void prederr(Integer runs, Integer groups, Float coresRatio) {
@@ -1174,9 +1153,6 @@ public class Dataset {
 				+ ", cores.ratio=" + coresRatio.toString().replace(",", ".")
 				+ ", silent=TRUE)";
 		RConnectionManager.eval(command);
-		
-		// clear the last console message
-		RConnectionManager.getTextConsole().getLastConsoleMessage();
 	}
     
     // ************ UTILITIES ************ \\

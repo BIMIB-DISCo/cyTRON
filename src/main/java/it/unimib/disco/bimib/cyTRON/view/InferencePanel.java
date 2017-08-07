@@ -444,7 +444,7 @@ public class InferencePanel extends javax.swing.JPanel {
             Boolean raisingCondition = raisingConditionCheckBox.isSelected();
             
             // get the inference
-            InferenceAlgorithm inferenceAlgorithm = new InferenceAlgorithm(dataset, this, inferenceController, algorithm, lambda, falsePositive, falseNegative, command, regularization, estimateErrorRates, bootstrapSamplings, pValue, initialBootstrapSeeds, restarts, score, raisingCondition);
+            InferenceAlgorithm inferenceAlgorithm = new InferenceAlgorithm(dataset, inferenceController, algorithm, lambda, falsePositive, falseNegative, command, regularization, estimateErrorRates, bootstrapSamplings, pValue, initialBootstrapSeeds, restarts, score, raisingCondition);
             inferenceAlgorithm.execute();
             
             // show the option pane for exiting the algorithm
@@ -453,26 +453,19 @@ public class InferencePanel extends javax.swing.JPanel {
             // cancel the thread and stop the current R command if the inference is not completed
             if (!inferenceAlgorithm.isDone()) {
             	inferenceAlgorithm.cancel();
-			}
+            // if the algorithm is not cancelled and the last message is not regular
+            } else if (!inferenceAlgorithm.isCancelled() && !RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        		// show an error message
+        		JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+        	}
+			// clear the last console message
+			RConnectionManager.getTextConsole().getLastConsoleMessage();
             
     		// update the current inference algorithm label
         	currentAlgorithmValueLabel.setText(dataset.getInferenceAlgorithm());
         	statisticsPanel.updateSelectedDataset();
         }        
     }//GEN-LAST:event_runButtonActionPerformed
-
-    // dispose all option panes
-    public void disposeJOptionPane() {
-    	Window[] windows = Window.getWindows();
-		for (Window window : windows) {
-		    if (window instanceof JDialog) {
-		        JDialog dialog = (JDialog) window;
-		        if (dialog.getContentPane().getComponentCount() == 1 && dialog.getContentPane().getComponent(0) instanceof JOptionPane){
-		            dialog.dispose();
-		        }
-		    }
-		}
-    }
     
     public void updateSelectedDataset() {
     	// get the selected dataset
@@ -521,7 +514,6 @@ public class InferencePanel extends javax.swing.JPanel {
     
     private class InferenceAlgorithm extends SwingWorker<Void, Void> {
     	private final Dataset dataset;
-    	private final InferencePanel inferencePanel;
     	private final InferenceController inferenceController;
     	private final Object algorithm;
     	private final Float lambda;
@@ -537,12 +529,11 @@ public class InferencePanel extends javax.swing.JPanel {
     	private final String score;
     	private final Boolean raisingCondition;
     	
-		public InferenceAlgorithm(Dataset dataset, InferencePanel inferencePanel, InferenceController inferenceController, Object algorithm, 
+		public InferenceAlgorithm(Dataset dataset, InferenceController inferenceController, Object algorithm, 
     			Float lambda, Float falsePositive, Float falseNegative, String command, List<String> regularization, Boolean estimateErrorRates,
     			Integer bootstrapSamplings, Float pValue, Integer initialBootstrapSeeds, Integer restarts, String score,
     			Boolean raisingCondition) {
     		this.dataset = dataset;
-    		this.inferencePanel = inferencePanel;
     		this.inferenceController = inferenceController;
     		this.algorithm = algorithm;
     		this.lambda = lambda;
@@ -571,13 +562,13 @@ public class InferencePanel extends javax.swing.JPanel {
 		protected void done() {
 			super.done();
 			// close the option panel
-			inferencePanel.disposeJOptionPane();
+			MainFrame.disposeJOptionPanes();
 		}
 		
 		public void cancel() {
-			// cancel the thread and stop the current R command in any case
-			super.cancel(true);
+			// cancel the thread and stop the current R command
 			RConnectionManager.getConnection().rniStop(0);
+			super.cancel(true);
 		}
     }
 }

@@ -370,7 +370,7 @@ public class VisualizationPanel extends javax.swing.JPanel {
 				JOptionPane.showConfirmDialog(this, "oncoprint" + RConnectionManager.CHECK_INPUT, RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
 			}
             
-            // if the last console message is regular
+            // if the last console message is not regular
             if (!RConnectionManager.getTextConsole().isLastMessageRegular()) {
             	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
             }

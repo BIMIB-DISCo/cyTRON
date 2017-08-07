@@ -1,13 +1,16 @@
 package it.unimib.disco.bimib.cyTRON.view;
 
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
+import it.unimib.disco.bimib.cyTRON.controller.InferenceController;
 import it.unimib.disco.bimib.cyTRON.controller.StatisticsController;
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
 import it.unimib.disco.bimib.cyTRON.model.R.RConnectionManager;
 
+import java.awt.Component;
 import java.awt.Window;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
@@ -268,31 +271,24 @@ public class StatisticsPanel extends javax.swing.JPanel {
         	Integer groups = (Integer) groupsSpinner.getValue();
         	
         	// get the statistics
-        	StatisticsAlgorithm statisticsAlgorithm = new StatisticsAlgorithm(dataset, this, statisticsController, statistics, type, bootstrapSamplings, coresRatio, runs, groups);
-        	statisticsAlgorithm.run();
+        	StatisticsAlgorithm statisticsAlgorithm = new StatisticsAlgorithm(dataset, statisticsController, statistics, type, bootstrapSamplings, coresRatio, runs, groups);
+        	statisticsAlgorithm.execute();
         	
         	// show the option pane for exiting the algorithm
-            JOptionPane.showOptionDialog(this, "Exit this window to kill the algorithm.", "", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
-            
-            // cancel the thread and stop the current R command if the inference is not completed
+        	JOptionPane.showOptionDialog(this, "Exit this window to kill the algorithm.", "", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
+        	
+            // cancel the thread and stop the current R command if the statistics is not completed
             if (!statisticsAlgorithm.isDone()) {
             	statisticsAlgorithm.cancel();
-			}
+            // if the algorithm is not cancelled and the last message is not regular
+			} else if (!statisticsAlgorithm.isCancelled() && !RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        		// show an error message
+        		JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+        	}
+			// clear the last console message
+			RConnectionManager.getTextConsole().getLastConsoleMessage();
         }
     }//GEN-LAST:event_runButtonActionPerformed
-
-    // dispose all option panes
-    public void disposeJOptionPane() {
-        Window[] windows = Window.getWindows();
-            for (Window window : windows) {
-                if (window instanceof JDialog) {
-                    JDialog dialog = (JDialog) window;
-                    if (dialog.getContentPane().getComponentCount() == 1 && dialog.getContentPane().getComponent(0) instanceof JOptionPane){
-                        dialog.dispose();
-                    }
-                }
-            }
-    }
     
     public void updateSelectedDataset() {
     	// get the selected dataset
@@ -324,7 +320,6 @@ public class StatisticsPanel extends javax.swing.JPanel {
     
     private class StatisticsAlgorithm extends SwingWorker<Void, Void> {
     	private final Dataset dataset;
-    	private final StatisticsPanel statisticsPanel;
     	private final StatisticsController statisticsController;
     	private final Object statistics;
     	private final String type;
@@ -333,11 +328,10 @@ public class StatisticsPanel extends javax.swing.JPanel {
     	private final Integer runs;
     	private final Integer groups;
     	
-        public StatisticsAlgorithm(Dataset dataset, StatisticsPanel statisticsPanel, StatisticsController statisticsController,
+        public StatisticsAlgorithm(Dataset dataset, StatisticsController statisticsController,
         		Object statistics, String type, Integer bootstrapSamplings, Float coresRatio, Integer runs,
         		Integer groups) {
             this.dataset = dataset;
-            this.statisticsPanel = statisticsPanel;
             this.statisticsController = statisticsController;
             this.statistics = statistics;
             this.type = type;
@@ -357,13 +351,13 @@ public class StatisticsPanel extends javax.swing.JPanel {
 		protected void done() {
 			super.done();
 			// close the option panel
-			statisticsPanel.disposeJOptionPane();
+			MainFrame.disposeJOptionPanes();
 		}
         
         public void cancel() {
-			// cancel the thread and stop the current R command in any case
-			super.cancel(true);
+			// cancel the thread and stop the current R command
 			RConnectionManager.getConnection().rniStop(0);
+			super.cancel(true);
 		}
     }
 }
