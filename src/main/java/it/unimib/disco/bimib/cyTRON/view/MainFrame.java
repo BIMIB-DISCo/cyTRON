@@ -80,6 +80,7 @@ public class MainFrame extends javax.swing.JFrame {
         bindEventsButton = new javax.swing.JButton();
         bindSamplesButton = new javax.swing.JButton();
         intersectButton = new javax.swing.JButton();
+        saveDatasetButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("cyTRON");
@@ -486,6 +487,13 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        saveDatasetButton.setText("Save...");
+        saveDatasetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveDatasetButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout datasetsPanelListLayout = new javax.swing.GroupLayout(datasetsPanelList);
         datasetsPanelList.setLayout(datasetsPanelListLayout);
         datasetsPanelListLayout.setHorizontalGroup(
@@ -495,25 +503,29 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(datasetsPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(datasetsListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
                     .addGroup(datasetsPanelListLayout.createSequentialGroup()
-                        .addComponent(importDatasetButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(deleteDatasetButton))
-                    .addGroup(datasetsPanelListLayout.createSequentialGroup()
-                        .addComponent(intersectButton)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(datasetsPanelListLayout.createSequentialGroup()
                         .addComponent(bindEventsButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bindSamplesButton)))
+                        .addComponent(bindSamplesButton))
+                    .addGroup(datasetsPanelListLayout.createSequentialGroup()
+                        .addGroup(datasetsPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(importDatasetButton)
+                            .addComponent(intersectButton))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(datasetsPanelListLayout.createSequentialGroup()
+                        .addComponent(deleteDatasetButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(saveDatasetButton)))
                 .addContainerGap())
         );
         datasetsPanelListLayout.setVerticalGroup(
             datasetsPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(datasetsPanelListLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(importDatasetButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(datasetsPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(importDatasetButton)
-                    .addComponent(deleteDatasetButton))
+                    .addComponent(deleteDatasetButton)
+                    .addComponent(saveDatasetButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(datasetsListScrollPane)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -554,12 +566,14 @@ public class MainFrame extends javax.swing.JFrame {
     private void initCustomComponents() {
     	hypothesesPanel = new HypothesesPanel(datasetController, this);
     	externalToolsPanel = new ExternalToolsPanel(datasetController, this);
-        inferencePanel = new InferencePanel(datasetController, this);
+    	statisticsPanel = new StatisticsPanel(datasetController, this);
+        inferencePanel = new InferencePanel(datasetController, this, statisticsPanel);
         visualizationPanel = new VisualizationPanel(datasetController, this);
     	
     	tabbedPane.addTab("Hypotheses", hypothesesPanel);
     	tabbedPane.addTab("External Tools", externalToolsPanel);
         tabbedPane.addTab("Inference", inferencePanel);
+        tabbedPane.addTab("Statistics", statisticsPanel);
         tabbedPane.addTab("Visualization", visualizationPanel);
     }
     
@@ -775,7 +789,8 @@ public class MainFrame extends javax.swing.JFrame {
 	        hypothesesPanel.updateSelectedDataset(datasetsList.getSelectedIndex());
 	        externalToolsPanel.updateSelectedDataset();
 	        inferencePanel.updateSelectedDataset();
-            visualizationPanel.updateTitleAndStages();
+                statisticsPanel.updateSelectedDataset();
+                visualizationPanel.updateTitleAndStages();
         }
     }//GEN-LAST:event_datasetsListValueChanged
 
@@ -874,6 +889,18 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_shortenBarcodesButtonActionPerformed
 
+    private void saveDatasetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveDatasetButtonActionPerformed
+        // if there is no selection
+        if (datasetsList.getSelectedIndex() == -1) {
+            // return
+            return;
+        }
+        
+        SaveDatasetFrame saveDatasetFrame = new SaveDatasetFrame(datasetController, this);
+        saveDatasetFrame.setLocationRelativeTo(null);
+	saveDatasetFrame.setVisible(true);
+    }//GEN-LAST:event_saveDatasetButtonActionPerformed
+
     // ************ OTHERS ************ \\
     public void updateNumberLabels() {
         typesNumberLabel.setText(String.valueOf(datasetController.getTypesListModel().size()));
@@ -937,6 +964,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel samplesPanelList;
     private javax.swing.JScrollPane samplesScrollPane;
     private javax.swing.JButton samplesSelectionButton;
+    private javax.swing.JButton saveDatasetButton;
     private javax.swing.JButton selectMultipleSamplesButton;
     private javax.swing.JButton shortenBarcodesButton;
     private javax.swing.JTabbedPane tabbedPane;
@@ -950,5 +978,6 @@ public class MainFrame extends javax.swing.JFrame {
     private HypothesesPanel hypothesesPanel;
     private ExternalToolsPanel externalToolsPanel;
     private InferencePanel inferencePanel;
+    private StatisticsPanel statisticsPanel;
     private VisualizationPanel visualizationPanel;
 }

@@ -4,7 +4,6 @@ import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.controller.InferenceController;
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
 import it.unimib.disco.bimib.cyTRON.model.R.RConnectionManager;
-import it.unimib.disco.bimib.cyTRON.model.R.TextConsole;
 
 import java.awt.Window;
 import java.util.List;
@@ -17,20 +16,22 @@ import javax.swing.SwingWorker;
 
 public class InferencePanel extends javax.swing.JPanel {
 
-	private final InferenceController inferenceController;
+    private final InferenceController inferenceController;
     private final DatasetController datasetController;
     private final MainFrame mainFrame;
+    private final StatisticsPanel statisticsPanel;
     
     private final DefaultComboBoxModel<String> algorithmDefaultComboBoxModel;
     private final DefaultComboBoxModel<String> commandDefaultComboBoxModel;
     private final DefaultListModel<String> regularizationsListModel;
     private final DefaultComboBoxModel<String> scoreDefaultComboBoxModel;
     
-    public InferencePanel(DatasetController datasetController, MainFrame mainFrame) {
+    public InferencePanel(DatasetController datasetController, MainFrame mainFrame, StatisticsPanel statisticsPanel) {
         // get the controllers and the main frame
     	inferenceController = new InferenceController();
         this.datasetController = datasetController;
         this.mainFrame = mainFrame;
+        this.statisticsPanel = statisticsPanel;
         
         // create the models
         algorithmDefaultComboBoxModel = new DefaultComboBoxModel(InferenceController.ALGORITHMS);
@@ -181,65 +182,57 @@ public class InferencePanel extends javax.swing.JPanel {
         parametersPanelLayout.setHorizontalGroup(
             parametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(parametersPanelLayout.createSequentialGroup()
-                .addGap(127, 127, 127)
+                .addGap(110, 110, 110)
                 .addGroup(parametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(regularizationLabel)
                     .addGroup(parametersPanelLayout.createSequentialGroup()
-                        .addComponent(raisingConditionLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(raisingConditionCheckBox))
-                    .addGroup(parametersPanelLayout.createSequentialGroup()
-                        .addComponent(pValueLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pValueSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(parametersPanelLayout.createSequentialGroup()
-                        .addComponent(bootstrapSamplingsLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(bootstrapSamplingsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(parametersPanelLayout.createSequentialGroup()
-                        .addComponent(estimateErrorRatesLabel)
-                        .addGap(18, 18, 18)
-                        .addComponent(estimateErrorRatesCheckBox))
-                    .addGroup(parametersPanelLayout.createSequentialGroup()
-                        .addComponent(falsePositiveLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(falsePositiveSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(54, 54, 54)
-                        .addComponent(falseNegativeLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(falseNegativeSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(parametersPanelLayout.createSequentialGroup()
-                        .addComponent(lambdaLabel)
-                        .addGap(49, 49, 49)
-                        .addComponent(lambdaSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(parametersPanelLayout.createSequentialGroup()
-                        .addComponent(commandLabel)
-                        .addGap(18, 18, 18)
-                        .addComponent(commandComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(parametersPanelLayout.createSequentialGroup()
-                        .addComponent(regularizationLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(parametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ctrlLabel)
-                            .addComponent(regularizationScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 619, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(parametersPanelLayout.createSequentialGroup()
-                        .addComponent(initialBootstrapSeedsLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(initialBootstrapSeedsLabel)
+                            .addComponent(restartsLabel)
+                            .addComponent(scoreLabel))
+                        .addGap(50, 50, 50)
                         .addGroup(parametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(restartsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(scoreComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(leaveLabel)
                             .addComponent(initialBootstrapSeedsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(parametersPanelLayout.createSequentialGroup()
-                        .addGroup(parametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(restartsLabel)
-                            .addComponent(scoreLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(parametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(scoreComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(restartsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(70, Short.MAX_VALUE))
+                        .addComponent(raisingConditionLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(raisingConditionCheckBox))
+                    .addGroup(parametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(regularizationScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, parametersPanelLayout.createSequentialGroup()
+                            .addGroup(parametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(falsePositiveLabel)
+                                .addComponent(commandLabel)
+                                .addComponent(lambdaLabel)
+                                .addComponent(estimateErrorRatesLabel)
+                                .addComponent(bootstrapSamplingsLabel)
+                                .addComponent(pValueLabel))
+                            .addGroup(parametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(parametersPanelLayout.createSequentialGroup()
+                                    .addGap(313, 313, 313)
+                                    .addComponent(falseNegativeLabel)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(falseNegativeSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(parametersPanelLayout.createSequentialGroup()
+                                    .addGap(43, 43, 43)
+                                    .addGroup(parametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(estimateErrorRatesCheckBox)
+                                        .addGroup(parametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(bootstrapSamplingsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(pValueSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(ctrlLabel)
+                                        .addComponent(commandComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(falsePositiveSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lambdaSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                .addContainerGap(111, Short.MAX_VALUE))
         );
         parametersPanelLayout.setVerticalGroup(
             parametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(parametersPanelLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
                 .addGroup(parametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lambdaLabel)
                     .addComponent(lambdaSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -257,39 +250,39 @@ public class InferencePanel extends javax.swing.JPanel {
                 .addGroup(parametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(regularizationLabel)
                     .addComponent(regularizationScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ctrlLabel)
-                .addGap(7, 7, 7)
+                .addGap(18, 18, 18)
                 .addGroup(parametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(estimateErrorRatesLabel)
-                    .addComponent(estimateErrorRatesCheckBox))
+                    .addComponent(estimateErrorRatesCheckBox)
+                    .addComponent(estimateErrorRatesLabel))
                 .addGap(18, 18, 18)
                 .addGroup(parametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bootstrapSamplingsLabel)
                     .addComponent(bootstrapSamplingsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(parametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pValueLabel)
-                    .addComponent(pValueSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pValueSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pValueLabel))
                 .addGap(18, 18, 18)
                 .addGroup(parametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(initialBootstrapSeedsLabel)
-                    .addComponent(initialBootstrapSeedsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(initialBootstrapSeedsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(initialBootstrapSeedsLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(leaveLabel)
                 .addGap(18, 18, 18)
                 .addGroup(parametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(restartsLabel)
-                    .addComponent(restartsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(restartsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(restartsLabel))
                 .addGap(18, 18, 18)
                 .addGroup(parametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(scoreLabel)
-                    .addComponent(scoreComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(scoreComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(scoreLabel))
                 .addGap(18, 18, 18)
                 .addGroup(parametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(raisingConditionLabel)
                     .addComponent(raisingConditionCheckBox))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         runButton.setText("Run");
@@ -457,16 +450,18 @@ public class InferencePanel extends javax.swing.JPanel {
             // show the option pane for exiting the algorithm
             JOptionPane.showOptionDialog(this, "Exit this window to kill the algorithm.", "", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
             
-            // cancel the thread and stop the current R command in any case
+            // cancel the thread and stop the current R command if the inference is not completed
             if (!inferenceAlgorithm.isDone()) {
             	inferenceAlgorithm.cancel();
 			}
             
     		// update the current inference algorithm label
         	currentAlgorithmValueLabel.setText(dataset.getInferenceAlgorithm());
+        	statisticsPanel.updateSelectedDataset();
         }        
     }//GEN-LAST:event_runButtonActionPerformed
 
+    // dispose all option panes
     public void disposeJOptionPane() {
     	Window[] windows = Window.getWindows();
 		for (Window window : windows) {
@@ -542,7 +537,6 @@ public class InferencePanel extends javax.swing.JPanel {
     	private final String score;
     	private final Boolean raisingCondition;
     	
-    	@SuppressWarnings("unused")
 		public InferenceAlgorithm(Dataset dataset, InferencePanel inferencePanel, InferenceController inferenceController, Object algorithm, 
     			Float lambda, Float falsePositive, Float falseNegative, String command, List<String> regularization, Boolean estimateErrorRates,
     			Integer bootstrapSamplings, Float pValue, Integer initialBootstrapSeeds, Integer restarts, String score,

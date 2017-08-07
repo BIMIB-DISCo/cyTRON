@@ -120,82 +120,72 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="127" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="110" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="raisingConditionLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="raisingConditionCheckBox" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <Component id="pValueLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="pValueSpinner" min="-2" pref="57" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <Component id="bootstrapSamplingsLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="bootstrapSamplingsSpinner" min="-2" pref="57" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <Component id="estimateErrorRatesLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="estimateErrorRatesCheckBox" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <Component id="falsePositiveLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="falsePositiveSpinner" min="-2" pref="57" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-                          <Component id="falseNegativeLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="falseNegativeSpinner" min="-2" pref="57" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <Component id="lambdaLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-                          <Component id="lambdaSpinner" min="-2" pref="57" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="regularizationLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="commandLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="commandComboBox" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="regularizationLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="ctrlLabel" min="-2" max="-2" attributes="0"/>
-                              <Component id="regularizationScrollPane" min="-2" pref="619" max="-2" attributes="0"/>
+                              <Component id="initialBootstrapSeedsLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="restartsLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="scoreLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="initialBootstrapSeedsLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="restartsSpinner" min="-2" pref="57" max="-2" attributes="0"/>
+                              <Component id="scoreComboBox" min="-2" max="-2" attributes="0"/>
                               <Component id="leaveLabel" min="-2" max="-2" attributes="0"/>
                               <Component id="initialBootstrapSeedsSpinner" min="-2" pref="57" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="restartsLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="scoreLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="scoreComboBox" min="-2" max="-2" attributes="0"/>
-                              <Component id="restartsSpinner" min="-2" pref="57" max="-2" attributes="0"/>
+                          <Component id="raisingConditionLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="raisingConditionCheckBox" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                          <Component id="regularizationScrollPane" min="-2" pref="500" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="falsePositiveLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="commandLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lambdaLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="estimateErrorRatesLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="bootstrapSamplingsLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="pValueLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="313" max="-2" attributes="0"/>
+                                      <Component id="falseNegativeLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="falseNegativeSpinner" min="-2" pref="57" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="estimateErrorRatesCheckBox" min="-2" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="1" attributes="0">
+                                              <Component id="bootstrapSamplingsSpinner" min="-2" pref="57" max="-2" attributes="0"/>
+                                              <Component id="pValueSpinner" min="-2" pref="57" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="ctrlLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="commandComboBox" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="falsePositiveSpinner" alignment="0" min="-2" pref="57" max="-2" attributes="0"/>
+                                          <Component id="lambdaSpinner" alignment="0" min="-2" pref="57" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace pref="70" max="32767" attributes="0"/>
+                  <EmptySpace pref="111" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lambdaLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lambdaSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -217,12 +207,12 @@
                       <Component id="regularizationLabel" min="-2" max="-2" attributes="0"/>
                       <Component id="regularizationScrollPane" min="-2" pref="21" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="ctrlLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="estimateErrorRatesLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="estimateErrorRatesCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="estimateErrorRatesLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -231,32 +221,32 @@
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="pValueLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="pValueSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="pValueLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="initialBootstrapSeedsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="initialBootstrapSeedsSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="initialBootstrapSeedsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="leaveLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="restartsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="restartsSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="restartsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="scoreLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="scoreComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="scoreLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="raisingConditionLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="raisingConditionCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="45" max="32767" attributes="0"/>
+                  <EmptySpace pref="25" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

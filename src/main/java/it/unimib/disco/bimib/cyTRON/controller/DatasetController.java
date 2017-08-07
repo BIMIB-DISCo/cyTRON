@@ -21,6 +21,7 @@ public class DatasetController {
     public static final String GENOTYPES = "genotypes";
     public static final String GISTIC = "GISTIC";
     public static final String MAF = "MAF";
+    public static final String LOAD = "load";
     
     public static final String EVENTS = "Events";
     public static final String SAMPLES = "Samples";
@@ -121,6 +122,17 @@ public class DatasetController {
         
         // update the lists
         updateLists(dataset1);
+    }
+    
+    public void save(int datasetIndex, String name, String path) {
+    	// get the dataset
+    	Dataset dataset = datasetsListModel.get(datasetIndex);
+    	
+    	// validate the path
+    	path = path.replace("\\", "\\\\") + File.separator + name + ".rds";
+    	
+    	// save the dataset
+    	dataset.save(path);
     }
     
     // ************ SAMPLES ************ \\

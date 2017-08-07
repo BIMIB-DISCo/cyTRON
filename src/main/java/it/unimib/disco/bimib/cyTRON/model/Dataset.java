@@ -81,6 +81,25 @@ public class Dataset {
 		}
     }
     
+    public void save(String path) {
+    	// create and execute the command
+        String command = "saveRDS(" + name + ", '" + path + "')";
+        RConnectionManager.eval(command);
+    }
+    
+    private void load(String name, String path) throws REngineException {
+    	// create and execute the command
+        String command = name + " = readRDS('" + path + "')";
+        RConnectionManager.eval(command);
+        
+        // check if the object exists in R
+        command = "exists('" + name + "')";
+        REXP rexp = RConnectionManager.eval(command);
+        if (rexp.asBool().isFALSE()) {
+			throw new REngineException(null, "readRDS");
+		}
+    }
+    
     private void importGenotypes(String name, String path) throws REngineException {
         // create and execute the command
         String command = name + " = import.genotypes('" + path + "')";
@@ -1100,6 +1119,58 @@ public class Dataset {
 	
 	public String getInferenceAlgorithm() {
 		return inferenceAlgorithm;
+	}
+	
+    // ************ STATISTICS ************ \\
+	public void bootstrap(String type, Integer bootstrapSamplings, Float coresRatio) {
+		// create and execute the command
+		String command = name + " = tronco.bootstrap(" + name
+				+ ", type='" + type
+				+ "', nboot=" + bootstrapSamplings.toString()
+				+ ", cores.ratio=" + coresRatio.toString().replace(",", ".")
+				+ ", silent=TRUE)";
+		RConnectionManager.eval(command);
+		
+		// clear the last console message
+		RConnectionManager.getTextConsole().getLastConsoleMessage();
+	}
+	
+	public void eloss(Integer runs, Integer groups) {
+		// create and execute the command
+		String command = name + " = tronco.kfold.eloss(" + name
+				+ ", runs=" + runs.toString()
+				+ ", k=" + groups.toString()
+				+ ", silent=TRUE)";
+		RConnectionManager.eval(command);
+		
+		// clear the last console message
+		RConnectionManager.getTextConsole().getLastConsoleMessage();
+	}
+	
+	public void posterr(Integer runs, Integer groups, Float coresRatio) {
+		// create and execute the command
+		String command = name + " = tronco.kfold.posterr(" + name
+				+ ", runs=" + runs.toString()
+				+ ", k=" + groups.toString()
+				+ ", cores.ratio=" + coresRatio.toString().replace(",", ".")
+				+ ", silent=TRUE)";
+		RConnectionManager.eval(command);
+		
+		// clear the last console message
+		RConnectionManager.getTextConsole().getLastConsoleMessage();
+	}
+	
+	public void prederr(Integer runs, Integer groups, Float coresRatio) {
+		// create and execute the command
+		String command = name + " = tronco.kfold.posterr(" + name
+				+ ", runs=" + runs.toString()
+				+ ", k=" + groups.toString()
+				+ ", cores.ratio=" + coresRatio.toString().replace(",", ".")
+				+ ", silent=TRUE)";
+		RConnectionManager.eval(command);
+		
+		// clear the last console message
+		RConnectionManager.getTextConsole().getLastConsoleMessage();
 	}
     
     // ************ UTILITIES ************ \\
