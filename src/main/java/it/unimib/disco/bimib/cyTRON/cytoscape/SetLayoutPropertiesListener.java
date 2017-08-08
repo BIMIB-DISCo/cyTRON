@@ -1,4 +1,4 @@
-package it.unimib.disco.bimib.cyTRON.controller;
+package it.unimib.disco.bimib.cyTRON.cytoscape;
 
 import java.awt.Color;
 import java.awt.Paint;
@@ -61,63 +61,62 @@ public class SetLayoutPropertiesListener implements NetworkAddedListener {
 
     @Override
     public void handleEvent(NetworkAddedEvent arg0) {
-        // Get the network and its view
+        // get the network and its view
     	CyNetwork network = arg0.getNetwork();
     	CyNetworkView view = null;
     	
-    	final Collection<CyNetworkView> views = this.networkViewManager.getNetworkViews(network);
+    	Collection<CyNetworkView> views = networkViewManager.getNetworkViews(network);
         if (!views.isEmpty()) {
             view = views.iterator().next();
         }
         if (view == null) {
-            view = this.networkViewFactory.createNetworkView(network);
-            this.networkViewManager.addNetworkView(view);
+            view = networkViewFactory.createNetworkView(network);
+            networkViewManager.addNetworkView(view);
         }
         
-        // Set general layout
-        CyLayoutAlgorithm layout = this.layoutAlgorithmManager.getLayout("hierarchic");
+        // set the layout
+        CyLayoutAlgorithm layout = layoutAlgorithmManager.getLayout("hierarchic");
         if (layout == null) {
-            layout = this.layoutAlgorithmManager.getDefaultLayout();
+            layout = layoutAlgorithmManager.getDefaultLayout();
         }
         TaskIterator taskIterator = layout.createTaskIterator(view, layout.getDefaultLayoutContext(), CyLayoutAlgorithm.ALL_NODE_VIEWS, null);
-        this.taskManager.execute(taskIterator);
+        taskManager.execute(taskIterator);
 
-        // Set node shape
-        DiscreteMapping<String, NodeShape> shapeMapping = (DiscreteMapping<String, NodeShape>) this.visualMappingFunctionFactoryDiscrete.createVisualMappingFunction("shape", String.class, BasicVisualLexicon.NODE_SHAPE);
+        // set node shape
+        DiscreteMapping<String, NodeShape> shapeMapping = (DiscreteMapping<String, NodeShape>) visualMappingFunctionFactoryDiscrete.createVisualMappingFunction("shape", String.class, BasicVisualLexicon.NODE_SHAPE);
         shapeMapping.putMapValue("ellipse", NodeShapeVisualProperty.ELLIPSE);
         shapeMapping.putMapValue("diamond", NodeShapeVisualProperty.DIAMOND);
         shapeMapping.putMapValue("hexagon", NodeShapeVisualProperty.HEXAGON);
         shapeMapping.putMapValue("octagon", NodeShapeVisualProperty.OCTAGON);
         shapeMapping.putMapValue("parallelogram", NodeShapeVisualProperty.PARALLELOGRAM);
-        shapeMapping.putMapValue("Rectangle", NodeShapeVisualProperty.RECTANGLE);
+        shapeMapping.putMapValue("rectangle", NodeShapeVisualProperty.RECTANGLE);
         shapeMapping.putMapValue("round rectangle", NodeShapeVisualProperty.ROUND_RECTANGLE);
         shapeMapping.putMapValue("triangle", NodeShapeVisualProperty.TRIANGLE);
         
-        // Set graph visualization rules based on its attributes
-        VisualStyle visualStyle = this.visualStyleFactory.createVisualStyle("StyleSet");
+        VisualStyle visualStyle = visualStyleFactory.createVisualStyle("StyleSet");
         visualStyle.addVisualMappingFunction(shapeMapping);
         
-        // Set nodes color
-        PassthroughMapping colorMapping = (PassthroughMapping) this.visualMappingFunctionFactoryPassthrough.createVisualMappingFunction("fillcolor", Color.class, BasicVisualLexicon.NODE_FILL_COLOR);
+        // set nodes color
+        PassthroughMapping colorMapping = (PassthroughMapping) visualMappingFunctionFactoryPassthrough.createVisualMappingFunction("fillcolor", Color.class, BasicVisualLexicon.NODE_FILL_COLOR);
         visualStyle.addVisualMappingFunction(colorMapping);
 
-        // Set nodes label
-        PassthroughMapping labelMapping = (PassthroughMapping) this.visualMappingFunctionFactoryPassthrough.createVisualMappingFunction("label", String.class, BasicVisualLexicon.NODE_LABEL);
+        // set nodes label
+        PassthroughMapping labelMapping = (PassthroughMapping) visualMappingFunctionFactoryPassthrough.createVisualMappingFunction("label", String.class, BasicVisualLexicon.NODE_LABEL);
         visualStyle.addVisualMappingFunction(labelMapping);
         
-        // Set nodes label color
-        PassthroughMapping fontColorMapping = (PassthroughMapping) this.visualMappingFunctionFactoryPassthrough.createVisualMappingFunction("fontcolor", Color.class, BasicVisualLexicon.NODE_LABEL_COLOR);
+        // set nodes label color
+        PassthroughMapping fontColorMapping = (PassthroughMapping) visualMappingFunctionFactoryPassthrough.createVisualMappingFunction("fontcolor", Color.class, BasicVisualLexicon.NODE_LABEL_COLOR);
         visualStyle.addVisualMappingFunction(fontColorMapping);
 
-        // Set nodes border color
-        PassthroughMapping borderColorMapping = (PassthroughMapping) this.visualMappingFunctionFactoryPassthrough.createVisualMappingFunction("bordercolor", Paint.class, BasicVisualLexicon.NODE_BORDER_PAINT);
+        // set nodes border color
+        PassthroughMapping borderColorMapping = (PassthroughMapping) visualMappingFunctionFactoryPassthrough.createVisualMappingFunction("bordercolor", Paint.class, BasicVisualLexicon.NODE_BORDER_PAINT);
         visualStyle.addVisualMappingFunction(borderColorMapping);
         
-        // Set node border width
-        PassthroughMapping borderWidthMapping = (PassthroughMapping) this.visualMappingFunctionFactoryPassthrough.createVisualMappingFunction("borderwidth", Double.class, BasicVisualLexicon.NODE_BORDER_WIDTH);
+        // set node border width
+        PassthroughMapping borderWidthMapping = (PassthroughMapping) visualMappingFunctionFactoryPassthrough.createVisualMappingFunction("borderwidth", Double.class, BasicVisualLexicon.NODE_BORDER_WIDTH);
         visualStyle.addVisualMappingFunction(borderWidthMapping);
         
-        // Find the longest label
+        // find the longest label
         int maximumLabelLength = 0;
         CyTable table = network.getDefaultNodeTable();
         for (View<CyNode> nodeView : view.getNodeViews()) {
@@ -129,8 +128,8 @@ public class SetLayoutPropertiesListener implements NetworkAddedListener {
 			}
         }
         
-        // Set node size
-        int nodeWidth = maximumLabelLength * 8;
+        // set node size
+        int nodeWidth = maximumLabelLength * 9;
         for (View<CyNode> nodeView : view.getNodeViews()) {
         	CyRow row = table.getRow(nodeView.getModel().getSUID());
         	if (row.get("label", String.class) != null) {
@@ -141,71 +140,36 @@ public class SetLayoutPropertiesListener implements NetworkAddedListener {
 	        	nodeView.setLockedValue(BasicVisualLexicon.NODE_HEIGHT, Double.valueOf(nodeWidth/2));
 			}
 		}
-        
-        // Nodes ordered by Y and X location
-    	TreeMap<Double, TreeMap<Double, View<CyNode>>> orderedNodes = new TreeMap<>();
-    	for (View<CyNode> nodeView : view.getNodeViews()) {
-    		double y = nodeView.getVisualProperty(BasicVisualLexicon.NODE_Y_LOCATION).doubleValue();
-    		double x = nodeView.getVisualProperty(BasicVisualLexicon.NODE_X_LOCATION).doubleValue();
-    		if (!orderedNodes.containsKey(y)) {
-				orderedNodes.put(y, new TreeMap<>());
-			}
-    		orderedNodes.get(y).put(x, nodeView);
-    	}
-    	
-    	// Y and X offset
-    	double yOffset = nodeWidth/6;
-    	double xOffset = (double) nodeWidth/1.5;
-    	
-    	// Adjust nodes Y and X locations
-    	int yLevel = 1;
-    	for (TreeMap<Double, View<CyNode>> nodesLevel: orderedNodes.values()) {
-    		int halfLevelSize = (int) Math.ceil((double) nodesLevel.size() / 2);
-    		
-    		int xLevel = 1;
-    		for (View<CyNode> nodeView : nodesLevel.values()) {
-    			nodeView.setVisualProperty(BasicVisualLexicon.NODE_Y_LOCATION, nodeView.getVisualProperty(BasicVisualLexicon.NODE_Y_LOCATION).doubleValue() + yOffset * yLevel);
-    			if (nodesLevel.size() % 2 == 0) {
-    				nodeView.setVisualProperty(BasicVisualLexicon.NODE_X_LOCATION, nodeView.getVisualProperty(BasicVisualLexicon.NODE_X_LOCATION).doubleValue() + xOffset * (xLevel - halfLevelSize - 1));
-    			} else {
-        			nodeView.setVisualProperty(BasicVisualLexicon.NODE_X_LOCATION, nodeView.getVisualProperty(BasicVisualLexicon.NODE_X_LOCATION).doubleValue() + xOffset * (xLevel - halfLevelSize));
-    			}
-				xLevel++;
-    		}
-    		yLevel++;
-		}
 
-        // Set edges arrow
-        DiscreteMapping<String, ArrowShape> arrowMapping = (DiscreteMapping<String, ArrowShape>) this.visualMappingFunctionFactoryDiscrete.createVisualMappingFunction("arrow", String.class, BasicVisualLexicon.EDGE_TARGET_ARROW_SHAPE);
+        // set edges arrow
+        DiscreteMapping<String, ArrowShape> arrowMapping = (DiscreteMapping<String, ArrowShape>) visualMappingFunctionFactoryDiscrete.createVisualMappingFunction("arrow", String.class, BasicVisualLexicon.EDGE_TARGET_ARROW_SHAPE);
         arrowMapping.putMapValue("True", ArrowShapeVisualProperty.ARROW);
         arrowMapping.putMapValue("False", ArrowShapeVisualProperty.NONE);
         visualStyle.addVisualMappingFunction(arrowMapping);
 
-        // Set edges color
-        PassthroughMapping edgeColorMapping = (PassthroughMapping) this.visualMappingFunctionFactoryPassthrough.createVisualMappingFunction("color", Color.class, BasicVisualLexicon.EDGE_STROKE_UNSELECTED_PAINT);
+        // set edges color
+        PassthroughMapping edgeColorMapping = (PassthroughMapping) visualMappingFunctionFactoryPassthrough.createVisualMappingFunction("color", Color.class, BasicVisualLexicon.EDGE_STROKE_UNSELECTED_PAINT);
         visualStyle.addVisualMappingFunction(edgeColorMapping);
         
-        // Set edges label
-        PassthroughMapping edgeLabelMapping = (PassthroughMapping) this.visualMappingFunctionFactoryPassthrough.createVisualMappingFunction("edgelabel", String.class, BasicVisualLexicon.EDGE_LABEL);
+        // set edges label
+        PassthroughMapping edgeLabelMapping = (PassthroughMapping) visualMappingFunctionFactoryPassthrough.createVisualMappingFunction("edgelabel", String.class, BasicVisualLexicon.EDGE_LABEL);
         visualStyle.addVisualMappingFunction(edgeLabelMapping);
 
-        // Set edges label color
-        PassthroughMapping edgeFontColorMapping = (PassthroughMapping) this.visualMappingFunctionFactoryPassthrough.createVisualMappingFunction("fontColor", Color.class, BasicVisualLexicon.EDGE_LABEL_COLOR);
+        // set edges label color
+        PassthroughMapping edgeFontColorMapping = (PassthroughMapping) visualMappingFunctionFactoryPassthrough.createVisualMappingFunction("fontColor", Color.class, BasicVisualLexicon.EDGE_LABEL_COLOR);
         visualStyle.addVisualMappingFunction(edgeFontColorMapping);
 
-        // Set edges thickness
-        PassthroughMapping edgeThicknessMapping = (PassthroughMapping) this.visualMappingFunctionFactoryPassthrough.createVisualMappingFunction("width", Double.class, BasicVisualLexicon.EDGE_WIDTH);
+        // set edges thickness
+        PassthroughMapping edgeThicknessMapping = (PassthroughMapping) visualMappingFunctionFactoryPassthrough.createVisualMappingFunction("width", Double.class, BasicVisualLexicon.EDGE_WIDTH);
         visualStyle.addVisualMappingFunction(edgeThicknessMapping);
 
-        // Set edges line type
-        DiscreteMapping<String, LineType> edgeLineTypeMapping = (DiscreteMapping<String, LineType>) this.visualMappingFunctionFactoryDiscrete.createVisualMappingFunction("line", String.class, BasicVisualLexicon.EDGE_LINE_TYPE);
+        // set edges line type
+        DiscreteMapping<String, LineType> edgeLineTypeMapping = (DiscreteMapping<String, LineType>) visualMappingFunctionFactoryDiscrete.createVisualMappingFunction("line", String.class, BasicVisualLexicon.EDGE_LINE_TYPE);
         edgeLineTypeMapping.putMapValue("Dash", LineTypeVisualProperty.EQUAL_DASH);
         edgeLineTypeMapping.putMapValue("Solid", LineTypeVisualProperty.SOLID);
         visualStyle.addVisualMappingFunction(edgeLineTypeMapping);
         
-        // Apply the visual style
-        this.visualMappingManager.addVisualStyle(visualStyle);
-        
+        // apply the visual style
         visualMappingManager.setVisualStyle(visualStyle, view);
         
     }

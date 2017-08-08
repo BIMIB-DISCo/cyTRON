@@ -1,10 +1,10 @@
 package it.unimib.disco.bimib.cyTRON.view;
 
+import it.unimib.disco.bimib.cyTRON.R.RConnectionManager;
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.controller.InferenceController;
 import it.unimib.disco.bimib.cyTRON.controller.StatisticsController;
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
-import it.unimib.disco.bimib.cyTRON.model.R.RConnectionManager;
 
 import java.awt.Component;
 import java.awt.Window;

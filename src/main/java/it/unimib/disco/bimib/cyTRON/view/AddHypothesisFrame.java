@@ -1,10 +1,10 @@
 package it.unimib.disco.bimib.cyTRON.view;
 
+import it.unimib.disco.bimib.cyTRON.R.RConnectionManager;
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.controller.HypothesesController;
 import it.unimib.disco.bimib.cyTRON.model.Event;
 import it.unimib.disco.bimib.cyTRON.model.Gene;
-import it.unimib.disco.bimib.cyTRON.model.R.RConnectionManager;
 
 import java.awt.Color;
 import java.util.List;

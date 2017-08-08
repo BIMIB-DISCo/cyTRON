@@ -1,4 +1,4 @@
-package it.unimib.disco.bimib.cyTRON.model.R;
+package it.unimib.disco.bimib.cyTRON.R;
 
 import org.rosuda.JRI.REXP;
 import org.rosuda.JRI.Rengine;

@@ -1,10 +1,11 @@
 package it.unimib.disco.bimib.cyTRON.view;
 
+import it.unimib.disco.bimib.cyTRON.R.RConnectionManager;
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
+import it.unimib.disco.bimib.cyTRON.cytoscape.CommandExecutor;
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
 import it.unimib.disco.bimib.cyTRON.model.Gene;
 import it.unimib.disco.bimib.cyTRON.model.Sample;
-import it.unimib.disco.bimib.cyTRON.model.R.RConnectionManager;
 
 import java.awt.Window;
 
@@ -15,9 +16,10 @@ import org.rosuda.REngine.REngineException;
 
 public class MainFrame extends javax.swing.JFrame {
 
+	private final CommandExecutor commandExecutor;
     private final DatasetController datasetController;
     
-    public MainFrame() {
+    public MainFrame(CommandExecutor commandExecutor) {
     	try {
 			// instantiate the connection with R
 			RConnectionManager.instantiateConnection();
@@ -25,7 +27,10 @@ public class MainFrame extends javax.swing.JFrame {
 			JOptionPane.showConfirmDialog(this, e.getMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
 		}
     	
-        // instantiate the controller
+    	// get the command executor
+    	this.commandExecutor = commandExecutor;
+    	
+        // instantiate the dataset controller
         datasetController = new DatasetController();
         
         // draws the interface
@@ -571,7 +576,7 @@ public class MainFrame extends javax.swing.JFrame {
     	externalToolsPanel = new ExternalToolsPanel(datasetController, this);
     	statisticsPanel = new StatisticsPanel(datasetController, this);
         inferencePanel = new InferencePanel(datasetController, this, statisticsPanel);
-        visualizationPanel = new VisualizationPanel(datasetController, this);
+        visualizationPanel = new VisualizationPanel(datasetController, this, commandExecutor);
     	
     	tabbedPane.addTab("Hypotheses", hypothesesPanel);
     	tabbedPane.addTab("External Tools", externalToolsPanel);

@@ -1,11 +1,11 @@
 package it.unimib.disco.bimib.cyTRON.controller;
 
+import it.unimib.disco.bimib.cyTRON.R.RConnectionManager;
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
 import it.unimib.disco.bimib.cyTRON.model.Event;
 import it.unimib.disco.bimib.cyTRON.model.Gene;
 import it.unimib.disco.bimib.cyTRON.model.Hypothesis;
 import it.unimib.disco.bimib.cyTRON.model.Pattern;
-import it.unimib.disco.bimib.cyTRON.model.R.RConnectionManager;
 
 import java.util.List;
 

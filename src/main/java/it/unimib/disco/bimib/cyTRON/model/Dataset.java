@@ -3,10 +3,10 @@ package it.unimib.disco.bimib.cyTRON.model;
 import org.rosuda.JRI.REXP;
 import org.rosuda.REngine.REngineException;
 
+import it.unimib.disco.bimib.cyTRON.R.RConnectionManager;
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.controller.InferenceController;
 import it.unimib.disco.bimib.cyTRON.controller.ToStringComparator;
-import it.unimib.disco.bimib.cyTRON.model.R.RConnectionManager;
 import it.unimib.disco.bimib.cyTRON.view.DeleteHypothesesFrame;
 
 import java.io.File;
@@ -913,6 +913,12 @@ public class Dataset {
 				e.printStackTrace();
 			}
 		}
+    }
+    
+    public void plot(String path) {
+    	// create and execute the command
+    	String command = "export.graphml(" + name + ", file='" + path + "')";
+    	RConnectionManager.eval(command);
     }
     
     public String getDescription() {

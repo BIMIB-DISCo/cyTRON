@@ -1,9 +1,11 @@
 package it.unimib.disco.bimib.cyTRON.view;
 
+import it.unimib.disco.bimib.cyTRON.R.RConnectionManager;
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.controller.VisualizationController;
+import it.unimib.disco.bimib.cyTRON.cytoscape.CommandExecutor;
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
-import it.unimib.disco.bimib.cyTRON.model.R.RConnectionManager;
+
 import java.awt.Color;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -16,12 +18,14 @@ public class VisualizationPanel extends javax.swing.JPanel {
     private final VisualizationController visualizationController;
     private final DatasetController datasetController;
     private final MainFrame mainFrame;
+    private final CommandExecutor commandExecutor;
     
-    public VisualizationPanel(DatasetController datasetController, MainFrame mainFrame) {
+    public VisualizationPanel(DatasetController datasetController, MainFrame mainFrame, CommandExecutor commandExecutor) {
         // get the main frame and the controllers
-        visualizationController = new VisualizationController();
         this.datasetController = datasetController;
         this.mainFrame = mainFrame;
+        this.commandExecutor = commandExecutor;
+        visualizationController = new VisualizationController(commandExecutor);
         
         // draw the inteface
         initComponents();
@@ -64,6 +68,8 @@ public class VisualizationPanel extends javax.swing.JPanel {
         showOncoprintButton = new javax.swing.JButton();
         tabLabel1 = new javax.swing.JLabel();
         tabLabel2 = new javax.swing.JLabel();
+        plotPanel = new javax.swing.JPanel();
+        showPlotButton = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(940, 660));
 
@@ -267,6 +273,32 @@ public class VisualizationPanel extends javax.swing.JPanel {
 
         tabbedPane.addTab("Oncoprint", oncoprintPanel);
 
+        showPlotButton.setText("Show");
+        showPlotButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showPlotButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout plotPanelLayout = new javax.swing.GroupLayout(plotPanel);
+        plotPanel.setLayout(plotPanelLayout);
+        plotPanelLayout.setHorizontalGroup(
+            plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plotPanelLayout.createSequentialGroup()
+                .addContainerGap(824, Short.MAX_VALUE)
+                .addComponent(showPlotButton)
+                .addContainerGap())
+        );
+        plotPanelLayout.setVerticalGroup(
+            plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plotPanelLayout.createSequentialGroup()
+                .addContainerGap(567, Short.MAX_VALUE)
+                .addComponent(showPlotButton)
+                .addContainerGap())
+        );
+
+        tabbedPane.addTab("Plot", plotPanel);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -379,6 +411,15 @@ public class VisualizationPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_showOncoprintButtonActionPerformed
 
+    private void showPlotButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPlotButtonActionPerformed
+        try {
+			visualizationController.plot(mainFrame.getSelectedDataset());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }//GEN-LAST:event_showPlotButtonActionPerformed
+
     public void updateTitleAndStages() {
         titleTextField.setText(mainFrame.getSelectedDataset().getDescription());
         annotateStageCheckBox.setSelected(mainFrame.getSelectedDataset().hasStagesAnnotation());
@@ -406,12 +447,14 @@ public class VisualizationPanel extends javax.swing.JPanel {
     private javax.swing.JPanel oncoprintPanel;
     private javax.swing.JCheckBox patternsCheckBox;
     private javax.swing.JLabel patternsLabel;
+    private javax.swing.JPanel plotPanel;
     private javax.swing.JLabel samplesGroupLabel;
     private javax.swing.JTextField samplesGroupTextField;
     private javax.swing.JCheckBox samplesNameCheckBox;
     private javax.swing.JLabel samplesNameLabel;
     private javax.swing.ButtonGroup samplesSortButtonGroup;
     private javax.swing.JButton showOncoprintButton;
+    private javax.swing.JButton showPlotButton;
     private javax.swing.JRadioButton stageSortRadioButton;
     private javax.swing.JLabel tabLabel1;
     private javax.swing.JLabel tabLabel2;

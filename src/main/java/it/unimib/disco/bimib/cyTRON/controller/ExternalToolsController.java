@@ -11,10 +11,10 @@ import javax.swing.DefaultListModel;
 import org.rosuda.JRI.REXP;
 import org.rosuda.JRI.RList;
 
+import it.unimib.disco.bimib.cyTRON.R.RConnectionManager;
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
 import it.unimib.disco.bimib.cyTRON.model.Gene;
 import it.unimib.disco.bimib.cyTRON.model.Type;
-import it.unimib.disco.bimib.cyTRON.model.R.RConnectionManager;
 
 public class ExternalToolsController {
 	
