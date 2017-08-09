@@ -5,9 +5,12 @@ import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.controller.VisualizationController;
 import it.unimib.disco.bimib.cyTRON.cytoscape.CommandExecutor;
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
+import it.unimib.disco.bimib.cyTRON.model.Model;
+import it.unimib.disco.bimib.cyTRON.model.Statistics;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -27,7 +30,7 @@ public class VisualizationPanel extends javax.swing.JPanel {
         this.commandExecutor = commandExecutor;
         visualizationController = new VisualizationController(commandExecutor);
         
-        // draw the inteface
+        // draw the interface
         initComponents();
     }
 
@@ -70,6 +73,24 @@ public class VisualizationPanel extends javax.swing.JPanel {
         tabLabel2 = new javax.swing.JLabel();
         plotPanel = new javax.swing.JPanel();
         showPlotButton = new javax.swing.JButton();
+        modelsLabel = new javax.swing.JLabel();
+        ctrlLabel1 = new javax.swing.JLabel();
+        primaFacieLabel = new javax.swing.JLabel();
+        primaFacieCheckBox = new javax.swing.JCheckBox();
+        disconnectedNodesLabel = new javax.swing.JLabel();
+        disconnectedNodesCheckBox = new javax.swing.JCheckBox();
+        scaleNodesLabel = new javax.swing.JLabel();
+        scaleNodesCheckBox = new javax.swing.JCheckBox();
+        confidenceLabel = new javax.swing.JLabel();
+        ctrlLabel2 = new javax.swing.JLabel();
+        pvalueCutoffLabel = new javax.swing.JLabel();
+        pvalueCutoffSpinner = new javax.swing.JSpinner();
+        modelsScrollPane = new javax.swing.JScrollPane();
+        modelsList = new javax.swing.JList<>();
+        confidenceScrollPane = new javax.swing.JScrollPane();
+        confidenceList = new javax.swing.JList<>();
+        expandHypothesesLabel = new javax.swing.JLabel();
+        expandHypothesesCheckBox = new javax.swing.JCheckBox();
 
         setMinimumSize(new java.awt.Dimension(940, 660));
 
@@ -280,19 +301,119 @@ public class VisualizationPanel extends javax.swing.JPanel {
             }
         });
 
+        modelsLabel.setText("Models:");
+
+        ctrlLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
+        ctrlLabel1.setText("ctrl/cmd-click to select multiple models (do not select for all)");
+
+        primaFacieLabel.setText("Prima Facie:");
+
+        primaFacieCheckBox.setText(" ");
+
+        disconnectedNodesLabel.setText("Disconnected nodes:");
+
+        disconnectedNodesCheckBox.setText(" ");
+
+        scaleNodesLabel.setText("Scale nodes:");
+
+        scaleNodesCheckBox.setText(" ");
+
+        confidenceLabel.setText("Confidence:");
+
+        ctrlLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
+        ctrlLabel2.setText("ctrl/cmd-click to select multiple statistics");
+
+        pvalueCutoffLabel.setText("p-value cutoff:");
+
+        pvalueCutoffSpinner.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.050000012f), Float.valueOf(0.0f), Float.valueOf(1.0f), Float.valueOf(0.01f)));
+
+        modelsList.setModel(visualizationController.getModelsListModel());
+        modelsList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
+        modelsList.setSize(new java.awt.Dimension(27, 136));
+        modelsList.setVisibleRowCount(-1);
+        modelsScrollPane.setViewportView(modelsList);
+
+        confidenceList.setModel(visualizationController.getStatisticsListModel());
+        confidenceList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
+        confidenceList.setSize(new java.awt.Dimension(27, 136));
+        confidenceList.setVisibleRowCount(-1);
+        confidenceScrollPane.setViewportView(confidenceList);
+
+        expandHypothesesLabel.setText("Expand hypotheses:");
+
+        expandHypothesesCheckBox.setSelected(true);
+        expandHypothesesCheckBox.setText(" ");
+
         javax.swing.GroupLayout plotPanelLayout = new javax.swing.GroupLayout(plotPanel);
         plotPanel.setLayout(plotPanelLayout);
         plotPanelLayout.setHorizontalGroup(
             plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plotPanelLayout.createSequentialGroup()
-                .addContainerGap(824, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(showPlotButton)
                 .addContainerGap())
+            .addGroup(plotPanelLayout.createSequentialGroup()
+                .addGap(111, 111, 111)
+                .addGroup(plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(disconnectedNodesLabel)
+                    .addComponent(primaFacieLabel)
+                    .addComponent(modelsLabel)
+                    .addComponent(confidenceLabel)
+                    .addComponent(scaleNodesLabel)
+                    .addComponent(pvalueCutoffLabel)
+                    .addComponent(expandHypothesesLabel))
+                .addGap(18, 18, 18)
+                .addGroup(plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(expandHypothesesCheckBox)
+                    .addGroup(plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(primaFacieCheckBox)
+                            .addComponent(disconnectedNodesCheckBox)
+                            .addComponent(scaleNodesCheckBox))
+                        .addComponent(pvalueCutoffSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ctrlLabel2)
+                        .addComponent(ctrlLabel1)
+                        .addComponent(modelsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
+                        .addComponent(confidenceScrollPane)))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
         plotPanelLayout.setVerticalGroup(
             plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plotPanelLayout.createSequentialGroup()
-                .addContainerGap(567, Short.MAX_VALUE)
+            .addGroup(plotPanelLayout.createSequentialGroup()
+                .addGap(138, 138, 138)
+                .addGroup(plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(modelsLabel)
+                    .addComponent(modelsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plotPanelLayout.createSequentialGroup()
+                        .addComponent(ctrlLabel1)
+                        .addGap(18, 18, 18)
+                        .addGroup(plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(primaFacieCheckBox)
+                            .addComponent(primaFacieLabel))
+                        .addGap(18, 18, 18)
+                        .addGroup(plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(disconnectedNodesLabel)
+                            .addComponent(disconnectedNodesCheckBox))
+                        .addGap(18, 18, 18)
+                        .addGroup(plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(scaleNodesCheckBox)
+                            .addComponent(scaleNodesLabel))
+                        .addGap(18, 18, 18)
+                        .addComponent(confidenceScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(confidenceLabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ctrlLabel2)
+                .addGap(18, 18, 18)
+                .addGroup(plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pvalueCutoffSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pvalueCutoffLabel))
+                .addGap(18, 18, 18)
+                .addGroup(plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(expandHypothesesLabel)
+                    .addComponent(expandHypothesesCheckBox))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
                 .addComponent(showPlotButton)
                 .addContainerGap())
         );
@@ -366,11 +487,15 @@ public class VisualizationPanel extends javax.swing.JPanel {
             // return
             annotateStageTextField.setBackground(Color.RED);
             return;
-        // else, if the path has been provided
-        } else if (annotateStage && annotateStagePath.length() > 0) {
-            // annotate the stage
-            visualizationController.annotateStages(dataset, annotateStagePath);
-        }
+        // else
+        }  else {
+        	annotateStageTextField.setBackground(Color.WHITE);
+        	// if the path has been provided
+        	if (annotateStage && annotateStagePath.length() > 0) {
+                // annotate the stage
+                visualizationController.annotateStages(dataset, annotateStagePath);
+            }
+        }	
         
         // if the last console message is regular
         if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
@@ -412,17 +537,53 @@ public class VisualizationPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_showOncoprintButtonActionPerformed
 
     private void showPlotButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPlotButtonActionPerformed
+        // get the dataset
+        Dataset dataset = mainFrame.getSelectedDataset();
+        
+        // if the dataset is null or has an empty inference
+        if (dataset == null || dataset.getInference().getAlgorithm().equals("")) {
+            return;
+        }
+
+        // get the parameters
+        List<Model> models = modelsList.getSelectedValuesList();
+        Boolean primaFacie = primaFacieCheckBox.isSelected();
+        Boolean disconnectedNodes = disconnectedNodesCheckBox.isSelected();
+        Boolean scaleNodes = scaleNodesCheckBox.isSelected();
+        List<Statistics> confidence = confidenceList.getSelectedValuesList();
+        Float pvalueCutoff = (Float) pvalueCutoffSpinner.getValue();
+        Boolean expandHypotheses = expandHypothesesCheckBox.isSelected();
+        
         try {
-			visualizationController.plot(mainFrame.getSelectedDataset());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            // get the plot
+            visualizationController.plot(mainFrame.getSelectedDataset(), models, primaFacie, disconnectedNodes, scaleNodes, confidence, pvalueCutoff, expandHypotheses);
+            
+            // if the last console message is not regular
+            if (!RConnectionManager.getTextConsole().isLastMessageRegular()) {
+            	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+            }
+        } catch (IOException e) {
+            Logger.getLogger(ImportDatasetFrame.class.getName()).log(Level.SEVERE, null, e);
+        }
     }//GEN-LAST:event_showPlotButtonActionPerformed
 
-    public void updateTitleAndStages() {
-        titleTextField.setText(mainFrame.getSelectedDataset().getDescription());
-        annotateStageCheckBox.setSelected(mainFrame.getSelectedDataset().hasStagesAnnotation());
+    public void updateSelectedDataset() {
+    	// get the dataset
+    	Dataset dataset = mainFrame.getSelectedDataset();
+    	
+    	// update the interface
+        titleTextField.setText(dataset.getDescription());
+        annotateStageCheckBox.setSelected(dataset.hasStagesAnnotation());
+        visualizationController.updateModelsList(dataset);
+        visualizationController.updateStatisticsList(dataset);
+    }
+    
+    public void updateModelsList(Dataset dataset) {
+    	visualizationController.updateModelsList(dataset);
+    }
+    
+    public void updateStatisticsList(Dataset dataset) {
+    	visualizationController.updateStatisticsList(dataset);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -435,8 +596,17 @@ public class VisualizationPanel extends javax.swing.JPanel {
     private javax.swing.JLabel clusterGenesLabel;
     private javax.swing.JCheckBox clusterSamplesCheckBox;
     private javax.swing.JLabel clusterSamplesLabel;
+    private javax.swing.JLabel confidenceLabel;
+    private javax.swing.JList<Statistics> confidenceList;
+    private javax.swing.JScrollPane confidenceScrollPane;
+    private javax.swing.JLabel ctrlLabel1;
+    private javax.swing.JLabel ctrlLabel2;
+    private javax.swing.JCheckBox disconnectedNodesCheckBox;
+    private javax.swing.JLabel disconnectedNodesLabel;
     private javax.swing.JLabel exclusivityLabel;
     private javax.swing.JRadioButton exclusivitySortButton;
+    private javax.swing.JCheckBox expandHypothesesCheckBox;
+    private javax.swing.JLabel expandHypothesesLabel;
     private javax.swing.JLabel fontSizeLabel;
     private javax.swing.JSpinner fontSizeSpinner;
     private javax.swing.JRadioButton labelSortRadioButton;
@@ -444,15 +614,24 @@ public class VisualizationPanel extends javax.swing.JPanel {
     private javax.swing.JLabel legendLabel;
     private javax.swing.JLabel legendSizeLabel;
     private javax.swing.JSpinner legendSizeSpinner;
+    private javax.swing.JLabel modelsLabel;
+    private javax.swing.JList<Model> modelsList;
+    private javax.swing.JScrollPane modelsScrollPane;
     private javax.swing.JPanel oncoprintPanel;
     private javax.swing.JCheckBox patternsCheckBox;
     private javax.swing.JLabel patternsLabel;
     private javax.swing.JPanel plotPanel;
+    private javax.swing.JCheckBox primaFacieCheckBox;
+    private javax.swing.JLabel primaFacieLabel;
+    private javax.swing.JLabel pvalueCutoffLabel;
+    private javax.swing.JSpinner pvalueCutoffSpinner;
     private javax.swing.JLabel samplesGroupLabel;
     private javax.swing.JTextField samplesGroupTextField;
     private javax.swing.JCheckBox samplesNameCheckBox;
     private javax.swing.JLabel samplesNameLabel;
     private javax.swing.ButtonGroup samplesSortButtonGroup;
+    private javax.swing.JCheckBox scaleNodesCheckBox;
+    private javax.swing.JLabel scaleNodesLabel;
     private javax.swing.JButton showOncoprintButton;
     private javax.swing.JButton showPlotButton;
     private javax.swing.JRadioButton stageSortRadioButton;

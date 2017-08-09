@@ -148,10 +148,14 @@ public class SaveDatasetFrame extends javax.swing.JFrame {
         // check the parameters
         if (name.length() == 0) {
             nameTextField.setBackground(Color.RED);
-	}
+        } else {
+        	nameTextField.setBackground(Color.WHITE);
+        }	
         if (path.length() == 0) {
             pathTextField.setBackground(Color.RED);
-        }
+        } else {
+        	pathTextField.setBackground(Color.WHITE);
+        }	
         
         if (name.length() > 0 && path.length() > 0) {
             // save the dataset

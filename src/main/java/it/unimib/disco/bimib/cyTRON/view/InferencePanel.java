@@ -20,18 +20,20 @@ public class InferencePanel extends javax.swing.JPanel {
     private final DatasetController datasetController;
     private final MainFrame mainFrame;
     private final StatisticsPanel statisticsPanel;
+    private final VisualizationPanel visualizationPanel;
     
     private final DefaultComboBoxModel<String> algorithmDefaultComboBoxModel;
     private final DefaultComboBoxModel<String> commandDefaultComboBoxModel;
     private final DefaultListModel<String> regularizationsListModel;
     private final DefaultComboBoxModel<String> scoreDefaultComboBoxModel;
     
-    public InferencePanel(DatasetController datasetController, MainFrame mainFrame, StatisticsPanel statisticsPanel) {
+    public InferencePanel(DatasetController datasetController, MainFrame mainFrame, StatisticsPanel statisticsPanel, VisualizationPanel visualizationPanel) {
         // get the controllers and the main frame
     	inferenceController = new InferenceController();
         this.datasetController = datasetController;
         this.mainFrame = mainFrame;
         this.statisticsPanel = statisticsPanel;
+        this.visualizationPanel = visualizationPanel;
         
         // create the models
         algorithmDefaultComboBoxModel = new DefaultComboBoxModel(InferenceController.ALGORITHMS);
@@ -462,9 +464,11 @@ public class InferencePanel extends javax.swing.JPanel {
 			RConnectionManager.getTextConsole().getLastConsoleMessage();
             
     		// update the current inference algorithm label
-        	currentAlgorithmValueLabel.setText(dataset.getInferenceAlgorithm());
+        	currentAlgorithmValueLabel.setText(dataset.getInference().getAlgorithm());
         	statisticsPanel.updateSelectedDataset();
-        }        
+                visualizationPanel.updateModelsList(dataset);
+                visualizationPanel.updateStatisticsList(dataset);
+            }        
     }//GEN-LAST:event_runButtonActionPerformed
     
     public void updateSelectedDataset() {
@@ -472,7 +476,7 @@ public class InferencePanel extends javax.swing.JPanel {
     	Dataset dataset = mainFrame.getSelectedDataset();
     	
     	// update the current inference algorithm label
-    	currentAlgorithmValueLabel.setText(dataset.getInferenceAlgorithm());
+    	currentAlgorithmValueLabel.setText(dataset.getInference().getAlgorithm());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

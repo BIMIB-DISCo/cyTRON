@@ -395,9 +395,13 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
         }
         if (fileName.length() == 0) {
             fileNameTextField1.setBackground(Color.RED);
+        } else {
+        	fileNameTextField1.setBackground(Color.WHITE);
         }
         if (filePath.length() == 0) {
             filePathTextField1.setBackground(Color.RED);
+        } else {
+        	filePathTextField1.setBackground(Color.WHITE);
         }
         
         if (fileName.length() > 0 && filePath.length() > 0) {
@@ -422,9 +426,14 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
         if (file.trim().length() == 1) {
             fileNameTextField2.setBackground(Color.RED);
             filePathTextField2.setBackground(Color.RED);
+        } else {
+        	fileNameTextField2.setBackground(Color.WHITE);
+        	filePathTextField2.setBackground(Color.WHITE);
         }
         if (mapping.length() == 0) {
             mappingTextField.setBackground(Color.RED);
+        } else {
+        	mappingTextField.setBackground(Color.WHITE);
         }
         
         if (file.trim().length() > 1 && mapping.length() > 0) {
@@ -516,6 +525,8 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
         if (file.length() == 0) {
             fileTextField.setBackground(Color.RED);
             return;
+        } else {
+        	fileTextField.setBackground(Color.WHITE);
         }
         
         // import mutex

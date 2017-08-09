@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
     <Component class="javax.swing.ButtonGroup" name="typeButtonGroup">
     </Component>
@@ -83,7 +83,10 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="frequenceLabel" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="frequenceTextField" min="-2" pref="32" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="negativeLabel" min="-2" max="-2" attributes="0"/>
+                                      <Component id="minimumFrequenceSpinner" min="-2" pref="65" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -96,13 +99,15 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace pref="19" max="32767" attributes="0"/>
+                  <EmptySpace pref="11" max="32767" attributes="0"/>
                   <Component id="selectionLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="frequenceLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="frequenceTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="minimumFrequenceSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="negativeLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="selectedEventsLabel" min="-2" max="-2" attributes="0"/>
@@ -117,7 +122,7 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="ctrlLabel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="selectButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
               </Group>
@@ -168,7 +173,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Lucida Grande" size="11" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="ctrl/cmd-click to select multiple events (do not select for NA)"/>
+            <Property name="text" type="java.lang.String" value="ctrl/cmd-click to select multiple events (do not select for default)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="selectedEventsLabel">
@@ -176,14 +181,12 @@
             <Property name="text" type="java.lang.String" value="Selected events:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="frequenceTextField">
-        </Component>
         <Component class="javax.swing.JLabel" name="ctrlLabel2">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Lucida Grande" size="11" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="ctrl/cmd-click to select multiple events (do not select for NA)"/>
+            <Property name="text" type="java.lang.String" value="ctrl/cmd-click to select multiple events (do not select for default)"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JScrollPane" name="filteredEventsScrollPane">
@@ -206,6 +209,21 @@
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
             <Property name="text" type="java.lang.String" value="Filtered events:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JSpinner" name="minimumFrequenceSpinner">
+          <Properties>
+            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+              <SpinnerModel initial="-0.01" maximum="1.0" minimum="-0.01" numberType="java.lang.Float" stepSize="0.01" type="number"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="negativeLabel">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Lucida Grande" size="11" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="negative value for default"/>
           </Properties>
         </Component>
       </SubComponents>

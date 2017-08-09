@@ -74,26 +74,13 @@ public class HypothesesController {
     	}
     }
     
-    public void addGroupHypothesis(Dataset dataset, String operation, List<Gene> genes, List<Event> effect, List<Event> cause, String minimumCardinality, String maximumCardinality, String minimumProbability, DatasetController datasetController) {
+    public void addGroupHypothesis(Dataset dataset, String operation, List<Gene> genes, List<Event> effect, List<Event> cause, Integer minimumCardinality, Integer maximumCardinality, Float minimumProbability, DatasetController datasetController) {
     	// validate the input
-        int minimumCardinalityInt;
-		try {
-			minimumCardinalityInt = Integer.parseInt(minimumCardinality);
-		} catch (NumberFormatException e) {
-			minimumCardinalityInt = 2;
-		}
-        int maximumCardinalityInt;
-		try {
-			maximumCardinalityInt = Integer.parseInt(maximumCardinality);
-		} catch (NumberFormatException e) {
-			maximumCardinalityInt = genes.size();
-		}
-        
-        if (minimumCardinalityInt < 2 || minimumCardinalityInt > maximumCardinalityInt) {
-            minimumCardinality = "2";
+        if (minimumCardinality < 2 || minimumCardinality > maximumCardinality) {
+            minimumCardinality = 2;
         }
-        if (maximumCardinalityInt > genes.size() || maximumCardinalityInt < minimumCardinalityInt) {
-            maximumCardinality = String.valueOf(genes.size());
+        if (maximumCardinality > genes.size() || maximumCardinality < minimumCardinality) {
+            maximumCardinality = genes.size();
         }
 
         // add the group

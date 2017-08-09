@@ -128,7 +128,9 @@ public class SamplesSelectionFrame extends javax.swing.JFrame {
             // return
             samplesList.setBackground(Color.RED);
             return;
-        }
+        } else {
+        	samplesList.setBackground(Color.WHITE);
+        }	
         
         // select the samples
         datasetController.selectSamples(samplesIndex, datasetIndex);

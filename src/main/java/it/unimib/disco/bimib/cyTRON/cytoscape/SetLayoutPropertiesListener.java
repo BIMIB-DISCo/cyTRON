@@ -3,6 +3,8 @@ package it.unimib.disco.bimib.cyTRON.cytoscape;
 import java.awt.Color;
 import java.awt.Paint;
 import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import org.cytoscape.model.CyNetwork;
@@ -24,14 +26,17 @@ import org.cytoscape.view.presentation.property.NodeShapeVisualProperty;
 import org.cytoscape.view.presentation.property.values.ArrowShape;
 import org.cytoscape.view.presentation.property.values.LineType;
 import org.cytoscape.view.presentation.property.values.NodeShape;
+import org.cytoscape.view.vizmap.VisualMappingFunction;
 import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
 import org.cytoscape.view.vizmap.VisualMappingManager;
+import org.cytoscape.view.vizmap.VisualPropertyDependency;
 import org.cytoscape.view.vizmap.VisualStyle;
 import org.cytoscape.view.vizmap.VisualStyleFactory;
 import org.cytoscape.view.vizmap.mappings.DiscreteMapping;
 import org.cytoscape.view.vizmap.mappings.PassthroughMapping;
 import org.cytoscape.work.TaskIterator;
 import org.cytoscape.work.TaskManager;
+import org.omg.CORBA.PRIVATE_MEMBER;
 
 public class SetLayoutPropertiesListener implements NetworkAddedListener {
 
@@ -82,6 +87,57 @@ public class SetLayoutPropertiesListener implements NetworkAddedListener {
         TaskIterator taskIterator = layout.createTaskIterator(view, layout.getDefaultLayoutContext(), CyLayoutAlgorithm.ALL_NODE_VIEWS, null);
         taskManager.execute(taskIterator);
 
+        // get the new visual style
+        VisualStyle visualStyle = visualStyleFactory.createVisualStyle("StyleSet");
+        
+        // remove the lock of nodes' height-width and set the arrow color
+        for (VisualPropertyDependency visualPropertyDependency : visualStyle.getAllVisualPropertyDependencies()) {
+			if (visualPropertyDependency.getIdString().equals("nodeSizeLocked")) {
+				visualPropertyDependency.setDependency(false);
+			} else if (visualPropertyDependency.getIdString().equals("arrowColorMatchesEdge")) {
+				visualPropertyDependency.setDependency(true);
+			}
+		}
+        
+        // get the rescaling factor
+        Double currentScaleMaximum = 50d;
+        Double maximumSize = 0d;
+        CyTable table = network.getDefaultNodeTable();
+        for (View<CyNode> nodeView : view.getNodeViews()) {
+        	Map rowValues = table.getRow(nodeView.getModel().getSUID()).getAllValues();
+        	
+        	Double width = (Double) rowValues.get("width");
+        	if (width != null && width > maximumSize) {
+				maximumSize = width;
+			}
+        	
+        	Double height = (Double) rowValues.get("height");
+        	if (height != null && height > maximumSize) {
+				maximumSize = height;
+			}
+        }
+        final Double rescalingFactor = maximumSize/currentScaleMaximum;
+        
+        // set the new size
+        for (View<CyNode> nodeView : view.getNodeViews()) {
+        	CyRow row = table.getRow(nodeView.getModel().getSUID());
+        	Map rowValues = row.getAllValues();
+        	
+        	Double width = (Double) rowValues.get("width");
+        	row.set("width", width/rescalingFactor);
+        	
+        	Double height = (Double) rowValues.get("height");
+        	row.set("height", height/rescalingFactor);
+        }
+        
+        // set node width
+        PassthroughMapping widthMapping = (PassthroughMapping) visualMappingFunctionFactoryPassthrough.createVisualMappingFunction("width", Color.class, BasicVisualLexicon.NODE_WIDTH);
+        visualStyle.addVisualMappingFunction(widthMapping);
+        
+        // set node height
+        PassthroughMapping heightMapping = (PassthroughMapping) visualMappingFunctionFactoryPassthrough.createVisualMappingFunction("height", Color.class, BasicVisualLexicon.NODE_HEIGHT);
+        visualStyle.addVisualMappingFunction(heightMapping);
+        
         // set node shape
         DiscreteMapping<String, NodeShape> shapeMapping = (DiscreteMapping<String, NodeShape>) visualMappingFunctionFactoryDiscrete.createVisualMappingFunction("shape", String.class, BasicVisualLexicon.NODE_SHAPE);
         shapeMapping.putMapValue("ellipse", NodeShapeVisualProperty.ELLIPSE);
@@ -92,8 +148,6 @@ public class SetLayoutPropertiesListener implements NetworkAddedListener {
         shapeMapping.putMapValue("rectangle", NodeShapeVisualProperty.RECTANGLE);
         shapeMapping.putMapValue("round rectangle", NodeShapeVisualProperty.ROUND_RECTANGLE);
         shapeMapping.putMapValue("triangle", NodeShapeVisualProperty.TRIANGLE);
-        
-        VisualStyle visualStyle = visualStyleFactory.createVisualStyle("StyleSet");
         visualStyle.addVisualMappingFunction(shapeMapping);
         
         // set nodes color
@@ -115,31 +169,6 @@ public class SetLayoutPropertiesListener implements NetworkAddedListener {
         // set node border width
         PassthroughMapping borderWidthMapping = (PassthroughMapping) visualMappingFunctionFactoryPassthrough.createVisualMappingFunction("borderwidth", Double.class, BasicVisualLexicon.NODE_BORDER_WIDTH);
         visualStyle.addVisualMappingFunction(borderWidthMapping);
-        
-        // find the longest label
-        int maximumLabelLength = 0;
-        CyTable table = network.getDefaultNodeTable();
-        for (View<CyNode> nodeView : view.getNodeViews()) {
-        	CyRow row = table.getRow(nodeView.getModel().getSUID());
-        	
-        	String label = row.get("label", String.class);
-        	if (label != null && label.length() > maximumLabelLength) {
-				maximumLabelLength = label.length(); 
-			}
-        }
-        
-        // set node size
-        int nodeWidth = maximumLabelLength * 9;
-        for (View<CyNode> nodeView : view.getNodeViews()) {
-        	CyRow row = table.getRow(nodeView.getModel().getSUID());
-        	if (row.get("label", String.class) != null) {
-				nodeView.setLockedValue(BasicVisualLexicon.NODE_WIDTH, Double.valueOf(nodeWidth));
-	        	nodeView.setLockedValue(BasicVisualLexicon.NODE_HEIGHT, Double.valueOf(nodeWidth/2));	
-			} else {
-				nodeView.setLockedValue(BasicVisualLexicon.NODE_WIDTH, Double.valueOf(nodeWidth/2));
-	        	nodeView.setLockedValue(BasicVisualLexicon.NODE_HEIGHT, Double.valueOf(nodeWidth/2));
-			}
-		}
 
         // set edges arrow
         DiscreteMapping<String, ArrowShape> arrowMapping = (DiscreteMapping<String, ArrowShape>) visualMappingFunctionFactoryDiscrete.createVisualMappingFunction("arrow", String.class, BasicVisualLexicon.EDGE_TARGET_ARROW_SHAPE);
@@ -148,7 +177,7 @@ public class SetLayoutPropertiesListener implements NetworkAddedListener {
         visualStyle.addVisualMappingFunction(arrowMapping);
 
         // set edges color
-        PassthroughMapping edgeColorMapping = (PassthroughMapping) visualMappingFunctionFactoryPassthrough.createVisualMappingFunction("color", Color.class, BasicVisualLexicon.EDGE_STROKE_UNSELECTED_PAINT);
+        PassthroughMapping edgeColorMapping = (PassthroughMapping) visualMappingFunctionFactoryPassthrough.createVisualMappingFunction("color", Color.class, BasicVisualLexicon.EDGE_UNSELECTED_PAINT);
         visualStyle.addVisualMappingFunction(edgeColorMapping);
         
         // set edges label
@@ -156,7 +185,7 @@ public class SetLayoutPropertiesListener implements NetworkAddedListener {
         visualStyle.addVisualMappingFunction(edgeLabelMapping);
 
         // set edges label color
-        PassthroughMapping edgeFontColorMapping = (PassthroughMapping) visualMappingFunctionFactoryPassthrough.createVisualMappingFunction("fontColor", Color.class, BasicVisualLexicon.EDGE_LABEL_COLOR);
+        PassthroughMapping edgeFontColorMapping = (PassthroughMapping) visualMappingFunctionFactoryPassthrough.createVisualMappingFunction("labelcolor", Color.class, BasicVisualLexicon.EDGE_LABEL_COLOR);
         visualStyle.addVisualMappingFunction(edgeFontColorMapping);
 
         // set edges thickness
@@ -165,9 +194,11 @@ public class SetLayoutPropertiesListener implements NetworkAddedListener {
 
         // set edges line type
         DiscreteMapping<String, LineType> edgeLineTypeMapping = (DiscreteMapping<String, LineType>) visualMappingFunctionFactoryDiscrete.createVisualMappingFunction("line", String.class, BasicVisualLexicon.EDGE_LINE_TYPE);
-        edgeLineTypeMapping.putMapValue("Dash", LineTypeVisualProperty.EQUAL_DASH);
-        edgeLineTypeMapping.putMapValue("Solid", LineTypeVisualProperty.SOLID);
+        edgeLineTypeMapping.putMapValue("dash", LineTypeVisualProperty.EQUAL_DASH);
+        edgeLineTypeMapping.putMapValue("solid", LineTypeVisualProperty.SOLID);
         visualStyle.addVisualMappingFunction(edgeLineTypeMapping);
+        
+        // Collection mappingFunctions = visualStyle.getAllVisualMappingFunctions();
         
         // apply the visual style
         visualMappingManager.setVisualStyle(visualStyle, view);

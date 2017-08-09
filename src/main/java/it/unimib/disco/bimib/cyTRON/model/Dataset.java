@@ -5,7 +5,7 @@ import org.rosuda.REngine.REngineException;
 
 import it.unimib.disco.bimib.cyTRON.R.RConnectionManager;
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
-import it.unimib.disco.bimib.cyTRON.controller.InferenceController;
+import it.unimib.disco.bimib.cyTRON.controller.StatisticsController;
 import it.unimib.disco.bimib.cyTRON.controller.ToStringComparator;
 import it.unimib.disco.bimib.cyTRON.view.DeleteHypothesesFrame;
 
@@ -37,7 +37,7 @@ public class Dataset {
     private Map<String, Pattern> patterns;
     private String description;
     private boolean hasStagesAnnotation;
-    private String inferenceAlgorithm;
+    private Inference inference;
     
     public Dataset(String name, String path, String type) throws REngineException {
         this.name = name;
@@ -48,7 +48,7 @@ public class Dataset {
         patterns = new HashMap<>();
         description = "";
         hasStagesAnnotation = false;
-        inferenceAlgorithm = "";
+        inference = new Inference();
     	
     	switch (type) {
             case DatasetController.GENOTYPES:
@@ -71,6 +71,8 @@ public class Dataset {
     	retrieveEvents();
     	if (type.equals(DatasetController.LOAD)) {
 			retrievePatterns();
+			retrieveInference();
+			retrieveStatistics();
 		}
     }
     
@@ -425,11 +427,11 @@ public class Dataset {
         retrieveEvents();
     }
     
-    public void eventsSelection(String frequence, Event[] selectedEvents, Event[] filteredEvents) {
+    public void eventsSelection(Float frequence, Event[] selectedEvents, Event[] filteredEvents) {
     	// create and execute the command
         String command = name + " = events.selection(" + name;
-        if (frequence.length() > 0) {
-			command += ", filter.freq=" + frequence;
+        if (frequence >= 0) {
+			command += ", filter.freq=" + frequence.toString().replace(",", ".");
 		}
         if (selectedEvents.length > 0) {
         	command += ", filter.in.names=c(";
@@ -585,7 +587,7 @@ public class Dataset {
 		}
     }
     
-    public void addGroupHypothesis(String operation, List<Gene> genes, List<Event> effect, List<Event> cause, String minimumCardinality, String maximumCardinality, String minimumProbability) {
+    public void addGroupHypothesis(String operation, List<Gene> genes, List<Event> effect, List<Event> cause, Integer minimumCardinality, Integer maximumCardinality, Float minimumProbability) {
     	// create and execute the command
         String command = name + " = hypothesis.add.group(" + name + ", " + operation + ", list(" + getStringOfGenes(genes) + ")";
         if (effect.size() > 0) {
@@ -594,14 +596,10 @@ public class Dataset {
         if (cause.size() > 0) {
         	command += ", pattern.cause=list(" + getStringOfEvents(cause) + ")";
 		}
-        if (minimumCardinality.length() > 0) {
-        	command += ", dim.min=" + minimumCardinality;
-		}
-        if (maximumCardinality.length() > 0) {
-        	command += ", dim.max=" + maximumCardinality;
-		}
-        if (minimumProbability.length() > 0) {
-        	command += ", min.prob=" + minimumProbability;
+        command += ", dim.min=" + minimumCardinality.toString()
+        	+ ", dim.max=" + maximumCardinality.toString();
+        if (minimumProbability > 0) {
+        	command += ", min.prob=" + minimumProbability.toString().replaceAll(",", ".");
 		}
         command += ", silent=TRUE)";
         RConnectionManager.eval(command);
@@ -915,9 +913,41 @@ public class Dataset {
 		}
     }
     
-    public void plot(String path) {
+    public void plot(String path, List<Model> models, Boolean primaFacie, Boolean disconnectedNodes, Boolean scaleNodes,
+			List<Statistics> confidence, Float pvalueCutoff, Boolean expandHypotheses) {
     	// create and execute the command
-    	String command = "export.graphml(" + name + ", file='" + path + "')";
+    	String command = "export.graphml(" + name + ", file='" + path + "'";
+    	if (models.size() > 0) {
+			command += ", models=c(";
+			for (Iterator<Model> iterator = models.iterator(); iterator.hasNext();) {
+				Model model = (Model) iterator.next();
+				command += "'" + model.getName() + "'";
+				if (iterator.hasNext()) {
+					command += ", ";
+				}
+			}
+			command += ")";
+		}
+    	command += ", pf=" + primaFacie.toString().toUpperCase()
+    			+ ", disconnected=" + disconnectedNodes.toString().toUpperCase();
+    	if (scaleNodes) {
+    		command += ", scale.nodes=TRUE";
+    	} 
+    	if (confidence.size() > 0) {
+    		command += ", confidence=c(";
+    		for (Iterator<Statistics> iterator = confidence.iterator(); iterator.hasNext();) {
+				Statistics statistics = (Statistics) iterator.next();
+				command += "'" + statistics.getCode() + "'";
+				if (iterator.hasNext()) {
+					command += ", ";
+				}
+			}
+    		command += ")";
+		}
+    	command += ", p.min=" + pvalueCutoff.toString().replace(",", ".")
+    			+ ", expand=" + expandHypotheses.toString().toUpperCase()
+    			+ ")";
+    	System.out.println(command);
     	RConnectionManager.eval(command);
     }
     
@@ -930,6 +960,36 @@ public class Dataset {
     }
     
     // ************ INFERENCE ************ \\
+    private void retrieveInference() {
+    	// create and execute the command for getting the inference algorithm
+    	String command = "as.parameters(" + name + ")$algorithm";
+    	REXP rexp = RConnectionManager.eval(command);
+    	
+    	// if last message is regular
+    	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+    		// get the inference algorithm
+    		String algorithm = rexp.asString().toLowerCase();
+    		
+    		// create and execute the command for getting the models
+    		command = "names(as.models(" + name + "))";
+        	rexp = RConnectionManager.eval(command);
+        	String[] modelNames = rexp.asStringArray();
+    		
+        	// instantiate the models
+    		List<Model> models = new ArrayList<>();
+    		for (int i = 0; i < modelNames.length; i++) {
+				String modelName = modelNames[i];
+				models.add(new Model(modelName));
+			}
+    		
+    		// instantiate the model
+    		inference = new Inference(algorithm, models);
+    	} else {
+	    	// clean the console
+	    	RConnectionManager.getTextConsole().getLastConsoleMessage();
+    	}
+    }
+    
     public void caprese(Float lambda, Float falsePositive, Float falseNegative) {
     	// create and execute the command
     	String command = name + " = tronco.caprese(" + name
@@ -941,8 +1001,10 @@ public class Dataset {
     	
     	// if last message is regular
     	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-    		// set the inference algorithm
-    		inferenceAlgorithm = InferenceController.CAPRESE;
+    		// retrieve the inference
+    		retrieveInference();
+    		// remove the old statistics
+    		removeStatistics();
     	}
     }
     
@@ -976,8 +1038,10 @@ public class Dataset {
 		
 		// if last message is regular
     	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-    		// set the inference algorithm
-    		inferenceAlgorithm = InferenceController.CAPRI;
+    		// retrieve the inference
+    		retrieveInference();
+    		// remove the old statistics
+    		removeStatistics();
     	}
 	}
 	
@@ -1009,8 +1073,10 @@ public class Dataset {
 		
 		// if last message is regular
     	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-    		// set the inference algorithm
-    		inferenceAlgorithm = InferenceController.CHOWLIU;
+    		// retrieve the inference
+    		retrieveInference();
+    		// remove the old statistics
+    		removeStatistics();
     	}
 	}
 	
@@ -1043,8 +1109,10 @@ public class Dataset {
 		
 		// if last message is regular
     	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-    		// set the inference algorithm
-    		inferenceAlgorithm = InferenceController.EDMONDS;
+    		// retrieve the inference
+    		retrieveInference();
+    		// remove the old statistics
+    		removeStatistics();
     	}
 	}
 	
@@ -1079,8 +1147,10 @@ public class Dataset {
 		
 		// if last message is regular
     	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-    		// set the inference algorithm
-    		inferenceAlgorithm = InferenceController.GABOW;
+    		// retrieve the inference
+    		retrieveInference();
+    		// remove the old statistics
+    		removeStatistics();
     	}
 	}
 	
@@ -1112,16 +1182,91 @@ public class Dataset {
 		
 		// if last message is regular
     	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-    		// set the inference algorithm
-    		inferenceAlgorithm = InferenceController.PRIM;
+    		// retrieve the inference
+    		retrieveInference();
+    		// remove the old statistics
+    		removeStatistics();
     	}
 	}
 	
-	public String getInferenceAlgorithm() {
-		return inferenceAlgorithm;
+	public Inference getInference() {
+		return inference;
 	}
 	
     // ************ STATISTICS ************ \\
+	private void retrieveStatistics() {
+		// create and execute the command for bootstrap npb
+		String command = name + "$bootstrap$npb";
+		REXP rexp = RConnectionManager.eval(command);
+		String rexpString = rexp.toString();
+		
+		// if the result is not null
+		if (!rexpString.equals("NULL")) {
+			// add the statistics
+			inference.addStatistics(new Statistics(StatisticsController.BOOTSTRAP + "-npb", "npb"));
+		}
+		
+		// create and execute the command for bootstrap sb
+		command = name + "$bootstrap$sb";
+		rexp = RConnectionManager.eval(command);
+		rexpString = rexp.toString();
+		
+		// if the result is not null
+		if (!rexpString.equals("[NULL ]")) {
+			// add the statistics
+			inference.addStatistics(new Statistics(StatisticsController.BOOTSTRAP + "-sb", "sb"));
+		}
+		
+		// create and execute the command for eloss
+		command = "as.kfold.eloss(" + name + ")";
+		RConnectionManager.eval(command);
+		
+		// if last message is regular
+		if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+			// add the statistics
+			inference.addStatistics(new Statistics(StatisticsController.ELOSS, StatisticsController.ELOSS.substring(6)));
+		} else {
+			// clean the console
+			RConnectionManager.getTextConsole().getLastConsoleMessage();
+		}
+		
+		// create and execute the command for posterr
+		command = "as.kfold.posterr(" + name + ")";
+		RConnectionManager.eval(command);
+		
+		// if last message is regular
+		if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+			// add the statistics
+			inference.addStatistics(new Statistics(StatisticsController.POSTERR, StatisticsController.POSTERR.substring(6)));
+		} else {
+			// clean the console
+			RConnectionManager.getTextConsole().getLastConsoleMessage();
+		}
+		
+		// create and execute the command for prederr
+		command = "as.kfold.prederr(" + name + ")";
+		RConnectionManager.eval(command);
+		
+		// if last message is regular
+		if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+			// add the statistics
+			inference.addStatistics(new Statistics(StatisticsController.PREDERR, StatisticsController.PREDERR.substring(6)));
+		} else {
+			// clean the console
+			RConnectionManager.getTextConsole().getLastConsoleMessage();
+		}
+	}
+	
+	private void removeStatistics() {
+		// create and execute the command for removing bootstrap
+		String command = name + "$bootstrap = NULL";
+		RConnectionManager.eval(command);
+		
+		// create and execute the command for removing kfold
+		command = name + "$kfold = NULL";
+		RConnectionManager.eval(command);
+	}
+	
 	public void bootstrap(String type, Integer bootstrapSamplings, Float coresRatio) {
 		// create and execute the command
 		String command = name + " = tronco.bootstrap(" + name
@@ -1130,6 +1275,16 @@ public class Dataset {
 				+ ", cores.ratio=" + coresRatio.toString().replace(",", ".")
 				+ ", silent=TRUE)";
 		RConnectionManager.eval(command);
+		
+		// if last message is regular
+		if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+			// add the statistics
+			if (type.equals(StatisticsController.NON_PARAMETRIC)) {
+				inference.addStatistics(new Statistics(StatisticsController.BOOTSTRAP + "-npb", "npb"));
+			} else if (type.equals(StatisticsController.STATISTICAL)) {
+				inference.addStatistics(new Statistics(StatisticsController.BOOTSTRAP + "-sb", "sb"));
+			}
+		}
 	}
 	
 	public void eloss(Integer runs, Integer groups) {
@@ -1139,6 +1294,12 @@ public class Dataset {
 				+ ", k=" + groups.toString()
 				+ ", silent=TRUE)";
 		RConnectionManager.eval(command);
+		
+		// if last message is regular
+		if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+			// add the statistics
+			inference.addStatistics(new Statistics(StatisticsController.ELOSS, StatisticsController.ELOSS.substring(6)));
+		}
 	}
 	
 	public void posterr(Integer runs, Integer groups, Float coresRatio) {
@@ -1149,6 +1310,12 @@ public class Dataset {
 				+ ", cores.ratio=" + coresRatio.toString().replace(",", ".")
 				+ ", silent=TRUE)";
 		RConnectionManager.eval(command);
+		
+		// if last message is regular
+		if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+			// add the statistics
+			inference.addStatistics(new Statistics(StatisticsController.POSTERR, StatisticsController.POSTERR.substring(6)));
+		}
 	}
 	
 	public void prederr(Integer runs, Integer groups, Float coresRatio) {
@@ -1159,6 +1326,12 @@ public class Dataset {
 				+ ", cores.ratio=" + coresRatio.toString().replace(",", ".")
 				+ ", silent=TRUE)";
 		RConnectionManager.eval(command);
+		
+		// if last message is regular
+		if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+			// add the statistics
+			inference.addStatistics(new Statistics(StatisticsController.PREDERR, StatisticsController.PREDERR.substring(6)));
+		}
 	}
     
     // ************ UTILITIES ************ \\

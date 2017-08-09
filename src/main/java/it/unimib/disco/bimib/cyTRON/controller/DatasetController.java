@@ -312,7 +312,7 @@ public class DatasetController {
         updateEventsList(dataset);
     }
     
-    public void selectEvents(String frequence, int[] selectedEventsIndex, int[] filteredEventsIndex, int datasetIndex) {
+    public void selectEvents(Float frequence, int[] selectedEventsIndex, int[] filteredEventsIndex, int datasetIndex) {
     	// get the events and the dataset
     	Event[] selectedEvents = new Event[selectedEventsIndex.length];
     	for (int i = 0; i < selectedEventsIndex.length; i++) {
@@ -323,9 +323,6 @@ public class DatasetController {
     		filteredEvents[i] = eventsListModel.get(filteredEventsIndex[i]);
 		}
     	Dataset dataset = datasetsListModel.get(datasetIndex);
-        
-        // validate the input
-        frequence = frequence.replace(",", ".");
     	
     	// select the samples
     	dataset.eventsSelection(frequence, selectedEvents, filteredEvents);

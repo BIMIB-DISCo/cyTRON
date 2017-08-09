@@ -36,11 +36,12 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
         frequenceLabel = new javax.swing.JLabel();
         ctrlLabel1 = new javax.swing.JLabel();
         selectedEventsLabel = new javax.swing.JLabel();
-        frequenceTextField = new javax.swing.JTextField();
         ctrlLabel2 = new javax.swing.JLabel();
         filteredEventsScrollPane = new javax.swing.JScrollPane();
         filteredEventsList = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
+        minimumFrequenceSpinner = new javax.swing.JSpinner();
+        negativeLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Events Selection");
@@ -64,18 +65,23 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
         frequenceLabel.setText("Minimum frequence:");
 
         ctrlLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
-        ctrlLabel1.setText("ctrl/cmd-click to select multiple events (do not select for NA)");
+        ctrlLabel1.setText("ctrl/cmd-click to select multiple events (do not select for default)");
 
         selectedEventsLabel.setText("Selected events:");
 
         ctrlLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
-        ctrlLabel2.setText("ctrl/cmd-click to select multiple events (do not select for NA)");
+        ctrlLabel2.setText("ctrl/cmd-click to select multiple events (do not select for default)");
 
         filteredEventsList.setModel(datasetController.getEventsListModel());
         filteredEventsList.setLayoutOrientation(javax.swing.JList.VERTICAL_WRAP);
         filteredEventsScrollPane.setViewportView(filteredEventsList);
 
         jLabel1.setText("Filtered events:");
+
+        minimumFrequenceSpinner.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(-0.01f), Float.valueOf(-0.01f), Float.valueOf(1.0f), Float.valueOf(0.01f)));
+
+        negativeLabel.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
+        negativeLabel.setText("negative value for default");
 
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
@@ -103,19 +109,23 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
                             .addGroup(panelLayout.createSequentialGroup()
                                 .addComponent(frequenceLabel)
                                 .addGap(18, 18, 18)
-                                .addComponent(frequenceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(negativeLabel)
+                                    .addComponent(minimumFrequenceSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLayout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
+                .addContainerGap(11, Short.MAX_VALUE)
                 .addComponent(selectionLabel)
                 .addGap(18, 18, 18)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(frequenceLabel)
-                    .addComponent(frequenceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(minimumFrequenceSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(negativeLabel)
                 .addGap(18, 18, 18)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(selectedEventsLabel)
@@ -128,7 +138,7 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
                     .addComponent(filteredEventsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ctrlLabel1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(selectButton)
                 .addGap(18, 18, 18))
         );
@@ -155,12 +165,12 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
 
     private void selectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectButtonActionPerformed
         // get the values
-        String frequence = frequenceTextField.getText();
+        Float minimumFrequence = (Float) minimumFrequenceSpinner.getValue();
         int[] selectedEventsIndex = selectedEventsList.getSelectedIndices();
         int[] filteredEventsIndex = filteredEventsList.getSelectedIndices();
         
         // select the samples
-        datasetController.selectEvents(frequence, selectedEventsIndex, filteredEventsIndex, datasetIndex);
+        datasetController.selectEvents(minimumFrequence, selectedEventsIndex, filteredEventsIndex, datasetIndex);
         
         // update the main frame
         mainFrame.updateNumberLabels();
@@ -175,8 +185,9 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
     private javax.swing.JList<String> filteredEventsList;
     private javax.swing.JScrollPane filteredEventsScrollPane;
     private javax.swing.JLabel frequenceLabel;
-    private javax.swing.JTextField frequenceTextField;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JSpinner minimumFrequenceSpinner;
+    private javax.swing.JLabel negativeLabel;
     private javax.swing.JPanel panel;
     private javax.swing.JButton selectButton;
     private javax.swing.JLabel selectedEventsLabel;

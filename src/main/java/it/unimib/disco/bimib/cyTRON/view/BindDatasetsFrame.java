@@ -146,6 +146,8 @@ public class BindDatasetsFrame extends javax.swing.JFrame {
         if (newName.length() == 0) {
             newNameTextField.setBackground(Color.RED);
             return;
+        } else {
+        	newNameTextField.setBackground(Color.WHITE);
         }
 
         try {

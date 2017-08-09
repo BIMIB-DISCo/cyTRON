@@ -57,11 +57,11 @@ public class AddGroupHypothesisFrame extends javax.swing.JFrame {
         operationComboBox = new javax.swing.JComboBox<>();
         minimumCardinalityLabel = new javax.swing.JLabel();
         maximumCardinalityLabel = new javax.swing.JLabel();
-        minimumCardinalityTextField = new javax.swing.JTextField();
-        maximumCardinalityTextField = new javax.swing.JTextField();
         minimumProbabilityLabel = new javax.swing.JLabel();
-        minimumProbabilityTextField = new javax.swing.JTextField();
         defaultLabel = new javax.swing.JLabel();
+        minimumCardinalitySpinner = new javax.swing.JSpinner();
+        maximumCardinalitySpinner = new javax.swing.JSpinner();
+        minimumProbabilitySpinner = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Add Group");
@@ -117,7 +117,13 @@ public class AddGroupHypothesisFrame extends javax.swing.JFrame {
         minimumProbabilityLabel.setText("Minimum probability*:");
 
         defaultLabel.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
-        defaultLabel.setText("* do not select for default");
+        defaultLabel.setText("* negative for default");
+
+        minimumCardinalitySpinner.setModel(new javax.swing.SpinnerNumberModel(-1, -1, null, 1));
+
+        maximumCardinalitySpinner.setModel(new javax.swing.SpinnerNumberModel(-1, -1, null, 1));
+
+        minimumProbabilitySpinner.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(-0.01f), Float.valueOf(-0.01f), Float.valueOf(1.0f), Float.valueOf(0.01f)));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -137,21 +143,15 @@ public class AddGroupHypothesisFrame extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(genesScrollPane)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(minimumProbabilityLabel)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(minimumCardinalityLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(minimumCardinalityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(230, 230, 230)
-                                .addComponent(maximumCardinalityLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(maximumCardinalityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 714, Short.MAX_VALUE)
+                                .addComponent(addGroupButton))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(minimumProbabilityLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(minimumProbabilityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 270, Short.MAX_VALUE)
-                        .addComponent(addGroupButton))
+                                .addComponent(minimumProbabilitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(effectLabel)
                         .addGap(44, 44, 44)
@@ -169,7 +169,15 @@ public class AddGroupHypothesisFrame extends javax.swing.JFrame {
                                     .addComponent(ctrlLabel1)
                                     .addComponent(ctrlLabel2)
                                     .addComponent(ctrlLabel3)))
-                            .addComponent(defaultLabel))
+                            .addComponent(defaultLabel)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(minimumCardinalityLabel)
+                                .addGap(18, 18, 18)
+                                .addComponent(minimumCardinalitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(193, 193, 193)
+                                .addComponent(maximumCardinalityLabel)
+                                .addGap(18, 18, 18)
+                                .addComponent(maximumCardinalitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -209,13 +217,13 @@ public class AddGroupHypothesisFrame extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(minimumCardinalityLabel)
-                            .addComponent(minimumCardinalityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(maximumCardinalityLabel)
-                            .addComponent(maximumCardinalityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(minimumCardinalitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(maximumCardinalitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(minimumProbabilityLabel)
-                            .addComponent(minimumProbabilityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(minimumProbabilitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(defaultLabel)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -230,15 +238,17 @@ public class AddGroupHypothesisFrame extends javax.swing.JFrame {
         List<Gene> genes = genesList.getSelectedValuesList();
         List<Event> effect = effectList.getSelectedValuesList();
         List<Event> cause = causeList.getSelectedValuesList();
-        String minimumCardinality = minimumCardinalityTextField.getText();
-        String maximumCardinality = maximumCardinalityTextField.getText();
-        String minimumProbability = minimumProbabilityTextField.getText();
+        Integer minimumCardinality = (Integer) minimumCardinalitySpinner.getValue();
+        Integer maximumCardinality = (Integer) maximumCardinalitySpinner.getValue();
+        Float minimumProbability = (Float) minimumProbabilitySpinner.getValue();
         
         // if no genes are selected
         if (genes.size() == 0) {
             // return
             genesList.setBackground(Color.RED);
             return;
+        } else {
+        	genesList.setBackground(Color.WHITE);
         }
         
         // add the hypothesis
@@ -275,11 +285,11 @@ public class AddGroupHypothesisFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane genesScrollPane;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel maximumCardinalityLabel;
-    private javax.swing.JTextField maximumCardinalityTextField;
+    private javax.swing.JSpinner maximumCardinalitySpinner;
     private javax.swing.JLabel minimumCardinalityLabel;
-    private javax.swing.JTextField minimumCardinalityTextField;
+    private javax.swing.JSpinner minimumCardinalitySpinner;
     private javax.swing.JLabel minimumProbabilityLabel;
-    private javax.swing.JTextField minimumProbabilityTextField;
+    private javax.swing.JSpinner minimumProbabilitySpinner;
     private javax.swing.ButtonGroup nodeButtonGroup;
     private javax.swing.JComboBox<String> operationComboBox;
     // End of variables declaration//GEN-END:variables

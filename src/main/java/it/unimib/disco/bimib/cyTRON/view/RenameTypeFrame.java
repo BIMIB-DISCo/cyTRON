@@ -112,7 +112,9 @@ public class RenameTypeFrame extends javax.swing.JFrame {
         if (newName.length() == 0) {
             newNameTextField.setBackground(Color.RED);
             return;
-        }
+        } else {
+        	newNameTextField.setBackground(Color.WHITE);
+        }	
         
         // rename the gene
         datasetController.renameType(typeIndex, datasetIndex, newName);

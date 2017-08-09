@@ -132,7 +132,9 @@ public class JoinTypesFrame extends javax.swing.JFrame {
         if (newName.length() == 0) {
             newNameTextField.setBackground(Color.RED);
             return;
-	}
+        } else {
+        	newNameTextField.setBackground(Color.WHITE);
+        }	
 
         // rename the gene
         datasetController.joinTypes(typeIndex1, typeIndex2, datasetIndex, newName);

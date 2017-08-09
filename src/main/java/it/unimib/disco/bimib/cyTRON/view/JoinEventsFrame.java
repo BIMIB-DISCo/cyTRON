@@ -163,12 +163,18 @@ public class JoinEventsFrame extends javax.swing.JFrame {
         // check the parameters
         if (name.length() == 0) {
             nameTextField.setBackground(Color.RED);
+        } else {
+        	nameTextField.setBackground(Color.WHITE);
         }
         if (type.length() == 0) {
             typeTextField.setBackground(Color.RED);
+        } else {
+        	typeTextField.setBackground(Color.WHITE);
         }
         if (color.length() == 0) {
             colorTextField.setBackground(Color.RED);
+        } else {
+        	colorTextField.setBackground(Color.WHITE);
         }
 
         if (name.length() > 0 && type.length() > 0 && color.length() > 0) {

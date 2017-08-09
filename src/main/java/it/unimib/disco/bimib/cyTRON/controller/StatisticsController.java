@@ -9,8 +9,11 @@ public class StatisticsController {
 	public static final String POSTERR = "kfold.posterr";
 	public static final String PREDERR = "kfold.prederr";
 	
+	public static final String NON_PARAMETRIC = "non-parametric";
+	public static final String STATISTICAL = "statistical";
+	
 	public static final String[] STATISTICS = new String[]{BOOTSTRAP, ELOSS, POSTERR, PREDERR};
-	public static final String[] TYPES = new String[]{"non-parametric", "statistica"};
+	public static final String[] TYPES = new String[]{NON_PARAMETRIC, STATISTICAL};
 	
 	public void statistics(Dataset dataset, Object statistics, String type, Integer bootstrapSamplings,
 			Float coresRatio, Integer runs, Integer groups) {

@@ -120,6 +120,11 @@ public class AddHypothesisFrame extends javax.swing.JFrame {
         infoButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/info.png"))); // NOI18N
         infoButton.setPreferredSize(new java.awt.Dimension(29, 29));
         infoButton.setSize(new java.awt.Dimension(29, 29));
+        infoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                infoButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout paternPanelLayout = new javax.swing.GroupLayout(paternPanel);
         paternPanel.setLayout(paternPanelLayout);
@@ -338,10 +343,14 @@ public class AddHypothesisFrame extends javax.swing.JFrame {
         // validate input
         if (label.length() == 0) {
 			labelTextField.setBackground(Color.RED);
-		}
+		} else {
+			labelTextField.setBackground(Color.WHITE);
+        }
         if (hypothesesController.isPatternTreeEmpty()) {
 			patternTree.setBackground(Color.RED);
-		}
+		} else {
+			patternTree.setBackground(Color.WHITE);
+        }
         
         if (label.length() > 0 && !hypothesesController.isPatternTreeEmpty()) {
         	// add the hypothesis
@@ -363,6 +372,10 @@ public class AddHypothesisFrame extends javax.swing.JFrame {
         	}
         }
     }//GEN-LAST:event_addHypothesisButtonActionPerformed
+
+    private void infoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoButtonActionPerformed
+        JOptionPane.showConfirmDialog(this, "INSTRUCTIONS:", "Add Hipothesis Instructions", JOptionPane.PLAIN_MESSAGE);
+    }//GEN-LAST:event_infoButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addHypothesisButton;

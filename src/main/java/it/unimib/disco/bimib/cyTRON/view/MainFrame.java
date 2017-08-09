@@ -574,10 +574,10 @@ public class MainFrame extends javax.swing.JFrame {
     private void initCustomComponents() {
     	hypothesesPanel = new HypothesesPanel(datasetController, this);
     	externalToolsPanel = new ExternalToolsPanel(datasetController, this);
-    	statisticsPanel = new StatisticsPanel(datasetController, this);
-        inferencePanel = new InferencePanel(datasetController, this, statisticsPanel);
-        visualizationPanel = new VisualizationPanel(datasetController, this, commandExecutor);
-    	
+    	visualizationPanel = new VisualizationPanel(datasetController, this, commandExecutor);
+        statisticsPanel = new StatisticsPanel(datasetController, this, visualizationPanel);
+        inferencePanel = new InferencePanel(datasetController, this, statisticsPanel, visualizationPanel);
+        
     	tabbedPane.addTab("Hypotheses", hypothesesPanel);
     	tabbedPane.addTab("External Tools", externalToolsPanel);
         tabbedPane.addTab("Inference", inferencePanel);
@@ -797,8 +797,8 @@ public class MainFrame extends javax.swing.JFrame {
 	        hypothesesPanel.updateSelectedDataset(datasetsList.getSelectedIndex());
 	        externalToolsPanel.updateSelectedDataset();
 	        inferencePanel.updateSelectedDataset();
-                statisticsPanel.updateSelectedDataset();
-                visualizationPanel.updateTitleAndStages();
+            statisticsPanel.updateSelectedDataset();
+            visualizationPanel.updateSelectedDataset();
         }
     }//GEN-LAST:event_datasetsListValueChanged
 

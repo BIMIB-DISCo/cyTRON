@@ -2,32 +2,29 @@ package it.unimib.disco.bimib.cyTRON.view;
 
 import it.unimib.disco.bimib.cyTRON.R.RConnectionManager;
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
-import it.unimib.disco.bimib.cyTRON.controller.InferenceController;
 import it.unimib.disco.bimib.cyTRON.controller.StatisticsController;
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
 
-import java.awt.Component;
-import java.awt.Window;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 public class StatisticsPanel extends javax.swing.JPanel {
 
-    private StatisticsController statisticsController;
-    private DatasetController datasetController;
-    private MainFrame mainFrame;
+    private final StatisticsController statisticsController;
+    private final DatasetController datasetController;
+    private final MainFrame mainFrame;
+    private final VisualizationPanel visualizationPanel;
     
     private final DefaultComboBoxModel<String> statisticsDefaultComboBoxModel;
     private final DefaultComboBoxModel<String> typessDefaultComboBoxModel;
     
-    public StatisticsPanel(DatasetController datasetController, MainFrame mainFrame) {
+    public StatisticsPanel(DatasetController datasetController, MainFrame mainFrame, VisualizationPanel visualizationPanel) {
         // get the main frame and the controllers
         statisticsController = new StatisticsController();
         this.datasetController = datasetController;
         this.mainFrame = mainFrame;
+        this.visualizationPanel = visualizationPanel;
         
         // creates the models
         statisticsDefaultComboBoxModel = new DefaultComboBoxModel<>(StatisticsController.STATISTICS);
@@ -250,7 +247,7 @@ public class StatisticsPanel extends javax.swing.JPanel {
     	Dataset dataset = mainFrame.getSelectedDataset();
     	
     	// check if a dataset is not selected
-        if (dataset == null || dataset.getInferenceAlgorithm().equals("")) {
+        if (dataset == null || dataset.getInference().getAlgorithm().equals("")) {
             // return
             return;
         }
@@ -287,6 +284,8 @@ public class StatisticsPanel extends javax.swing.JPanel {
         	}
 			// clear the last console message
 			RConnectionManager.getTextConsole().getLastConsoleMessage();
+                        
+                visualizationPanel.updateStatisticsList(dataset);
         }
     }//GEN-LAST:event_runButtonActionPerformed
     
@@ -295,7 +294,7 @@ public class StatisticsPanel extends javax.swing.JPanel {
     	Dataset dataset = mainFrame.getSelectedDataset();
     	
     	// update the current inference algorithm label
-    	currentAlgorithmValueLabel.setText(dataset.getInferenceAlgorithm());
+    	currentAlgorithmValueLabel.setText(dataset.getInference().getAlgorithm());
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
