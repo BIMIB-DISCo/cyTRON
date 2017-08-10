@@ -73,16 +73,14 @@ public class ExternalToolsController {
 		}
 	}
 	
-	public void importMutex(String file, String fdr) {
+	public void importMutex(String file, Float fdr) {
 		// validate the path
 		file = file.replace("\\", "\\\\");
 		
 		// create and execute the command
-        String command = "import.mutex.groups('" + file + "'";
-        if (fdr.length() > 0) {
-			command += ", fdr=" + fdr;
-		}
-        command += ", display=FALSE)";
+        String command = "import.mutex.groups('" + file + "'"
+        	+ ", fdr=" + fdr.toString().replace(",", ".")
+        	+ ", display=FALSE)";
         REXP rexp = RConnectionManager.eval(command);
         
         // read the output and populate the model

@@ -135,7 +135,9 @@ public class VisualizationController {
 			statisticsListModel.addElement(statistics);
 		}
 		for (Statistics statistics : dataset.getInference().getStatistics()) {
-			statisticsListModel.addElement(statistics);
+			if (!statistics.getAlgorithm().equals(StatisticsController.ELOSS)) {
+				statisticsListModel.addElement(statistics);
+			}
 		}
 	}
 	

@@ -17,7 +17,7 @@ public class InferenceController {
 	
 	public static final String[] ALGORITHMS = new String[]{CAPRESE, CAPRI, CHOWLIU, EDMONDS, GABOW, PRIM};
 	public static final String[] COMMANDS = new String[]{"hc", "tabu"};
-	public static final String[] REGULARIZATIONS = new String[]{"bic", "aic", "aic", "loglik", "bde", "bds", "k2", "mbde", "bdla"};
+	public static final String[] REGULARIZATIONS = new String[]{"bic", "aic", "loglik", "bde", "bds", "k2", "mbde", "bdla"};
 	public static final String[] SCORES = new String[]{"pmi", "mi", "entropy", "cpmi"};
 	
 	public void inference(Dataset dataset, Object algorithm, Float lambda, Float falsePositive, Float falseNegative,

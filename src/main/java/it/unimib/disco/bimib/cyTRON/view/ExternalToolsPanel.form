@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <Properties>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[940, 660]"/>
@@ -420,8 +420,8 @@
                           </Group>
                           <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="fdrTextField" min="-2" pref="32" max="-2" attributes="0"/>
                               <Component id="fileTextField" min="-2" pref="570" max="-2" attributes="0"/>
+                              <Component id="fdrSpinner" min="-2" pref="57" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="125" max="32767" attributes="0"/>
                       </Group>
@@ -437,8 +437,8 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="fdrTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="fdrLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="fdrSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="importMutexButton" min="-2" max="-2" attributes="0"/>
@@ -470,9 +470,11 @@
                     <Property name="text" type="java.lang.String" value="FDR:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="fdrTextField">
+                <Component class="javax.swing.JSpinner" name="fdrSpinner">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="0.2"/>
+                    <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                      <SpinnerModel initial="0.2" maximum="1.0" minimum="0.0" numberType="java.lang.Float" stepSize="0.1" type="number"/>
+                    </Property>
                   </Properties>
                 </Component>
               </SubComponents>

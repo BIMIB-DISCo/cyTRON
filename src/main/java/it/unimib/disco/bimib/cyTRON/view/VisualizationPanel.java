@@ -74,7 +74,6 @@ public class VisualizationPanel extends javax.swing.JPanel {
         plotPanel = new javax.swing.JPanel();
         showPlotButton = new javax.swing.JButton();
         modelsLabel = new javax.swing.JLabel();
-        ctrlLabel1 = new javax.swing.JLabel();
         primaFacieLabel = new javax.swing.JLabel();
         primaFacieCheckBox = new javax.swing.JCheckBox();
         disconnectedNodesLabel = new javax.swing.JLabel();
@@ -91,6 +90,7 @@ public class VisualizationPanel extends javax.swing.JPanel {
         confidenceList = new javax.swing.JList<>();
         expandHypothesesLabel = new javax.swing.JLabel();
         expandHypothesesCheckBox = new javax.swing.JCheckBox();
+        defaultLabel = new javax.swing.JLabel();
 
         setMinimumSize(new java.awt.Dimension(940, 660));
 
@@ -303,9 +303,6 @@ public class VisualizationPanel extends javax.swing.JPanel {
 
         modelsLabel.setText("Models:");
 
-        ctrlLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
-        ctrlLabel1.setText("ctrl/cmd-click to select multiple models (do not select for all)");
-
         primaFacieLabel.setText("Prima Facie:");
 
         primaFacieCheckBox.setText(" ");
@@ -328,6 +325,7 @@ public class VisualizationPanel extends javax.swing.JPanel {
         pvalueCutoffSpinner.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.050000012f), Float.valueOf(0.0f), Float.valueOf(1.0f), Float.valueOf(0.01f)));
 
         modelsList.setModel(visualizationController.getModelsListModel());
+        modelsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         modelsList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
         modelsList.setSize(new java.awt.Dimension(27, 136));
         modelsList.setVisibleRowCount(-1);
@@ -344,51 +342,55 @@ public class VisualizationPanel extends javax.swing.JPanel {
         expandHypothesesCheckBox.setSelected(true);
         expandHypothesesCheckBox.setText(" ");
 
+        defaultLabel.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
+        defaultLabel.setText("do not select for default");
+
         javax.swing.GroupLayout plotPanelLayout = new javax.swing.GroupLayout(plotPanel);
         plotPanel.setLayout(plotPanelLayout);
         plotPanelLayout.setHorizontalGroup(
             plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plotPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(showPlotButton)
-                .addContainerGap())
             .addGroup(plotPanelLayout.createSequentialGroup()
-                .addGap(111, 111, 111)
                 .addGroup(plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(disconnectedNodesLabel)
-                    .addComponent(primaFacieLabel)
-                    .addComponent(modelsLabel)
-                    .addComponent(confidenceLabel)
-                    .addComponent(scaleNodesLabel)
-                    .addComponent(pvalueCutoffLabel)
-                    .addComponent(expandHypothesesLabel))
-                .addGap(18, 18, 18)
-                .addGroup(plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(expandHypothesesCheckBox)
-                    .addGroup(plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(primaFacieCheckBox)
-                            .addComponent(disconnectedNodesCheckBox)
-                            .addComponent(scaleNodesCheckBox))
-                        .addComponent(pvalueCutoffSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(ctrlLabel2)
-                        .addComponent(ctrlLabel1)
-                        .addComponent(modelsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
-                        .addComponent(confidenceScrollPane)))
-                .addContainerGap(115, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plotPanelLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(showPlotButton))
+                    .addGroup(plotPanelLayout.createSequentialGroup()
+                        .addGap(111, 111, 111)
+                        .addGroup(plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(disconnectedNodesLabel)
+                            .addComponent(primaFacieLabel)
+                            .addComponent(confidenceLabel)
+                            .addComponent(scaleNodesLabel)
+                            .addComponent(pvalueCutoffLabel)
+                            .addComponent(expandHypothesesLabel)
+                            .addComponent(modelsLabel))
+                        .addGap(18, 18, 18)
+                        .addGroup(plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(expandHypothesesCheckBox)
+                            .addGroup(plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(primaFacieCheckBox)
+                                .addComponent(disconnectedNodesCheckBox)
+                                .addComponent(scaleNodesCheckBox))
+                            .addComponent(pvalueCutoffSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ctrlLabel2)
+                            .addComponent(confidenceScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 531, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(defaultLabel)
+                            .addComponent(modelsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 109, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         plotPanelLayout.setVerticalGroup(
             plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(plotPanelLayout.createSequentialGroup()
-                .addGap(138, 138, 138)
-                .addGroup(plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(modelsLabel)
-                    .addComponent(modelsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(139, Short.MAX_VALUE)
+                .addGroup(plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(modelsScrollPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(modelsLabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(defaultLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plotPanelLayout.createSequentialGroup()
-                        .addComponent(ctrlLabel1)
-                        .addGap(18, 18, 18)
                         .addGroup(plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(primaFacieCheckBox)
                             .addComponent(primaFacieLabel))
@@ -413,7 +415,7 @@ public class VisualizationPanel extends javax.swing.JPanel {
                 .addGroup(plotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(expandHypothesesLabel)
                     .addComponent(expandHypothesesCheckBox))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
+                .addGap(128, 128, 128)
                 .addComponent(showPlotButton)
                 .addContainerGap())
         );
@@ -599,8 +601,8 @@ public class VisualizationPanel extends javax.swing.JPanel {
     private javax.swing.JLabel confidenceLabel;
     private javax.swing.JList<Statistics> confidenceList;
     private javax.swing.JScrollPane confidenceScrollPane;
-    private javax.swing.JLabel ctrlLabel1;
     private javax.swing.JLabel ctrlLabel2;
+    private javax.swing.JLabel defaultLabel;
     private javax.swing.JCheckBox disconnectedNodesCheckBox;
     private javax.swing.JLabel disconnectedNodesLabel;
     private javax.swing.JLabel exclusivityLabel;

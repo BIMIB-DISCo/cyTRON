@@ -81,12 +81,7 @@ public class Dataset {
         String command = "rm(" + name + ")";
         RConnectionManager.eval(command);
         
-        // check if the object exists in R
-        command = "exists('" + name + "')";
-        REXP rexp = RConnectionManager.eval(command);
-        if (rexp.asBool().isTRUE()) {
-			throw new REngineException(null, "rm");
-		}
+        
     }
     
     public void save(String path) {

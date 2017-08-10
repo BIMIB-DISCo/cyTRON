@@ -24,7 +24,8 @@ import org.cytoscape.work.undo.UndoSupport;
 import org.osgi.framework.BundleContext;
 
 import it.unimib.disco.bimib.cyTRON.cytoscape.CommandExecutor;
-import it.unimib.disco.bimib.cyTRON.cytoscape.SetLayoutPropertiesListener;
+import it.unimib.disco.bimib.cyTRON.cytoscape.NetworkAddedTroncoVisualStyleListener;
+import it.unimib.disco.bimib.cyTRON.cytoscape.NetworkViewAddedHierarchicLayoutListener;
 
 public class CyActivator extends AbstractCyActivator {
 
@@ -44,20 +45,25 @@ public class CyActivator extends AbstractCyActivator {
     	MenuAction menuAction = new MenuAction(commandExecutor);
     	registerAllServices(bundleContext, menuAction, new Properties());
     	
-    	// add the SetLayoutPropertiesListener to the services
+    	// add the NetworkAddedTroncoVisualStyleListener to the services
     	CyNetworkViewManager cyNetworkViewManager = getService(bundleContext, CyNetworkViewManager.class);
         CyNetworkViewFactory cyNetworkViewFactory = getService(bundleContext, CyNetworkViewFactory.class);
-        CyLayoutAlgorithmManager cyLayoutAlgorithmManager = getService(bundleContext, CyLayoutAlgorithmManager.class);
-        TaskManager taskManager = getService(bundleContext, TaskManager.class);
         VisualStyleFactory visualStyleFactory = getService(bundleContext, VisualStyleFactory.class);
         VisualMappingManager visualMappingManager = getService(bundleContext, VisualMappingManager.class);
         VisualMappingFunctionFactory visualMappingFunctionFactoryDiscrete = getService(bundleContext, VisualMappingFunctionFactory.class, "(mapping.type=discrete)");
         VisualMappingFunctionFactory visualMappingFunctionFactoryPassthrough = getService(bundleContext, VisualMappingFunctionFactory.class, "(mapping.type=passthrough)");
     	
-    	SetLayoutPropertiesListener setLayoutPropertiesListener = new SetLayoutPropertiesListener(cyNetworkViewManager, cyNetworkViewFactory,
-                cyLayoutAlgorithmManager, taskManager, visualStyleFactory, visualMappingManager, visualMappingFunctionFactoryDiscrete,
+    	NetworkAddedTroncoVisualStyleListener networkAddedTroncoVisualStyleListener = new NetworkAddedTroncoVisualStyleListener(cyNetworkViewManager, cyNetworkViewFactory,
+                visualStyleFactory, visualMappingManager, visualMappingFunctionFactoryDiscrete,
                 visualMappingFunctionFactoryPassthrough);
-    	registerAllServices(bundleContext, setLayoutPropertiesListener, new Properties());
+    	registerAllServices(bundleContext, networkAddedTroncoVisualStyleListener, new Properties());
+    	
+    	// add the NetworkViewAddedHierarchicLayoutListener to the services
+    	CyLayoutAlgorithmManager cyLayoutAlgorithmManager = getService(bundleContext, CyLayoutAlgorithmManager.class);
+        TaskManager taskManager = getService(bundleContext, TaskManager.class);
+        
+        NetworkViewAddedHierarchicLayoutListener networkViewAddedHierarchicLayoutListener = new NetworkViewAddedHierarchicLayoutListener(cyLayoutAlgorithmManager, taskManager);
+        registerAllServices(bundleContext, networkViewAddedHierarchicLayoutListener, new Properties());
     	
     	// add the hierarchic layout to the services
     	NetworkViewTaskFactory networkViewTaskFactoryHierarchic = getService(bundleContext, NetworkViewTaskFactory.class, "(title=Hierarchic)");

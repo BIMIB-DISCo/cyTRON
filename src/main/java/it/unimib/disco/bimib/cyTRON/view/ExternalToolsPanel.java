@@ -67,7 +67,7 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
         fileLabel = new javax.swing.JLabel();
         fileTextField = new javax.swing.JTextField();
         fdrLabel = new javax.swing.JLabel();
-        fdrTextField = new javax.swing.JTextField();
+        fdrSpinner = new javax.swing.JSpinner();
         goupsMutexInfoPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
@@ -280,7 +280,7 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
 
         fdrLabel.setText("FDR:");
 
-        fdrTextField.setText("0.2");
+        fdrSpinner.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.2f), Float.valueOf(0.0f), Float.valueOf(1.0f), Float.valueOf(0.1f)));
 
         javax.swing.GroupLayout importMutexParametersPanelLayout = new javax.swing.GroupLayout(importMutexParametersPanel);
         importMutexParametersPanel.setLayout(importMutexParametersPanelLayout);
@@ -297,8 +297,8 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
                     .addComponent(fdrLabel))
                 .addGap(40, 40, 40)
                 .addGroup(importMutexParametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fdrTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fdrSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(125, Short.MAX_VALUE))
         );
         importMutexParametersPanelLayout.setVerticalGroup(
@@ -310,8 +310,8 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
                     .addComponent(fileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(importMutexParametersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fdrTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fdrLabel))
+                    .addComponent(fdrLabel)
+                    .addComponent(fdrSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(importMutexButton))
         );
@@ -519,7 +519,7 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
     private void importMutexButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importMutexButtonActionPerformed
         // get the parameters
         String file = fileTextField.getText();
-        String fdr = fdrTextField.getText();
+        Float fdr = (Float) fdrSpinner.getValue();
         
         // check the paramets
         if (file.length() == 0) {
@@ -557,7 +557,7 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
     private javax.swing.JButton exportNbsButton;
     private javax.swing.JPanel exportNbsPanel;
     private javax.swing.JLabel fdrLabel;
-    private javax.swing.JTextField fdrTextField;
+    private javax.swing.JSpinner fdrSpinner;
     private javax.swing.JLabel fileLabel;
     private javax.swing.JLabel fileNameLabel1;
     private javax.swing.JLabel fileNameLabel2;
