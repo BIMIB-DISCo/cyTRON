@@ -142,18 +142,14 @@ public class IntersectDatasetsFrame extends javax.swing.JFrame {
         	newNameTextField.setBackground(Color.WHITE);
         }
         
-        try {
-            // intersect the datasets
-            this.datasetController.intersect(datasetIndex1, datasetIndex2, newName);
+        // intersect the datasets
+        this.datasetController.intersect(datasetIndex1, datasetIndex2, newName);
 
-            // update the main frame
-            mainFrame.updateNumberLabels();
+        // update the main frame
+        mainFrame.updateNumberLabels();
 
-            // close the frame
+        // close the frame
 	    dispose();
-	} catch (REngineException e) {
-            JOptionPane.showConfirmDialog(this, e.getMessage() + RConnectionManager.CHECK_INPUT, RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
-	} 
     }//GEN-LAST:event_intersectButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

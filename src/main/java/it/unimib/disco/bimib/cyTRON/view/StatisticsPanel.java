@@ -285,7 +285,7 @@ public class StatisticsPanel extends javax.swing.JPanel {
 			// clear the last console message
 			RConnectionManager.getTextConsole().getLastConsoleMessage();
                         
-                visualizationPanel.updateStatisticsList(dataset);
+            visualizationPanel.updateStatisticsList(dataset);
         }
     }//GEN-LAST:event_runButtonActionPerformed
     

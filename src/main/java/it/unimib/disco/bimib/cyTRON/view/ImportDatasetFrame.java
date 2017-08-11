@@ -191,13 +191,16 @@ public class ImportDatasetFrame extends javax.swing.JFrame {
     			    datasetController.importDataset(name, path, DatasetController.MAF);
     			} else if (loadRadioButton.isSelected()) {
                             datasetController.importDataset(name, path, DatasetController.LOAD);
-                    }
+                }
     			
-    			// close the frame
-    	        dispose();
+    			// if the last console message is regular
+    			if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        			// close the frame
+        	        dispose();
+    			} else {
+    				JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+    			}
 			}
-		} catch (REngineException e) {
-			JOptionPane.showConfirmDialog(this, e.getMessage() + RConnectionManager.CHECK_INPUT, RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
 		} catch (FileNotFoundException e) {
 			JOptionPane.showConfirmDialog(this, "The specified file does not exist.", RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
 		}

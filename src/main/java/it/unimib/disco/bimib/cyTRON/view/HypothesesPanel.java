@@ -1,5 +1,6 @@
 package it.unimib.disco.bimib.cyTRON.view;
 
+import it.unimib.disco.bimib.cyTRON.R.RConnectionManager;
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.controller.HypothesesController;
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
@@ -242,10 +243,15 @@ public class HypothesesPanel extends javax.swing.JPanel {
             // delete the pattern
             hypothesesController.deletePattern(dataset, patternsList.getSelectedIndex(), datasetController);
 
-            // update the number labels
-            mainFrame.updateNumberLabels();
-            updatePatternsNumberLabel();
-            hypothesesNumberLabel.setText("");
+        	// if the last console message is regular
+            if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+                // update the number labels
+                mainFrame.updateNumberLabels();
+                updatePatternsNumberLabel();
+                hypothesesNumberLabel.setText("");
+            } else {
+            	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+            }
         }
     }//GEN-LAST:event_deletePatternButtonActionPerformed
 

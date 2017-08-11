@@ -1,7 +1,6 @@
 package it.unimib.disco.bimib.cyTRON.model;
 
 import org.rosuda.JRI.REXP;
-import org.rosuda.REngine.REngineException;
 
 import it.unimib.disco.bimib.cyTRON.R.RConnectionManager;
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
@@ -39,7 +38,7 @@ public class Dataset {
     private boolean hasStagesAnnotation;
     private Inference inference;
     
-    public Dataset(String name, String path, String type) throws REngineException {
+    public Dataset(String name, String path, String type) {
         this.name = name;
         genes = new HashMap<>();
         types = new HashMap<>();
@@ -67,21 +66,22 @@ public class Dataset {
                 break;
         }
     	
-    	retrieveSamples();
-    	retrieveEvents();
-    	if (type.equals(DatasetController.LOAD)) {
-			retrievePatterns();
-			retrieveInference();
-			retrieveStatistics();
-		}
+    	// if the last console message is regular
+    	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+    		retrieveSamples();
+        	retrieveEvents();
+        	if (type.equals(DatasetController.LOAD)) {
+    			retrievePatterns();
+    			retrieveInference();
+    			retrieveStatistics();
+    		}
+    	}
     }
     
-    public void deleteDataset() throws REngineException {
+    public void deleteDataset() {
         // create and execute the command
         String command = "rm(" + name + ")";
         RConnectionManager.eval(command);
-        
-        
     }
     
     public void save(String path) {
@@ -90,101 +90,88 @@ public class Dataset {
         RConnectionManager.eval(command);
     }
     
-    private void load(String name, String path) throws REngineException {
+    private void load(String name, String path){
     	// create and execute the command
         String command = name + " = readRDS('" + path + "')";
         RConnectionManager.eval(command);
-        
-        // check if the object exists in R
-        command = "exists('" + name + "')";
-        REXP rexp = RConnectionManager.eval(command);
-        if (rexp.asBool().isFALSE()) {
-			throw new REngineException(null, "readRDS");
-		}
     }
     
-    private void importGenotypes(String name, String path) throws REngineException {
+    private void importGenotypes(String name, String path){
         // create and execute the command
         String command = name + " = import.genotypes('" + path + "')";
         RConnectionManager.eval(command);
-        
-        // check if the object exists in R
-        command = "exists('" + name + "')";
-        REXP rexp = RConnectionManager.eval(command);
-        if (rexp.asBool().isFALSE()) {
-			throw new REngineException(null, "import.genotypes");
-		}
     }
     
-    private void importGistic(String name, String path) throws REngineException {
+    private void importGistic(String name, String path){
         // create and execute the command
         String command = name + " = import.GISTIC('" + path + "', silent=TRUE)";
         RConnectionManager.eval(command);
-        
-        // check if the object exists in R
-        command = "exists('" + name + "')";
-        REXP rexp = RConnectionManager.eval(command);
-        if (rexp.asBool().isFALSE()) {
-			throw new REngineException(null, "import.GISTIC");
-		}
     }
     
-    private void importMaf(String name, String path) throws REngineException {
+    private void importMaf(String name, String path){
         // create and execute the command
         String command = name + " = import.MAF('" + path + "', sep = ';', silent=TRUE)";
         RConnectionManager.eval(command);
-        
-        // check if the object exists in R
-        command = "exists('" + name + "')";
-        REXP rexp = RConnectionManager.eval(command);
-        if (rexp.asBool().isFALSE()) {
-			throw new REngineException(null, "import.MAF");
-		}
     }
     
     public void bindSamples(Dataset dataset, String newName) {
     	// create and execute the command
         String command = newName + " = sbind(c(" + name + ", " + dataset.getName() + "))";
         RConnectionManager.eval(command);
-        command = "rm(" + name + ")";
-        RConnectionManager.eval(command);
         
-        // update the name
-        name = newName;
-        
-        // update the samples and the events
-        retrieveSamples();
-        retrieveEvents();
+    	// if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        	// delete the old R object
+        	command = "rm(" + name + ")";
+            RConnectionManager.eval(command);
+            
+            // update the name
+            name = newName;
+            
+            // update the samples and the events
+            retrieveSamples();
+            retrieveEvents();
+        }
     }
     
     public void bindEvents(Dataset dataset, String newName) {
     	// create and execute the command
         String command = newName + " = ebind(c(" + name + ", " + dataset.getName() + "), silent=TRUE)";
         RConnectionManager.eval(command);
-        command = "rm(" + name + ")";
-        RConnectionManager.eval(command);
         
-        // update the name
-        name = newName;
-        
-        // update the samples and the events
-        retrieveSamples();
-        retrieveEvents();
+        // if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        	// delete the old R object
+	        command = "rm(" + name + ")";
+	        RConnectionManager.eval(command);
+	        
+	        // update the name
+	        name = newName;
+	        
+	        // update the samples and the events
+	        retrieveSamples();
+	        retrieveEvents();
+        }
     }
     
     public void intersect(Dataset dataset, String newName) {
     	// create and execute the command
         String command = newName + " = intersect.datasets(" + name + ", " + dataset.getName() + ")";
         RConnectionManager.eval(command);
-        command = "rm(" + name + ")";
-        RConnectionManager.eval(command);
         
-        // update the name
-        name = newName;
-        
-        // update the samples and the events
-        retrieveSamples();
-        retrieveEvents();
+        // if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        	// delete the old R object
+	        command = "rm(" + name + ")";
+	        RConnectionManager.eval(command);
+	        
+	        // update the name
+	        name = newName;
+	        
+	        // update the samples and the events
+	        retrieveSamples();
+	        retrieveEvents();
+        }
     }
     
     // ************ SAMPLES ************ \\
@@ -196,20 +183,26 @@ public class Dataset {
         String command = "as.samples(" + name + ")";
         REXP rexp = RConnectionManager.eval(command);
         
-        // get the names of the genes
-        String[] names = rexp.asStringArray();
-        
-        // if the output of R is null
-        if (names == null) {
-        	// return
-			return;
-		}
-        
-    	// instantiate the genes and add them to the map
-    	for (int i = 0; i < names.length; i++) {
-            String name = names[i];
-            samples.put(name, new Sample(name));
-    	}
+    	// if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        	// get the names of the genes
+            String[] names = rexp.asStringArray();
+            
+            // if the output of R is null
+            if (names == null) {
+            	// return
+    			return;
+    		}
+            
+        	// instantiate the genes and add them to the map
+        	for (int i = 0; i < names.length; i++) {
+                String name = names[i];
+                samples.put(name, new Sample(name));
+        	}
+        } else {
+        	// clean the console
+        	RConnectionManager.getTextConsole().getLastConsoleMessage();
+        }
     }
     
     public void deleteSample(Sample sample) {
@@ -217,8 +210,11 @@ public class Dataset {
         String command = name + " = delete.samples(" + name + ", c('" + sample.getName() + "'))";
         RConnectionManager.eval(command);
         
-        // delete the sample from the map
-        samples.remove(sample.getName());
+    	// if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        	// delete the sample from the map
+            samples.remove(sample.getName());
+        }
     }
     
     public void samplesSelection(Sample[] samples) {
@@ -233,8 +229,11 @@ public class Dataset {
         command += "))";
         RConnectionManager.eval(command);
         
-        // reload the samples
-        retrieveSamples();
+    	// if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        	// reload the samples
+            retrieveSamples();
+        }
     }
     
     public Collection<Sample> getSamples() {
@@ -268,8 +267,11 @@ public class Dataset {
         String command = name + " = TCGA.remove.multiple.samples(" + name + ")";
         RConnectionManager.eval(command);
         
-        // reload the samples
-        retrieveSamples();
+    	// if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        	// reload the samples
+            retrieveSamples();
+        }
     }
     
     public void shortenBarcodes() {
@@ -277,8 +279,11 @@ public class Dataset {
         String command = name + " = TCGA.shorten.barcodes(" + name + ")";
         RConnectionManager.eval(command);
         
-        // reload the samples
-        retrieveSamples();
+    	// if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+            // reload the samples
+            retrieveSamples();
+        }
     }
     
     // ************ GENES ************ \\    
@@ -287,8 +292,11 @@ public class Dataset {
         String command = name + " = rename.gene(" + name + ", '" + gene.getName() + "', '" + newName + "')";
         RConnectionManager.eval(command);
         
-        // rename the gene
-        gene.setName(newName);
+    	// if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+            // rename the gene
+            gene.setName(newName);
+        }
     }
     
     public void deleteGene(Gene gene) {
@@ -296,11 +304,14 @@ public class Dataset {
         String command = name + " = delete.gene(" + name + ", '" + gene.getName() + "')";
         RConnectionManager.eval(command);
         
-        // delete the gene from the map
-        genes.remove(gene.getName());
-        
-        // reload the events
-        retrieveEvents();
+    	// if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        	// delete the gene from the map
+            genes.remove(gene.getName());
+        	
+            // reload the events
+            retrieveEvents();
+        }
     }
     
     public Collection<Gene> getGenes() {
@@ -316,8 +327,11 @@ public class Dataset {
         String command = name + " = rename.type(" + name + ", '" + type.getName() + "', '" + newName + "')";
         RConnectionManager.eval(command);
         
-        // rename the type
-        type.setName(newName);
+    	// if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+            // rename the type
+            type.setName(newName);
+        }
     }
     
     public void deleteType(Type type) {
@@ -328,8 +342,11 @@ public class Dataset {
         // delete the type from the map
         types.remove(type.getName());
         
-        // reload the events
-        retrieveEvents();
+    	// if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+            // reload the events
+            retrieveEvents();
+        }
     }
     
     public void joinTypes(Type type1, Type type2, String newName) {
@@ -337,8 +354,11 @@ public class Dataset {
         String command = name + " = join.types(" + name + ", '" + type1.getName() + "', '" + type2.getName() + "', new.type='" + newName + "', silent=TRUE)";
         RConnectionManager.eval(command);
         
-        // reload the events
-        retrieveEvents();
+    	// if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+            // reload the events
+            retrieveEvents();
+        }
     }
     
     public Collection<Type> getTypes() {
@@ -361,45 +381,51 @@ public class Dataset {
         String commandAttributes = "as.events(" + name + ")";
         REXP rexpAttributes = RConnectionManager.eval(commandAttributes);
         
-        // get the events and its attributes
-        String[] names = rexp.asStringArray();
-        String[] attributes = rexpAttributes.asStringArray();
-        
-        // if the output of R is null
-        if (names == null || attributes == null) {
-        	// return
-			return;
-		}
-        
-        // instantiate the events and add them to the map
-        for (int i = 0; i < names.length; i++) {
-        	// get the name, the type and the gene
-        	String name = names[i];
-        	String typeName = attributes[i];
-        	String geneName = attributes[i + names.length];
-        	
-        	// get the type
-        	Type type;
-        	if (types.containsKey(typeName)) {
-				type = types.get(typeName);
-			} else {
-				type = new Type(typeName);
-				types.put(typeName, type);
-			}
-        	
-        	// get the gene
-        	Gene gene;
-        	if (genes.containsKey(geneName)) {
-        		gene = genes.get(geneName);
-			} else {
-				gene = new Gene(geneName);
-				if (!typeName.equals(PATTERN)) {
-					genes.put(geneName, gene);
-				}
-			}
-        	
-        	// add the event
-        	events.put(name, new Event(name, type, gene));
+    	// if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        	// get the events and its attributes
+            String[] names = rexp.asStringArray();
+            String[] attributes = rexpAttributes.asStringArray();
+            
+            // if the output of R is null
+            if (names == null || attributes == null) {
+            	// return
+    			return;
+    		}
+            
+            // instantiate the events and add them to the map
+            for (int i = 0; i < names.length; i++) {
+            	// get the name, the type and the gene
+            	String name = names[i];
+            	String typeName = attributes[i];
+            	String geneName = attributes[i + names.length];
+            	
+            	// get the type
+            	Type type;
+            	if (types.containsKey(typeName)) {
+    				type = types.get(typeName);
+    			} else {
+    				type = new Type(typeName);
+    				types.put(typeName, type);
+    			}
+            	
+            	// get the gene
+            	Gene gene;
+            	if (genes.containsKey(geneName)) {
+            		gene = genes.get(geneName);
+    			} else {
+    				gene = new Gene(geneName);
+    				if (!typeName.equals(PATTERN)) {
+    					genes.put(geneName, gene);
+    				}
+    			}
+            	
+            	// add the event
+            	events.put(name, new Event(name, type, gene));
+            }
+        } else {
+        	// clean the console
+        	RConnectionManager.getTextConsole().getLastConsoleMessage();
         }
     }
     
@@ -408,8 +434,11 @@ public class Dataset {
         String command = name + " = delete.event(" + name + ", '" + event.getGene().getName() + "', '" + event.getType().getName() + "')";
         RConnectionManager.eval(command);
         
-        // reload the events
-        retrieveEvents();
+    	// if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        	// reload the events
+            retrieveEvents();
+        }
     }
     
     public void joinEvents(Event event1, Event event2, String geneName, String typeName, String colorName) {
@@ -418,8 +447,11 @@ public class Dataset {
     			"', new.event='" + geneName + "', new.type='" + typeName + "', event.color='" + colorName + "')";
     	RConnectionManager.eval(command);
     	
-    	// reload the events
-        retrieveEvents();
+    	// if the last console message is regular
+    	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+    		// reload the events
+            retrieveEvents();
+    	}
     }
     
     public void eventsSelection(Float frequence, Event[] selectedEvents, Event[] filteredEvents) {
@@ -451,8 +483,11 @@ public class Dataset {
         command += ", silent=TRUE)";
         RConnectionManager.eval(command);
         
-        // reload the events
-        retrieveEvents();
+    	// if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+            // reload the events
+            retrieveEvents();
+        }
     }
     
     public void trim() {
@@ -460,8 +495,11 @@ public class Dataset {
         String command = name + " = trim(" + name + ")";
         RConnectionManager.eval(command);
         
-        // reload the events
-        retrieveEvents();
+    	// if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        	// reload the events
+            retrieveEvents();
+        }
     }
     
     public Collection<Event> getEvents() {
@@ -500,57 +538,63 @@ public class Dataset {
         // get the hypotheses info
     	String[] hypothesesStrings = rexp.asStringArray();
     	
-    	// if the output of R is null
-    	if (hypothesesStrings == null) {
-    		// return
-    		return;
+    	// if the last console message is regular
+    	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        	// if the output of R is null
+        	if (hypothesesStrings == null) {
+        		// return
+        		return;
+        	}
+        	
+            // instantiate and split the hypotheses by patterns
+        	int numberOfHypotheses = hypothesesStrings.length / 4;
+        	for (int j = 0; j < numberOfHypotheses ; j++) {
+        		// get the names of the elements
+    			String causeTypeName = hypothesesStrings[j];
+    			String causeEventName = hypothesesStrings[j + numberOfHypotheses];
+    			String effectTypeName = hypothesesStrings[j + numberOfHypotheses * 2];
+    			String effectEventName = hypothesesStrings[j + numberOfHypotheses * 3];
+    			
+    			// get the types
+    			Type causeType = types.get(causeTypeName);
+    			Type effectType = types.get(effectTypeName);
+    			
+    			// get the events and the pattern
+    			Pattern pattern = null;
+    			Object causeEvent = null;
+    			Object effectEvent = null;
+    			
+    			if (causeTypeName.equals("Pattern")) {
+    				if (patterns.containsKey(causeEventName)) {
+    					pattern = patterns.get(causeEventName);
+    				} else {
+    					pattern = new Pattern(causeEventName);
+    					patterns.put(causeEventName, pattern);
+    				}
+    				causeEvent = pattern;
+    			} else {
+    				causeEvent = genes.get(causeEventName);
+    			}
+    			
+    			if (effectTypeName.equals("Pattern")) {
+    				if (patterns.containsKey(effectEventName)) {
+    					pattern = patterns.get(effectEventName);
+    				} else {
+    					pattern = new Pattern(effectEventName);
+    					patterns.put(effectEventName, pattern);
+    				}
+    				effectEvent = pattern;
+    			} else {
+    				effectEvent = genes.get(effectEventName);
+    			}
+    			
+    			// add the hypothesis to the pattern
+    			pattern.addHypothesis(new Hypothesis(causeType, causeEvent, effectType, effectEvent));
+    		}
+    	} else {
+    		// clean the console
+    		RConnectionManager.getTextConsole().getLastConsoleMessage();
     	}
-    	
-        // instantiate and split the hypotheses by patterns
-    	int numberOfHypotheses = hypothesesStrings.length / 4;
-    	for (int j = 0; j < numberOfHypotheses ; j++) {
-    		// get the names of the elements
-			String causeTypeName = hypothesesStrings[j];
-			String causeEventName = hypothesesStrings[j + numberOfHypotheses];
-			String effectTypeName = hypothesesStrings[j + numberOfHypotheses * 2];
-			String effectEventName = hypothesesStrings[j + numberOfHypotheses * 3];
-			
-			// get the types
-			Type causeType = types.get(causeTypeName);
-			Type effectType = types.get(effectTypeName);
-			
-			// get the events and the pattern
-			Pattern pattern = null;
-			Object causeEvent = null;
-			Object effectEvent = null;
-			
-			if (causeTypeName.equals("Pattern")) {
-				if (patterns.containsKey(causeEventName)) {
-					pattern = patterns.get(causeEventName);
-				} else {
-					pattern = new Pattern(causeEventName);
-					patterns.put(causeEventName, pattern);
-				}
-				causeEvent = pattern;
-			} else {
-				causeEvent = genes.get(causeEventName);
-			}
-			
-			if (effectTypeName.equals("Pattern")) {
-				if (patterns.containsKey(effectEventName)) {
-					pattern = patterns.get(effectEventName);
-				} else {
-					pattern = new Pattern(effectEventName);
-					patterns.put(effectEventName, pattern);
-				}
-				effectEvent = pattern;
-			} else {
-				effectEvent = genes.get(effectEventName);
-			}
-			
-			// add the hypothesis to the pattern
-			pattern.addHypothesis(new Hypothesis(causeType, causeEvent, effectType, effectEvent));
-		}
     }
     
     public void addHypothesis(String pattern, String label, List<Event> effect, List<Event> cause) {
@@ -635,16 +679,19 @@ public class Dataset {
     	String command = name + " = delete.pattern(" + name + ", '" + pattern.getLabel() + "')";
         RConnectionManager.eval(command);
         
-        // delete the pattern from the map
-        patterns.remove(pattern.getLabel());
-        
-        // remove the event
-        events.remove(pattern.getLabel());
-        
-        // remove the type if there are no more events
-        if (patterns.size() == 0) {
-			types.remove(PATTERN);
-		}
+    	// if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        	// delete the pattern from the map
+            patterns.remove(pattern.getLabel());
+            
+            // remove the event
+            events.remove(pattern.getLabel());
+            
+            // remove the type if there are no more events
+            if (patterns.size() == 0) {
+    			types.remove(PATTERN);
+    		}
+        }
     }
     
     public void deleteHypothesis(String deletion, Object event) {
@@ -660,18 +707,21 @@ public class Dataset {
     	String command = name + " = delete.hypothesis(" + name + ", " + deletion.toLowerCase() + "='" + eventName + "')";
         RConnectionManager.eval(command);
     	
-        // update the list of hypothesis    
-    	for (Pattern pattern : patterns.values()) {
-    		for (Hypothesis hypothesis : pattern.getHypotheses()) {
-    			// if one of the three condition holds (depending on the type of deletion)
-    			if ((deletion.equals(DeleteHypothesesFrame.CAUSE) && event.equals(hypothesis.getCauseEvent())) ||
-    					(deletion.equals(DeleteHypothesesFrame.EFFECT) && event.equals(hypothesis.getEffectEvent())) ||
-    					(deletion.equals(DeleteHypothesesFrame.EVENT) && (event.equals(hypothesis.getCauseEvent()) || event.equals(hypothesis.getEffectEvent())))) {
-    				// delete the hypothesis
-    				pattern.deleteHypothesis(hypothesis);
+    	// if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        	// update the list of hypothesis    
+        	for (Pattern pattern : patterns.values()) {
+        		for (Hypothesis hypothesis : pattern.getHypotheses()) {
+        			// if one of the three condition holds (depending on the type of deletion)
+        			if ((deletion.equals(DeleteHypothesesFrame.CAUSE) && event.equals(hypothesis.getCauseEvent())) ||
+        					(deletion.equals(DeleteHypothesesFrame.EFFECT) && event.equals(hypothesis.getEffectEvent())) ||
+        					(deletion.equals(DeleteHypothesesFrame.EVENT) && (event.equals(hypothesis.getCauseEvent()) || event.equals(hypothesis.getEffectEvent())))) {
+        				// delete the hypothesis
+        				pattern.deleteHypothesis(hypothesis);
+        			}
     			}
-			}
-		}
+    		}
+        }
     }
     
     public Collection<Pattern> getPatterns() {
@@ -740,8 +790,11 @@ public class Dataset {
     	String command = name + " = annotate.description(" + name + ", '" + description + "')";
     	RConnectionManager.eval(command);
     	
-    	// set the description
-    	this.description = description;
+    	// if the last console message is regular
+    	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+    		// set the description
+        	this.description = description;
+    	}
     }
     
     public void annotateStages(HashMap<String, String> stages) {
@@ -774,6 +827,7 @@ public class Dataset {
     	command = name + " = annotate.stages(" + name + ", stages)";
     	RConnectionManager.eval(command);
     	
+    	// if the last console message is regular
     	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
     		hasStagesAnnotation = true;
     	}
@@ -1196,7 +1250,7 @@ public class Dataset {
 		String rexpString = rexp.toString();
 		
 		// if the result is not null
-		if (!rexpString.equals("NULL")) {
+		if (!rexpString.equals("[NULL ]")) {
 			// add the statistics
 			inference.addStatistics(new Statistics(StatisticsController.BOOTSTRAP + "-npb", "npb"));
 		}

@@ -496,45 +496,52 @@ public class VisualizationPanel extends javax.swing.JPanel {
         	if (annotateStage && annotateStagePath.length() > 0) {
                 // annotate the stage
                 visualizationController.annotateStages(dataset, annotateStagePath);
+                
+                // if the last console message is not regular
+                if (!RConnectionManager.getTextConsole().isLastMessageRegular()) {
+                	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+                	return;
+                }
             }
-        }	
+        }
         
-        // if the last console message is regular
-        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-            // get the title
-            String title = titleTextField.getText();
-            // if title has been specified
-            if (title.length() > 0) {
-                visualizationController.annotareDescription(dataset, title);
-            }
-
-            // get the other parameters
-            Boolean exclusivitySort = exclusivitySortButton.isSelected();
-            Boolean labelSort = labelSortRadioButton.isSelected();
-            Boolean stageSort = stageSortRadioButton.isSelected();
-            Boolean clusterSamples = clusterGenesCheckBox.isSelected();
-            Boolean clusterGenes = clusterGenesCheckBox.isSelected();
-            Boolean annotateHits = annotateHitsCheckBox.isSelected();
-            Float fontSize = (float) fontSizeSpinner.getValue();
-            Boolean samplesName = samplesNameCheckBox.isSelected();
-            Boolean legend = legendCheckBox.isSelected();
-            Float legendSize = (float) legendSizeSpinner.getValue();
-            String samplesGroupPath = samplesGroupTextField.getText();
-            Boolean pattern = patternsCheckBox.isSelected();
-
-            // show oncoprint
-            try {
-				visualizationController.oncoprint(dataset, exclusivitySort, labelSort, stageSort, clusterSamples, clusterGenes, annotateStage, annotateHits, fontSize, samplesName, legend, legendSize, samplesGroupPath, pattern);
-			} catch (IOException e) {
-				JOptionPane.showConfirmDialog(this, "oncoprint" + RConnectionManager.CHECK_INPUT, RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
-			}
-            
+        // get the title
+        String title = titleTextField.getText();
+        // if title has been specified
+        if (title.length() > 0) {
+            visualizationController.annotareDescription(dataset, title);
+        	
             // if the last console message is not regular
             if (!RConnectionManager.getTextConsole().isLastMessageRegular()) {
             	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+            	return;
             }
-        } else {
-            JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+        }
+
+        // get the other parameters
+        Boolean exclusivitySort = exclusivitySortButton.isSelected();
+        Boolean labelSort = labelSortRadioButton.isSelected();
+        Boolean stageSort = stageSortRadioButton.isSelected();
+        Boolean clusterSamples = clusterGenesCheckBox.isSelected();
+        Boolean clusterGenes = clusterGenesCheckBox.isSelected();
+        Boolean annotateHits = annotateHitsCheckBox.isSelected();
+        Float fontSize = (float) fontSizeSpinner.getValue();
+        Boolean samplesName = samplesNameCheckBox.isSelected();
+        Boolean legend = legendCheckBox.isSelected();
+        Float legendSize = (float) legendSizeSpinner.getValue();
+        String samplesGroupPath = samplesGroupTextField.getText();
+        Boolean pattern = patternsCheckBox.isSelected();
+
+        // show oncoprint
+        try {
+			visualizationController.oncoprint(dataset, exclusivitySort, labelSort, stageSort, clusterSamples, clusterGenes, annotateStage, annotateHits, fontSize, samplesName, legend, legendSize, samplesGroupPath, pattern);
+		} catch (IOException e) {
+			JOptionPane.showConfirmDialog(this, "oncoprint" + RConnectionManager.CHECK_INPUT, RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+		}
+        
+        // if the last console message is not regular
+        if (!RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
         }
     }//GEN-LAST:event_showOncoprintButtonActionPerformed
 

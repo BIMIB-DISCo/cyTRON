@@ -1,9 +1,11 @@
 package it.unimib.disco.bimib.cyTRON.view;
 
+import it.unimib.disco.bimib.cyTRON.R.RConnectionManager;
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.controller.HypothesesController;
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 public class DeleteHypothesesFrame extends javax.swing.JFrame {
 
@@ -163,11 +165,16 @@ public class DeleteHypothesesFrame extends javax.swing.JFrame {
             hypothesesController.deleteHypothesis(dataset, EVENT, event, hypothesesPanel.getPatternsSelectedIndex());
         }
         
-        // update the number of patterns and hypotheses
-        hypothesesPanel.updateHypothesesNumberLabel();
-        
-        // close the frame
-        dispose();
+    	// if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        	// update the number of patterns and hypotheses
+            hypothesesPanel.updateHypothesesNumberLabel();
+            
+            // close the frame
+            dispose();
+        } else {
+        	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+        }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
