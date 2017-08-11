@@ -53,9 +53,9 @@ public class ImportDatasetFrame extends javax.swing.JFrame {
         importLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         importLabel.setText("Import Dataset from File");
 
-        pathLabel.setText("Path:");
+        pathLabel.setText("File");
 
-        nameLabel.setText("Name:");
+        nameLabel.setText("Dataset name:");
 
         pathTextField.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -110,7 +110,7 @@ public class ImportDatasetFrame extends javax.swing.JFrame {
                                 .addComponent(gisticRadioButton)
                                 .addGap(18, 18, 18)
                                 .addComponent(loadRadioButton)
-                                .addGap(0, 216, Short.MAX_VALUE))
+                                .addGap(0, 166, Short.MAX_VALUE))
                             .addComponent(nameTextField)
                             .addComponent(pathTextField)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()

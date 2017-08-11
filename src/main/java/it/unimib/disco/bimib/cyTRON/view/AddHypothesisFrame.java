@@ -374,7 +374,12 @@ public class AddHypothesisFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_addHypothesisButtonActionPerformed
 
     private void infoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoButtonActionPerformed
-        JOptionPane.showConfirmDialog(this, "INSTRUCTIONS:", "Add Hipothesis Instructions", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showConfirmDialog(this, 
+        		"INSTRUCTIONS:"
+        		+ "\nTo start click on \"Pattern\" (it represents the root of any pattern) in the text box."
+        		+ "\nThen select an item using the radio buttons below the text box and click \"Add\". This will add the item to the pattern."
+        		+ "\nContinue iteratively to create the desired pattern.",
+        		"Add Hipothesis Instructions", JOptionPane.PLAIN_MESSAGE);
     }//GEN-LAST:event_infoButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

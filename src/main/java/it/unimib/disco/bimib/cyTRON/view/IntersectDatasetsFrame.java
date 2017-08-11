@@ -145,11 +145,16 @@ public class IntersectDatasetsFrame extends javax.swing.JFrame {
         // intersect the datasets
         this.datasetController.intersect(datasetIndex1, datasetIndex2, newName);
 
-        // update the main frame
-        mainFrame.updateNumberLabels();
+    	// if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+            // update the main frame
+            mainFrame.updateNumberLabels();
 
-        // close the frame
-	    dispose();
+            // close the frame
+    	    dispose();
+        } else {
+        	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+        }
     }//GEN-LAST:event_intersectButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

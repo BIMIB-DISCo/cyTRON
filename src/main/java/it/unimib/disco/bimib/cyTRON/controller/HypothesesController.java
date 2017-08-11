@@ -96,9 +96,9 @@ public class HypothesesController {
         }
     }
     
-    public void addHomologousHypothesis(Dataset dataset, List<Event> effect, List<Event> cause, List<Gene> genes, String operation, DatasetController datasetController) {
+    public void addHomologousHypothesis(Dataset dataset, List<Event> effect, List<Event> cause, List<Gene> genes, DatasetController datasetController) {
     	// add the homologous
-    	dataset.addHomologousHypothesis(effect, cause, genes, operation);
+    	dataset.addHomologousHypothesis(effect, cause, genes);
     	
     	// if the last console message is regular
     	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {

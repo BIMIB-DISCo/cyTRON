@@ -651,7 +651,7 @@ public class Dataset {
         }
     }
     
-    public void addHomologousHypothesis(List<Event> effect, List<Event> cause, List<Gene> genes, String operation) {
+    public void addHomologousHypothesis(List<Event> effect, List<Event> cause, List<Gene> genes) {
     	// create and execute the command
         String command = name + " = hypothesis.add.homologous(" + name;
         if (effect.size() > 0) {
@@ -663,7 +663,7 @@ public class Dataset {
         if (genes.size() > 0) {
         	command += ", genes=list(" + getStringOfGenes(genes) + ")";
 		}
-        command += ", FUN=" + operation + ", silent=TRUE)";
+        command += ", silent=TRUE)";
         RConnectionManager.eval(command);
         
         // if the last console message is regular
@@ -953,6 +953,7 @@ public class Dataset {
 		        
 		        // start and wait for the process
 		        Process process = processBuilder.start();
+		        System.out.println("R command: \"" + command + "\"");
 		        process.waitFor();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -996,7 +997,6 @@ public class Dataset {
     	command += ", p.min=" + pvalueCutoff.toString().replace(",", ".")
     			+ ", expand=" + expandHypotheses.toString().toUpperCase()
     			+ ")";
-    	System.out.println(command);
     	RConnectionManager.eval(command);
     }
     

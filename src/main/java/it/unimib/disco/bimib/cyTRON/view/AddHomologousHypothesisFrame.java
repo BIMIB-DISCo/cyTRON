@@ -3,12 +3,10 @@ package it.unimib.disco.bimib.cyTRON.view;
 import it.unimib.disco.bimib.cyTRON.R.RConnectionManager;
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.controller.HypothesesController;
-import it.unimib.disco.bimib.cyTRON.model.Dataset;
 import it.unimib.disco.bimib.cyTRON.model.Event;
 import it.unimib.disco.bimib.cyTRON.model.Gene;
 
 import java.util.List;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 public class AddHomologousHypothesisFrame extends javax.swing.JFrame {
@@ -18,17 +16,12 @@ public class AddHomologousHypothesisFrame extends javax.swing.JFrame {
     private final MainFrame mainFrame;
     private final HypothesesPanel hypothesesPanel;
     
-    private final DefaultComboBoxModel<String> operationsDefaultComboBoxModel;
-    
     public AddHomologousHypothesisFrame(HypothesesController hypothesesController, DatasetController datasetController, MainFrame mainFrame, HypothesesPanel hypothesesPanel) {
         // instantiate the controllers and the dataset index
         this.hypothesesController = hypothesesController;
         this.datasetController = datasetController;
         this.mainFrame = mainFrame;
         this.hypothesesPanel = hypothesesPanel;
-        
-        // create the default combo box models
-        operationsDefaultComboBoxModel = new DefaultComboBoxModel(HypothesesController.OPERATIONS);
         
         // draws the interface
         initComponents();
@@ -38,7 +31,6 @@ public class AddHomologousHypothesisFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        nodeButtonGroup = new javax.swing.ButtonGroup();
         addHomologousButton = new javax.swing.JButton();
         effectLabel = new javax.swing.JLabel();
         effectScrollPane = new javax.swing.JScrollPane();
@@ -53,8 +45,6 @@ public class AddHomologousHypothesisFrame extends javax.swing.JFrame {
         genesScrollPane = new javax.swing.JScrollPane();
         genesList = new javax.swing.JList<>();
         ctrlLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        operationComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Add Homologous");
@@ -99,10 +89,6 @@ public class AddHomologousHypothesisFrame extends javax.swing.JFrame {
         ctrlLabel3.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
         ctrlLabel3.setText("ctrl/cmd-click to select multiple genes (do not select for all)");
 
-        jLabel1.setText("Operation:");
-
-        operationComboBox.setModel(operationsDefaultComboBoxModel);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -112,36 +98,30 @@ public class AddHomologousHypothesisFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(addHomologousButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(addLabel)
-                        .addGap(832, 832, 832))
+                        .addComponent(addHomologousButton)
+                        .addGap(6, 6, 6))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(effectLabel)
-                            .addComponent(causeLabel)
-                            .addComponent(genesLabel)
-                            .addComponent(jLabel1))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(addLabel)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(ctrlLabel2)
-                                .addGap(541, 541, 541))
-                            .addComponent(effectScrollPane)
-                            .addComponent(causeScrollPane)
-                            .addComponent(genesScrollPane)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(operationComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(ctrlLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(ctrlLabel3, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap())
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(effectLabel)
+                                    .addComponent(causeLabel)
+                                    .addComponent(genesLabel))
+                                .addGap(42, 42, 42)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ctrlLabel2)
+                                    .addComponent(genesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 858, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(causeScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 858, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ctrlLabel1)
+                                    .addComponent(ctrlLabel3)
+                                    .addComponent(effectScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 858, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
+                .addGap(51, 51, 51)
                 .addComponent(addLabel)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,11 +141,7 @@ public class AddHomologousHypothesisFrame extends javax.swing.JFrame {
                     .addComponent(genesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ctrlLabel3)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(operationComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                 .addComponent(addHomologousButton)
                 .addContainerGap())
         );
@@ -178,10 +154,9 @@ public class AddHomologousHypothesisFrame extends javax.swing.JFrame {
         List<Event> effect = effectList.getSelectedValuesList();
         List<Event> cause = causeList.getSelectedValuesList();
         List<Gene> genes = genesList.getSelectedValuesList();
-        String operation = (String) operationComboBox.getSelectedItem();
         
         // add the hypothesis
-        hypothesesController.addHomologousHypothesis(mainFrame.getSelectedDataset(), effect, cause, genes, operation, datasetController); 
+        hypothesesController.addHomologousHypothesis(mainFrame.getSelectedDataset(), effect, cause, genes, datasetController); 
         
         // if the last console message is regular
     	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
@@ -211,8 +186,5 @@ public class AddHomologousHypothesisFrame extends javax.swing.JFrame {
     private javax.swing.JLabel genesLabel;
     private javax.swing.JList<Gene> genesList;
     private javax.swing.JScrollPane genesScrollPane;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.ButtonGroup nodeButtonGroup;
-    private javax.swing.JComboBox<String> operationComboBox;
     // End of variables declaration//GEN-END:variables
 }

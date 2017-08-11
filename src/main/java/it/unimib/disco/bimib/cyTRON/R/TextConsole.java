@@ -21,9 +21,7 @@ public class TextConsole implements RMainLoopCallbacks {
 	}
 
 	@Override
-	public void rBusy(Rengine rEngine, int which) {
-		System.out.println("rBusy(" + which + ")");
-	}
+	public void rBusy(Rengine rEngine, int which) {}
 
 	@Override
 	public String rReadConsole(Rengine rEngine, String prompt, int addToHistory) {

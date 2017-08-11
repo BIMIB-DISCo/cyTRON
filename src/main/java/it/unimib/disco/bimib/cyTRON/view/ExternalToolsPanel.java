@@ -539,7 +539,7 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
         externalToolsController.importMutex(file, fdr);
         
     	// if the last console message is not regular
-        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        if (!RConnectionManager.getTextConsole().isLastMessageRegular()) {
         	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
         }
     }//GEN-LAST:event_importMutexButtonActionPerformed

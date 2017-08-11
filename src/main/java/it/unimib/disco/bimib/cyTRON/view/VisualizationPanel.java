@@ -485,7 +485,7 @@ public class VisualizationPanel extends javax.swing.JPanel {
         boolean annotateStage = annotateStageCheckBox.isSelected();
         String annotateStagePath = annotateStageTextField.getText();
         // if there are no annotation and the path has not been provided
-        if (annotateStage && !mainFrame.getSelectedDataset().hasStagesAnnotation() && annotateStagePath.length() == 0) {
+        if (annotateStage && !dataset.hasStagesAnnotation() && annotateStagePath.length() == 0) {
             // return
             annotateStageTextField.setBackground(Color.RED);
             return;
@@ -522,7 +522,7 @@ public class VisualizationPanel extends javax.swing.JPanel {
         Boolean exclusivitySort = exclusivitySortButton.isSelected();
         Boolean labelSort = labelSortRadioButton.isSelected();
         Boolean stageSort = stageSortRadioButton.isSelected();
-        Boolean clusterSamples = clusterGenesCheckBox.isSelected();
+        Boolean clusterSamples = clusterSamplesCheckBox.isSelected();
         Boolean clusterGenes = clusterGenesCheckBox.isSelected();
         Boolean annotateHits = annotateHitsCheckBox.isSelected();
         Float fontSize = (float) fontSizeSpinner.getValue();
@@ -531,10 +531,18 @@ public class VisualizationPanel extends javax.swing.JPanel {
         Float legendSize = (float) legendSizeSpinner.getValue();
         String samplesGroupPath = samplesGroupTextField.getText();
         Boolean pattern = patternsCheckBox.isSelected();
+        
+        // if stage sort is selected, but there are no stages
+        if (stageSort && !dataset.hasStagesAnnotation()) {
+        	JOptionPane.showConfirmDialog(this, "Cannot group samples by stage if no stage annotation is provided.", RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+        	return;
+		}
 
         // show oncoprint
         try {
 			visualizationController.oncoprint(dataset, exclusivitySort, labelSort, stageSort, clusterSamples, clusterGenes, annotateStage, annotateHits, fontSize, samplesName, legend, legendSize, samplesGroupPath, pattern);
+		} catch (IllegalArgumentException e) {
+			JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
 		} catch (IOException e) {
 			JOptionPane.showConfirmDialog(this, "oncoprint" + RConnectionManager.CHECK_INPUT, RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
 		}

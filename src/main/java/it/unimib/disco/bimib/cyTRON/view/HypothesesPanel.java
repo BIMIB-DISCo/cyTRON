@@ -222,7 +222,7 @@ public class HypothesesPanel extends javax.swing.JPanel {
         
         AddHypothesisFrame addHypothesisFrame = new AddHypothesisFrame(hypothesesController, datasetController, mainFrame, this);
         addHypothesisFrame.setLocationRelativeTo(null);
-	addHypothesisFrame.setVisible(true);
+        addHypothesisFrame.setVisible(true);
     }//GEN-LAST:event_addPatternButtonActionPerformed
 
     private void deletePatternButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletePatternButtonActionPerformed
@@ -264,7 +264,7 @@ public class HypothesesPanel extends javax.swing.JPanel {
         
         AddGroupHypothesisFrame addGroupHypothesisFrame = new AddGroupHypothesisFrame(hypothesesController, datasetController, mainFrame, this);
         addGroupHypothesisFrame.setLocationRelativeTo(null);
-	addGroupHypothesisFrame.setVisible(true);
+        addGroupHypothesisFrame.setVisible(true);
     }//GEN-LAST:event_addGroupButtonActionPerformed
 
     private void addHomologousButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addHomologousButtonActionPerformed
@@ -276,7 +276,7 @@ public class HypothesesPanel extends javax.swing.JPanel {
         
         AddHomologousHypothesisFrame addHomologousHypothesisFrame = new AddHomologousHypothesisFrame(hypothesesController, datasetController, mainFrame, this);
         addHomologousHypothesisFrame.setLocationRelativeTo(null);
-	addHomologousHypothesisFrame.setVisible(true);
+        addHomologousHypothesisFrame.setVisible(true);
     }//GEN-LAST:event_addHomologousButtonActionPerformed
 
     private void patternsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_patternsListValueChanged
@@ -293,7 +293,7 @@ public class HypothesesPanel extends javax.swing.JPanel {
         
         DeleteHypothesesFrame deleteHypothesesFrame = new DeleteHypothesesFrame(hypothesesController, datasetController, mainFrame, this);
         deleteHypothesesFrame.setLocationRelativeTo(null);
-	deleteHypothesesFrame.setVisible(true);
+        deleteHypothesesFrame.setVisible(true);
     }//GEN-LAST:event_deleteHypothesisButtonActionPerformed
 
     // ************ OTHERS ************ \\

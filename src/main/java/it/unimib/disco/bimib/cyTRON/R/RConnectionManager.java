@@ -53,6 +53,7 @@ public class RConnectionManager {
         
     // execute a command
     public static REXP eval(String command) {
+    	System.out.println("R command: \"" + command + "\"");
     	return getConnection().eval(command);
 	}
 	

@@ -48,6 +48,7 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Events Selection");
+        setMaximumSize(new java.awt.Dimension(670, 400));
         setMinimumSize(new java.awt.Dimension(670, 400));
         setSize(new java.awt.Dimension(670, 400));
 
@@ -70,7 +71,7 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
         ctrlLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
         ctrlLabel1.setText("ctrl/cmd-click to select multiple events (do not select for default)");
 
-        selectedEventsLabel.setText("Selected events:");
+        selectedEventsLabel.setText("Events to keep:");
 
         ctrlLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
         ctrlLabel2.setText("ctrl/cmd-click to select multiple events (do not select for default)");
@@ -79,7 +80,7 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
         filteredEventsList.setLayoutOrientation(javax.swing.JList.VERTICAL_WRAP);
         filteredEventsScrollPane.setViewportView(filteredEventsList);
 
-        jLabel1.setText("Filtered events:");
+        jLabel1.setText("Events to remove:");
 
         minimumFrequenceSpinner.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(-0.01f), Float.valueOf(-0.01f), Float.valueOf(1.0f), Float.valueOf(0.01f)));
 
@@ -93,29 +94,29 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
             .addGroup(panelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(selectButton))
                     .addGroup(panelLayout.createSequentialGroup()
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(selectedEventsLabel)
+                            .addComponent(jLabel1))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(filteredEventsScrollPane)
                             .addGroup(panelLayout.createSequentialGroup()
                                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(selectedEventsLabel)
-                                    .addComponent(jLabel1))
-                                .addGap(18, 18, 18)
-                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(filteredEventsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(selectedEventsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(ctrlLabel1)
-                                    .addComponent(ctrlLabel2)))
-                            .addComponent(selectionLabel)
-                            .addGroup(panelLayout.createSequentialGroup()
-                                .addComponent(frequenceLabel)
-                                .addGap(18, 18, 18)
-                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(negativeLabel)
-                                    .addComponent(minimumFrequenceSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                    .addComponent(ctrlLabel2))
+                                .addGap(0, 168, Short.MAX_VALUE))
+                            .addComponent(selectedEventsScrollPane)))
+                    .addComponent(selectionLabel)
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addComponent(frequenceLabel)
+                        .addGap(18, 18, 18)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(negativeLabel)
+                            .addComponent(minimumFrequenceSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(selectButton)))
                 .addContainerGap())
         );
         panelLayout.setVerticalGroup(
@@ -143,7 +144,7 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
                 .addComponent(ctrlLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(selectButton)
-                .addGap(18, 18, 18))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
