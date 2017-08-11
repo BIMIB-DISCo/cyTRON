@@ -602,18 +602,19 @@ public class MainFrame extends javax.swing.JFrame {
         // get the confirmation
         int confirmation = JOptionPane.showConfirmDialog(this, "The dataset will be deleted.\nAre you sure?", "", JOptionPane.OK_CANCEL_OPTION);
         
-        try {
-            // if confirmed
-            if (confirmation == JOptionPane.OK_OPTION) {
-                // execute the action
-                datasetController.deleteDataset(datasetsList.getSelectedIndex());
+        // if confirmed
+        if (confirmation == JOptionPane.OK_OPTION) {
+            // execute the action
+            datasetController.deleteDataset(datasetsList.getSelectedIndex());
 
-                // clear the number labels
+            // if the last console message is regular
+            if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+            	// clear the number labels
                 clearNumberLabels();
+            } else {
+            	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
             }
-	} catch (REngineException e) {
-            JOptionPane.showConfirmDialog(this, e.getMessage() + RConnectionManager.CHECK_INPUT, RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
-	}
+        }
     }//GEN-LAST:event_deleteDatasetButtonActionPerformed
 
     // ************ SAMPLES ************ \\
@@ -631,10 +632,17 @@ public class MainFrame extends javax.swing.JFrame {
         if (confirmation == JOptionPane.OK_OPTION) {
             // excute the action
             datasetController.deleteSample(samplesList.getSelectedIndex(), datasetsList.getSelectedIndex());
+            
+        	// if the last console message is regular
+            if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+                // update the number labels
+                updateNumberLabels();
+            } else {
+            	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+            }
         }
 
-        // update the number labels
-        updateNumberLabels();
+
     }//GEN-LAST:event_deteleSampleButtonActionPerformed
     
     // ************ GENES ************ \\
@@ -665,8 +673,13 @@ public class MainFrame extends javax.swing.JFrame {
             // execute the actioin
             datasetController.deleteGene(genesList.getSelectedIndex(), datasetsList.getSelectedIndex());
 
-            // update the number labels
-            updateNumberLabels();
+        	// if the last console message is regular
+            if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+                // update the number labels
+                updateNumberLabels();
+            } else {
+            	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+            }
         }
     }//GEN-LAST:event_deleteGeneButtonActionPerformed
 
@@ -686,8 +699,13 @@ public class MainFrame extends javax.swing.JFrame {
             // execute the action
             datasetController.deleteType(typesList.getSelectedIndex(), datasetsList.getSelectedIndex());
 
-            // update the number labels
-            updateNumberLabels();
+        	// if the last console message is regular
+            if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+                // update the number labels
+                updateNumberLabels();
+            } else {
+            	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+            }
         }
     }//GEN-LAST:event_deleteTypeButtonActionPerformed
 
@@ -731,8 +749,13 @@ public class MainFrame extends javax.swing.JFrame {
             // execute the action
             datasetController.deleteEvent(eventsList.getSelectedIndex(), datasetsList.getSelectedIndex());
 
-            // update the number labels
-            updateNumberLabels();
+        	// if the last console message is regular
+            if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+            	// update the number labels
+                updateNumberLabels();
+            } else {
+            	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+            }
         }
     }//GEN-LAST:event_deleteEventButtonActionPerformed
 
@@ -872,8 +895,13 @@ public class MainFrame extends javax.swing.JFrame {
             // remove multiple samples from the dataset
             datasetController.removeMultipleSamples(datasetsList.getSelectedIndex());
             
-            // update the number labels
-            updateNumberLabels();
+        	// if the last console message is regular
+            if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+            	// update the number labels
+                updateNumberLabels();
+            } else {
+            	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+            }
         }
     }//GEN-LAST:event_deleteMultipleSamplesButtonActionPerformed
 
@@ -892,8 +920,13 @@ public class MainFrame extends javax.swing.JFrame {
             // remove multiple samples from the dataset
             datasetController.shortenBarcodes(datasetsList.getSelectedIndex());
             
-            // update the number labels
-            updateNumberLabels();
+        	// if the last console message is regular
+            if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+                // update the number labels
+                updateNumberLabels();
+            } else {
+            	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+            }
         }
     }//GEN-LAST:event_shortenBarcodesButtonActionPerformed
 

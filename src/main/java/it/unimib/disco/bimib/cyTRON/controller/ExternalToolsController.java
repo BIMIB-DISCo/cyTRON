@@ -83,24 +83,27 @@ public class ExternalToolsController {
         	+ ", display=FALSE)";
         REXP rexp = RConnectionManager.eval(command);
         
-        // read the output and populate the model
-        groupsListModel.clear();
-        try {
-			RList groupsList = rexp.asList();
-			for (int i = 0; i < groupsList.keys().length; i++) {
-				String group = groupsList.keys()[i] + " - ";
-				
-				String[] genes = groupsList.at(i).asStringArray();
-				for (int j = 0; j < genes.length; j++) {
-					group += genes[j];
-					if (j < genes.length - 1) {
-						group += ", ";
-					}
-				}
-				
-				groupsListModel.addElement(group);
-			}
-		} catch (NullPointerException e) {}
+    	// if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        	// read the output and populate the model
+            groupsListModel.clear();
+            try {
+    			RList groupsList = rexp.asList();
+    			for (int i = 0; i < groupsList.keys().length; i++) {
+    				String group = groupsList.keys()[i] + " - ";
+    				
+    				String[] genes = groupsList.at(i).asStringArray();
+    				for (int j = 0; j < genes.length; j++) {
+    					group += genes[j];
+    					if (j < genes.length - 1) {
+    						group += ", ";
+    					}
+    				}
+    				
+    				groupsListModel.addElement(group);
+    			}
+    		} catch (NullPointerException e) {}
+        }
 	}
 	
 	public DefaultListModel<String> getGroupsListModel() {

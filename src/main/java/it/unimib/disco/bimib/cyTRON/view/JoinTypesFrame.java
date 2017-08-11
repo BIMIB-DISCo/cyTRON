@@ -1,8 +1,10 @@
 package it.unimib.disco.bimib.cyTRON.view;
 
+import it.unimib.disco.bimib.cyTRON.R.RConnectionManager;
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import java.awt.Color;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 public class JoinTypesFrame extends javax.swing.JFrame {
 
@@ -139,11 +141,16 @@ public class JoinTypesFrame extends javax.swing.JFrame {
         // rename the gene
         datasetController.joinTypes(typeIndex1, typeIndex2, datasetIndex, newName);
 
-        // update the main frame
-        mainFrame.updateNumberLabels();
-        
-        // close the frame
-        dispose();
+    	// if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+            // update the main frame
+            mainFrame.updateNumberLabels();
+            
+            // close the frame
+            dispose();
+        } else {
+        	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+        }
     }//GEN-LAST:event_joinButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

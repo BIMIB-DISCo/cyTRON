@@ -466,9 +466,9 @@ public class InferencePanel extends javax.swing.JPanel {
     		// update the current inference algorithm label
         	currentAlgorithmValueLabel.setText(dataset.getInference().getAlgorithm());
         	statisticsPanel.updateSelectedDataset();
-                visualizationPanel.updateModelsList(dataset);
-                visualizationPanel.updateStatisticsList(dataset);
-            }        
+            visualizationPanel.updateModelsList(dataset);
+            visualizationPanel.updateStatisticsList(dataset);
+        }        
     }//GEN-LAST:event_runButtonActionPerformed
     
     public void updateSelectedDataset() {
