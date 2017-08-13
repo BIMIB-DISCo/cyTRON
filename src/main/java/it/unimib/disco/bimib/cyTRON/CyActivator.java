@@ -31,11 +31,8 @@ public class CyActivator extends AbstractCyActivator {
 
     @Override
     public void start(BundleContext bundleContext) throws Exception {
-    	// Print startup message.
-    	System.out.println("cyTRON:\tstarting (201708)...");
-    	
     	// print java.library.path
-    	System.out.println("cyTRON:\tjava.library.path: " + System.getProperty("java.library.path"));
+    	System.out.println("java.library.path: " + System.getProperty("java.library.path"));
     	
     	// get the services for importing the graphml file into Cytoscape
     	CommandExecutorTaskFactory commandExecutorTaskFactory = getService(bundleContext, CommandExecutorTaskFactory.class);
