@@ -10,7 +10,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>it.unimib.disco.bimib.cyTRON</groupId>
 	<artifactId>cyTRON</artifactId>
-	<version>20170813</version>
+	<version>0.0.1-SNAPSHOT</version>
 
 	<name>cyTRON</name>
 	<packaging>bundle</packaging>
