@@ -60,7 +60,7 @@ public class VisualizationController {
 	
 	public void oncoprint(Dataset dataset, Boolean exclusivitySort, Boolean labelSort, Boolean stageSort, Boolean clusterSamples,
 			Boolean clusterGenes, Boolean annotateStage, Boolean annotateHits, Float fontSize, Boolean samplesName, Boolean legend,
-			Float legendSize, String samplesGroupPath, Boolean pattern) throws IOException {
+			Float legendSize, String samplesGroupPath, Boolean pattern) throws IOException, IllegalArgumentException {
 		// validate the path
 		samplesGroupPath = samplesGroupPath.replace("\\", "\\\\");
 		

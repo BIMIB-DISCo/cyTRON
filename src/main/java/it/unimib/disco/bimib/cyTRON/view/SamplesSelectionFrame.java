@@ -5,9 +5,12 @@
  */
 package it.unimib.disco.bimib.cyTRON.view;
 
+import it.unimib.disco.bimib.cyTRON.R.RConnectionManager;
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.model.Sample;
 import java.awt.Color;
+
+import javax.swing.JOptionPane;
 
 public class SamplesSelectionFrame extends javax.swing.JFrame {
 
@@ -40,6 +43,7 @@ public class SamplesSelectionFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Samples Selection");
+        setMaximumSize(new java.awt.Dimension(640, 360));
         setMinimumSize(new java.awt.Dimension(640, 360));
 
         selectButton.setText("Select");
@@ -56,7 +60,7 @@ public class SamplesSelectionFrame extends javax.swing.JFrame {
         selectionLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         selectionLabel.setText("Samples Selection");
 
-        samplesLabel.setText("Samples:");
+        samplesLabel.setText("Samples to keep:");
 
         ctrlLabel.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
         ctrlLabel.setText("ctrl/cmd-click to select multiple samples");
@@ -68,19 +72,18 @@ public class SamplesSelectionFrame extends javax.swing.JFrame {
             .addGroup(panelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(selectionLabel)
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addComponent(samplesLabel)
+                        .addGap(18, 18, 18)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelLayout.createSequentialGroup()
+                                .addComponent(ctrlLabel)
+                                .addGap(0, 273, Short.MAX_VALUE))
+                            .addComponent(samplesScrollPane)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(selectButton))
-                    .addGroup(panelLayout.createSequentialGroup()
-                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(selectionLabel)
-                            .addGroup(panelLayout.createSequentialGroup()
-                                .addComponent(samplesLabel)
-                                .addGap(18, 18, 18)
-                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(ctrlLabel)
-                                    .addComponent(samplesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 15, Short.MAX_VALUE)))
+                        .addComponent(selectButton)))
                 .addContainerGap())
         );
         panelLayout.setVerticalGroup(
@@ -135,11 +138,16 @@ public class SamplesSelectionFrame extends javax.swing.JFrame {
         // select the samples
         datasetController.selectSamples(samplesIndex, datasetIndex);
         
-        // update the main frame
-        mainFrame.updateNumberLabels();
-        
-        // close the frame
-        dispose();
+    	// if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        	// update the main frame
+            mainFrame.updateNumberLabels();
+            
+            // close the frame
+            dispose();
+        } else {
+        	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+        }
     }//GEN-LAST:event_selectButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

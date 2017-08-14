@@ -589,7 +589,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void importDatasetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importDatasetButtonActionPerformed
         ImportDatasetFrame importDatasetFrame = new ImportDatasetFrame(datasetController, this);
         importDatasetFrame.setLocationRelativeTo(null);
-	importDatasetFrame.setVisible(true);
+        importDatasetFrame.setVisible(true);
     }//GEN-LAST:event_importDatasetButtonActionPerformed
 
     private void deleteDatasetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteDatasetButtonActionPerformed
@@ -602,18 +602,19 @@ public class MainFrame extends javax.swing.JFrame {
         // get the confirmation
         int confirmation = JOptionPane.showConfirmDialog(this, "The dataset will be deleted.\nAre you sure?", "", JOptionPane.OK_CANCEL_OPTION);
         
-        try {
-            // if confirmed
-            if (confirmation == JOptionPane.OK_OPTION) {
-                // execute the action
-                datasetController.deleteDataset(datasetsList.getSelectedIndex());
+        // if confirmed
+        if (confirmation == JOptionPane.OK_OPTION) {
+            // execute the action
+            datasetController.deleteDataset(datasetsList.getSelectedIndex());
 
-                // clear the number labels
+            // if the last console message is regular
+            if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+            	// clear the number labels
                 clearNumberLabels();
+            } else {
+            	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
             }
-	} catch (REngineException e) {
-            JOptionPane.showConfirmDialog(this, e.getMessage() + RConnectionManager.CHECK_INPUT, RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
-	}
+        }
     }//GEN-LAST:event_deleteDatasetButtonActionPerformed
 
     // ************ SAMPLES ************ \\
@@ -631,10 +632,15 @@ public class MainFrame extends javax.swing.JFrame {
         if (confirmation == JOptionPane.OK_OPTION) {
             // excute the action
             datasetController.deleteSample(samplesList.getSelectedIndex(), datasetsList.getSelectedIndex());
+            
+        	// if the last console message is regular
+            if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+                // update the number labels
+                updateNumberLabels();
+            } else {
+            	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+            }
         }
-
-        // update the number labels
-        updateNumberLabels();
     }//GEN-LAST:event_deteleSampleButtonActionPerformed
     
     // ************ GENES ************ \\
@@ -647,7 +653,7 @@ public class MainFrame extends javax.swing.JFrame {
         
         RenameGeneFrame renameGeneFrame = new RenameGeneFrame(datasetController, genesList.getSelectedIndex(), datasetsList.getSelectedIndex());
         renameGeneFrame.setLocationRelativeTo(null);
-	renameGeneFrame.setVisible(true);
+        renameGeneFrame.setVisible(true);
     }//GEN-LAST:event_renameGeneButtonActionPerformed
 
     private void deleteGeneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteGeneButtonActionPerformed
@@ -665,8 +671,13 @@ public class MainFrame extends javax.swing.JFrame {
             // execute the actioin
             datasetController.deleteGene(genesList.getSelectedIndex(), datasetsList.getSelectedIndex());
 
-            // update the number labels
-            updateNumberLabels();
+        	// if the last console message is regular
+            if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+                // update the number labels
+                updateNumberLabels();
+            } else {
+            	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+            }
         }
     }//GEN-LAST:event_deleteGeneButtonActionPerformed
 
@@ -686,8 +697,13 @@ public class MainFrame extends javax.swing.JFrame {
             // execute the action
             datasetController.deleteType(typesList.getSelectedIndex(), datasetsList.getSelectedIndex());
 
-            // update the number labels
-            updateNumberLabels();
+        	// if the last console message is regular
+            if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+                // update the number labels
+                updateNumberLabels();
+            } else {
+            	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+            }
         }
     }//GEN-LAST:event_deleteTypeButtonActionPerformed
 
@@ -700,7 +716,7 @@ public class MainFrame extends javax.swing.JFrame {
         
         RenameTypeFrame renameTypeFrame = new RenameTypeFrame(datasetController, typesList.getSelectedIndex(), datasetsList.getSelectedIndex());
         renameTypeFrame.setLocationRelativeTo(null);
-	renameTypeFrame.setVisible(true);
+        renameTypeFrame.setVisible(true);
     }//GEN-LAST:event_renameTypeButtonActionPerformed
 
     private void joinTypesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joinTypesButtonActionPerformed
@@ -712,7 +728,7 @@ public class MainFrame extends javax.swing.JFrame {
         
         JoinTypesFrame joinTypesFrame = new JoinTypesFrame(this, datasetController, typesList.getSelectedIndex(), datasetsList.getSelectedIndex());
         joinTypesFrame.setLocationRelativeTo(null);
-	joinTypesFrame.setVisible(true);
+        joinTypesFrame.setVisible(true);
     }//GEN-LAST:event_joinTypesButtonActionPerformed
 
     // ************ EVENTS ************ \\
@@ -731,8 +747,13 @@ public class MainFrame extends javax.swing.JFrame {
             // execute the action
             datasetController.deleteEvent(eventsList.getSelectedIndex(), datasetsList.getSelectedIndex());
 
-            // update the number labels
-            updateNumberLabels();
+        	// if the last console message is regular
+            if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+            	// update the number labels
+                updateNumberLabels();
+            } else {
+            	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+            }
         }
     }//GEN-LAST:event_deleteEventButtonActionPerformed
 
@@ -745,7 +766,7 @@ public class MainFrame extends javax.swing.JFrame {
         
         JoinEventsFrame joinEventsFrame = new JoinEventsFrame(this, datasetController, eventsList.getSelectedIndex(), datasetsList.getSelectedIndex());
         joinEventsFrame.setLocationRelativeTo(null);
-	joinEventsFrame.setVisible(true);
+        joinEventsFrame.setVisible(true);
     }//GEN-LAST:event_joinEventsButtonActionPerformed
     
     // ************ BINDS ************ \\
@@ -758,7 +779,7 @@ public class MainFrame extends javax.swing.JFrame {
         
         BindDatasetsFrame bindDatasetsFrame = new BindDatasetsFrame(this, datasetController, datasetsList.getSelectedIndex(), DatasetController.EVENTS);
         bindDatasetsFrame.setLocationRelativeTo(null);
-	bindDatasetsFrame.setVisible(true);
+        bindDatasetsFrame.setVisible(true);
     }//GEN-LAST:event_bindEventsButtonActionPerformed
 
     private void bindSamplesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bindSamplesButtonActionPerformed
@@ -770,7 +791,7 @@ public class MainFrame extends javax.swing.JFrame {
         
         BindDatasetsFrame bindDatasetsFrame = new BindDatasetsFrame(this, datasetController, datasetsList.getSelectedIndex(), DatasetController.SAMPLES);
         bindDatasetsFrame.setLocationRelativeTo(null);
-	bindDatasetsFrame.setVisible(true);
+        bindDatasetsFrame.setVisible(true);
     }//GEN-LAST:event_bindSamplesButtonActionPerformed
 
     private void intersectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intersectButtonActionPerformed
@@ -782,7 +803,7 @@ public class MainFrame extends javax.swing.JFrame {
         
         IntersectDatasetsFrame intersectDatasetsFrame = new IntersectDatasetsFrame(this, datasetController, datasetsList.getSelectedIndex(), DatasetController.SAMPLES);
         intersectDatasetsFrame.setLocationRelativeTo(null);
-	intersectDatasetsFrame.setVisible(true);
+        intersectDatasetsFrame.setVisible(true);
     }//GEN-LAST:event_intersectButtonActionPerformed
 
     private void datasetsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_datasetsListValueChanged
@@ -811,7 +832,7 @@ public class MainFrame extends javax.swing.JFrame {
         
         SamplesSelectionFrame samplesSelectionFrame = new SamplesSelectionFrame(this, datasetController, datasetsList.getSelectedIndex());
         samplesSelectionFrame.setLocationRelativeTo(null);
-	samplesSelectionFrame.setVisible(true);
+        samplesSelectionFrame.setVisible(true);
     }//GEN-LAST:event_samplesSelectionButtonActionPerformed
 
     private void eventsSelectionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventsSelectionButtonActionPerformed
@@ -823,7 +844,7 @@ public class MainFrame extends javax.swing.JFrame {
         
         EventsSelectionFrame eventsSelectionFrame = new EventsSelectionFrame(this, datasetController, datasetsList.getSelectedIndex());
         eventsSelectionFrame.setLocationRelativeTo(null);
-	eventsSelectionFrame.setVisible(true);
+        eventsSelectionFrame.setVisible(true);
     }//GEN-LAST:event_eventsSelectionButtonActionPerformed
 
     private void trimButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trimButtonActionPerformed
@@ -840,6 +861,13 @@ public class MainFrame extends javax.swing.JFrame {
         if (confirmation == JOptionPane.OK_OPTION) {
             // trim the events
             datasetController.trim(datasetsList.getSelectedIndex());
+            
+        	// if the last console message is regular
+            if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+            	updateNumberLabels();
+            } else {
+            	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+            }
         }
     }//GEN-LAST:event_trimButtonActionPerformed
 
@@ -853,8 +881,13 @@ public class MainFrame extends javax.swing.JFrame {
         // get the indexes of the multiple samples of the dataset
     	int[] multipleSamplesIndexes = datasetController.selectMultipleSamples(datasetsList.getSelectedIndex());
     	
-    	// select the multiple samples
-    	samplesList.setSelectedIndices(multipleSamplesIndexes);
+    	// if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        	// select the multiple samples
+        	samplesList.setSelectedIndices(multipleSamplesIndexes);
+        } else {
+        	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+        }
     }//GEN-LAST:event_selectMultipleSamplesButtonActionPerformed
 
     private void deleteMultipleSamplesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteMultipleSamplesButtonActionPerformed
@@ -872,8 +905,13 @@ public class MainFrame extends javax.swing.JFrame {
             // remove multiple samples from the dataset
             datasetController.removeMultipleSamples(datasetsList.getSelectedIndex());
             
-            // update the number labels
-            updateNumberLabels();
+        	// if the last console message is regular
+            if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+            	// update the number labels
+                updateNumberLabels();
+            } else {
+            	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+            }
         }
     }//GEN-LAST:event_deleteMultipleSamplesButtonActionPerformed
 
@@ -892,8 +930,13 @@ public class MainFrame extends javax.swing.JFrame {
             // remove multiple samples from the dataset
             datasetController.shortenBarcodes(datasetsList.getSelectedIndex());
             
-            // update the number labels
-            updateNumberLabels();
+        	// if the last console message is regular
+            if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+                // update the number labels
+                updateNumberLabels();
+            } else {
+            	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+            }
         }
     }//GEN-LAST:event_shortenBarcodesButtonActionPerformed
 
@@ -906,7 +949,7 @@ public class MainFrame extends javax.swing.JFrame {
         
         SaveDatasetFrame saveDatasetFrame = new SaveDatasetFrame(datasetController, this);
         saveDatasetFrame.setLocationRelativeTo(null);
-	saveDatasetFrame.setVisible(true);
+        saveDatasetFrame.setVisible(true);
     }//GEN-LAST:event_saveDatasetButtonActionPerformed
 
     // ************ OTHERS ************ \\

@@ -1,5 +1,6 @@
 package it.unimib.disco.bimib.cyTRON.view;
 
+import it.unimib.disco.bimib.cyTRON.R.RConnectionManager;
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.controller.ExternalToolsController;
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
@@ -405,11 +406,16 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
         }
         
         if (fileName.length() > 0 && filePath.length() > 0) {
-                // export the mutex file
+            // export the mutex file
             externalToolsController.exportMutex(dataset, fileName, filePath, mutation, amplification, deletion);
 
-            // show confirmation message
-            JOptionPane.showConfirmDialog(this, "Mutex file exported.", "", JOptionPane.PLAIN_MESSAGE);
+        	// if the last console message is regular
+            if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+            	// show confirmation message
+                JOptionPane.showConfirmDialog(this, "Mutex file exported.", "", JOptionPane.PLAIN_MESSAGE);
+            } else {
+            	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+            }
         }
     }//GEN-LAST:event_exportMutexButtonActionPerformed
 
@@ -531,6 +537,11 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
         
         // import mutex
         externalToolsController.importMutex(file, fdr);
+        
+    	// if the last console message is not regular
+        if (!RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+        }
     }//GEN-LAST:event_importMutexButtonActionPerformed
 
     public void updateSelectedDataset() {

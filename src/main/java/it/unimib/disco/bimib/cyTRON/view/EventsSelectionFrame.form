@@ -8,6 +8,9 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
     <Property name="title" type="java.lang.String" value="Events Selection"/>
+    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[670, 400]"/>
+    </Property>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[670, 400]"/>
     </Property>
@@ -60,36 +63,36 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Component id="selectButton" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
+                              <Component id="selectedEventsLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="filteredEventsScrollPane" alignment="0" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="selectedEventsLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="filteredEventsScrollPane" alignment="0" min="-2" pref="527" max="-2" attributes="0"/>
-                                      <Component id="selectedEventsScrollPane" alignment="0" min="-2" pref="527" max="-2" attributes="0"/>
                                       <Component id="ctrlLabel1" min="-2" max="-2" attributes="0"/>
                                       <Component id="ctrlLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <EmptySpace min="0" pref="168" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="selectionLabel" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="frequenceLabel" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="negativeLabel" min="-2" max="-2" attributes="0"/>
-                                      <Component id="minimumFrequenceSpinner" min="-2" pref="65" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
+                              <Component id="selectedEventsScrollPane" alignment="0" max="32767" attributes="0"/>
                           </Group>
+                      </Group>
+                      <Component id="selectionLabel" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="frequenceLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="negativeLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="minimumFrequenceSpinner" min="-2" pref="65" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="selectButton" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -124,7 +127,7 @@
                   <Component id="ctrlLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="selectButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -178,7 +181,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="selectedEventsLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Selected events:"/>
+            <Property name="text" type="java.lang.String" value="Events to keep:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="ctrlLabel2">
@@ -208,7 +211,7 @@
         </Container>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Filtered events:"/>
+            <Property name="text" type="java.lang.String" value="Events to remove:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="minimumFrequenceSpinner">

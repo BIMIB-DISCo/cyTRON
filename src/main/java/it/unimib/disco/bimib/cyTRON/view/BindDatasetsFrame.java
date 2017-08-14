@@ -150,18 +150,20 @@ public class BindDatasetsFrame extends javax.swing.JFrame {
         	newNameTextField.setBackground(Color.WHITE);
         }
 
-        try {
-        	// bind the datasets
-			this.datasetController.bind(datasetIndex1, datasetIndex2, newName, this.bind);
-			
+    	// bind the datasets
+		this.datasetController.bind(datasetIndex1, datasetIndex2, newName, this.bind);
+
+		// if the last console message is regular
+		if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
 			// update the main frame
 	        mainFrame.updateNumberLabels();
 	        
 	        // close the frame
 	        dispose();
-		} catch (REngineException e) {
-			JOptionPane.showConfirmDialog(this, e.getMessage() + RConnectionManager.CHECK_INPUT, RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+		} else {
+			JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
 		}
+		
     }//GEN-LAST:event_bindButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

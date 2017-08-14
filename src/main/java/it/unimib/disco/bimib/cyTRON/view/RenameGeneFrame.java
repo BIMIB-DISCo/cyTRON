@@ -1,8 +1,11 @@
 package it.unimib.disco.bimib.cyTRON.view;
 
+import it.unimib.disco.bimib.cyTRON.R.RConnectionManager;
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.model.Gene;
 import java.awt.Color;
+
+import javax.swing.JOptionPane;
 
 
 /**
@@ -118,8 +121,13 @@ public class RenameGeneFrame extends javax.swing.JFrame {
         // rename the gene
         datasetController.renameGene(geneIndex, datasetIndex, newName);
 
-        // close the frame
-        dispose();
+    	// if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+            // close the frame
+            dispose();
+        } else {
+        	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+        }
     }//GEN-LAST:event_renameButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

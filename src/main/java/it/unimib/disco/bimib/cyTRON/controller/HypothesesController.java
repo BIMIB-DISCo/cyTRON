@@ -96,9 +96,9 @@ public class HypothesesController {
         }
     }
     
-    public void addHomologousHypothesis(Dataset dataset, List<Event> effect, List<Event> cause, List<Gene> genes, String operation, DatasetController datasetController) {
+    public void addHomologousHypothesis(Dataset dataset, List<Event> effect, List<Event> cause, List<Gene> genes, DatasetController datasetController) {
     	// add the homologous
-    	dataset.addHomologousHypothesis(effect, cause, genes, operation);
+    	dataset.addHomologousHypothesis(effect, cause, genes);
     	
     	// if the last console message is regular
     	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
@@ -117,19 +117,25 @@ public class HypothesesController {
     	// delete the pattern from the dataset
     	dataset.deletePattern(pattern);
     	
-    	// update the pattern list
-    	updatePatternsList(dataset);
-    	
-    	// update the lists of events and types
-    	datasetController.updateLists(dataset);
+    	// if the last console message is regular
+    	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+    	   	// update the pattern list
+        	updatePatternsList(dataset);
+        	
+        	// update the lists of events and types
+        	datasetController.updateLists(dataset);
+    	}
     }
     
     public void deleteHypothesis(Dataset dataset, String deletion, Object event, int patternIndex) {
     	// delete the hypotheses from the dataset
     	dataset.deleteHypothesis(deletion, event);
     	
-    	// update the hypotheses list
-    	updateHypothesesList(patternIndex);
+    	// if the last console message is regular
+    	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+    		// update the hypotheses list
+        	updateHypothesesList(patternIndex);
+    	}
     }
     
     // ************ OTHERS ************ \\
