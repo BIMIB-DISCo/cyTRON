@@ -10,7 +10,7 @@ The documentation of the cyTRON Cytoscape app is available at the [docs folder](
 * the installation guide;
 * a short technical documentation showing the class diagram and the adopted patterns.
 
-In addition, we also provide an installable .jar file ([release directory](***)) together with a few example datasets ([datasets directory](***)).
+In addition, we also provide an installable .jar file ([release directory](https://github.com/BIMIB-DISCo/cyTRON/tree/master/release)) together with a few example datasets ([datasets directory](https://github.com/BIMIB-DISCo/cyTRON/tree/master/datasets)).
 
 ### Google Summer of Code
 cyTRON was developed within the [Google Summer of Code](https://summerofcode.withgoogle.com/) program, in collaboration with [NRNB](http://nrnb.org/) (National Resource for Network Biology).
