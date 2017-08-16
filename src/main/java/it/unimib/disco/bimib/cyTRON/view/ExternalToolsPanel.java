@@ -8,8 +8,6 @@ import it.unimib.disco.bimib.cyTRON.model.Type;
 import java.awt.Color;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
@@ -469,8 +467,8 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
             try {
                 // update the text field
                 filePathTextField1.setText(fileChooser.getSelectedFile().getCanonicalPath());
-            } catch (IOException ex) {
-                Logger.getLogger(ImportDatasetFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException e) {
+            	e.printStackTrace();
             }
         }
     }//GEN-LAST:event_filePathTextField1MouseClicked
@@ -485,8 +483,8 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
             try {
                 // update the text field
                 mappingTextField.setText(fileChooser.getSelectedFile().getCanonicalPath());
-            } catch (IOException ex) {
-                Logger.getLogger(ImportDatasetFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException e) {
+            	e.printStackTrace();
             }
         }
     }//GEN-LAST:event_mappingTextFieldMouseClicked
@@ -502,8 +500,8 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
             try {
                 // update the text field
                 filePathTextField2.setText(fileChooser.getSelectedFile().getCanonicalPath());
-            } catch (IOException ex) {
-                Logger.getLogger(ImportDatasetFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException e) {
+            	e.printStackTrace();
             }
         }
     }//GEN-LAST:event_filePathTextField2MouseClicked
@@ -518,8 +516,8 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
             try {
                 // update the text field
                 fileTextField.setText(fileChooser.getSelectedFile().getCanonicalPath());
-            } catch (IOException ex) {
-                Logger.getLogger(ImportDatasetFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException e) {
+            	e.printStackTrace();
             }
         }
     }//GEN-LAST:event_fileTextFieldMouseClicked

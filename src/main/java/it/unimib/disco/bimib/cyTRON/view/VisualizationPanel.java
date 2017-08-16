@@ -10,8 +10,6 @@ import it.unimib.disco.bimib.cyTRON.model.Statistics;
 import java.awt.Color;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -447,8 +445,8 @@ public class VisualizationPanel extends javax.swing.JPanel {
             try {
                 // update the text field
                 annotateStageTextField.setText(fileChooser.getSelectedFile().getCanonicalPath());
-            } catch (IOException ex) {
-                Logger.getLogger(ImportDatasetFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException e) {
+            	e.printStackTrace();
             }
         }
     }//GEN-LAST:event_annotateStageTextFieldMouseClicked
@@ -463,8 +461,8 @@ public class VisualizationPanel extends javax.swing.JPanel {
             try {
                 // update the text field
                 samplesGroupTextField.setText(fileChooser.getSelectedFile().getCanonicalPath());
-            } catch (IOException ex) {
-                Logger.getLogger(ImportDatasetFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException e) {
+            	e.printStackTrace();
             }
         }
     }//GEN-LAST:event_samplesGroupTextFieldMouseClicked
@@ -577,7 +575,7 @@ public class VisualizationPanel extends javax.swing.JPanel {
             	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
             }
         } catch (IOException e) {
-            Logger.getLogger(ImportDatasetFrame.class.getName()).log(Level.SEVERE, null, e);
+        	e.printStackTrace();
         }
     }//GEN-LAST:event_showPlotButtonActionPerformed
 

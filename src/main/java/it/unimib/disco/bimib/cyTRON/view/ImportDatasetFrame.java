@@ -6,8 +6,6 @@ import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -214,8 +212,8 @@ public class ImportDatasetFrame extends javax.swing.JFrame {
             try {
                 // update the text field
                 pathTextField.setText(fileChooser.getSelectedFile().getCanonicalPath());
-            } catch (IOException ex) {
-                Logger.getLogger(ImportDatasetFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException e) {
+            	e.printStackTrace();
             }
         }
     }//GEN-LAST:event_pathTextFieldMouseClicked

@@ -3,8 +3,6 @@ package it.unimib.disco.bimib.cyTRON.view;
 import it.unimib.disco.bimib.cyTRON.controller.WizardController;
 import it.unimib.disco.bimib.cyTRON.cytoscape.CommandExecutor;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -534,8 +532,8 @@ public class WizardFrame extends javax.swing.JFrame {
             try {
                 // update the text field
                 jriFromTextField.setText(fileChooser.getSelectedFile().getCanonicalPath());
-            } catch (IOException ex) {
-                Logger.getLogger(ImportDatasetFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException e) {
+            	e.printStackTrace();
             }
         }
     }//GEN-LAST:event_jriFromTextFieldMouseClicked
@@ -557,8 +555,8 @@ public class WizardFrame extends javax.swing.JFrame {
             try {
                 // update the text field
                 jriToTextField.setText(fileChooser.getSelectedFile().getCanonicalPath());
-            } catch (IOException ex) {
-                Logger.getLogger(ImportDatasetFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException e) {
+            	e.printStackTrace();
             }
         }
     }//GEN-LAST:event_jriToTextFieldMouseClicked
@@ -580,8 +578,8 @@ public class WizardFrame extends javax.swing.JFrame {
             try {
                 // update the text field
                 rLibraryFromTextField.setText(fileChooser.getSelectedFile().getCanonicalPath());
-            } catch (IOException ex) {
-                Logger.getLogger(ImportDatasetFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException e) {
+            	e.printStackTrace();
             }
         }
     }//GEN-LAST:event_rLibraryFromTextFieldMouseClicked
@@ -603,8 +601,8 @@ public class WizardFrame extends javax.swing.JFrame {
             try {
                 // update the text field
                 rLibraryToTextField.setText(fileChooser.getSelectedFile().getCanonicalPath());
-            } catch (IOException ex) {
-                Logger.getLogger(ImportDatasetFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException e) {
+            	e.printStackTrace();
             }
         }
     }//GEN-LAST:event_rLibraryToTextFieldMouseClicked

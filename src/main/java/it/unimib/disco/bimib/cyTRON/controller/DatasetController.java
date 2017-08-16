@@ -11,8 +11,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 
 public class DatasetController {
@@ -60,8 +58,8 @@ public class DatasetController {
 				// add it to the list
 				datasetsListModel.addElement(dataset);
 			}
-		} catch (IOException ex) {
-			Logger.getLogger(DatasetController.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
