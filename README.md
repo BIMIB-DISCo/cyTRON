@@ -21,9 +21,9 @@ Here is the [link](https://summerofcode.withgoogle.com/projects/#517889236611891
 The starting point of the GSoC project was the code included in the branch [base](https://github.com/BIMIB-DISCo/cyTRON/tree/base) of this repository.
 
 #### Final Product
-The branch [master](https://github.com/BIMIB-DISCo/cyTRON/tree/master) at commit **AGGIUNGERE FINAL COMMIT** is the final product achieved at the end of the GSoC project.
+The branch [master](https://github.com/BIMIB-DISCo/cyTRON/tree/master) at commit 41a1433247238342909f5a8d02d9b88f63f6fb01 is the final product achieved at the end of the GSoC project.
 
-All the differences between the branch base and commit **AGGIUNGERE FINAL COMMIT** represent the work carried out during the GSoC conding period.
+All the differences between the branch base and commit 41a1433247238342909f5a8d02d9b88f63f6fb01 represent the work carried out during the GSoC conding period.
 
 The app is usable and will be uploaded to the [Cytoscape App Store](http://apps.cytoscape.org).
 
