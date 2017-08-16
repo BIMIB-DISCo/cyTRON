@@ -9,7 +9,7 @@ The workspace is logically divided into five packages:
 In addition, the classes [CyActivator.java](https://github.com/BIMIB-DISCo/cyTRON/blob/master/src/main/java/it/unimib/disco/bimib/cyTRON/CyActivator.java) and [MenuAction.java](https://github.com/BIMIB-DISCo/cyTRON/blob/master/src/main/java/it/unimib/disco/bimib/cyTRON/MenuAction.java) instantiate the application in the **Apps** menu of Cytoscape.
 
 ### Framework
-As suggested by the packages' names, the application exploits the MVC framework.
+As suggested by packages' names, the application exploits the MVC framework.
 
 ### Class Diagrams
 In order to have a better overview of the classes and their relations, we also report three class diagrams, one for each component of the MVC:
