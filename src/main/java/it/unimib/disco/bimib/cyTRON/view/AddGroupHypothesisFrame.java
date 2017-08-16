@@ -13,7 +13,9 @@ import javax.swing.JOptionPane;
 
 public class AddGroupHypothesisFrame extends javax.swing.JFrame {
 
-    private final HypothesesController hypothesesController;
+	private static final long serialVersionUID = -2239920150778305734L;
+	
+	private final HypothesesController hypothesesController;
     private final DatasetController datasetController;
     private final MainFrame mainFrame;
     private final HypothesesPanel hypothesesPanel;
@@ -28,7 +30,7 @@ public class AddGroupHypothesisFrame extends javax.swing.JFrame {
         this.hypothesesPanel = hypothesesPanel;
         
         // create the default combo box models
-        operationsDefaultComboBoxModel = new DefaultComboBoxModel(HypothesesController.OPERATIONS);
+        operationsDefaultComboBoxModel = new DefaultComboBoxModel<>(HypothesesController.OPERATIONS);
         
         // draws the interface
         initComponents();

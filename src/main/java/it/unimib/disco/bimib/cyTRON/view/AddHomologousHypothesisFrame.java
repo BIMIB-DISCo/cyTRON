@@ -11,7 +11,9 @@ import javax.swing.JOptionPane;
 
 public class AddHomologousHypothesisFrame extends javax.swing.JFrame {
 
-    private final HypothesesController hypothesesController;
+	private static final long serialVersionUID = -4513674801595133587L;
+	
+	private final HypothesesController hypothesesController;
     private final DatasetController datasetController;
     private final MainFrame mainFrame;
     private final HypothesesPanel hypothesesPanel;

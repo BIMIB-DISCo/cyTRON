@@ -1,7 +1,6 @@
 package it.unimib.disco.bimib.cyTRON.view;
 
 import it.unimib.disco.bimib.cyTRON.R.RConnectionManager;
-import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.controller.VisualizationController;
 import it.unimib.disco.bimib.cyTRON.cytoscape.CommandExecutor;
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
@@ -18,16 +17,14 @@ import javax.swing.JOptionPane;
 
 public class VisualizationPanel extends javax.swing.JPanel {
 
-    private final VisualizationController visualizationController;
-    private final DatasetController datasetController;
+	private static final long serialVersionUID = 3641642931327614439L;
+
+	private final VisualizationController visualizationController;
     private final MainFrame mainFrame;
-    private final CommandExecutor commandExecutor;
     
-    public VisualizationPanel(DatasetController datasetController, MainFrame mainFrame, CommandExecutor commandExecutor) {
+    public VisualizationPanel(MainFrame mainFrame, CommandExecutor commandExecutor) {
         // get the main frame and the controllers
-        this.datasetController = datasetController;
         this.mainFrame = mainFrame;
-        this.commandExecutor = commandExecutor;
         visualizationController = new VisualizationController(commandExecutor);
         
         // draw the interface

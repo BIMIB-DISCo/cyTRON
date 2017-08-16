@@ -16,8 +16,10 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 public class ExternalToolsPanel extends javax.swing.JPanel {
-    
-    private final ExternalToolsController externalToolsController;
+
+	private static final long serialVersionUID = -6722902308598924308L;
+	
+	private final ExternalToolsController externalToolsController;
     private final DatasetController datasetController;
     private final MainFrame mainFrame;
 
@@ -545,7 +547,7 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_importMutexButtonActionPerformed
 
     public void updateSelectedDataset() {
-        DefaultComboBoxModel<Type> defaultComboBoxModel = new DefaultComboBoxModel<Type>();
+        DefaultComboBoxModel<Type> defaultComboBoxModel = new DefaultComboBoxModel<>();
         defaultComboBoxModel.addElement(null); 
         for (Object type : datasetController.getTypesListModel().toArray()) {
             defaultComboBoxModel.addElement((Type) type);

@@ -10,7 +10,9 @@ import javax.swing.JOptionPane;
 
 public class WizardFrame extends javax.swing.JFrame {
 
-    private WizardController wizardController;
+	private static final long serialVersionUID = -5083643351838860038L;
+
+	private WizardController wizardController;
     private CommandExecutor commandExecutor;
 	
     public WizardFrame(WizardController wizardController, CommandExecutor commandExecutor) {

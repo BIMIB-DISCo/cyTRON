@@ -15,7 +15,9 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 
 public class AddHypothesisFrame extends javax.swing.JFrame {
 
-    private final HypothesesController hypothesesController;
+	private static final long serialVersionUID = -8553686634181134563L;
+	
+	private final HypothesesController hypothesesController;
     private final DatasetController datasetController;
     private final MainFrame mainFrame;
     private final HypothesesPanel hypothesesPanel;
@@ -39,9 +41,9 @@ public class AddHypothesisFrame extends javax.swing.JFrame {
         defaultTreeCellRenderer.setClosedIcon(null);
         
         // create the default combo box models
-        operationsDefaultComboBoxModel = new DefaultComboBoxModel(HypothesesController.OPERATIONS);
-        genesDefaultComboBoxModel = new DefaultComboBoxModel(datasetController.getGenesListModel().toArray());
-        eventsDefaultComboBoxModel = new DefaultComboBoxModel(datasetController.getEventsListModel().toArray());
+        operationsDefaultComboBoxModel = new DefaultComboBoxModel<>(HypothesesController.OPERATIONS);
+        genesDefaultComboBoxModel = new DefaultComboBoxModel<>((Gene[]) datasetController.getGenesListModel().toArray());
+        eventsDefaultComboBoxModel = new DefaultComboBoxModel<>((Event[]) datasetController.getEventsListModel().toArray());
         
         // draw the interface
         initComponents();

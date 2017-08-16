@@ -1,23 +1,21 @@
 package it.unimib.disco.bimib.cyTRON.view;
 
 import it.unimib.disco.bimib.cyTRON.R.RConnectionManager;
-import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.controller.InferenceController;
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
 
-import java.awt.Window;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 public class InferencePanel extends javax.swing.JPanel {
 
-    private final InferenceController inferenceController;
-    private final DatasetController datasetController;
+	private static final long serialVersionUID = -3810638175707142963L;
+	
+	private final InferenceController inferenceController;
     private final MainFrame mainFrame;
     private final StatisticsPanel statisticsPanel;
     private final VisualizationPanel visualizationPanel;
@@ -27,22 +25,21 @@ public class InferencePanel extends javax.swing.JPanel {
     private final DefaultListModel<String> regularizationsListModel;
     private final DefaultComboBoxModel<String> scoreDefaultComboBoxModel;
     
-    public InferencePanel(DatasetController datasetController, MainFrame mainFrame, StatisticsPanel statisticsPanel, VisualizationPanel visualizationPanel) {
+    public InferencePanel(MainFrame mainFrame, StatisticsPanel statisticsPanel, VisualizationPanel visualizationPanel) {
         // get the controllers and the main frame
     	inferenceController = new InferenceController();
-        this.datasetController = datasetController;
         this.mainFrame = mainFrame;
         this.statisticsPanel = statisticsPanel;
         this.visualizationPanel = visualizationPanel;
         
         // create the models
-        algorithmDefaultComboBoxModel = new DefaultComboBoxModel(InferenceController.ALGORITHMS);
-        commandDefaultComboBoxModel = new DefaultComboBoxModel(InferenceController.COMMANDS);
-        regularizationsListModel = new DefaultListModel();
+        algorithmDefaultComboBoxModel = new DefaultComboBoxModel<>(InferenceController.ALGORITHMS);
+        commandDefaultComboBoxModel = new DefaultComboBoxModel<>(InferenceController.COMMANDS);
+        regularizationsListModel = new DefaultListModel<>();
         for (int i = 0; i < InferenceController.REGULARIZATIONS.length; i++) {
             regularizationsListModel.addElement(InferenceController.REGULARIZATIONS[i]);
         }
-        scoreDefaultComboBoxModel = new DefaultComboBoxModel(InferenceController.SCORES);
+        scoreDefaultComboBoxModel = new DefaultComboBoxModel<>(InferenceController.SCORES);
         
         // draw the interface
         initComponents();

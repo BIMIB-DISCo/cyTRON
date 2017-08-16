@@ -7,14 +7,11 @@ import java.awt.Color;
 
 import javax.swing.JOptionPane;
 
-
-/**
- *
- * @author edotony
- */
 public class RenameGeneFrame extends javax.swing.JFrame {
 
-    private final DatasetController datasetController;
+	private static final long serialVersionUID = -5923766716990686990L;
+
+	private final DatasetController datasetController;
     private final int geneIndex;
     private final int datasetIndex;
     

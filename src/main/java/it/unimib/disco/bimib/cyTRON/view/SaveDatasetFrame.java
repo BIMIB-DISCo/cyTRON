@@ -13,7 +13,9 @@ import javax.swing.JOptionPane;
 
 public class SaveDatasetFrame extends javax.swing.JFrame {
 
-    private final DatasetController datasetController;
+	private static final long serialVersionUID = -6799635471356923408L;
+
+	private final DatasetController datasetController;
     private final MainFrame mainFrame;
 
     public SaveDatasetFrame(DatasetController datasetController, MainFrame mainFrame) {
