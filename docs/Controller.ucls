@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.0" icons="true" always-add-relationships="false" generalizations="false" 
+  realizations="false" associations="false" dependencies="false" nesting-relationships="false" router="FAN">  
+  <class id="1" language="java" name="it.unimib.disco.bimib.cyTRON.controller.DatasetController" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/controller/DatasetController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="188" x="269" y="115"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="it.unimib.disco.bimib.cyTRON.controller.ToStringComparator" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/controller/ToStringComparator.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="188" x="725" y="37"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="it.unimib.disco.bimib.cyTRON.controller.WizardController" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/controller/WizardController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="188" x="497" y="37"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="it.unimib.disco.bimib.cyTRON.controller.StatisticsController" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/controller/StatisticsController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="188" x="953" y="115"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="it.unimib.disco.bimib.cyTRON.controller.VisualizationController" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/controller/VisualizationController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="188" x="953" y="37"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="it.unimib.disco.bimib.cyTRON.controller.HypothesesController" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/controller/HypothesesController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="188" x="269" y="37"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="it.unimib.disco.bimib.cyTRON.controller.ExternalToolsController" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/controller/ExternalToolsController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="188" x="41" y="37"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="it.unimib.disco.bimib.cyTRON.controller.InferenceController" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/controller/InferenceController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="188" x="1181" y="37"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <dependency id="9">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="10">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <classifier-display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+    sort-features="false" accessors="true" visibility="false">    
+    <attributes public="false" package="false" protected="false" private="false" static="false"/>    
+    <operations public="false" package="false" protected="false" private="false" static="false"/>  
+  </classifier-display>  
+  <association-display labels="false" multiplicity="false"/>
+</class-diagram>
