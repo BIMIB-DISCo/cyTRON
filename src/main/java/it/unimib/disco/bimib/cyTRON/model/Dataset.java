@@ -199,9 +199,6 @@ public class Dataset {
                 String name = names[i];
                 samples.put(name, new Sample(name));
         	}
-        } else {
-        	// clean the console
-        	RConnectionManager.getTextConsole().getLastConsoleMessage();
         }
     }
     
@@ -423,9 +420,6 @@ public class Dataset {
             	// add the event
             	events.put(name, new Event(name, type, gene));
             }
-        } else {
-        	// clean the console
-        	RConnectionManager.getTextConsole().getLastConsoleMessage();
         }
     }
     
@@ -591,9 +585,6 @@ public class Dataset {
     			// add the hypothesis to the pattern
     			pattern.addHypothesis(new Hypothesis(causeType, causeEvent, effectType, effectEvent));
     		}
-    	} else {
-    		// clean the console
-    		RConnectionManager.getTextConsole().getLastConsoleMessage();
     	}
     }
     
@@ -1033,9 +1024,6 @@ public class Dataset {
     		
     		// instantiate the model
     		inference = new Inference(algorithm, models);
-    	} else {
-	    	// clean the console
-	    	RConnectionManager.getTextConsole().getLastConsoleMessage();
     	}
     }
     
@@ -1274,9 +1262,6 @@ public class Dataset {
 		if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
 			// add the statistics
 			inference.addStatistics(new Statistics(StatisticsController.ELOSS, StatisticsController.ELOSS.substring(6)));
-		} else {
-			// clean the console
-			RConnectionManager.getTextConsole().getLastConsoleMessage();
 		}
 		
 		// create and execute the command for posterr
@@ -1287,9 +1272,6 @@ public class Dataset {
 		if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
 			// add the statistics
 			inference.addStatistics(new Statistics(StatisticsController.POSTERR, StatisticsController.POSTERR.substring(6)));
-		} else {
-			// clean the console
-			RConnectionManager.getTextConsole().getLastConsoleMessage();
 		}
 		
 		// create and execute the command for prederr
@@ -1300,9 +1282,6 @@ public class Dataset {
 		if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
 			// add the statistics
 			inference.addStatistics(new Statistics(StatisticsController.PREDERR, StatisticsController.PREDERR.substring(6)));
-		} else {
-			// clean the console
-			RConnectionManager.getTextConsole().getLastConsoleMessage();
 		}
 	}
 	

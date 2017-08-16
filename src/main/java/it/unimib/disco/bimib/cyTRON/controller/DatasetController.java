@@ -15,8 +15,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 
-import org.rosuda.REngine.REngineException;
-
 public class DatasetController {
 
 	public static final String GENOTYPES = "genotypes";

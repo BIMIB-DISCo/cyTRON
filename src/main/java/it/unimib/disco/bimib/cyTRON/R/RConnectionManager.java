@@ -13,9 +13,10 @@ public class RConnectionManager {
 	private static TextConsole textConsole;
 	
 	// instantiate the objects
-	public static void instantiateConnection() throws RuntimeException{
+	public static void instantiateConnection() throws RuntimeException {
 		// check libraries consistency
     	if (!versionCheck()) {
+    		System.out.println("Version check failed.");
 			throw new RuntimeException("Version mismatch - Java files don't match library version.");
 		}
 		
@@ -29,11 +30,15 @@ public class RConnectionManager {
 		
 		// check R
         if (!waitForR()) {
+        	System.out.println("Wait for R failed.");
         	throw new RuntimeException("R cannot be loaded.");
 		}
-		
+	}
+	
+	// load TRONCO
+	public static void loadTronco() throws RuntimeException {
 		// load the TRONCO library in R
-		rEngine.eval("library('TRONCO')");
+		eval("library('TRONCO')");
 		
 		// check TRONCO
 		if (!textConsole.isLastMessageRegular()) {
@@ -53,7 +58,11 @@ public class RConnectionManager {
         
     // execute a command
     public static REXP eval(String command) {
-    	System.out.println("R command: \"" + command + "\"");
+    	// clear last console message
+    	RConnectionManager.getTextConsole().getLastConsoleMessage();
+    	
+    	// print and run the command
+    	System.out.println("R command:\t" + command);
     	return getConnection().eval(command);
 	}
 	

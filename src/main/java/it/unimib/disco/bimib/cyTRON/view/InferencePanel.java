@@ -457,8 +457,6 @@ public class InferencePanel extends javax.swing.JPanel {
         		// show an error message
         		JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
         	}
-			// clear the last console message
-			RConnectionManager.getTextConsole().getLastConsoleMessage();
             
     		// update the current inference algorithm label
         	currentAlgorithmValueLabel.setText(dataset.getInference().getAlgorithm());

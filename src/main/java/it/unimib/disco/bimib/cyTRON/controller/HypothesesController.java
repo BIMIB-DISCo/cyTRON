@@ -191,11 +191,11 @@ public class HypothesesController {
     }
     
     // ************ LIST GETTERS ************ \\
-    public DefaultListModel getPatternsListModel() {
+    public DefaultListModel<Pattern> getPatternsListModel() {
         return patternsListModel;
     }
     
-    public DefaultListModel getHypothesesListModel() {
+    public DefaultListModel<Hypothesis> getHypothesesListModel() {
         return hypothesesListModel;
     }
 }
