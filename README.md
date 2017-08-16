@@ -8,7 +8,7 @@ In such a multidisciplinary domain, where computer scientists actively cooperate
 ### Documents
 The documentation of the cyTRON Cytoscape app is available at the [docs folder](https://github.com/BIMIB-DISCo/cyTRON/tree/master/docs) of this project and includes:
 * the installation guide;
-* a short technical documentation showing the class diagram and the adopted patterns.
+* a short technical documentation describing the class diagram and the adopted patterns.
 
 In addition, we also provide an installable .jar file ([release directory](https://github.com/BIMIB-DISCo/cyTRON/tree/master/release)) together with a few example datasets ([datasets directory](https://github.com/BIMIB-DISCo/cyTRON/tree/master/datasets)).
 
