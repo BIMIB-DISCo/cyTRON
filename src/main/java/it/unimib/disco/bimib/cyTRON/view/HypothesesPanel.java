@@ -4,11 +4,15 @@ import it.unimib.disco.bimib.cyTRON.R.RConnectionManager;
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.controller.HypothesesController;
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
+import it.unimib.disco.bimib.cyTRON.model.Hypothesis;
+import it.unimib.disco.bimib.cyTRON.model.Pattern;
 import javax.swing.JOptionPane;
 
 public class HypothesesPanel extends javax.swing.JPanel {
     
-    private HypothesesController hypothesesController;
+	private static final long serialVersionUID = -1487198890090507681L;
+	
+	private HypothesesController hypothesesController;
     private DatasetController datasetController;
     private MainFrame mainFrame;
         
@@ -88,7 +92,6 @@ public class HypothesesPanel extends javax.swing.JPanel {
         });
 
         patternsList.setModel(hypothesesController.getPatternsListModel());
-		
         patternsList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 patternsListValueChanged(evt);
@@ -154,7 +157,6 @@ public class HypothesesPanel extends javax.swing.JPanel {
         hypothesesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Hypotheses"));
 
         hypothesesList.setModel(hypothesesController.getHypothesesListModel());
-
         hypothesesScrollPane.setViewportView(hypothesesList);
 
         deleteHypothesisButton.setText("Delete...");
@@ -329,13 +331,13 @@ public class HypothesesPanel extends javax.swing.JPanel {
     private javax.swing.JButton deleteHypothesisButton;
     private javax.swing.JButton deletePatternButton;
     private javax.swing.JLabel hypothesesLabel;
-    private javax.swing.JList<String> hypothesesList;
+    private javax.swing.JList<Hypothesis> hypothesesList;
     private javax.swing.JLabel hypothesesNumberLabel;
     private javax.swing.JPanel hypothesesPanel;
     private javax.swing.JScrollPane hypothesesScrollPane;
     private javax.swing.JPanel infoPanel;
     private javax.swing.JLabel patternsLabel;
-    private javax.swing.JList<String> patternsList;
+    private javax.swing.JList<Pattern> patternsList;
     private javax.swing.JLabel patternsNumberLabel;
     private javax.swing.JPanel patternsPanel;
     private javax.swing.JScrollPane patternsScrollPane;

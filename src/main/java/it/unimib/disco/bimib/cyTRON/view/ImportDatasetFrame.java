@@ -6,23 +6,19 @@ import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import org.rosuda.REngine.REngineException;
-
 public class ImportDatasetFrame extends javax.swing.JFrame {
 
-    private final DatasetController datasetController;
-    private final MainFrame mainFrame;
+	private static final long serialVersionUID = -3735699826971726858L;
+	
+	private final DatasetController datasetController;
 
-    public ImportDatasetFrame(DatasetController datasetController, MainFrame mainFrame) {
+    public ImportDatasetFrame(DatasetController datasetController) {
         // get the controller
         this.datasetController = datasetController;
-        this.mainFrame = mainFrame;
         
         // draw the interface
         initComponents();
@@ -216,8 +212,8 @@ public class ImportDatasetFrame extends javax.swing.JFrame {
             try {
                 // update the text field
                 pathTextField.setText(fileChooser.getSelectedFile().getCanonicalPath());
-            } catch (IOException ex) {
-                Logger.getLogger(ImportDatasetFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException e) {
+            	e.printStackTrace();
             }
         }
     }//GEN-LAST:event_pathTextFieldMouseClicked

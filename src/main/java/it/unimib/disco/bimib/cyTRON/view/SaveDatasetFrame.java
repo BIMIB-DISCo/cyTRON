@@ -5,15 +5,15 @@ import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 
 import java.awt.Color;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 public class SaveDatasetFrame extends javax.swing.JFrame {
 
-    private final DatasetController datasetController;
+	private static final long serialVersionUID = -6799635471356923408L;
+
+	private final DatasetController datasetController;
     private final MainFrame mainFrame;
 
     public SaveDatasetFrame(DatasetController datasetController, MainFrame mainFrame) {
@@ -136,8 +136,8 @@ public class SaveDatasetFrame extends javax.swing.JFrame {
             try {
                 // update the text field
                 pathTextField.setText(fileChooser.getSelectedFile().getCanonicalPath());
-            } catch (IOException ex) {
-                Logger.getLogger(SaveDatasetFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException e) {
+            	e.printStackTrace();
             }
         }
     }//GEN-LAST:event_pathTextFieldMouseClicked

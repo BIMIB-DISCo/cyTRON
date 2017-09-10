@@ -12,17 +12,20 @@ import java.awt.Window;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
-import org.rosuda.REngine.REngineException;
-
 public class MainFrame extends javax.swing.JFrame {
+
+	private static final long serialVersionUID = 6101131522201523082L;
 
 	private final CommandExecutor commandExecutor;
     private final DatasetController datasetController;
     
-    public MainFrame(CommandExecutor commandExecutor) {
+    public MainFrame(CommandExecutor commandExecutor, boolean instantiateRConnection) {
     	try {
-			// instantiate the connection with R
-			RConnectionManager.instantiateConnection();
+    		if (instantiateRConnection) {
+    			// instantiate the connection with R and load TRONCO
+    			RConnectionManager.instantiateConnection();
+    			RConnectionManager.loadTronco();
+			}
 		} catch (RuntimeException e) {
 			JOptionPane.showConfirmDialog(this, e.getMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
 		}
@@ -92,6 +95,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("cyTRON");
+        setMaximumSize(new java.awt.Dimension(1280, 720));
         setMinimumSize(new java.awt.Dimension(1280, 720));
 
         currentDatasetPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -574,9 +578,9 @@ public class MainFrame extends javax.swing.JFrame {
     private void initCustomComponents() {
     	hypothesesPanel = new HypothesesPanel(datasetController, this);
     	externalToolsPanel = new ExternalToolsPanel(datasetController, this);
-    	visualizationPanel = new VisualizationPanel(datasetController, this, commandExecutor);
-        statisticsPanel = new StatisticsPanel(datasetController, this, visualizationPanel);
-        inferencePanel = new InferencePanel(datasetController, this, statisticsPanel, visualizationPanel);
+    	visualizationPanel = new VisualizationPanel(this, commandExecutor);
+        statisticsPanel = new StatisticsPanel(this, visualizationPanel);
+        inferencePanel = new InferencePanel(this, statisticsPanel, visualizationPanel);
         
     	tabbedPane.addTab("Hypotheses", hypothesesPanel);
     	tabbedPane.addTab("External Tools", externalToolsPanel);
@@ -587,7 +591,7 @@ public class MainFrame extends javax.swing.JFrame {
     
     // ************ DATASETS ************ \\
     private void importDatasetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importDatasetButtonActionPerformed
-        ImportDatasetFrame importDatasetFrame = new ImportDatasetFrame(datasetController, this);
+        ImportDatasetFrame importDatasetFrame = new ImportDatasetFrame(datasetController);
         importDatasetFrame.setLocationRelativeTo(null);
         importDatasetFrame.setVisible(true);
     }//GEN-LAST:event_importDatasetButtonActionPerformed
@@ -801,7 +805,7 @@ public class MainFrame extends javax.swing.JFrame {
             return;
         }
         
-        IntersectDatasetsFrame intersectDatasetsFrame = new IntersectDatasetsFrame(this, datasetController, datasetsList.getSelectedIndex(), DatasetController.SAMPLES);
+        IntersectDatasetsFrame intersectDatasetsFrame = new IntersectDatasetsFrame(this, datasetController, datasetsList.getSelectedIndex());
         intersectDatasetsFrame.setLocationRelativeTo(null);
         intersectDatasetsFrame.setVisible(true);
     }//GEN-LAST:event_intersectButtonActionPerformed

@@ -9,7 +9,9 @@ import javax.swing.JOptionPane;
 
 public class DeleteHypothesesFrame extends javax.swing.JFrame {
 
-    public static final String EFFECT = "Effect";
+	private static final long serialVersionUID = 7610602066489041357L;
+	
+	public static final String EFFECT = "Effect";
     public static final String CAUSE = "Cause";
     public static final String EVENT = "Event";
     
@@ -28,7 +30,7 @@ public class DeleteHypothesesFrame extends javax.swing.JFrame {
         this.hypothesesPanel = hypothesesPanel;
         
         // construct the combo box model
-        eventsDefaultComboBoxModel = new DefaultComboBoxModel(datasetController.getGenesListModel().toArray());
+        eventsDefaultComboBoxModel = new DefaultComboBoxModel<>(this.datasetController.getGenesListModel().toArray());
         for (Object pattern : hypothesesController.getPatternsListModel().toArray()) {
             eventsDefaultComboBoxModel.addElement(pattern);
         }

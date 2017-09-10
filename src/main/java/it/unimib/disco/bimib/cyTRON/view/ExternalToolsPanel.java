@@ -8,16 +8,16 @@ import it.unimib.disco.bimib.cyTRON.model.Type;
 import java.awt.Color;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 public class ExternalToolsPanel extends javax.swing.JPanel {
-    
-    private final ExternalToolsController externalToolsController;
+
+	private static final long serialVersionUID = -6722902308598924308L;
+	
+	private final ExternalToolsController externalToolsController;
     private final DatasetController datasetController;
     private final MainFrame mainFrame;
 
@@ -467,8 +467,8 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
             try {
                 // update the text field
                 filePathTextField1.setText(fileChooser.getSelectedFile().getCanonicalPath());
-            } catch (IOException ex) {
-                Logger.getLogger(ImportDatasetFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException e) {
+            	e.printStackTrace();
             }
         }
     }//GEN-LAST:event_filePathTextField1MouseClicked
@@ -483,8 +483,8 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
             try {
                 // update the text field
                 mappingTextField.setText(fileChooser.getSelectedFile().getCanonicalPath());
-            } catch (IOException ex) {
-                Logger.getLogger(ImportDatasetFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException e) {
+            	e.printStackTrace();
             }
         }
     }//GEN-LAST:event_mappingTextFieldMouseClicked
@@ -500,8 +500,8 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
             try {
                 // update the text field
                 filePathTextField2.setText(fileChooser.getSelectedFile().getCanonicalPath());
-            } catch (IOException ex) {
-                Logger.getLogger(ImportDatasetFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException e) {
+            	e.printStackTrace();
             }
         }
     }//GEN-LAST:event_filePathTextField2MouseClicked
@@ -516,8 +516,8 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
             try {
                 // update the text field
                 fileTextField.setText(fileChooser.getSelectedFile().getCanonicalPath());
-            } catch (IOException ex) {
-                Logger.getLogger(ImportDatasetFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException e) {
+            	e.printStackTrace();
             }
         }
     }//GEN-LAST:event_fileTextFieldMouseClicked
@@ -545,7 +545,7 @@ public class ExternalToolsPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_importMutexButtonActionPerformed
 
     public void updateSelectedDataset() {
-        DefaultComboBoxModel<Type> defaultComboBoxModel = new DefaultComboBoxModel<Type>();
+        DefaultComboBoxModel<Type> defaultComboBoxModel = new DefaultComboBoxModel<>();
         defaultComboBoxModel.addElement(null); 
         for (Object type : datasetController.getTypesListModel().toArray()) {
             defaultComboBoxModel.addElement((Type) type);

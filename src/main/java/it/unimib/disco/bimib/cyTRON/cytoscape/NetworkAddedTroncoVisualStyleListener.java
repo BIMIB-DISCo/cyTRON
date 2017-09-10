@@ -2,10 +2,7 @@ package it.unimib.disco.bimib.cyTRON.cytoscape;
 
 import java.awt.Color;
 import java.awt.Paint;
-import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
 
 import org.cytoscape.model.CyEdge;
 import org.cytoscape.model.CyNetwork;
@@ -14,8 +11,6 @@ import org.cytoscape.model.CyRow;
 import org.cytoscape.model.CyTable;
 import org.cytoscape.model.events.NetworkAddedEvent;
 import org.cytoscape.model.events.NetworkAddedListener;
-import org.cytoscape.view.layout.CyLayoutAlgorithm;
-import org.cytoscape.view.layout.CyLayoutAlgorithmManager;
 import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.view.model.CyNetworkViewFactory;
 import org.cytoscape.view.model.CyNetworkViewManager;
@@ -27,7 +22,6 @@ import org.cytoscape.view.presentation.property.NodeShapeVisualProperty;
 import org.cytoscape.view.presentation.property.values.ArrowShape;
 import org.cytoscape.view.presentation.property.values.LineType;
 import org.cytoscape.view.presentation.property.values.NodeShape;
-import org.cytoscape.view.vizmap.VisualMappingFunction;
 import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
 import org.cytoscape.view.vizmap.VisualMappingManager;
 import org.cytoscape.view.vizmap.VisualPropertyDependency;
@@ -35,9 +29,6 @@ import org.cytoscape.view.vizmap.VisualStyle;
 import org.cytoscape.view.vizmap.VisualStyleFactory;
 import org.cytoscape.view.vizmap.mappings.DiscreteMapping;
 import org.cytoscape.view.vizmap.mappings.PassthroughMapping;
-import org.cytoscape.work.TaskIterator;
-import org.cytoscape.work.TaskManager;
-import org.omg.CORBA.PRIVATE_MEMBER;
 
 public class NetworkAddedTroncoVisualStyleListener implements NetworkAddedListener {
 
@@ -165,7 +156,7 @@ public class NetworkAddedTroncoVisualStyleListener implements NetworkAddedListen
         Double maximumSize = 0d;
         CyTable table = network.getDefaultNodeTable();
         for (View<CyNode> nodeView : view.getNodeViews()) {
-        	Map rowValues = table.getRow(nodeView.getModel().getSUID()).getAllValues();
+        	Map<String, Object> rowValues = table.getRow(nodeView.getModel().getSUID()).getAllValues();
         	
         	Double width = (Double) rowValues.get("width");
         	if (width != null && width > maximumSize) {
@@ -182,7 +173,7 @@ public class NetworkAddedTroncoVisualStyleListener implements NetworkAddedListen
         // set the new size
         for (View<CyNode> nodeView : view.getNodeViews()) {
         	CyRow row = table.getRow(nodeView.getModel().getSUID());
-        	Map rowValues = row.getAllValues();
+        	Map<String, Object> rowValues = row.getAllValues();
         	
         	Double width = (Double) rowValues.get("width");
         	row.set("width", width/rescalingFactor);
@@ -195,7 +186,7 @@ public class NetworkAddedTroncoVisualStyleListener implements NetworkAddedListen
         CyTable edgeTable = network.getDefaultEdgeTable();
         for (View<CyEdge> edgeView : view.getEdgeViews()) {
         	CyRow row = edgeTable.getRow(edgeView.getModel().getSUID());
-        	Map rowValues = row.getAllValues();
+        	Map<String, Object> rowValues = row.getAllValues();
         	
         	String label = (String) rowValues.get("edgelabel");
         	if (label != null) {

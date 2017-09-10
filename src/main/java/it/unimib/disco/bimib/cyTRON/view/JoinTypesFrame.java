@@ -8,7 +8,9 @@ import javax.swing.JOptionPane;
 
 public class JoinTypesFrame extends javax.swing.JFrame {
 
-    private final MainFrame mainFrame;
+	private static final long serialVersionUID = -6368847769338410691L;
+
+	private final MainFrame mainFrame;
     private final DatasetController datasetController;
     private final int typeIndex1;
     private final int datasetIndex;
@@ -23,7 +25,7 @@ public class JoinTypesFrame extends javax.swing.JFrame {
         this.datasetIndex = datasetIndex;
         
         // create the default combo box model from the list of types
-        defaultComboBoxModel = new DefaultComboBoxModel();
+        defaultComboBoxModel = new DefaultComboBoxModel<>();
         for (Object type : this.datasetController.getTypesListModel().toArray()) {
             defaultComboBoxModel.addElement(type.toString());
         }

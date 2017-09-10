@@ -1,7 +1,6 @@
 package it.unimib.disco.bimib.cyTRON.view;
 
 import it.unimib.disco.bimib.cyTRON.R.RConnectionManager;
-import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.controller.StatisticsController;
 import it.unimib.disco.bimib.cyTRON.model.Dataset;
 
@@ -11,18 +10,18 @@ import javax.swing.SwingWorker;
 
 public class StatisticsPanel extends javax.swing.JPanel {
 
-    private final StatisticsController statisticsController;
-    private final DatasetController datasetController;
+	private static final long serialVersionUID = 2423195685394129580L;
+
+	private final StatisticsController statisticsController;
     private final MainFrame mainFrame;
     private final VisualizationPanel visualizationPanel;
     
     private final DefaultComboBoxModel<String> statisticsDefaultComboBoxModel;
     private final DefaultComboBoxModel<String> typessDefaultComboBoxModel;
     
-    public StatisticsPanel(DatasetController datasetController, MainFrame mainFrame, VisualizationPanel visualizationPanel) {
+    public StatisticsPanel(MainFrame mainFrame, VisualizationPanel visualizationPanel) {
         // get the main frame and the controllers
         statisticsController = new StatisticsController();
-        this.datasetController = datasetController;
         this.mainFrame = mainFrame;
         this.visualizationPanel = visualizationPanel;
         
@@ -282,8 +281,6 @@ public class StatisticsPanel extends javax.swing.JPanel {
         		// show an error message
         		JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
         	}
-			// clear the last console message
-			RConnectionManager.getTextConsole().getLastConsoleMessage();
                         
             visualizationPanel.updateStatisticsList(dataset);
         }

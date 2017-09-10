@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unimib.disco.bimib.cyTRON.view;
 
 import it.unimib.disco.bimib.cyTRON.R.RConnectionManager;
@@ -14,7 +9,9 @@ import javax.swing.JOptionPane;
 
 public class SamplesSelectionFrame extends javax.swing.JFrame {
 
-    private final MainFrame mainFrame;
+	private static final long serialVersionUID = 2274200170693733951L;
+
+	private final MainFrame mainFrame;
     private final DatasetController datasetController;
     private final int datasetIndex;
 

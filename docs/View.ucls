@@ -1,0 +1,682 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.0" icons="true" always-add-relationships="false" generalizations="false" 
+  realizations="false" associations="false" dependencies="false" nesting-relationships="false" router="FAN">  
+  <class id="1" language="java" name="it.unimib.disco.bimib.cyTRON.view.AddGroupHypothesisFrame" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/view/AddGroupHypothesisFrame.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="215" x="1252" y="115"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="it.unimib.disco.bimib.cyTRON.view.HypothesesPanel" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/view/HypothesesPanel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="166" x="1719" y="37"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="it.unimib.disco.bimib.cyTRON.view.SamplesSelectionFrame" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/view/SamplesSelectionFrame.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="188" x="896" y="271"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="it.unimib.disco.bimib.cyTRON.view.SaveDatasetFrame" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/view/SaveDatasetFrame.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="166" x="1536" y="271"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="it.unimib.disco.bimib.cyTRON.view.EventsSelectionFrame" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/view/EventsSelectionFrame.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="177" x="41" y="271"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="it.unimib.disco.bimib.cyTRON.view.StatisticsPanel.StatisticsAlgorithm" 
+    project="cyTRON" file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/view/StatisticsPanel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="166" x="2549" y="427"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="it.unimib.disco.bimib.cyTRON.view.RenameGeneFrame" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/view/RenameGeneFrame.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="166" x="484" y="271"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="it.unimib.disco.bimib.cyTRON.view.JoinTypesFrame" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/view/JoinTypesFrame.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="166" x="2196" y="271"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="it.unimib.disco.bimib.cyTRON.view.AddHomologousHypothesisFrame" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/view/AddHomologousHypothesisFrame.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="260" x="1950" y="115"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="it.unimib.disco.bimib.cyTRON.view.AddHypothesisFrame" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/view/AddHypothesisFrame.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="172" x="1507" y="115"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="it.unimib.disco.bimib.cyTRON.view.MainFrame" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/view/MainFrame.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="38" width="166" x="1950" y="193"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="it.unimib.disco.bimib.cyTRON.view.InferencePanel" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/view/InferencePanel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="166" x="1990" y="271"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="it.unimib.disco.bimib.cyTRON.view.IntersectDatasetsFrame" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/view/IntersectDatasetsFrame.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="186" x="258" y="271"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="it.unimib.disco.bimib.cyTRON.view.RenameTypeFrame" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/view/RenameTypeFrame.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="166" x="1124" y="271"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="it.unimib.disco.bimib.cyTRON.view.ImportDatasetFrame" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/view/ImportDatasetFrame.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="166" x="2425" y="505"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="it.unimib.disco.bimib.cyTRON.view.ExternalToolsPanel" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/view/ExternalToolsPanel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="166" x="690" y="271"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="it.unimib.disco.bimib.cyTRON.view.VisualizationPanel" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/view/VisualizationPanel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="166" x="2238" y="427"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="it.unimib.disco.bimib.cyTRON.view.WizardFrame" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/view/WizardFrame.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="38" width="166" x="2736" y="115"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="it.unimib.disco.bimib.cyTRON.view.BindDatasetsFrame" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/view/BindDatasetsFrame.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="166" x="1330" y="271"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="20" language="java" name="it.unimib.disco.bimib.cyTRON.view.StatisticsPanel" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/view/StatisticsPanel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="166" x="2507" y="349"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="it.unimib.disco.bimib.cyTRON.view.InferencePanel.InferenceAlgorithm" 
+    project="cyTRON" file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/view/InferencePanel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="166" x="1950" y="349"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="22" language="java" name="it.unimib.disco.bimib.cyTRON.view.JoinEventsFrame" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/view/JoinEventsFrame.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="166" x="1742" y="271"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="it.unimib.disco.bimib.cyTRON.view.DeleteHypothesesFrame" project="cyTRON" 
+    file="/cyTRON/src/main/java/it/unimib/disco/bimib/cyTRON/view/DeleteHypothesesFrame.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="38" width="191" x="1719" y="115"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <dependency id="24">    
+    <bendpoint x="2745" y="193"/>    
+    <bendpoint x="2745" y="271"/>    
+    <bendpoint x="2745" y="349"/>    
+    <bendpoint x="2745" y="427"/>    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="15"/>  
+  </dependency>  
+  <dependency id="25">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <dependency id="26">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <dependency id="27">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <dependency id="28">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="15"/>  
+  </dependency>  
+  <association id="29">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="30" name="mainFrame"/>      
+      <multiplicity id="31" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <nesting id="32">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="6"/>  
+  </nesting>  
+  <dependency id="33">    
+    <bendpoint x="2455" y="271"/>    
+    <bendpoint x="2455" y="349"/>    
+    <bendpoint x="2455" y="427"/>    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="15"/>  
+  </dependency>  
+  <association id="34">    
+    <end type="SOURCE" refId="23" navigable="false">      
+      <attribute id="35" name="hypothesesPanel"/>      
+      <multiplicity id="36" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="37">    
+    <bendpoint x="2240" y="115"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="38" name="mainFrame"/>      
+      <multiplicity id="39" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="40">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <dependency id="41">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <dependency id="42">    
+    <bendpoint x="1959" y="271"/>    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <nesting id="43">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="21"/>  
+  </nesting>  
+  <dependency id="44">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="45">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="19"/>  
+  </dependency>  
+  <dependency id="46">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <nesting id="47">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="6"/>  
+  </nesting>  
+  <dependency id="48">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="49">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="15"/>  
+  </dependency>  
+  <association id="50">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="51" name="mainFrame"/>      
+      <multiplicity id="52" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="53">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="54" name="mainFrame"/>      
+      <multiplicity id="55" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <nesting id="56">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="21"/>  
+  </nesting>  
+  <dependency id="57">    
+    <bendpoint x="1556" y="349"/>    
+    <bendpoint x="1556" y="427"/>    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="15"/>  
+  </dependency>  
+  <association id="58">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="59" name="mainFrame"/>      
+      <multiplicity id="60" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="61">    
+    <bendpoint x="2518" y="271"/>    
+    <end type="SOURCE" refId="20" navigable="false">      
+      <attribute id="62" name="mainFrame"/>      
+      <multiplicity id="63" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="64">    
+    <bendpoint x="2703" y="349"/>    
+    <bendpoint x="2703" y="271"/>    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <dependency id="65">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <association id="66">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="67" name="mainFrame"/>      
+      <multiplicity id="68" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="69">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="70" name="mainFrame"/>      
+      <multiplicity id="71" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="72">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="73" name="mainFrame"/>      
+      <multiplicity id="74" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="75">    
+    <bendpoint x="2497" y="271"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="76" name="statisticsPanel"/>      
+      <multiplicity id="77" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="78">    
+    <bendpoint x="1577" y="349"/>    
+    <bendpoint x="1577" y="427"/>    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="15"/>  
+  </dependency>  
+  <association id="79">    
+    <bendpoint x="2413" y="349"/>    
+    <bendpoint x="2413" y="271"/>    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="80" name="mainFrame"/>      
+      <multiplicity id="81" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="82">    
+    <bendpoint x="2476" y="427"/>    
+    <bendpoint x="2476" y="349"/>    
+    <bendpoint x="2476" y="271"/>    
+    <end type="SOURCE" refId="15" navigable="false">      
+      <attribute id="83" name="mainFrame"/>      
+      <multiplicity id="84" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="85">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="19"/>  
+  </dependency>  
+  <association id="86">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="87" name="hypothesesPanel"/>      
+      <multiplicity id="88" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="89">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="10"/>  
+  </dependency>  
+  <dependency id="90">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <association id="91">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="92" name="statisticsPanel"/>      
+      <multiplicity id="93" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="94">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="95" name="mainFrame"/>      
+      <multiplicity id="96" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="97">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="10"/>  
+  </dependency>  
+  <dependency id="98">    
+    <bendpoint x="2434" y="271"/>    
+    <bendpoint x="2434" y="349"/>    
+    <bendpoint x="2434" y="427"/>    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="15"/>  
+  </dependency>  
+  <association id="99">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="100" name="mainFrame"/>      
+      <multiplicity id="101" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="102">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="103" name="externalToolsPanel"/>      
+      <multiplicity id="104" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="105">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="22"/>  
+  </dependency>  
+  <dependency id="106">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <association id="107">    
+    <bendpoint x="2392" y="271"/>    
+    <bendpoint x="2392" y="349"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="108" name="visualizationPanel"/>      
+      <multiplicity id="109" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="110">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <dependency id="111">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <dependency id="112">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <dependency id="113">    
+    <bendpoint x="1938" y="271"/>    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <dependency id="114">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <association id="115">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="116" name="mainFrame"/>      
+      <multiplicity id="117" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="118">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <association id="119">    
+    <bendpoint x="2146" y="349"/>    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="120" name="visualizationPanel"/>      
+      <multiplicity id="121" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="122">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <association id="123">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="124" name="hypothesesPanel"/>      
+      <multiplicity id="125" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="126">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <association id="127">    
+    <end type="SOURCE" refId="20" navigable="false">      
+      <attribute id="128" name="visualizationPanel"/>      
+      <multiplicity id="129" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="130">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="22"/>  
+  </dependency>  
+  <dependency id="131">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <association id="132">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="133" name="mainFrame"/>      
+      <multiplicity id="134" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="135">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="136" name="hypothesesPanel"/>      
+      <multiplicity id="137" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="138">    
+    <bendpoint x="2724" y="349"/>    
+    <bendpoint x="2724" y="271"/>    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <dependency id="139">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <association id="140">    
+    <end type="SOURCE" refId="22" navigable="false">      
+      <attribute id="141" name="mainFrame"/>      
+      <multiplicity id="142" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="143">    
+    <bendpoint x="2261" y="115"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="144" name="hypothesesPanel"/>      
+      <multiplicity id="145" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="146">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <dependency id="147">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <association id="148">    
+    <end type="SOURCE" refId="23" navigable="false">      
+      <attribute id="149" name="mainFrame"/>      
+      <multiplicity id="150" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="151">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="152" name="inferencePanel"/>      
+      <multiplicity id="153" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="154">    
+    <bendpoint x="2766" y="193"/>    
+    <bendpoint x="2766" y="271"/>    
+    <bendpoint x="2766" y="349"/>    
+    <bendpoint x="2766" y="427"/>    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="15"/>  
+  </dependency>  
+  <classifier-display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
+    sort-features="false" accessors="true" visibility="false">    
+    <attributes public="false" package="false" protected="false" private="false" static="false"/>    
+    <operations public="false" package="false" protected="false" private="false" static="false"/>  
+  </classifier-display>  
+  <association-display labels="false" multiplicity="false"/>
+</class-diagram>

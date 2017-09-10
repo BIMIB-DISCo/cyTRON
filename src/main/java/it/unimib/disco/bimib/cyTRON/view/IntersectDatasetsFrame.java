@@ -8,26 +8,24 @@ import java.awt.Color;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
-import org.rosuda.REngine.REngineException;
-
 public class IntersectDatasetsFrame extends javax.swing.JFrame {
 
-    private final MainFrame mainFrame;
+	private static final long serialVersionUID = 4356205283846858740L;
+	
+	private final MainFrame mainFrame;
     private final DatasetController datasetController;
     private final int datasetIndex1;
-    private final String bind;
     
     private final DefaultComboBoxModel<String> defaultComboBoxModel;
     
-    public IntersectDatasetsFrame(MainFrame mainFrame, DatasetController datasetController, int datasetIndex1, String bind) {
+    public IntersectDatasetsFrame(MainFrame mainFrame, DatasetController datasetController, int datasetIndex1) {
         // get the variables
         this.mainFrame = mainFrame;
         this.datasetController = datasetController;
         this.datasetIndex1 = datasetIndex1;
-        this.bind = bind;
         
         // create the default combo box model from the list of types
-        this.defaultComboBoxModel = new DefaultComboBoxModel();
+        this.defaultComboBoxModel = new DefaultComboBoxModel<>();
         for (Object dataset : this.datasetController.getDatasetsListModel().toArray()) {
             this.defaultComboBoxModel.addElement(dataset.toString());
         }
