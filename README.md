@@ -28,6 +28,6 @@ All the differences between the branch base and commit [41a1433](https://github.
 The app is usable and will be uploaded to the [Cytoscape App Store](http://apps.cytoscape.org).
 
 #### Next Steps
-Even if the app is usable, there is room for improvement.
+Even if the app is already usable as is, there is always room for improvement.
 
-The list of enhancements, nice-to-have features and issues is available at the [issue page](https://github.com/BIMIB-DISCo/cyTRON/issues) of this repository.
+The updated list of enhancements, nice-to-have features and issues is available at the [issue page](https://github.com/BIMIB-DISCo/cyTRON/issues) of this repository. 
