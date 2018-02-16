@@ -554,6 +554,9 @@ public class VisualizationPanel extends javax.swing.JPanel {
         
         // if the dataset is null or has an empty inference
         if (dataset == null || dataset.getInference().getAlgorithm().equals("")) {
+        	// show the warning message
+        	JOptionPane.showConfirmDialog(this, "A model has to be inferred to be plotted.", "Model required", JOptionPane.PLAIN_MESSAGE);
+        	// return
             return;
         }
 
