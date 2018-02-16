@@ -11,6 +11,8 @@ import java.awt.Window;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -53,6 +55,8 @@ public class MainFrame extends javax.swing.JFrame {
         deleteGeneButton = new javax.swing.JButton();
         genesScrollPane = new javax.swing.JScrollPane();
         genesList = new javax.swing.JList<>();
+        filterGenesTextField = new javax.swing.JTextField();
+        filterGenesLabel = new javax.swing.JLabel();
         typesPanelList = new javax.swing.JPanel();
         renameTypeButton = new javax.swing.JButton();
         deleteTypeButton = new javax.swing.JButton();
@@ -67,6 +71,8 @@ public class MainFrame extends javax.swing.JFrame {
         selectMultipleSamplesButton = new javax.swing.JButton();
         deleteMultipleSamplesButton = new javax.swing.JButton();
         shortenBarcodesButton = new javax.swing.JButton();
+        filterSamplesLabel = new javax.swing.JLabel();
+        filterSamplesTextField = new javax.swing.JTextField();
         eventsPanelList = new javax.swing.JPanel();
         eventsScrollPane = new javax.swing.JScrollPane();
         eventsList = new javax.swing.JList<>();
@@ -101,6 +107,7 @@ public class MainFrame extends javax.swing.JFrame {
         currentDatasetPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         genesPanelList.setBorder(javax.swing.BorderFactory.createTitledBorder("Genes"));
+        genesPanelList.setToolTipText("");
         genesPanelList.setPreferredSize(new java.awt.Dimension(300, 320));
 
         renameGeneButton.setText("Rename...");
@@ -121,6 +128,10 @@ public class MainFrame extends javax.swing.JFrame {
         genesList.setModel(datasetController.getGenesListModel());
         genesScrollPane.setViewportView(genesList);
 
+        filterGenesTextField.setToolTipText("");
+
+        filterGenesLabel.setText("Filter:");
+
         javax.swing.GroupLayout genesPanelListLayout = new javax.swing.GroupLayout(genesPanelList);
         genesPanelList.setLayout(genesPanelListLayout);
         genesPanelListLayout.setHorizontalGroup(
@@ -128,11 +139,15 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(genesPanelListLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(genesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(genesScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
+                    .addComponent(genesScrollPane)
                     .addGroup(genesPanelListLayout.createSequentialGroup()
                         .addComponent(renameGeneButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(deleteGeneButton)))
+                        .addComponent(deleteGeneButton))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, genesPanelListLayout.createSequentialGroup()
+                        .addComponent(filterGenesLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(filterGenesTextField)))
                 .addContainerGap())
         );
         genesPanelListLayout.setVerticalGroup(
@@ -140,6 +155,10 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, genesPanelListLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(genesScrollPane)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(genesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(filterGenesTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(filterGenesLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(genesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(renameGeneButton)
@@ -244,13 +263,22 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        filterSamplesLabel.setText("Filter:");
+
+        filterSamplesTextField.setToolTipText("");
+
         javax.swing.GroupLayout samplesPanelListLayout = new javax.swing.GroupLayout(samplesPanelList);
         samplesPanelList.setLayout(samplesPanelListLayout);
         samplesPanelListLayout.setHorizontalGroup(
             samplesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(samplesPanelListLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(samplesScrollPane)
+                .addGroup(samplesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(samplesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(samplesPanelListLayout.createSequentialGroup()
+                        .addComponent(filterSamplesLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(filterSamplesTextField)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(samplesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(samplesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,10 +303,13 @@ public class MainFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(shortenBarcodesButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(samplesSelectionButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(deteleSampleButton))
+                        .addComponent(samplesSelectionButton))
                     .addComponent(samplesScrollPane))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(samplesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(deteleSampleButton)
+                    .addComponent(filterSamplesLabel)
+                    .addComponent(filterSamplesTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -587,6 +618,36 @@ public class MainFrame extends javax.swing.JFrame {
         tabbedPane.addTab("Inference", inferencePanel);
         tabbedPane.addTab("Statistics", statisticsPanel);
         tabbedPane.addTab("Visualization", visualizationPanel);
+        
+        filterGenesTextField.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterGenes();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterGenes();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {}
+        });
+        
+        filterSamplesTextField.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterSamples();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterSamples();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {}
+        });
     }
     
     // ************ DATASETS ************ \\
@@ -647,6 +708,20 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deteleSampleButtonActionPerformed
     
+    private void filterSamples() {
+        // get the filter and the dataset index
+        String filter = filterSamplesTextField.getText().toLowerCase();
+        int datasetIndex = datasetsList.getSelectedIndex();
+        
+        // return if no dataset is selected
+        if (datasetIndex == -1) {
+            return;
+        }
+        
+        // filter the genes
+        datasetController.filterSamples(datasetIndex, filter);
+    }
+    
     // ************ GENES ************ \\
     private void renameGeneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renameGeneButtonActionPerformed
         // if there is no selection
@@ -685,6 +760,20 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteGeneButtonActionPerformed
 
+    private void filterGenes() {
+        // get the filter and the dataset index
+        String filter = filterGenesTextField.getText().toLowerCase();
+        int datasetIndex = datasetsList.getSelectedIndex();
+        
+        // return if no dataset is selected
+        if (datasetIndex == -1) {
+            return;
+        }
+        
+        // filter the genes
+        datasetController.filterGenes(datasetIndex, filter);
+    }
+    
     // ************ TYPES ************ \\
     private void deleteTypeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteTypeButtonActionPerformed
         // if there is no selection
@@ -812,16 +901,16 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void datasetsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_datasetsListValueChanged
         if (datasetsList.getSelectedIndex() != -1) {
-	    	// update the lists
-	        datasetController.updateLists(datasetsList.getSelectedIndex());
-	        
-	        // update the number labels
-	        updateNumberLabels();
-	        
-	        // update the other panels
-	        hypothesesPanel.updateSelectedDataset(datasetsList.getSelectedIndex());
-	        externalToolsPanel.updateSelectedDataset();
-	        inferencePanel.updateSelectedDataset();
+            // update the lists
+            datasetController.updateLists(datasetsList.getSelectedIndex());
+
+            // update the number labels
+            updateNumberLabels();
+
+            // update the other panels
+            hypothesesPanel.updateSelectedDataset(datasetsList.getSelectedIndex());
+            externalToolsPanel.updateSelectedDataset();
+            inferencePanel.updateSelectedDataset();
             statisticsPanel.updateSelectedDataset();
             visualizationPanel.updateSelectedDataset();
         }
@@ -1014,6 +1103,10 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel eventsPanelList;
     private javax.swing.JScrollPane eventsScrollPane;
     private javax.swing.JButton eventsSelectionButton;
+    private javax.swing.JLabel filterGenesLabel;
+    private javax.swing.JTextField filterGenesTextField;
+    private javax.swing.JLabel filterSamplesLabel;
+    private javax.swing.JTextField filterSamplesTextField;
     private javax.swing.JLabel genesLabel;
     private javax.swing.JList<Gene> genesList;
     private javax.swing.JLabel genesNumberLabel;

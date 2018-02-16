@@ -180,6 +180,24 @@ public class DatasetController {
 			updateSamplesList(dataset);
 		}
 	}
+	
+	public void filterSamples(int datasetIndex, String filter) {
+		// get the dataset
+		Dataset dataset = datasetsListModel.get(datasetIndex);
+		
+		// execute the filtering
+		for (Sample sample : dataset.getSamples()) {
+			if (!sample.getName().toLowerCase().startsWith(filter)) {
+				if (samplesListModel.contains(sample)) {
+					samplesListModel.removeElement(sample);
+				}
+			} else {
+				if (!samplesListModel.contains(sample)) {
+					samplesListModel.addElement(sample);
+				}
+			}
+		}
+	}
 
 	// ************ TCGA ************ \\
 	public int[] selectMultipleSamples(int datasetIndex) {
@@ -257,6 +275,24 @@ public class DatasetController {
 			updateGenesList(dataset);
 			updateTypesList(dataset);
 			updateEventsList(dataset);
+		}
+	}
+	
+	public void filterGenes(int datasetIndex, String filter) {
+		// get the dataset
+		Dataset dataset = datasetsListModel.get(datasetIndex);
+		
+		// execute the filtering
+		for (Gene gene : dataset.getGenes()) {
+			if (!gene.getName().toLowerCase().startsWith(filter)) {
+				if (genesListModel.contains(gene)) {
+					genesListModel.removeElement(gene);
+				}
+			} else {
+				if (!genesListModel.contains(gene)) {
+					genesListModel.addElement(gene);
+				}
+			}
 		}
 	}
 
