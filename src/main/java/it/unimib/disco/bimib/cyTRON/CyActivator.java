@@ -69,10 +69,10 @@ public class CyActivator extends AbstractCyActivator {
         registerAllServices(bundleContext, networkViewAddedHierarchicLayoutListener, new Properties());
     	
     	// add the hierarchic layout to the services
-    	NetworkViewTaskFactory networkViewTaskFactoryHierarchic = getService(bundleContext, NetworkViewTaskFactory.class, "(title=Hierarchic)");
-        DummyLayoutWrapper dummyLayoutWrapperHierarchic = new DummyLayoutWrapper(networkViewTaskFactoryHierarchic, "hierarchic", "yFiles Hierarchic Layout", getService(bundleContext, UndoSupport.class));
+    	// NetworkViewTaskFactory networkViewTaskFactoryHierarchic = getService(bundleContext, NetworkViewTaskFactory.class, "(title=Hierarchic)");
+        // DummyLayoutWrapper dummyLayoutWrapperHierarchic = new DummyLayoutWrapper(networkViewTaskFactoryHierarchic, "hierarchic", "yFiles Hierarchic Layout", getService(bundleContext, UndoSupport.class));
     	
-    	registerService(bundleContext, dummyLayoutWrapperHierarchic, CyLayoutAlgorithm.class, new Properties());
+    	// registerService(bundleContext, dummyLayoutWrapperHierarchic, CyLayoutAlgorithm.class, new Properties());
     }
 
     // wrapper for yFiles
