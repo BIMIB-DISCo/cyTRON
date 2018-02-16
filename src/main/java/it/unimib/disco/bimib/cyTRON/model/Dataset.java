@@ -70,10 +70,14 @@ public class Dataset {
     	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
     		retrieveSamples();
         	retrieveEvents();
+        	
         	if (type.equals(DatasetController.LOAD)) {
-    			retrievePatterns();
-    			retrieveInference();
-    			retrieveStatistics();
+        		retrievePatterns();
+        		
+        		if (hasModel()) {
+        			retrieveInference();
+        			retrieveStatistics();
+				}
     		}
     	}
     }
@@ -91,6 +95,12 @@ public class Dataset {
     	
     	retrieveSamples();
     	retrieveEvents();
+    	retrievePatterns();
+    	
+    	if (hasModel()) {
+			retrieveInference();
+			retrieveStatistics();
+		}
     }
     
     public void deleteDataset() {
@@ -1203,6 +1213,15 @@ public class Dataset {
 		return inference;
 	}
 	
+	public boolean hasModel() {
+		// create and execute the command
+		String command = "has.model(" + name + ")";
+		REXP rexp = RConnectionManager.eval(command);
+		
+		// return the result
+		return rexp.asBool().isTRUE();
+	}
+	
     // ************ STATISTICS ************ \\
 	private void retrieveStatistics() {
 		// create and execute the command for bootstrap npb
@@ -1256,6 +1275,9 @@ public class Dataset {
 			// add the statistics
 			inference.addStatistics(new Statistics(StatisticsController.PREDERR, StatisticsController.PREDERR.substring(6)));
 		}
+		
+		// cancel the last message on console
+		RConnectionManager.getTextConsole().getLastConsoleMessage();
 	}
 	
 	private void removeStatistics() {
