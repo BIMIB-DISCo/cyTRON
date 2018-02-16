@@ -161,15 +161,35 @@ public class SaveDatasetFrame extends javax.swing.JFrame {
         
         if (name.length() > 0 && path.length() > 0) {
             // save the dataset
-            datasetController.save(mainFrame.getSelectedDataset(), name, path);
-        }
-        
-    	// if the last console message is regular
-        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-            // close the frame
-            dispose();
-        } else {
-        	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+            boolean result = datasetController.save(mainFrame.getSelectedDataset(), name, path, false);
+            
+            // if the file already exist
+            if (!result) {
+            	// ask the confirmation to overwrite the file
+    	        int confirmation = JOptionPane.showConfirmDialog(this, "The selected file already exists.\nDo you want to overwrite it?", "", JOptionPane.OK_CANCEL_OPTION);
+    	        
+    	        // if confirmed
+    	        if (confirmation == JOptionPane.OK_OPTION) {
+    	        	// overwrite the file
+    	        	datasetController.save(mainFrame.getSelectedDataset(), name, path, true);
+    	        	
+    	        	// if the last console message is regular
+    	            if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+    	                // close the frame
+    	                dispose();
+    	            } else {
+    	            	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+    	            }
+    	        }
+			} else {
+				// if the last console message is regular
+		        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+		            // close the frame
+		            dispose();
+		        } else {
+		        	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
+		        }
+			}
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 

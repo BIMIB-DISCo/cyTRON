@@ -137,12 +137,19 @@ public class DatasetController {
 		}
 	}
 
-	public void save(Dataset dataset, String name, String path) {
+	public boolean save(Dataset dataset, String name, String path, boolean force) {
 		// validate the path
 		path = path.replace("\\", "\\\\") + File.separator + name + ".rds";
+		
+		// return if the file already exists
+		File file = new File(path);
+		if (file.exists() && !force) {
+			return false;
+		}
 
 		// save the dataset
 		dataset.save(path);
+		return true;
 	}
 
 	// ************ SAMPLES ************ \\
