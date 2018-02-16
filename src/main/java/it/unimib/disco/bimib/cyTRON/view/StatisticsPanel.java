@@ -247,7 +247,9 @@ public class StatisticsPanel extends javax.swing.JPanel {
     	
     	// check if a dataset is not selected
         if (dataset == null || dataset.getInference().getAlgorithm().equals("")) {
-            // return
+            // show the warning message
+        	JOptionPane.showConfirmDialog(this, "A model has to be inferred before assessing statistics.", "Model required", JOptionPane.PLAIN_MESSAGE);
+        	// return
             return;
         }
 
