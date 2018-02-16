@@ -976,8 +976,17 @@ public class MainFrame extends javax.swing.JFrame {
     	
     	// if the last console message is regular
         if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-        	// select the multiple samples
-        	samplesList.setSelectedIndices(multipleSamplesIndexes);
+        	// if there are no multiple samples
+        	if (multipleSamplesIndexes.length == 0) {
+        		// show a message
+        		JOptionPane.showConfirmDialog(this, "No multiple samples.", "", JOptionPane.PLAIN_MESSAGE);
+			} else {
+				// select the multiple samples
+	        	samplesList.setSelectedIndices(multipleSamplesIndexes);
+	        	
+	        	// scroll to the first multiple sample
+	        	samplesList.ensureIndexIsVisible(multipleSamplesIndexes[0]);
+			}
         } else {
         	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
         }
