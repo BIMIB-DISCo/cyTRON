@@ -145,9 +145,6 @@ public class IntersectDatasetsFrame extends javax.swing.JFrame {
 
     	// if the last console message is regular
         if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-            // update the main frame
-            mainFrame.updateNumberLabels();
-
             // close the frame
     	    dispose();
         } else {

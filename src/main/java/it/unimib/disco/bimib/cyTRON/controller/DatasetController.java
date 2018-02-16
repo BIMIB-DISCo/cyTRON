@@ -101,15 +101,14 @@ public class DatasetController {
 
 		// if the last console message is regular
 		if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-			// remove the second dataset form the list model and from R
-			dataset2.deleteDataset();
+			// get the dataset from R
+			Dataset dataset3 = new Dataset(newName);
+			
 			// if the last console message is regular
 			if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-				datasetsListModel.remove(datasetIndex2);
+				// add the new dataset to the list
+				datasetsListModel.addElement(dataset3);
 			}
-
-			// update the lists
-			updateLists(dataset1);
 		}
 	}
 
@@ -127,15 +126,14 @@ public class DatasetController {
 
 		// if the last console message is regular
 		if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-			// remove the second dataset form the list model and from R
-			dataset2.deleteDataset();
+			// get the dataset from R
+			Dataset dataset3 = new Dataset(newName);
+			
 			// if the last console message is regular
 			if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-				datasetsListModel.remove(datasetIndex2);
+				// add the new dataset to the list
+				datasetsListModel.addElement(dataset3);
 			}
-
-			// update the lists
-			updateLists(dataset1);
 		}
 	}
 

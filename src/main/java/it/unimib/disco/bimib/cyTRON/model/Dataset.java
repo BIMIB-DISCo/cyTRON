@@ -78,6 +78,21 @@ public class Dataset {
     	}
     }
     
+    public Dataset(String name) {
+    	this.name = name;
+    	genes = new HashMap<>();
+        types = new HashMap<>();
+        samples = new HashMap<>();
+        events = new HashMap<>();
+        patterns = new HashMap<>();
+        description = "";
+        hasStagesAnnotation = false;
+        inference = new Inference();
+    	
+    	retrieveSamples();
+    	retrieveEvents();
+    }
+    
     public void deleteDataset() {
         // create and execute the command
         String command = "rm(" + name + ")";
@@ -118,60 +133,18 @@ public class Dataset {
     	// create and execute the command
         String command = newName + " = sbind(c(" + name + ", " + dataset.getName() + "))";
         RConnectionManager.eval(command);
-        
-    	// if the last console message is regular
-        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-        	// delete the old R object
-        	command = "rm(" + name + ")";
-            RConnectionManager.eval(command);
-            
-            // update the name
-            name = newName;
-            
-            // update the samples and the events
-            retrieveSamples();
-            retrieveEvents();
-        }
     }
     
     public void bindEvents(Dataset dataset, String newName) {
     	// create and execute the command
         String command = newName + " = ebind(c(" + name + ", " + dataset.getName() + "), silent=TRUE)";
         RConnectionManager.eval(command);
-        
-        // if the last console message is regular
-        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-        	// delete the old R object
-	        command = "rm(" + name + ")";
-	        RConnectionManager.eval(command);
-	        
-	        // update the name
-	        name = newName;
-	        
-	        // update the samples and the events
-	        retrieveSamples();
-	        retrieveEvents();
-        }
     }
     
     public void intersect(Dataset dataset, String newName) {
     	// create and execute the command
         String command = newName + " = intersect.datasets(" + name + ", " + dataset.getName() + ")";
         RConnectionManager.eval(command);
-        
-        // if the last console message is regular
-        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-        	// delete the old R object
-	        command = "rm(" + name + ")";
-	        RConnectionManager.eval(command);
-	        
-	        // update the name
-	        name = newName;
-	        
-	        // update the samples and the events
-	        retrieveSamples();
-	        retrieveEvents();
-        }
     }
     
     // ************ SAMPLES ************ \\
