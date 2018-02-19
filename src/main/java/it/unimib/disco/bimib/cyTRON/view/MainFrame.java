@@ -98,6 +98,8 @@ public class MainFrame extends javax.swing.JFrame {
         bindSamplesButton = new javax.swing.JButton();
         intersectButton = new javax.swing.JButton();
         saveDatasetButton = new javax.swing.JButton();
+        renameDatasetButton = new javax.swing.JButton();
+        duplicateDatasetButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("cyTRON");
@@ -537,6 +539,15 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        renameDatasetButton.setText("Rename...");
+        renameDatasetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                renameDatasetButtonActionPerformed(evt);
+            }
+        });
+
+        duplicateDatasetButton.setText("Duplicate...");
+
         javax.swing.GroupLayout datasetsPanelListLayout = new javax.swing.GroupLayout(datasetsPanelList);
         datasetsPanelList.setLayout(datasetsPanelListLayout);
         datasetsPanelListLayout.setHorizontalGroup(
@@ -550,14 +561,18 @@ public class MainFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(bindSamplesButton))
                     .addGroup(datasetsPanelListLayout.createSequentialGroup()
+                        .addComponent(deleteDatasetButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(saveDatasetButton))
+                    .addGroup(datasetsPanelListLayout.createSequentialGroup()
                         .addGroup(datasetsPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(importDatasetButton)
                             .addComponent(intersectButton))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(datasetsPanelListLayout.createSequentialGroup()
-                        .addComponent(deleteDatasetButton)
+                        .addComponent(renameDatasetButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(saveDatasetButton)))
+                        .addComponent(duplicateDatasetButton)))
                 .addContainerGap())
         );
         datasetsPanelListLayout.setVerticalGroup(
@@ -569,6 +584,10 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(datasetsPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(deleteDatasetButton)
                     .addComponent(saveDatasetButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(datasetsPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(renameDatasetButton)
+                    .addComponent(duplicateDatasetButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(datasetsListScrollPane)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1054,6 +1073,18 @@ public class MainFrame extends javax.swing.JFrame {
         saveDatasetFrame.setVisible(true);
     }//GEN-LAST:event_saveDatasetButtonActionPerformed
 
+    private void renameDatasetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renameDatasetButtonActionPerformed
+        // if there is no selection
+        if (datasetsList.getSelectedIndex() == -1) {
+            // return
+            return;
+        }
+        
+        RenameDatasetFrame renameDatasetFrame = new RenameDatasetFrame(datasetController, datasetsList.getSelectedIndex());
+        renameDatasetFrame.setLocationRelativeTo(null);
+        renameDatasetFrame.setVisible(true);
+    }//GEN-LAST:event_renameDatasetButtonActionPerformed
+
     // ************ OTHERS ************ \\
     public void updateNumberLabels() {
         typesNumberLabel.setText(String.valueOf(datasetController.getTypesListModel().size()));
@@ -1105,6 +1136,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton deleteMultipleSamplesButton;
     private javax.swing.JButton deleteTypeButton;
     private javax.swing.JButton deteleSampleButton;
+    private javax.swing.JButton duplicateDatasetButton;
     private javax.swing.JPanel editPanel;
     private javax.swing.JLabel eventsLabel;
     private javax.swing.JList<String> eventsList;
@@ -1126,6 +1158,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton intersectButton;
     private javax.swing.JButton joinEventsButton;
     private javax.swing.JButton joinTypesButton;
+    private javax.swing.JButton renameDatasetButton;
     private javax.swing.JButton renameGeneButton;
     private javax.swing.JButton renameTypeButton;
     private javax.swing.JLabel samplesLabel;

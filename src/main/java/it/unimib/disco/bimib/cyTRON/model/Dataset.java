@@ -157,6 +157,25 @@ public class Dataset {
         RConnectionManager.eval(command);
     }
     
+    public void rename(String newName) {
+    	// create and execute the command
+        String command = newName + " = " + name;
+        RConnectionManager.eval(command);
+        
+        // if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+        	// create and execute the command
+        	command = "rm(" + name + ")";
+            RConnectionManager.eval(command);
+            
+            // if the last console message is regular
+            if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+            	// rename the dataset
+            	name = newName;
+            }
+        }
+    }
+    
     // ************ SAMPLES ************ \\
     private void retrieveSamples() {
     	// initialize the structure

@@ -151,6 +151,18 @@ public class DatasetController {
 		dataset.save(path);
 		return true;
 	}
+	
+	public void renameDataset(int datasetIndex, String newName) {
+		// get the dataset
+		Dataset dataset = datasetsListModel.get(datasetIndex);
+		
+		// validate name input
+		newName = newName.trim();
+		newName = newName.replace(" ", "_");
+		
+		// execute the rename
+		dataset.rename(newName);
+	}
 
 	// ************ SAMPLES ************ \\
 	public void deleteSample(int sampleIndex, int datasetIndex) {

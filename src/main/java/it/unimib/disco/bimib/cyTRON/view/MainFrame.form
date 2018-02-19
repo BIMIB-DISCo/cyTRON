@@ -689,6 +689,11 @@
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="bindSamplesButton" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="deleteDatasetButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="saveDatasetButton" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="importDatasetButton" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -697,9 +702,9 @@
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="deleteDatasetButton" min="-2" max="-2" attributes="0"/>
+                          <Component id="renameDatasetButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="saveDatasetButton" min="-2" max="-2" attributes="0"/>
+                          <Component id="duplicateDatasetButton" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -715,6 +720,11 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="deleteDatasetButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="saveDatasetButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="renameDatasetButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="duplicateDatasetButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="datasetsListScrollPane" max="32767" attributes="0"/>
@@ -798,6 +808,19 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveDatasetButtonActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="renameDatasetButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Rename..."/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="renameDatasetButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="duplicateDatasetButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Duplicate..."/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
