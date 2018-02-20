@@ -547,6 +547,11 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         duplicateDatasetButton.setText("Duplicate...");
+        duplicateDatasetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                duplicateDatasetButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout datasetsPanelListLayout = new javax.swing.GroupLayout(datasetsPanelList);
         datasetsPanelList.setLayout(datasetsPanelListLayout);
@@ -1084,6 +1089,18 @@ public class MainFrame extends javax.swing.JFrame {
         renameDatasetFrame.setLocationRelativeTo(null);
         renameDatasetFrame.setVisible(true);
     }//GEN-LAST:event_renameDatasetButtonActionPerformed
+
+    private void duplicateDatasetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_duplicateDatasetButtonActionPerformed
+        // if there is no selection
+        if (datasetsList.getSelectedIndex() == -1) {
+            // return
+            return;
+        }
+        
+        DuplicateDatasetFrame duplicateDatasetFrame = new DuplicateDatasetFrame(datasetController, datasetsList.getSelectedIndex());
+        duplicateDatasetFrame.setLocationRelativeTo(null);
+        duplicateDatasetFrame.setVisible(true);
+    }//GEN-LAST:event_duplicateDatasetButtonActionPerformed
 
     // ************ OTHERS ************ \\
     public void updateNumberLabels() {

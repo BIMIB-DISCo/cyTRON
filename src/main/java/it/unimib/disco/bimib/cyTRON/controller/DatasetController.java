@@ -163,6 +163,25 @@ public class DatasetController {
 		// execute the rename
 		dataset.rename(newName);
 	}
+	
+	public void duplicateDataset(int datasetIndex, String newName) {
+		// get the dataset
+		Dataset dataset = datasetsListModel.get(datasetIndex);
+		
+		// validate name input
+		newName = newName.trim();
+		newName = newName.replace(" ", "_");
+		
+		// execute the duplication
+		dataset.duplicate(newName);
+		
+		// if the last console message is regular
+		if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+			// add the new dataset to the list
+			Dataset newDataset = new Dataset(newName);
+			datasetsListModel.addElement(newDataset);
+		}
+	}
 
 	// ************ SAMPLES ************ \\
 	public void deleteSample(int sampleIndex, int datasetIndex) {

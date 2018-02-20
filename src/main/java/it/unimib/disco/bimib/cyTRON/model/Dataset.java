@@ -158,14 +158,13 @@ public class Dataset {
     }
     
     public void rename(String newName) {
-    	// create and execute the command
-        String command = newName + " = " + name;
-        RConnectionManager.eval(command);
+    	// first duplicate the dataset
+        duplicate(newName);
         
         // if the last console message is regular
         if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
         	// create and execute the command
-        	command = "rm(" + name + ")";
+        	String command = "rm(" + name + ")";
             RConnectionManager.eval(command);
             
             // if the last console message is regular
@@ -174,6 +173,12 @@ public class Dataset {
             	name = newName;
             }
         }
+    }
+    
+    public void duplicate(String newName) {
+    	// create and execute the command
+        String command = newName + " = " + name;
+        RConnectionManager.eval(command);
     }
     
     // ************ SAMPLES ************ \\
