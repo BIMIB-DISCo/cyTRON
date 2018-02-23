@@ -15,10 +15,12 @@ public class ImportDatasetFrame extends javax.swing.JFrame {
 	private static final long serialVersionUID = -3735699826971726858L;
 	
 	private final DatasetController datasetController;
+	private final MainFrame mainFrame;
 
-    public ImportDatasetFrame(DatasetController datasetController) {
-        // get the controller
+    public ImportDatasetFrame(DatasetController datasetController, MainFrame mainFrame) {
+        // get the controller and the main frame
         this.datasetController = datasetController;
+        this.mainFrame = mainFrame;
         
         // draw the interface
         initComponents();
@@ -41,6 +43,7 @@ public class ImportDatasetFrame extends javax.swing.JFrame {
         gisticRadioButton = new javax.swing.JRadioButton();
         importButton = new javax.swing.JButton();
         loadRadioButton = new javax.swing.JRadioButton();
+        workspaceRadioButton = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Import Dataset");
@@ -81,6 +84,14 @@ public class ImportDatasetFrame extends javax.swing.JFrame {
         typeButtonGroup.add(loadRadioButton);
         loadRadioButton.setText("load");
 
+        typeButtonGroup.add(workspaceRadioButton);
+        workspaceRadioButton.setText("workspace");
+        workspaceRadioButton.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                workspaceRadioButtonStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
         panelLayout.setHorizontalGroup(
@@ -106,7 +117,9 @@ public class ImportDatasetFrame extends javax.swing.JFrame {
                                 .addComponent(gisticRadioButton)
                                 .addGap(18, 18, 18)
                                 .addComponent(loadRadioButton)
-                                .addGap(0, 166, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addComponent(workspaceRadioButton)
+                                .addGap(0, 49, Short.MAX_VALUE))
                             .addComponent(nameTextField)
                             .addComponent(pathTextField)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
@@ -125,7 +138,8 @@ public class ImportDatasetFrame extends javax.swing.JFrame {
                     .addComponent(genotypesRadioButton)
                     .addComponent(mafRadioButton)
                     .addComponent(gisticRadioButton)
-                    .addComponent(loadRadioButton))
+                    .addComponent(loadRadioButton)
+                    .addComponent(workspaceRadioButton))
                 .addGap(13, 13, 13)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -165,7 +179,7 @@ public class ImportDatasetFrame extends javax.swing.JFrame {
         String path = pathTextField.getText();
         
         // check the parameters
-        if (name.length() == 0) {
+        if (name.length() == 0 && nameTextField.isEnabled()) {
         	nameTextField.setBackground(Color.RED);
 		} else {
 			nameTextField.setBackground(Color.WHITE);
@@ -177,7 +191,7 @@ public class ImportDatasetFrame extends javax.swing.JFrame {
         }
         
         try {
-        	if (name.length() > 0 && path.length() > 0) {
+        	if ((name.length() > 0 || !nameTextField.isEnabled()) && path.length() > 0) {
         		// import the dataset
     			if (genotypesRadioButton.isSelected()) {
     			    datasetController.importDataset(name, path, DatasetController.GENOTYPES);
@@ -186,12 +200,20 @@ public class ImportDatasetFrame extends javax.swing.JFrame {
     			} else if (mafRadioButton.isSelected()) {
     			    datasetController.importDataset(name, path, DatasetController.MAF);
     			} else if (loadRadioButton.isSelected()) {
-                            datasetController.importDataset(name, path, DatasetController.LOAD);
+                    datasetController.importDataset(name, path, DatasetController.LOAD);
+                } else if (workspaceRadioButton.isSelected()) {
+                    datasetController.importWorkspace(path);
                 }
     			
     			// if the last console message is regular
     			if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-        			// close the frame
+    				// if a workspace is imported
+    				if (workspaceRadioButton.isSelected()) {
+                        // clear the labels
+    					mainFrame.clearNumberLabels();
+                    }
+    				
+    				// close the frame
         	        dispose();
     			} else {
     				JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
@@ -218,6 +240,14 @@ public class ImportDatasetFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_pathTextFieldMouseClicked
 
+    private void workspaceRadioButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_workspaceRadioButtonStateChanged
+        if (workspaceRadioButton.isSelected()) {
+            nameTextField.setEnabled(false);
+        } else {
+            nameTextField.setEnabled(true);
+        }
+    }//GEN-LAST:event_workspaceRadioButtonStateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton genotypesRadioButton;
     private javax.swing.JRadioButton gisticRadioButton;
@@ -232,5 +262,6 @@ public class ImportDatasetFrame extends javax.swing.JFrame {
     private javax.swing.JTextField pathTextField;
     private javax.swing.ButtonGroup typeButtonGroup;
     private javax.swing.JLabel typeLabel;
+    private javax.swing.JRadioButton workspaceRadioButton;
     // End of variables declaration//GEN-END:variables
 }

@@ -10,8 +10,11 @@ import it.unimib.disco.bimib.cyTRON.model.Type;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.List;
 import javax.swing.DefaultListModel;
+
+import org.rosuda.JRI.REXP;
 
 public class DatasetController {
 
@@ -72,7 +75,7 @@ public class DatasetController {
 
 		// if the last console message is regular
 		if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-			// get the dataset from the model
+			// remove the dataset from the model
 			datasetsListModel.remove(datasetIndex);
 
 			// clear the lists
@@ -150,6 +153,66 @@ public class DatasetController {
 		// save the dataset
 		dataset.save(path);
 		return true;
+	}
+	
+	public boolean saveWorkspace(String name, String path, boolean force) {
+		// validate the path
+		path = path.replace("\\", "\\\\") + File.separator + name + ".RData";
+		
+		// return if the file already exists
+		File file = new File(path);
+		if (file.exists() && !force) {
+			return false;
+		}
+		
+		// create the string of datasets
+		String datasetsString = "";
+		for (Enumeration<Dataset> iterator = datasetsListModel.elements(); iterator.hasMoreElements();) {
+			Dataset dataset = iterator.nextElement();
+			datasetsString += dataset.getName(); 
+			if (iterator.hasMoreElements()) {
+				datasetsString += ", ";
+		    }
+		}
+		
+		// save the whole workspace
+		String command = "save(" + datasetsString + ", file='" + path + "')";
+        RConnectionManager.eval(command);
+		
+		return true;
+	}
+	
+	public void importWorkspace(String path) {
+		// load the whole workspace
+		String command = "load('" + path + "')";
+        RConnectionManager.eval(command);
+        
+        // if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+	        // get all the datasets names
+	        command = "ls()";
+	        REXP rexp = RConnectionManager.eval(command);
+	        
+	        // if the last console message is regular
+	        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+	        	// get the names of the datasets
+	            String[] names = rexp.asStringArray();
+	        	
+	            // clear the list of datasets
+	            datasetsListModel.clear();
+	            // clear all the other lists
+				samplesListModel.clear();
+				genesListModel.clear();
+				typesListModel.clear();
+				eventsListModel.clear();
+	            
+	            // load the datasets
+	            for (int i = 0; i < names.length; i++) {
+	                String name = names[i];
+	                datasetsListModel.addElement(new Dataset(name));
+	            }
+	        }
+        }
 	}
 	
 	public void renameDataset(int datasetIndex, String newName) {
