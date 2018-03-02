@@ -81,7 +81,7 @@
                                   <Component id="ctrlLabel" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="tabLabel" pref="491" max="32767" attributes="0"/>
+                              <Component id="newlineLabel" pref="491" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -107,7 +107,7 @@
                       <Component id="fileTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="tabLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="newlineLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                   <Component id="selectButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -175,7 +175,7 @@
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="fileTextFieldMouseClicked"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="tabLabel">
+        <Component class="javax.swing.JLabel" name="newlineLabel">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Lucida Grande" size="11" style="0"/>

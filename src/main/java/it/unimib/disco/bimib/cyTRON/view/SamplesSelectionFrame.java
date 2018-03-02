@@ -41,7 +41,7 @@ public class SamplesSelectionFrame extends javax.swing.JFrame {
         ctrlLabel = new javax.swing.JLabel();
         fromFileButton = new javax.swing.JButton();
         fileTextField = new javax.swing.JTextField();
-        tabLabel = new javax.swing.JLabel();
+        newlineLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Samples Selection");
@@ -80,8 +80,8 @@ public class SamplesSelectionFrame extends javax.swing.JFrame {
             }
         });
 
-        tabLabel.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
-        tabLabel.setText("newline-separated values file containing the ids of the samples to select");
+        newlineLabel.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
+        newlineLabel.setText("newline-separated values file containing the ids of the samples to select");
 
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
@@ -107,7 +107,7 @@ public class SamplesSelectionFrame extends javax.swing.JFrame {
                             .addGroup(panelLayout.createSequentialGroup()
                                 .addComponent(ctrlLabel)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(tabLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE))))
+                            .addComponent(newlineLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         panelLayout.setVerticalGroup(
@@ -126,7 +126,7 @@ public class SamplesSelectionFrame extends javax.swing.JFrame {
                     .addComponent(fromFileButton)
                     .addComponent(fileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabLabel)
+                .addComponent(newlineLabel)
                 .addGap(50, 50, 50)
                 .addComponent(selectButton)
                 .addContainerGap())
@@ -228,13 +228,13 @@ public class SamplesSelectionFrame extends javax.swing.JFrame {
     private javax.swing.JLabel ctrlLabel;
     private javax.swing.JTextField fileTextField;
     private javax.swing.JButton fromFileButton;
+    private javax.swing.JLabel newlineLabel;
     private javax.swing.JPanel panel;
     private javax.swing.JLabel samplesLabel;
     private javax.swing.JList<Sample> samplesList;
     private javax.swing.JScrollPane samplesScrollPane;
     private javax.swing.JButton selectButton;
     private javax.swing.JLabel selectionLabel;
-    private javax.swing.JLabel tabLabel;
     private javax.swing.ButtonGroup typeButtonGroup;
     // End of variables declaration//GEN-END:variables
 }

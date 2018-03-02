@@ -6,12 +6,10 @@ import it.unimib.disco.bimib.cyTRON.model.Event;
 import it.unimib.disco.bimib.cyTRON.model.Gene;
 import it.unimib.disco.bimib.cyTRON.model.Sample;
 import it.unimib.disco.bimib.cyTRON.model.Type;
-import it.unimib.disco.bimib.cyTRON.view.SamplesSelectionFrame;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.channels.SelectableChannel;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -288,27 +286,9 @@ public class DatasetController {
 		}
 	}
 	
-	private Set<String> readSampleNamesFromFile(String file) {
-		// validate the input
-		file.replace("\\", "\\\\");
-		
-		// read the sample names from file
-		Set<String> sampleNames = new HashSet<>();
-		try {
-			for (String line : Files.readAllLines(Paths.get(file))) {
-				sampleNames.add(line.trim());
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		// return
-		return sampleNames;
-	}
-	
 	public int[] selectSamplesFromFile(String file) {
-		// get the ids
-		Set<String> samplesNames = readSampleNamesFromFile(file);
+		// get the names
+		Set<String> samplesNames = readNamesFromFile(file);
 		
 		// selected samples
 		List<Sample> selectedSamples = new ArrayList<>(); 
@@ -570,6 +550,33 @@ public class DatasetController {
 		}
 	}
 
+	public int[] selectEventsFromFile(String file) {
+		// get the names
+		Set<String> eventsNames = readNamesFromFile(file);
+		
+		// selected events
+		List<Event> selectedEvents = new ArrayList<>(); 
+		
+		// for each event in the model
+		for (Enumeration<Event> iterator = eventsListModel.elements(); iterator.hasMoreElements();) {
+			Event event = iterator.nextElement();
+			
+			// if the event is selected from the file
+			if (eventsNames.contains(event.getName())) {
+				// add it to the list of selected events
+				selectedEvents.add(event);
+			}
+		}
+		
+		// get the indexes of the selected events into an array
+		int[] selectedEventsIndexes = new int[selectedEvents.size()];
+		for (int i = 0; i < selectedEvents.size(); i++) {
+			selectedEventsIndexes[i] = eventsListModel.indexOf(selectedEvents.get(i));
+		}
+
+		return selectedEventsIndexes;
+	}
+	
 	public void trim(int datasetIndex) {
 		// get the dataset
 		Dataset dataset = datasetsListModel.get(datasetIndex);
@@ -667,5 +674,24 @@ public class DatasetController {
 	@SuppressWarnings("rawtypes")
 	public DefaultListModel getEventsListModel() {
 		return eventsListModel;
+	}
+	
+	// ************ OTHERS ************ \\
+	private Set<String> readNamesFromFile(String file) {
+		// validate the input
+		file.replace("\\", "\\\\");
+		
+		// read the names from file
+		Set<String> names = new HashSet<>();
+		try {
+			for (String line : Files.readAllLines(Paths.get(file))) {
+				names.add(line.trim());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		// return the names
+		return names;
 	}
 }
