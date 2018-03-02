@@ -6,12 +6,20 @@ import it.unimib.disco.bimib.cyTRON.model.Event;
 import it.unimib.disco.bimib.cyTRON.model.Gene;
 import it.unimib.disco.bimib.cyTRON.model.Sample;
 import it.unimib.disco.bimib.cyTRON.model.Type;
+import it.unimib.disco.bimib.cyTRON.view.SamplesSelectionFrame;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.channels.SelectableChannel;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import javax.swing.DefaultListModel;
 
 import org.rosuda.JRI.REXP;
@@ -278,6 +286,51 @@ public class DatasetController {
 			// update the sample list
 			updateSamplesList(dataset);
 		}
+	}
+	
+	private Set<String> readSampleNamesFromFile(String file) {
+		// validate the input
+		file.replace("\\", "\\\\");
+		
+		// read the sample names from file
+		Set<String> sampleNames = new HashSet<>();
+		try {
+			for (String line : Files.readAllLines(Paths.get(file))) {
+				sampleNames.add(line.trim());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		// return
+		return sampleNames;
+	}
+	
+	public int[] selectSamplesFromFile(String file) {
+		// get the ids
+		Set<String> samplesNames = readSampleNamesFromFile(file);
+		
+		// selected samples
+		List<Sample> selectedSamples = new ArrayList<>(); 
+		
+		// for each sample in the model
+		for (Enumeration<Sample> iterator = samplesListModel.elements(); iterator.hasMoreElements();) {
+			Sample sample = iterator.nextElement();
+			
+			// if the sample is selected from the file
+			if (samplesNames.contains(sample.getName())) {
+				// add it to the list of selected samples
+				selectedSamples.add(sample);
+			}
+		}
+		
+		// get the indexes of the selected samples into an array
+		int[] selectedSamplesIndexes = new int[selectedSamples.size()];
+		for (int i = 0; i < selectedSamples.size(); i++) {
+			selectedSamplesIndexes[i] = samplesListModel.indexOf(selectedSamples.get(i));
+		}
+
+		return selectedSamplesIndexes;
 	}
 	
 	public void filterSamples(int datasetIndex, String filter) {
