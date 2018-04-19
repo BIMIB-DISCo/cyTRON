@@ -47,7 +47,8 @@ public class DatasetController {
 	}
 
 	// ************ DATASETS ************ \\
-	public void importDataset(String name, String path, String type) throws FileNotFoundException {
+	public void importDataset(String type, String name, String path, String eventType, Boolean trim,
+			String separator, Boolean tcga, Boolean mergeMutationsTypes) throws FileNotFoundException {
 		// validate name input
 		name = name.trim();
 		name = name.replace(" ", "_");
@@ -60,7 +61,8 @@ public class DatasetController {
 
 		try {
 			// create the new dataset
-			Dataset dataset = new Dataset(name, datasetFile.getCanonicalPath().replace("\\", "\\\\"), type);
+			Dataset dataset = new Dataset(type, name, datasetFile.getCanonicalPath().replace("\\", "\\\\"), eventType,
+					trim, separator, tcga, mergeMutationsTypes);
 
 			// if the last console message is regular
 			if (RConnectionManager.getTextConsole().isLastMessageRegular()) {

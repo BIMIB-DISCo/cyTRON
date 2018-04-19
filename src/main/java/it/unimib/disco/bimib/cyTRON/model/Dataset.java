@@ -38,7 +38,8 @@ public class Dataset {
     private boolean hasStagesAnnotation;
     private Inference inference;
     
-    public Dataset(String name, String path, String type) {
+    public Dataset(String type, String name, String path, String eventType, Boolean trim,
+			String separator, Boolean tcga, Boolean mergeMutationsTypes) {
         this.name = name;
         genes = new HashMap<>();
         types = new HashMap<>();
@@ -51,13 +52,13 @@ public class Dataset {
     	
     	switch (type) {
             case DatasetController.GENOTYPES:
-                importGenotypes(name, path);
+                importGenotypes(name, path, eventType);
                 break;
             case DatasetController.GISTIC:
-                importGistic(name, path);
+                importGistic(name, path, trim);
                 break;
             case DatasetController.MAF:
-                importMaf(name, path);
+                importMaf(name, path, separator, tcga, mergeMutationsTypes);
                 break;
             case DatasetController.LOAD:
                 load(name, path);
@@ -121,21 +122,25 @@ public class Dataset {
         RConnectionManager.eval(command);
     }
     
-    private void importGenotypes(String name, String path){
+    private void importGenotypes(String name, String path, String eventType){
         // create and execute the command
-        String command = name + " = import.genotypes('" + path + "')";
+        String command = name + " = import.genotypes('" + path + "', event.type='" + eventType + "')";
         RConnectionManager.eval(command);
     }
     
-    private void importGistic(String name, String path){
+    private void importGistic(String name, String path, Boolean trim){
         // create and execute the command
-        String command = name + " = import.GISTIC('" + path + "', silent=TRUE)";
+        String command = name + " = import.GISTIC('" + path + "', trim=" + trim.toString().toUpperCase() + ", silent=TRUE)";
         RConnectionManager.eval(command);
     }
     
-    private void importMaf(String name, String path){
+    private void importMaf(String name, String path, String separator, Boolean tcga, Boolean mergeMutationsTypes){
         // create and execute the command
-        String command = name + " = import.MAF('" + path + "', sep = ';', silent=TRUE)";
+        String command = name + " = import.MAF('" + path +
+        		"', sep='" + separator
+        		+ "', is.TCGA=" + tcga.toString().toUpperCase()
+        		+ ", merge.mutation.types=" + mergeMutationsTypes.toString().toUpperCase()
+        		+ ", silent=TRUE)";
         RConnectionManager.eval(command);
     }
     
