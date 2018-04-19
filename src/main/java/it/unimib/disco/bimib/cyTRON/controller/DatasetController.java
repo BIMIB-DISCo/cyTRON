@@ -123,7 +123,7 @@ public class DatasetController {
 		}
 	}
 
-	public void intersect(int datasetIndex1, int datasetIndex2, String newName) {
+	public void intersect(int datasetIndex1, int datasetIndex2, String newName, Boolean genomes) {
 		// get the datasets
 		Dataset dataset1 = datasetsListModel.get(datasetIndex1);
 		Dataset dataset2 = datasetsListModel.get(datasetIndex2);
@@ -133,7 +133,7 @@ public class DatasetController {
 		newName = newName.replace(" ", "_");
 
 		// execute the intersection
-		dataset1.intersect(dataset2, newName);
+		dataset1.intersect(dataset2, newName, genomes);
 
 		// if the last console message is regular
 		if (RConnectionManager.getTextConsole().isLastMessageRegular()) {

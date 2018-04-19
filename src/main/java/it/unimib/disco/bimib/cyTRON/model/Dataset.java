@@ -156,9 +156,10 @@ public class Dataset {
         RConnectionManager.eval(command);
     }
     
-    public void intersect(Dataset dataset, String newName) {
+    public void intersect(Dataset dataset, String newName, Boolean genomes) {
     	// create and execute the command
-        String command = newName + " = intersect.datasets(" + name + ", " + dataset.getName() + ")";
+        String command = newName + " = intersect.datasets(" + name + ", " + dataset.getName()
+        		+ ", intersect.genomes=" + genomes.toString().toUpperCase() + ")";
         RConnectionManager.eval(command);
     }
     
