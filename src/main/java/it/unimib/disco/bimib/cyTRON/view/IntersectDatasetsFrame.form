@@ -37,7 +37,7 @@
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Component id="intersectButton" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <Component id="intersectLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -46,9 +46,14 @@
                           <Component id="newNameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="datasetLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="datasetLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="genomesLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="genomesCheckBox" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
                           <Component id="datasetTextField" pref="541" max="32767" attributes="0"/>
                           <Component id="datasetComboBox" max="32767" attributes="0"/>
                           <Component id="newNameTextField" max="32767" attributes="0"/>
@@ -62,7 +67,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace pref="99" max="32767" attributes="0"/>
+              <EmptySpace pref="75" max="32767" attributes="0"/>
               <Component id="intersectLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -79,7 +84,12 @@
                   <Component id="newNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="newNameTextField" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="genomesLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="genomesCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
               <Component id="intersectButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -137,6 +147,17 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="genomesLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Genomes:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="genomesCheckBox">
+      <Properties>
+        <Property name="selected" type="boolean" value="true"/>
+        <Property name="text" type="java.lang.String" value=" "/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

@@ -47,6 +47,8 @@ public class IntersectDatasetsFrame extends javax.swing.JFrame {
         intersectButton = new javax.swing.JButton();
         datasetLabel2 = new javax.swing.JLabel();
         datasetComboBox = new javax.swing.JComboBox<>();
+        genomesLabel = new javax.swing.JLabel();
+        genomesCheckBox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Intersect Datasets");
@@ -74,6 +76,11 @@ public class IntersectDatasetsFrame extends javax.swing.JFrame {
 
         datasetComboBox.setModel(defaultComboBoxModel);
 
+        genomesLabel.setText("Genomes:");
+
+        genomesCheckBox.setSelected(true);
+        genomesCheckBox.setText(" ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -91,9 +98,13 @@ public class IntersectDatasetsFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(newNameLabel)
                             .addComponent(datasetLabel2)
-                            .addComponent(datasetLabel1))
+                            .addComponent(datasetLabel1)
+                            .addComponent(genomesLabel))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(genomesCheckBox)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(datasetTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
                             .addComponent(datasetComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(newNameTextField))))
@@ -102,7 +113,7 @@ public class IntersectDatasetsFrame extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(99, Short.MAX_VALUE)
+                .addContainerGap(75, Short.MAX_VALUE)
                 .addComponent(intersectLabel)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -116,7 +127,11 @@ public class IntersectDatasetsFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(newNameLabel)
                     .addComponent(newNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(77, 77, 77)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(genomesLabel)
+                    .addComponent(genomesCheckBox))
+                .addGap(60, 60, 60)
                 .addComponent(intersectButton)
                 .addContainerGap())
         );
@@ -125,12 +140,14 @@ public class IntersectDatasetsFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void intersectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intersectButtonActionPerformed
-        // get the new name and the index of the second type
+        // get the new name and the index of the second dataset
         String newName = newNameTextField.getText();
         int datasetIndex2 = datasetComboBox.getSelectedIndex();
         if (datasetIndex2 >= datasetIndex1) {
             datasetIndex2++;
         }
+        // get the additional parameter
+        Boolean genomes = genomesCheckBox.isSelected();
 
         // check the input
         if (newName.length() == 0) {
@@ -141,13 +158,10 @@ public class IntersectDatasetsFrame extends javax.swing.JFrame {
         }
         
         // intersect the datasets
-        this.datasetController.intersect(datasetIndex1, datasetIndex2, newName);
+        this.datasetController.intersect(datasetIndex1, datasetIndex2, newName, genomes);
 
     	// if the last console message is regular
         if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-            // update the main frame
-            mainFrame.updateNumberLabels();
-
             // close the frame
     	    dispose();
         } else {
@@ -160,6 +174,8 @@ public class IntersectDatasetsFrame extends javax.swing.JFrame {
     private javax.swing.JLabel datasetLabel1;
     private javax.swing.JLabel datasetLabel2;
     private javax.swing.JTextField datasetTextField;
+    private javax.swing.JCheckBox genomesCheckBox;
+    private javax.swing.JLabel genomesLabel;
     private javax.swing.JButton intersectButton;
     private javax.swing.JLabel intersectLabel;
     private javax.swing.JLabel newNameLabel;

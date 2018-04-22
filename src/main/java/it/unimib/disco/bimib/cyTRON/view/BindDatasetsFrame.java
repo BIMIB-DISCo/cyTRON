@@ -147,15 +147,11 @@ public class BindDatasetsFrame extends javax.swing.JFrame {
 
 		// if the last console message is regular
 		if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-			// update the main frame
-	        mainFrame.updateNumberLabels();
-	        
-	        // close the frame
+			// close the frame
 	        dispose();
 		} else {
 			JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
 		}
-		
     }//GEN-LAST:event_bindButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

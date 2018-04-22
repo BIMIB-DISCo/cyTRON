@@ -38,7 +38,8 @@ public class Dataset {
     private boolean hasStagesAnnotation;
     private Inference inference;
     
-    public Dataset(String name, String path, String type) {
+    public Dataset(String type, String name, String path, String eventType, Boolean trim,
+			String separator, Boolean tcga, Boolean mergeMutationsTypes) {
         this.name = name;
         genes = new HashMap<>();
         types = new HashMap<>();
@@ -51,13 +52,13 @@ public class Dataset {
     	
     	switch (type) {
             case DatasetController.GENOTYPES:
-                importGenotypes(name, path);
+                importGenotypes(name, path, eventType);
                 break;
             case DatasetController.GISTIC:
-                importGistic(name, path);
+                importGistic(name, path, trim);
                 break;
             case DatasetController.MAF:
-                importMaf(name, path);
+                importMaf(name, path, separator, tcga, mergeMutationsTypes);
                 break;
             case DatasetController.LOAD:
                 load(name, path);
@@ -70,12 +71,37 @@ public class Dataset {
     	if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
     		retrieveSamples();
         	retrieveEvents();
+        	
         	if (type.equals(DatasetController.LOAD)) {
-    			retrievePatterns();
-    			retrieveInference();
-    			retrieveStatistics();
+        		retrievePatterns();
+        		
+        		if (hasModel()) {
+        			retrieveInference();
+        			retrieveStatistics();
+				}
     		}
     	}
+    }
+    
+    public Dataset(String name) {
+    	this.name = name;
+    	genes = new HashMap<>();
+        types = new HashMap<>();
+        samples = new HashMap<>();
+        events = new HashMap<>();
+        patterns = new HashMap<>();
+        description = "";
+        hasStagesAnnotation = false;
+        inference = new Inference();
+    	
+    	retrieveSamples();
+    	retrieveEvents();
+    	retrievePatterns();
+    	
+    	if (hasModel()) {
+			retrieveInference();
+			retrieveStatistics();
+		}
     }
     
     public void deleteDataset() {
@@ -96,21 +122,25 @@ public class Dataset {
         RConnectionManager.eval(command);
     }
     
-    private void importGenotypes(String name, String path){
+    private void importGenotypes(String name, String path, String eventType){
         // create and execute the command
-        String command = name + " = import.genotypes('" + path + "')";
+        String command = name + " = import.genotypes('" + path + "', event.type='" + eventType + "')";
         RConnectionManager.eval(command);
     }
     
-    private void importGistic(String name, String path){
+    private void importGistic(String name, String path, Boolean trim){
         // create and execute the command
-        String command = name + " = import.GISTIC('" + path + "', silent=TRUE)";
+        String command = name + " = import.GISTIC('" + path + "', trim=" + trim.toString().toUpperCase() + ", silent=TRUE)";
         RConnectionManager.eval(command);
     }
     
-    private void importMaf(String name, String path){
+    private void importMaf(String name, String path, String separator, Boolean tcga, Boolean mergeMutationsTypes){
         // create and execute the command
-        String command = name + " = import.MAF('" + path + "', sep = ';', silent=TRUE)";
+        String command = name + " = import.MAF('" + path +
+        		"', sep='" + separator
+        		+ "', is.TCGA=" + tcga.toString().toUpperCase()
+        		+ ", merge.mutation.types=" + mergeMutationsTypes.toString().toUpperCase()
+        		+ ", silent=TRUE)";
         RConnectionManager.eval(command);
     }
     
@@ -118,60 +148,43 @@ public class Dataset {
     	// create and execute the command
         String command = newName + " = sbind(c(" + name + ", " + dataset.getName() + "))";
         RConnectionManager.eval(command);
-        
-    	// if the last console message is regular
-        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-        	// delete the old R object
-        	command = "rm(" + name + ")";
-            RConnectionManager.eval(command);
-            
-            // update the name
-            name = newName;
-            
-            // update the samples and the events
-            retrieveSamples();
-            retrieveEvents();
-        }
     }
     
     public void bindEvents(Dataset dataset, String newName) {
     	// create and execute the command
         String command = newName + " = ebind(c(" + name + ", " + dataset.getName() + "), silent=TRUE)";
         RConnectionManager.eval(command);
+    }
+    
+    public void intersect(Dataset dataset, String newName, Boolean genomes) {
+    	// create and execute the command
+        String command = newName + " = intersect.datasets(" + name + ", " + dataset.getName()
+        		+ ", intersect.genomes=" + genomes.toString().toUpperCase() + ")";
+        RConnectionManager.eval(command);
+    }
+    
+    public void rename(String newName) {
+    	// first duplicate the dataset
+        duplicate(newName);
         
         // if the last console message is regular
         if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-        	// delete the old R object
-	        command = "rm(" + name + ")";
-	        RConnectionManager.eval(command);
-	        
-	        // update the name
-	        name = newName;
-	        
-	        // update the samples and the events
-	        retrieveSamples();
-	        retrieveEvents();
+        	// create and execute the command
+        	String command = "rm(" + name + ")";
+            RConnectionManager.eval(command);
+            
+            // if the last console message is regular
+            if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+            	// rename the dataset
+            	name = newName;
+            }
         }
     }
     
-    public void intersect(Dataset dataset, String newName) {
+    public void duplicate(String newName) {
     	// create and execute the command
-        String command = newName + " = intersect.datasets(" + name + ", " + dataset.getName() + ")";
+        String command = newName + " = " + name;
         RConnectionManager.eval(command);
-        
-        // if the last console message is regular
-        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-        	// delete the old R object
-	        command = "rm(" + name + ")";
-	        RConnectionManager.eval(command);
-	        
-	        // update the name
-	        name = newName;
-	        
-	        // update the samples and the events
-	        retrieveSamples();
-	        retrieveEvents();
-        }
     }
     
     // ************ SAMPLES ************ \\
@@ -1230,6 +1243,15 @@ public class Dataset {
 		return inference;
 	}
 	
+	public boolean hasModel() {
+		// create and execute the command
+		String command = "has.model(" + name + ")";
+		REXP rexp = RConnectionManager.eval(command);
+		
+		// return the result
+		return rexp.asBool().isTRUE();
+	}
+	
     // ************ STATISTICS ************ \\
 	private void retrieveStatistics() {
 		// create and execute the command for bootstrap npb
@@ -1283,6 +1305,9 @@ public class Dataset {
 			// add the statistics
 			inference.addStatistics(new Statistics(StatisticsController.PREDERR, StatisticsController.PREDERR.substring(6)));
 		}
+		
+		// cancel the last message on console
+		RConnectionManager.getTextConsole().getLastConsoleMessage();
 	}
 	
 	private void removeStatistics() {

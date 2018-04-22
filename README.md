@@ -15,7 +15,7 @@ In addition, we also provide an installable .jar file ([release directory](https
 ### Google Summer of Code
 cyTRON was developed within the [Google Summer of Code](https://summerofcode.withgoogle.com/) program, in collaboration with [NRNB](http://nrnb.org/) (National Resource for Network Biology).
 
-Here is the [link](https://summerofcode.withgoogle.com/projects/#5178892366118912) to the project.
+Here is the [link](https://summerofcode.withgoogle.com/archive/2017/projects/5141157457690624/) to the project.
 
 #### Starting Point
 The starting point of the GSoC project was the code included in the branch [base](https://github.com/BIMIB-DISCo/cyTRON/tree/base) of this repository.
@@ -25,9 +25,4 @@ The branch [master](https://github.com/BIMIB-DISCo/cyTRON/tree/master) at commit
 
 All the differences between the branch base and commit [41a1433](https://github.com/BIMIB-DISCo/cyTRON/commit/41a1433247238342909f5a8d02d9b88f63f6fb01) represent the work carried out during the GSoC conding period.
 
-The app is usable and will be uploaded to the [Cytoscape App Store](http://apps.cytoscape.org).
-
-#### Next Steps
-Even if the app is already usable as is, there is always room for improvement.
-
-The updated list of enhancements, nice-to-have features and issues is available at the [issue page](https://github.com/BIMIB-DISCo/cyTRON/issues) of this repository. 
+The app is usable and will be uploaded to the [Cytoscape App Store](http://apps.cytoscape.org). 

@@ -4,6 +4,8 @@ import it.unimib.disco.bimib.cyTRON.R.RConnectionManager;
 import it.unimib.disco.bimib.cyTRON.controller.DatasetController;
 import it.unimib.disco.bimib.cyTRON.model.Sample;
 import java.awt.Color;
+import java.io.IOException;
+import javax.swing.JFileChooser;
 
 import javax.swing.JOptionPane;
 
@@ -37,6 +39,9 @@ public class SamplesSelectionFrame extends javax.swing.JFrame {
         selectionLabel = new javax.swing.JLabel();
         samplesLabel = new javax.swing.JLabel();
         ctrlLabel = new javax.swing.JLabel();
+        fromFileButton = new javax.swing.JButton();
+        fileTextField = new javax.swing.JTextField();
+        newlineLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Samples Selection");
@@ -62,6 +67,22 @@ public class SamplesSelectionFrame extends javax.swing.JFrame {
         ctrlLabel.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
         ctrlLabel.setText("ctrl/cmd-click to select multiple samples");
 
+        fromFileButton.setText("From file");
+        fromFileButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fromFileButtonActionPerformed(evt);
+            }
+        });
+
+        fileTextField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                fileTextFieldMouseClicked(evt);
+            }
+        });
+
+        newlineLabel.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
+        newlineLabel.setText("newline-separated values file containing the ids of the samples to select");
+
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
         panelLayout.setHorizontalGroup(
@@ -69,24 +90,30 @@ public class SamplesSelectionFrame extends javax.swing.JFrame {
             .addGroup(panelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(selectionLabel)
-                    .addGroup(panelLayout.createSequentialGroup()
-                        .addComponent(samplesLabel)
-                        .addGap(18, 18, 18)
-                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelLayout.createSequentialGroup()
-                                .addComponent(ctrlLabel)
-                                .addGap(0, 273, Short.MAX_VALUE))
-                            .addComponent(samplesScrollPane)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(selectButton)))
+                        .addComponent(selectButton))
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addComponent(selectionLabel)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(fromFileButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(samplesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(samplesScrollPane)
+                            .addComponent(fileTextField)
+                            .addGroup(panelLayout.createSequentialGroup()
+                                .addComponent(ctrlLabel)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(newlineLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLayout.createSequentialGroup()
-                .addContainerGap(97, Short.MAX_VALUE)
+                .addContainerGap(64, Short.MAX_VALUE)
                 .addComponent(selectionLabel)
                 .addGap(18, 18, 18)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,7 +121,13 @@ public class SamplesSelectionFrame extends javax.swing.JFrame {
                     .addComponent(samplesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ctrlLabel)
-                .addGap(72, 72, 72)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fromFileButton)
+                    .addComponent(fileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(newlineLabel)
+                .addGap(50, 50, 50)
                 .addComponent(selectButton)
                 .addContainerGap())
         );
@@ -147,8 +180,55 @@ public class SamplesSelectionFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_selectButtonActionPerformed
 
+    private void fileTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fileTextFieldMouseClicked
+        // create the file chooser
+        JFileChooser fileChooser = new JFileChooser();
+        
+        // check the return option
+        int option = fileChooser.showOpenDialog(this);
+        if (option == JFileChooser.APPROVE_OPTION) {
+            try {
+                // update the text field
+                fileTextField.setText(fileChooser.getSelectedFile().getCanonicalPath());
+            } catch (IOException e) {
+            	e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_fileTextFieldMouseClicked
+
+    private void fromFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fromFileButtonActionPerformed
+        // get the path of the file
+        String file = fileTextField.getText();
+        
+        // check the path
+        if (file.length() == 0) {
+            fileTextField.setBackground(Color.RED);
+            return;
+        } else {
+        	fileTextField.setBackground(Color.WHITE);
+        }
+        
+        // get the indexes of the selected samples
+    	int[] samplesIndexes = datasetController.selectSamplesFromFile(file);
+    	
+    	// if there are no selected samples
+    	if (samplesIndexes.length == 0) {
+    		// show a message
+    		JOptionPane.showConfirmDialog(this, "No samples selected from file.", "", JOptionPane.PLAIN_MESSAGE);
+		} else {
+			// select the multiple samples
+        	samplesList.setSelectedIndices(samplesIndexes);
+        	
+        	// scroll to the first multiple sample
+        	samplesList.ensureIndexIsVisible(samplesIndexes[0]);
+		}
+    }//GEN-LAST:event_fromFileButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ctrlLabel;
+    private javax.swing.JTextField fileTextField;
+    private javax.swing.JButton fromFileButton;
+    private javax.swing.JLabel newlineLabel;
     private javax.swing.JPanel panel;
     private javax.swing.JLabel samplesLabel;
     private javax.swing.JList<Sample> samplesList;

@@ -10,8 +10,17 @@ import it.unimib.disco.bimib.cyTRON.model.Type;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import javax.swing.DefaultListModel;
+
+import org.rosuda.JRI.REXP;
 
 public class DatasetController {
 
@@ -38,7 +47,8 @@ public class DatasetController {
 	}
 
 	// ************ DATASETS ************ \\
-	public void importDataset(String name, String path, String type) throws FileNotFoundException {
+	public void importDataset(String type, String name, String path, String eventType, Boolean trim,
+			String separator, Boolean tcga, Boolean mergeMutationsTypes) throws FileNotFoundException {
 		// validate name input
 		name = name.trim();
 		name = name.replace(" ", "_");
@@ -51,7 +61,8 @@ public class DatasetController {
 
 		try {
 			// create the new dataset
-			Dataset dataset = new Dataset(name, datasetFile.getCanonicalPath().replace("\\", "\\\\"), type);
+			Dataset dataset = new Dataset(type, name, datasetFile.getCanonicalPath().replace("\\", "\\\\"), eventType,
+					trim, separator, tcga, mergeMutationsTypes);
 
 			// if the last console message is regular
 			if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
@@ -72,7 +83,7 @@ public class DatasetController {
 
 		// if the last console message is regular
 		if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-			// get the dataset from the model
+			// remove the dataset from the model
 			datasetsListModel.remove(datasetIndex);
 
 			// clear the lists
@@ -101,19 +112,18 @@ public class DatasetController {
 
 		// if the last console message is regular
 		if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-			// remove the second dataset form the list model and from R
-			dataset2.deleteDataset();
+			// get the dataset from R
+			Dataset dataset3 = new Dataset(newName);
+			
 			// if the last console message is regular
 			if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-				datasetsListModel.remove(datasetIndex2);
+				// add the new dataset to the list
+				datasetsListModel.addElement(dataset3);
 			}
-
-			// update the lists
-			updateLists(dataset1);
 		}
 	}
 
-	public void intersect(int datasetIndex1, int datasetIndex2, String newName) {
+	public void intersect(int datasetIndex1, int datasetIndex2, String newName, Boolean genomes) {
 		// get the datasets
 		Dataset dataset1 = datasetsListModel.get(datasetIndex1);
 		Dataset dataset2 = datasetsListModel.get(datasetIndex2);
@@ -123,28 +133,125 @@ public class DatasetController {
 		newName = newName.replace(" ", "_");
 
 		// execute the intersection
-		dataset1.intersect(dataset2, newName);
+		dataset1.intersect(dataset2, newName, genomes);
 
 		// if the last console message is regular
 		if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-			// remove the second dataset form the list model and from R
-			dataset2.deleteDataset();
+			// get the dataset from R
+			Dataset dataset3 = new Dataset(newName);
+			
 			// if the last console message is regular
 			if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-				datasetsListModel.remove(datasetIndex2);
+				// add the new dataset to the list
+				datasetsListModel.addElement(dataset3);
 			}
-
-			// update the lists
-			updateLists(dataset1);
 		}
 	}
 
-	public void save(Dataset dataset, String name, String path) {
+	public boolean save(Dataset dataset, String name, String path, boolean force) {
 		// validate the path
 		path = path.replace("\\", "\\\\") + File.separator + name + ".rds";
+		
+		// return if the file already exists
+		File file = new File(path);
+		if (file.exists() && !force) {
+			return false;
+		}
 
 		// save the dataset
 		dataset.save(path);
+		return true;
+	}
+	
+	public boolean saveWorkspace(String name, String path, boolean force) {
+		// validate the path
+		path = path.replace("\\", "\\\\") + File.separator + name + ".RData";
+		
+		// return if the file already exists
+		File file = new File(path);
+		if (file.exists() && !force) {
+			return false;
+		}
+		
+		// create the string of datasets
+		String datasetsString = "";
+		for (Enumeration<Dataset> iterator = datasetsListModel.elements(); iterator.hasMoreElements();) {
+			Dataset dataset = iterator.nextElement();
+			datasetsString += dataset.getName(); 
+			if (iterator.hasMoreElements()) {
+				datasetsString += ", ";
+		    }
+		}
+		
+		// save the whole workspace
+		String command = "save(" + datasetsString + ", file='" + path + "')";
+        RConnectionManager.eval(command);
+		
+		return true;
+	}
+	
+	public void importWorkspace(String path) {
+		// load the whole workspace
+		String command = "load('" + path + "')";
+        RConnectionManager.eval(command);
+        
+        // if the last console message is regular
+        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+	        // get all the datasets names
+	        command = "ls()";
+	        REXP rexp = RConnectionManager.eval(command);
+	        
+	        // if the last console message is regular
+	        if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+	        	// get the names of the datasets
+	            String[] names = rexp.asStringArray();
+	        	
+	            // clear the list of datasets
+	            datasetsListModel.clear();
+	            // clear all the other lists
+				samplesListModel.clear();
+				genesListModel.clear();
+				typesListModel.clear();
+				eventsListModel.clear();
+	            
+	            // load the datasets
+	            for (int i = 0; i < names.length; i++) {
+	                String name = names[i];
+	                datasetsListModel.addElement(new Dataset(name));
+	            }
+	        }
+        }
+	}
+	
+	public void renameDataset(int datasetIndex, String newName) {
+		// get the dataset
+		Dataset dataset = datasetsListModel.get(datasetIndex);
+		
+		// validate name input
+		newName = newName.trim();
+		newName = newName.replace(" ", "_");
+		
+		// execute the rename
+		dataset.rename(newName);
+	}
+	
+	public void duplicateDataset(int datasetIndex, String newName) {
+		// get the dataset
+		Dataset dataset = datasetsListModel.get(datasetIndex);
+		
+		// validate name input
+		newName = newName.trim();
+		newName = newName.replace(" ", "_");
+		
+		// execute the duplication
+		dataset.duplicate(newName);
+		
+		// if the last console message is regular
+		if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
+			// add the new dataset to the list
+			Dataset newDataset = new Dataset(newName);
+			datasetsListModel.addElement(newDataset);
+		}
 	}
 
 	// ************ SAMPLES ************ \\
@@ -178,6 +285,51 @@ public class DatasetController {
 		if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
 			// update the sample list
 			updateSamplesList(dataset);
+		}
+	}
+	
+	public int[] selectSamplesFromFile(String file) {
+		// get the names
+		Set<String> samplesNames = readNamesFromFile(file);
+		
+		// selected samples
+		List<Sample> selectedSamples = new ArrayList<>(); 
+		
+		// for each sample in the model
+		for (Enumeration<Sample> iterator = samplesListModel.elements(); iterator.hasMoreElements();) {
+			Sample sample = iterator.nextElement();
+			
+			// if the sample is selected from the file
+			if (samplesNames.contains(sample.getName())) {
+				// add it to the list of selected samples
+				selectedSamples.add(sample);
+			}
+		}
+		
+		// get the indexes of the selected samples into an array
+		int[] selectedSamplesIndexes = new int[selectedSamples.size()];
+		for (int i = 0; i < selectedSamples.size(); i++) {
+			selectedSamplesIndexes[i] = samplesListModel.indexOf(selectedSamples.get(i));
+		}
+
+		return selectedSamplesIndexes;
+	}
+	
+	public void filterSamples(int datasetIndex, String filter) {
+		// get the dataset
+		Dataset dataset = datasetsListModel.get(datasetIndex);
+		
+		// execute the filtering
+		for (Sample sample : dataset.getSamples()) {
+			if (!sample.getName().toLowerCase().startsWith(filter)) {
+				if (samplesListModel.contains(sample)) {
+					samplesListModel.removeElement(sample);
+				}
+			} else {
+				if (!samplesListModel.contains(sample)) {
+					samplesListModel.addElement(sample);
+				}
+			}
 		}
 	}
 
@@ -257,6 +409,24 @@ public class DatasetController {
 			updateGenesList(dataset);
 			updateTypesList(dataset);
 			updateEventsList(dataset);
+		}
+	}
+	
+	public void filterGenes(int datasetIndex, String filter) {
+		// get the dataset
+		Dataset dataset = datasetsListModel.get(datasetIndex);
+		
+		// execute the filtering
+		for (Gene gene : dataset.getGenes()) {
+			if (!gene.getName().toLowerCase().startsWith(filter)) {
+				if (genesListModel.contains(gene)) {
+					genesListModel.removeElement(gene);
+				}
+			} else {
+				if (!genesListModel.contains(gene)) {
+					genesListModel.addElement(gene);
+				}
+			}
 		}
 	}
 
@@ -382,6 +552,33 @@ public class DatasetController {
 		}
 	}
 
+	public int[] selectEventsFromFile(String file) {
+		// get the names
+		Set<String> eventsNames = readNamesFromFile(file);
+		
+		// selected events
+		List<Event> selectedEvents = new ArrayList<>(); 
+		
+		// for each event in the model
+		for (Enumeration<Event> iterator = eventsListModel.elements(); iterator.hasMoreElements();) {
+			Event event = iterator.nextElement();
+			
+			// if the event is selected from the file
+			if (eventsNames.contains(event.getName())) {
+				// add it to the list of selected events
+				selectedEvents.add(event);
+			}
+		}
+		
+		// get the indexes of the selected events into an array
+		int[] selectedEventsIndexes = new int[selectedEvents.size()];
+		for (int i = 0; i < selectedEvents.size(); i++) {
+			selectedEventsIndexes[i] = eventsListModel.indexOf(selectedEvents.get(i));
+		}
+
+		return selectedEventsIndexes;
+	}
+	
 	public void trim(int datasetIndex) {
 		// get the dataset
 		Dataset dataset = datasetsListModel.get(datasetIndex);
@@ -479,5 +676,24 @@ public class DatasetController {
 	@SuppressWarnings("rawtypes")
 	public DefaultListModel getEventsListModel() {
 		return eventsListModel;
+	}
+	
+	// ************ OTHERS ************ \\
+	private Set<String> readNamesFromFile(String file) {
+		// validate the input
+		file.replace("\\", "\\\\");
+		
+		// read the names from file
+		Set<String> names = new HashSet<>();
+		try {
+			for (String line : Files.readAllLines(Paths.get(file))) {
+				names.add(line.trim());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		// return the names
+		return names;
 	}
 }

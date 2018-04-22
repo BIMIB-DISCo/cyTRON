@@ -23,10 +23,12 @@ public class NetworkViewAddedHierarchicLayoutListener implements org.cytoscape.v
 		CyNetworkView view = arg0.getNetworkView();
 		
 		// set the hierarchic layout
-        CyLayoutAlgorithm layout = layoutAlgorithmManager.getLayout("hierarchic");
-        if (layout == null) {
-            layout = layoutAlgorithmManager.getDefaultLayout();
-        }
+        // CyLayoutAlgorithm layout = layoutAlgorithmManager.getLayout("hierarchic");
+        // if (layout == null) {
+        //	layout = layoutAlgorithmManager.getDefaultLayout();
+        // }
+        
+        CyLayoutAlgorithm layout = layoutAlgorithmManager.getDefaultLayout();
         TaskIterator taskIterator = layout.createTaskIterator(view, layout.getDefaultLayoutContext(), CyLayoutAlgorithm.ALL_NODE_VIEWS, null);
         taskManager.execute(taskIterator);
 	}

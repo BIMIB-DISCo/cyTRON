@@ -9,14 +9,14 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-public class SaveDatasetFrame extends javax.swing.JFrame {
+public class SaveWorkspaceFrame extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = -6799635471356923408L;
 
 	private final DatasetController datasetController;
     private final MainFrame mainFrame;
 
-    public SaveDatasetFrame(DatasetController datasetController, MainFrame mainFrame) {
+    public SaveWorkspaceFrame(DatasetController datasetController, MainFrame mainFrame) {
         // get the controller
         this.datasetController = datasetController;
         this.mainFrame = mainFrame;
@@ -39,17 +39,15 @@ public class SaveDatasetFrame extends javax.swing.JFrame {
         saveButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Save Dataset");
+        setTitle("Save Workspace");
         setMinimumSize(new java.awt.Dimension(640, 360));
 
         saveLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
-        saveLabel.setText("Save Dataset to File");
+        saveLabel.setText("Save Workspace to File");
 
         pathLabel.setText("Path:");
 
         nameLabel.setText("Name:");
-
-        nameTextField.setText(mainFrame.getSelectedDataset().getName());
 
         pathTextField.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -73,7 +71,7 @@ public class SaveDatasetFrame extends javax.swing.JFrame {
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLayout.createSequentialGroup()
                         .addComponent(saveLabel)
-                        .addGap(0, 486, Short.MAX_VALUE))
+                        .addGap(0, 464, Short.MAX_VALUE))
                     .addGroup(panelLayout.createSequentialGroup()
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(nameLabel)
@@ -160,8 +158,8 @@ public class SaveDatasetFrame extends javax.swing.JFrame {
         }	
         
         if (name.length() > 0 && path.length() > 0) {
-            // save the dataset
-            boolean result = datasetController.save(mainFrame.getSelectedDataset(), name, path, false);
+            // save the workspace
+            boolean result = datasetController.saveWorkspace(name, path, false);
             
             // if the file already exist
             if (!result) {
@@ -171,7 +169,7 @@ public class SaveDatasetFrame extends javax.swing.JFrame {
     	        // if confirmed
     	        if (confirmation == JOptionPane.OK_OPTION) {
     	        	// overwrite the file
-    	        	datasetController.save(mainFrame.getSelectedDataset(), name, path, true);
+    	        	datasetController.saveWorkspace(name, path, true);
     	        	
     	        	// if the last console message is regular
     	            if (RConnectionManager.getTextConsole().isLastMessageRegular()) {

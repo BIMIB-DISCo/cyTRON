@@ -11,6 +11,8 @@ import java.awt.Window;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -53,6 +55,8 @@ public class MainFrame extends javax.swing.JFrame {
         deleteGeneButton = new javax.swing.JButton();
         genesScrollPane = new javax.swing.JScrollPane();
         genesList = new javax.swing.JList<>();
+        filterGenesTextField = new javax.swing.JTextField();
+        filterGenesLabel = new javax.swing.JLabel();
         typesPanelList = new javax.swing.JPanel();
         renameTypeButton = new javax.swing.JButton();
         deleteTypeButton = new javax.swing.JButton();
@@ -67,6 +71,8 @@ public class MainFrame extends javax.swing.JFrame {
         selectMultipleSamplesButton = new javax.swing.JButton();
         deleteMultipleSamplesButton = new javax.swing.JButton();
         shortenBarcodesButton = new javax.swing.JButton();
+        filterSamplesLabel = new javax.swing.JLabel();
+        filterSamplesTextField = new javax.swing.JTextField();
         eventsPanelList = new javax.swing.JPanel();
         eventsScrollPane = new javax.swing.JScrollPane();
         eventsList = new javax.swing.JList<>();
@@ -92,6 +98,9 @@ public class MainFrame extends javax.swing.JFrame {
         bindSamplesButton = new javax.swing.JButton();
         intersectButton = new javax.swing.JButton();
         saveDatasetButton = new javax.swing.JButton();
+        renameDatasetButton = new javax.swing.JButton();
+        duplicateDatasetButton = new javax.swing.JButton();
+        saveWorkspaceButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("cyTRON");
@@ -101,6 +110,7 @@ public class MainFrame extends javax.swing.JFrame {
         currentDatasetPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         genesPanelList.setBorder(javax.swing.BorderFactory.createTitledBorder("Genes"));
+        genesPanelList.setToolTipText("");
         genesPanelList.setPreferredSize(new java.awt.Dimension(300, 320));
 
         renameGeneButton.setText("Rename...");
@@ -121,6 +131,10 @@ public class MainFrame extends javax.swing.JFrame {
         genesList.setModel(datasetController.getGenesListModel());
         genesScrollPane.setViewportView(genesList);
 
+        filterGenesTextField.setToolTipText("");
+
+        filterGenesLabel.setText("Filter:");
+
         javax.swing.GroupLayout genesPanelListLayout = new javax.swing.GroupLayout(genesPanelList);
         genesPanelList.setLayout(genesPanelListLayout);
         genesPanelListLayout.setHorizontalGroup(
@@ -128,11 +142,15 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(genesPanelListLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(genesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(genesScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
+                    .addComponent(genesScrollPane)
                     .addGroup(genesPanelListLayout.createSequentialGroup()
                         .addComponent(renameGeneButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(deleteGeneButton)))
+                        .addComponent(deleteGeneButton))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, genesPanelListLayout.createSequentialGroup()
+                        .addComponent(filterGenesLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(filterGenesTextField)))
                 .addContainerGap())
         );
         genesPanelListLayout.setVerticalGroup(
@@ -140,6 +158,10 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, genesPanelListLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(genesScrollPane)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(genesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(filterGenesTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(filterGenesLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(genesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(renameGeneButton)
@@ -244,13 +266,22 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        filterSamplesLabel.setText("Filter:");
+
+        filterSamplesTextField.setToolTipText("");
+
         javax.swing.GroupLayout samplesPanelListLayout = new javax.swing.GroupLayout(samplesPanelList);
         samplesPanelList.setLayout(samplesPanelListLayout);
         samplesPanelListLayout.setHorizontalGroup(
             samplesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(samplesPanelListLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(samplesScrollPane)
+                .addGroup(samplesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(samplesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(samplesPanelListLayout.createSequentialGroup()
+                        .addComponent(filterSamplesLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(filterSamplesTextField)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(samplesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(samplesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,10 +306,13 @@ public class MainFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(shortenBarcodesButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(samplesSelectionButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(deteleSampleButton))
+                        .addComponent(samplesSelectionButton))
                     .addComponent(samplesScrollPane))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(samplesPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(deteleSampleButton)
+                    .addComponent(filterSamplesLabel)
+                    .addComponent(filterSamplesTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -506,6 +540,27 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        renameDatasetButton.setText("Rename...");
+        renameDatasetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                renameDatasetButtonActionPerformed(evt);
+            }
+        });
+
+        duplicateDatasetButton.setText("Duplicate...");
+        duplicateDatasetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                duplicateDatasetButtonActionPerformed(evt);
+            }
+        });
+
+        saveWorkspaceButton.setText("Save workspace...");
+        saveWorkspaceButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveWorkspaceButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout datasetsPanelListLayout = new javax.swing.GroupLayout(datasetsPanelList);
         datasetsPanelList.setLayout(datasetsPanelListLayout);
         datasetsPanelListLayout.setHorizontalGroup(
@@ -519,25 +574,37 @@ public class MainFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(bindSamplesButton))
                     .addGroup(datasetsPanelListLayout.createSequentialGroup()
-                        .addGroup(datasetsPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(importDatasetButton)
-                            .addComponent(intersectButton))
+                        .addComponent(renameDatasetButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(duplicateDatasetButton))
+                    .addGroup(datasetsPanelListLayout.createSequentialGroup()
+                        .addComponent(importDatasetButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(deleteDatasetButton))
+                    .addGroup(datasetsPanelListLayout.createSequentialGroup()
+                        .addComponent(intersectButton)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(datasetsPanelListLayout.createSequentialGroup()
-                        .addComponent(deleteDatasetButton)
+                        .addComponent(saveDatasetButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(saveDatasetButton)))
+                        .addComponent(saveWorkspaceButton)))
                 .addContainerGap())
         );
         datasetsPanelListLayout.setVerticalGroup(
             datasetsPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(datasetsPanelListLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(importDatasetButton)
+                .addGroup(datasetsPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(importDatasetButton)
+                    .addComponent(deleteDatasetButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(datasetsPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(deleteDatasetButton)
-                    .addComponent(saveDatasetButton))
+                    .addComponent(saveDatasetButton)
+                    .addComponent(saveWorkspaceButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(datasetsPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(renameDatasetButton)
+                    .addComponent(duplicateDatasetButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(datasetsListScrollPane)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -587,11 +654,41 @@ public class MainFrame extends javax.swing.JFrame {
         tabbedPane.addTab("Inference", inferencePanel);
         tabbedPane.addTab("Statistics", statisticsPanel);
         tabbedPane.addTab("Visualization", visualizationPanel);
+        
+        filterGenesTextField.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterGenes();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterGenes();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {}
+        });
+        
+        filterSamplesTextField.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterSamples();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterSamples();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {}
+        });
     }
     
     // ************ DATASETS ************ \\
     private void importDatasetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importDatasetButtonActionPerformed
-        ImportDatasetFrame importDatasetFrame = new ImportDatasetFrame(datasetController);
+        ImportDatasetFrame importDatasetFrame = new ImportDatasetFrame(datasetController, this);
         importDatasetFrame.setLocationRelativeTo(null);
         importDatasetFrame.setVisible(true);
     }//GEN-LAST:event_importDatasetButtonActionPerformed
@@ -647,6 +744,20 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deteleSampleButtonActionPerformed
     
+    private void filterSamples() {
+        // get the filter and the dataset index
+        String filter = filterSamplesTextField.getText().toLowerCase();
+        int datasetIndex = datasetsList.getSelectedIndex();
+        
+        // return if no dataset is selected
+        if (datasetIndex == -1) {
+            return;
+        }
+        
+        // filter the genes
+        datasetController.filterSamples(datasetIndex, filter);
+    }
+    
     // ************ GENES ************ \\
     private void renameGeneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renameGeneButtonActionPerformed
         // if there is no selection
@@ -685,6 +796,20 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteGeneButtonActionPerformed
 
+    private void filterGenes() {
+        // get the filter and the dataset index
+        String filter = filterGenesTextField.getText().toLowerCase();
+        int datasetIndex = datasetsList.getSelectedIndex();
+        
+        // return if no dataset is selected
+        if (datasetIndex == -1) {
+            return;
+        }
+        
+        // filter the genes
+        datasetController.filterGenes(datasetIndex, filter);
+    }
+    
     // ************ TYPES ************ \\
     private void deleteTypeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteTypeButtonActionPerformed
         // if there is no selection
@@ -812,16 +937,16 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void datasetsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_datasetsListValueChanged
         if (datasetsList.getSelectedIndex() != -1) {
-	    	// update the lists
-	        datasetController.updateLists(datasetsList.getSelectedIndex());
-	        
-	        // update the number labels
-	        updateNumberLabels();
-	        
-	        // update the other panels
-	        hypothesesPanel.updateSelectedDataset(datasetsList.getSelectedIndex());
-	        externalToolsPanel.updateSelectedDataset();
-	        inferencePanel.updateSelectedDataset();
+            // update the lists
+            datasetController.updateLists(datasetsList.getSelectedIndex());
+
+            // update the number labels
+            updateNumberLabels();
+
+            // update the other panels
+            hypothesesPanel.updateSelectedDataset(datasetsList.getSelectedIndex());
+            externalToolsPanel.updateSelectedDataset();
+            inferencePanel.updateSelectedDataset();
             statisticsPanel.updateSelectedDataset();
             visualizationPanel.updateSelectedDataset();
         }
@@ -887,8 +1012,17 @@ public class MainFrame extends javax.swing.JFrame {
     	
     	// if the last console message is regular
         if (RConnectionManager.getTextConsole().isLastMessageRegular()) {
-        	// select the multiple samples
-        	samplesList.setSelectedIndices(multipleSamplesIndexes);
+        	// if there are no multiple samples
+        	if (multipleSamplesIndexes.length == 0) {
+        		// show a message
+        		JOptionPane.showConfirmDialog(this, "No multiple samples.", "", JOptionPane.PLAIN_MESSAGE);
+			} else {
+				// select the multiple samples
+	        	samplesList.setSelectedIndices(multipleSamplesIndexes);
+	        	
+	        	// scroll to the first multiple sample
+	        	samplesList.ensureIndexIsVisible(multipleSamplesIndexes[0]);
+			}
         } else {
         	JOptionPane.showConfirmDialog(this, RConnectionManager.getTextConsole().getLastConsoleMessage(), RConnectionManager.ERROR, JOptionPane.PLAIN_MESSAGE);
         }
@@ -956,6 +1090,42 @@ public class MainFrame extends javax.swing.JFrame {
         saveDatasetFrame.setVisible(true);
     }//GEN-LAST:event_saveDatasetButtonActionPerformed
 
+    private void renameDatasetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renameDatasetButtonActionPerformed
+        // if there is no selection
+        if (datasetsList.getSelectedIndex() == -1) {
+            // return
+            return;
+        }
+        
+        RenameDatasetFrame renameDatasetFrame = new RenameDatasetFrame(datasetController, datasetsList.getSelectedIndex());
+        renameDatasetFrame.setLocationRelativeTo(null);
+        renameDatasetFrame.setVisible(true);
+    }//GEN-LAST:event_renameDatasetButtonActionPerformed
+
+    private void duplicateDatasetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_duplicateDatasetButtonActionPerformed
+        // if there is no selection
+        if (datasetsList.getSelectedIndex() == -1) {
+            // return
+            return;
+        }
+        
+        DuplicateDatasetFrame duplicateDatasetFrame = new DuplicateDatasetFrame(datasetController, datasetsList.getSelectedIndex());
+        duplicateDatasetFrame.setLocationRelativeTo(null);
+        duplicateDatasetFrame.setVisible(true);
+    }//GEN-LAST:event_duplicateDatasetButtonActionPerformed
+
+    private void saveWorkspaceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveWorkspaceButtonActionPerformed
+    	// if there are no datasets
+        if (datasetsList.getModel().getSize() == 0) {
+            // return
+            return;
+        }
+    	
+    	SaveWorkspaceFrame saveWorkspaceFrame = new SaveWorkspaceFrame(datasetController, this);
+    	saveWorkspaceFrame.setLocationRelativeTo(null);
+    	saveWorkspaceFrame.setVisible(true);
+    }//GEN-LAST:event_saveWorkspaceButtonActionPerformed
+
     // ************ OTHERS ************ \\
     public void updateNumberLabels() {
         typesNumberLabel.setText(String.valueOf(datasetController.getTypesListModel().size()));
@@ -964,7 +1134,7 @@ public class MainFrame extends javax.swing.JFrame {
         samplesNumberLabel.setText(String.valueOf(datasetController.getSamplesListModel().size()));
     }
     
-    private void clearNumberLabels() {
+    public void clearNumberLabels() {
         typesNumberLabel.setText("");
         genesNumberLabel.setText("");
         eventsNumberLabel.setText("");
@@ -1007,6 +1177,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton deleteMultipleSamplesButton;
     private javax.swing.JButton deleteTypeButton;
     private javax.swing.JButton deteleSampleButton;
+    private javax.swing.JButton duplicateDatasetButton;
     private javax.swing.JPanel editPanel;
     private javax.swing.JLabel eventsLabel;
     private javax.swing.JList<String> eventsList;
@@ -1014,6 +1185,10 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel eventsPanelList;
     private javax.swing.JScrollPane eventsScrollPane;
     private javax.swing.JButton eventsSelectionButton;
+    private javax.swing.JLabel filterGenesLabel;
+    private javax.swing.JTextField filterGenesTextField;
+    private javax.swing.JLabel filterSamplesLabel;
+    private javax.swing.JTextField filterSamplesTextField;
     private javax.swing.JLabel genesLabel;
     private javax.swing.JList<Gene> genesList;
     private javax.swing.JLabel genesNumberLabel;
@@ -1024,6 +1199,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton intersectButton;
     private javax.swing.JButton joinEventsButton;
     private javax.swing.JButton joinTypesButton;
+    private javax.swing.JButton renameDatasetButton;
     private javax.swing.JButton renameGeneButton;
     private javax.swing.JButton renameTypeButton;
     private javax.swing.JLabel samplesLabel;
@@ -1033,6 +1209,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane samplesScrollPane;
     private javax.swing.JButton samplesSelectionButton;
     private javax.swing.JButton saveDatasetButton;
+    private javax.swing.JButton saveWorkspaceButton;
     private javax.swing.JButton selectMultipleSamplesButton;
     private javax.swing.JButton shortenBarcodesButton;
     private javax.swing.JTabbedPane tabbedPane;
