@@ -553,8 +553,8 @@ public class DatasetController {
 	}
 
 	public int[] selectEventsFromFile(String file) {
-		// get the names
-		Set<String> eventsNames = readNamesFromFile(file);
+		// get the events from file
+		Set<Event> eventsFromFile = readEventsFromFile(file);
 		
 		// selected events
 		List<Event> selectedEvents = new ArrayList<>(); 
@@ -564,7 +564,7 @@ public class DatasetController {
 			Event event = iterator.nextElement();
 			
 			// if the event is selected from the file
-			if (eventsNames.contains(event.getName())) {
+			if (eventsFromFile.contains(event)) {
 				// add it to the list of selected events
 				selectedEvents.add(event);
 			}
@@ -696,4 +696,27 @@ public class DatasetController {
 		// return the names
 		return names;
 	}
+	
+	private Set<Event> readEventsFromFile(String file) {
+		// validate the input
+		file.replace("\\", "\\\\");
+		
+		// read the events from file
+		Set<Event> eventsFromFile = new HashSet<>();
+		
+		try {
+			String[] splitLine;
+			final String standardName = "G00";
+			for (String line : Files.readAllLines(Paths.get(file))) {
+				splitLine = line.split("\t");
+				eventsFromFile.add(new Event(standardName, new Type(splitLine[1].trim()), new Gene(splitLine[0].trim())));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		// return the names
+		return eventsFromFile;
+	}
+	
 }
