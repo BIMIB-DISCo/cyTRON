@@ -15,8 +15,8 @@ import it.unimib.disco.bimib.cyTRON.R.RConnectionManager;
 
 public class WizardController {
 	
-	public static final String VERSION = "201708";
-	public static final String INSTALLATION_LINK = "www.google.com";
+	public static final String VERSION = "201901";
+	public static final String INSTALLATION_LINK = "https://github.com/BIMIB-DISCo/cyTRON";
 	private static final String CYTOSCAPE_DIRECTORY = "CytoscapeConfiguration";
 	private static final String CYTRON = "cyTRON";
 	

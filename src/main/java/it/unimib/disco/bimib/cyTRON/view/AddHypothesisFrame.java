@@ -373,7 +373,7 @@ public class AddHypothesisFrame extends javax.swing.JFrame {
                 // clear the pattern tree model
                 hypothesesController.clearPatternTreeModel();
                 
-             // show a completion message
+                // show a completion message
                 JOptionPane.showConfirmDialog(this, "Operation successfully completed.", "", JOptionPane.PLAIN_MESSAGE);
                 
                 // close the frame
