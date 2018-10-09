@@ -255,6 +255,9 @@ public class AddGroupHypothesisFrame extends javax.swing.JFrame {
             mainFrame.updateNumberLabels();
             hypothesesPanel.updatePatternsNumberLabel();
             
+            // show a completion message
+            JOptionPane.showConfirmDialog(this, "Operation successfully completed.", "", JOptionPane.PLAIN_MESSAGE);
+            
             // close the frame
             dispose();
     	} else {
