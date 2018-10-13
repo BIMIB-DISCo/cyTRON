@@ -33,7 +33,6 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
 
         typeButtonGroup = new javax.swing.ButtonGroup();
         panel = new javax.swing.JPanel();
-        selectButton = new javax.swing.JButton();
         selectedEventsScrollPane = new javax.swing.JScrollPane();
         selectedEventsList = new javax.swing.JList<>();
         selectionLabel = new javax.swing.JLabel();
@@ -43,7 +42,7 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
         ctrlLabel2 = new javax.swing.JLabel();
         filteredEventsScrollPane = new javax.swing.JScrollPane();
         filteredEventsList = new javax.swing.JList<>();
-        jLabel1 = new javax.swing.JLabel();
+        removeLabel = new javax.swing.JLabel();
         minimumFrequenceSpinner = new javax.swing.JSpinner();
         negativeLabel = new javax.swing.JLabel();
         fromFileButton = new javax.swing.JButton();
@@ -51,19 +50,13 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
         tabLabel = new javax.swing.JLabel();
         keepRadioButton = new javax.swing.JRadioButton();
         removeRadioButton = new javax.swing.JRadioButton();
+        selectButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Events Selection");
         setMaximumSize(new java.awt.Dimension(670, 500));
         setMinimumSize(new java.awt.Dimension(670, 500));
         setSize(new java.awt.Dimension(670, 500));
-
-        selectButton.setText("Select");
-        selectButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selectButtonActionPerformed(evt);
-            }
-        });
 
         selectedEventsList.setModel(datasetController.getEventsListModel());
         selectedEventsList.setLayoutOrientation(javax.swing.JList.VERTICAL_WRAP);
@@ -84,9 +77,10 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
 
         filteredEventsList.setModel(datasetController.getEventsListModel());
         filteredEventsList.setLayoutOrientation(javax.swing.JList.VERTICAL_WRAP);
+        filteredEventsList.setMaximumSize(new java.awt.Dimension(90, 528));
         filteredEventsScrollPane.setViewportView(filteredEventsList);
 
-        jLabel1.setText("Events to remove:");
+        removeLabel.setText("Events to remove:");
 
         minimumFrequenceSpinner.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(-0.01f), Float.valueOf(-0.01f), Float.valueOf(1.0f), Float.valueOf(0.01f)));
 
@@ -107,7 +101,7 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
         });
 
         tabLabel.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
-        tabLabel.setText("newline-separated values file containing the ids of the samples to select");
+        tabLabel.setText("tab-separated values file containing, on each line, gene and type of the events to select");
 
         typeButtonGroup.add(keepRadioButton);
         keepRadioButton.setSelected(true);
@@ -115,6 +109,13 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
 
         typeButtonGroup.add(removeRadioButton);
         removeRadioButton.setText("remove");
+
+        selectButton.setText("Select");
+        selectButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
@@ -130,36 +131,39 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(negativeLabel)
                             .addComponent(minimumFrequenceSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(selectButton))
                     .addGroup(panelLayout.createSequentialGroup()
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(fromFileButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(selectedEventsLabel, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(removeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelLayout.createSequentialGroup()
                                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(ctrlLabel1)
-                                    .addComponent(ctrlLabel2))
-                                .addGap(0, 180, Short.MAX_VALUE))
-                            .addComponent(selectedEventsScrollPane)
-                            .addComponent(filteredEventsScrollPane)
-                            .addComponent(tabLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
+                                    .addComponent(ctrlLabel2)
+                                    .addGroup(panelLayout.createSequentialGroup()
+                                        .addComponent(fileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(keepRadioButton)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(removeRadioButton)))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(panelLayout.createSequentialGroup()
-                                .addComponent(fileTextField)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(keepRadioButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(removeRadioButton)))))
+                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(filteredEventsScrollPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tabLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(selectedEventsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap())))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(selectButton)
                 .addContainerGap())
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(32, 32, 32)
                 .addComponent(selectionLabel)
                 .addGap(18, 18, 18)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -175,7 +179,7 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
                 .addComponent(ctrlLabel2)
                 .addGap(18, 18, 18)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
+                    .addComponent(removeLabel)
                     .addComponent(filteredEventsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ctrlLabel1)
@@ -188,7 +192,7 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
                         .addComponent(removeRadioButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tabLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addComponent(selectButton)
                 .addContainerGap())
         );
@@ -199,14 +203,14 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -289,11 +293,11 @@ public class EventsSelectionFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane filteredEventsScrollPane;
     private javax.swing.JLabel frequenceLabel;
     private javax.swing.JButton fromFileButton;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JRadioButton keepRadioButton;
     private javax.swing.JSpinner minimumFrequenceSpinner;
     private javax.swing.JLabel negativeLabel;
     private javax.swing.JPanel panel;
+    private javax.swing.JLabel removeLabel;
     private javax.swing.JRadioButton removeRadioButton;
     private javax.swing.JButton selectButton;
     private javax.swing.JLabel selectedEventsLabel;

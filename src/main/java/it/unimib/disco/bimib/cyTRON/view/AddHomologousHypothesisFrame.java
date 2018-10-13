@@ -165,6 +165,9 @@ public class AddHomologousHypothesisFrame extends javax.swing.JFrame {
     		// update the number labels
             mainFrame.updateNumberLabels();
             hypothesesPanel.updatePatternsNumberLabel();
+            
+            // show a completion message
+            JOptionPane.showConfirmDialog(this, "Operation successfully completed.", "", JOptionPane.PLAIN_MESSAGE);
                     
             // close the frame
             dispose();

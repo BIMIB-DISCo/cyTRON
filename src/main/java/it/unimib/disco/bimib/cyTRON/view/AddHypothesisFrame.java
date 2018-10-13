@@ -42,8 +42,14 @@ public class AddHypothesisFrame extends javax.swing.JFrame {
         
         // create the default combo box models
         operationsDefaultComboBoxModel = new DefaultComboBoxModel<>(HypothesesController.OPERATIONS);
-        genesDefaultComboBoxModel = new DefaultComboBoxModel<>((Gene[]) datasetController.getGenesListModel().toArray());
-        eventsDefaultComboBoxModel = new DefaultComboBoxModel<>((Event[]) datasetController.getEventsListModel().toArray());
+        genesDefaultComboBoxModel = new DefaultComboBoxModel<>();
+        for (Object gene : datasetController.getGenesListModel().toArray()) {
+        	genesDefaultComboBoxModel.addElement((Gene) gene);
+        }
+        eventsDefaultComboBoxModel = new DefaultComboBoxModel<>();
+        for (Object event : datasetController.getEventsListModel().toArray()) {
+        	eventsDefaultComboBoxModel.addElement((Event) event);
+        }
         
         // draw the interface
         initComponents();
@@ -366,6 +372,9 @@ public class AddHypothesisFrame extends javax.swing.JFrame {
                 
                 // clear the pattern tree model
                 hypothesesController.clearPatternTreeModel();
+                
+                // show a completion message
+                JOptionPane.showConfirmDialog(this, "Operation successfully completed.", "", JOptionPane.PLAIN_MESSAGE);
                 
                 // close the frame
                 dispose();
