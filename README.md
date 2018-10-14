@@ -8,9 +8,9 @@ In such a multidisciplinary domain, where computer scientists actively cooperate
 
 ### Documents 
 The documentation of the cyTRON Cytoscape app is available at the [docs folder](https://github.com/BIMIB-DISCo/cyTRON/tree/master/docs) of this project and includes: 
-* the installation guide; 
-* a short technical documentation describing the class diagram and the adopted patterns; 
-* a case study example that replicates some of the results published in Caravagna, Giulio, et al. "Algorithmic methods to infer the evolutionary trajectories in cancer progression." Proceedings of the National Academy of Sciences 113.28 (2016): E4025-E4034. 
+* the [installation guide](https://github.com/BIMIB-DISCo/cyTRON/blob/master/docs/cyTRON_setup_guide.pdf);
+* a [case study example](https://github.com/BIMIB-DISCo/cyTRON/blob/master/docs/cyTRON_case_study.pdf) that replicates some of the results published in Caravagna, Giulio, et al. "Algorithmic methods to infer the evolutionary trajectories in cancer progression." Proceedings of the National Academy of Sciences 113.28 (2016): E4025-E4034;
+* a short technical documentation describing the class diagram and the adopted patterns.
 
 In addition, we also provide an installable .jar file ([release directory](https://github.com/BIMIB-DISCo/cyTRON/tree/master/release)) together with a few example datasets ([datasets directory](https://github.com/BIMIB-DISCo/cyTRON/tree/master/datasets)). 
 
