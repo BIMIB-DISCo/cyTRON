@@ -27,7 +27,7 @@ The branch [master](https://github.com/BIMIB-DISCo/cyTRON/tree/master) at commit
 
 All the differences between the branch base and commit [41a1433](https://github.com/BIMIB-DISCo/cyTRON/commit/41a1433247238342909f5a8d02d9b88f63f6fb01) represent the work carried out during the GSoC2017 conding period. 
 
-The app will be added to the [Cytoscape App Store](http://apps.cytoscape.org). 
+The app is also available at the [Cytoscape App Store](http://apps.cytoscape.org/apps/cytron). 
 
 ### DEBUG 
 
