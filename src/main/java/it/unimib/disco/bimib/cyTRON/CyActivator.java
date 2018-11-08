@@ -24,8 +24,8 @@ import org.cytoscape.work.undo.UndoSupport;
 import org.osgi.framework.BundleContext;
 
 import it.unimib.disco.bimib.cyTRON.cytoscape.CommandExecutor;
-import it.unimib.disco.bimib.cyTRON.cytoscape.NetworkAddedTroncoVisualStyleListener;
-import it.unimib.disco.bimib.cyTRON.cytoscape.NetworkViewAddedHierarchicLayoutListener;
+import it.unimib.disco.bimib.cyTRON.cytoscape.NetworkAddedTroncoListener;
+import it.unimib.disco.bimib.cyTRON.cytoscape.NetworkViewAddedTroncoListener;
 
 public class CyActivator extends AbstractCyActivator {
 
@@ -56,7 +56,7 @@ public class CyActivator extends AbstractCyActivator {
         VisualMappingFunctionFactory visualMappingFunctionFactoryDiscrete = getService(bundleContext, VisualMappingFunctionFactory.class, "(mapping.type=discrete)");
         VisualMappingFunctionFactory visualMappingFunctionFactoryPassthrough = getService(bundleContext, VisualMappingFunctionFactory.class, "(mapping.type=passthrough)");
     	
-    	NetworkAddedTroncoVisualStyleListener networkAddedTroncoVisualStyleListener = new NetworkAddedTroncoVisualStyleListener(cyNetworkViewManager, cyNetworkViewFactory,
+    	NetworkAddedTroncoListener networkAddedTroncoVisualStyleListener = new NetworkAddedTroncoListener(cyNetworkViewManager, cyNetworkViewFactory,
                 visualStyleFactory, visualMappingManager, visualMappingFunctionFactoryDiscrete,
                 visualMappingFunctionFactoryPassthrough);
     	registerAllServices(bundleContext, networkAddedTroncoVisualStyleListener, new Properties());
@@ -65,7 +65,7 @@ public class CyActivator extends AbstractCyActivator {
     	CyLayoutAlgorithmManager cyLayoutAlgorithmManager = getService(bundleContext, CyLayoutAlgorithmManager.class);
         TaskManager taskManager = getService(bundleContext, TaskManager.class);
         
-        NetworkViewAddedHierarchicLayoutListener networkViewAddedHierarchicLayoutListener = new NetworkViewAddedHierarchicLayoutListener(cyLayoutAlgorithmManager, taskManager);
+        NetworkViewAddedTroncoListener networkViewAddedHierarchicLayoutListener = new NetworkViewAddedTroncoListener(cyNetworkViewManager, cyLayoutAlgorithmManager, taskManager);
         registerAllServices(bundleContext, networkViewAddedHierarchicLayoutListener, new Properties());
     	
     	// add the hierarchic layout to the services

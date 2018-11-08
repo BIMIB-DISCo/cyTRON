@@ -30,7 +30,7 @@ import org.cytoscape.view.vizmap.VisualStyleFactory;
 import org.cytoscape.view.vizmap.mappings.DiscreteMapping;
 import org.cytoscape.view.vizmap.mappings.PassthroughMapping;
 
-public class NetworkAddedTroncoVisualStyleListener implements NetworkAddedListener {
+public class NetworkAddedTroncoListener implements NetworkAddedListener {
 
     private final CyNetworkViewManager networkViewManager;
     private final CyNetworkViewFactory networkViewFactory;
@@ -39,7 +39,7 @@ public class NetworkAddedTroncoVisualStyleListener implements NetworkAddedListen
     private final VisualMappingFunctionFactory visualMappingFunctionFactoryDiscrete;
     private final VisualMappingFunctionFactory visualMappingFunctionFactoryPassthrough;
 
-    public NetworkAddedTroncoVisualStyleListener(CyNetworkViewManager networkViewManager, CyNetworkViewFactory networkViewFactory,
+    public NetworkAddedTroncoListener(CyNetworkViewManager networkViewManager, CyNetworkViewFactory networkViewFactory,
             VisualStyleFactory visualStyleFactory, VisualMappingManager visualMappingManager, VisualMappingFunctionFactory visualMappingFunctionFactoryDiscrete,
             VisualMappingFunctionFactory visualMappingFunctionFactoryPassthrough) {
         super();
@@ -56,6 +56,13 @@ public class NetworkAddedTroncoVisualStyleListener implements NetworkAddedListen
     public void handleEvent(NetworkAddedEvent arg0) {
     	// get the network and its view
     	CyNetwork network = arg0.getNetwork();
+    	
+    	// check if it is a TRONCO network by its information field
+    	if (!isTroncoNetwork(network)) {
+    		return;
+    	}
+    	
+    	// add the TRONCO view
     	CyNetworkView view = networkViewFactory.createNetworkView(network);
         networkViewManager.addNetworkView(view, true);
 
@@ -196,5 +203,13 @@ public class NetworkAddedTroncoVisualStyleListener implements NetworkAddedListen
         
         // apply the visual style
         visualMappingManager.setVisualStyle(visualStyle, view);
+    }
+    
+    public static boolean isTroncoNetwork(CyNetwork network) {
+    	String information = network.getRow(network).get("informations", String.class);
+    	if (information == null || !information.contains("TRONCO")) {
+    		return false;
+    	}
+    	return true;
     }
 }
