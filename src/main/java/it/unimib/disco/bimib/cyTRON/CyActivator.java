@@ -65,7 +65,7 @@ public class CyActivator extends AbstractCyActivator {
     	CyLayoutAlgorithmManager cyLayoutAlgorithmManager = getService(bundleContext, CyLayoutAlgorithmManager.class);
         TaskManager taskManager = getService(bundleContext, TaskManager.class);
         
-        NetworkViewAddedTroncoListener networkViewAddedHierarchicLayoutListener = new NetworkViewAddedTroncoListener(cyLayoutAlgorithmManager, taskManager);
+        NetworkViewAddedTroncoListener networkViewAddedHierarchicLayoutListener = new NetworkViewAddedTroncoListener(cyNetworkViewManager, cyLayoutAlgorithmManager, taskManager);
         registerAllServices(bundleContext, networkViewAddedHierarchicLayoutListener, new Properties());
     	
     	// add the hierarchic layout to the services

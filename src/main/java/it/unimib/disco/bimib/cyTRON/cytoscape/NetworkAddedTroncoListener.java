@@ -56,6 +56,13 @@ public class NetworkAddedTroncoListener implements NetworkAddedListener {
     public void handleEvent(NetworkAddedEvent arg0) {
     	// get the network and its view
     	CyNetwork network = arg0.getNetwork();
+    	
+    	// check if it is a TRONCO network by its information field
+    	if (!isTroncoNetwork(network)) {
+    		return;
+    	}
+    	
+    	// add the TRONCO view
     	CyNetworkView view = networkViewFactory.createNetworkView(network);
         networkViewManager.addNetworkView(view, true);
 
@@ -196,5 +203,13 @@ public class NetworkAddedTroncoListener implements NetworkAddedListener {
         
         // apply the visual style
         visualMappingManager.setVisualStyle(visualStyle, view);
+    }
+    
+    public static boolean isTroncoNetwork(CyNetwork network) {
+    	String information = network.getRow(network).get("informations", String.class);
+    	if (information == null || !information.contains("TRONCO")) {
+    		return false;
+    	}
+    	return true;
     }
 }
