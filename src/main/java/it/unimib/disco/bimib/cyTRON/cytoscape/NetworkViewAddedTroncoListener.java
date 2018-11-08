@@ -7,12 +7,12 @@ import org.cytoscape.view.model.events.NetworkViewAddedEvent;
 import org.cytoscape.work.TaskIterator;
 import org.cytoscape.work.TaskManager;
 
-public class NetworkViewAddedHierarchicLayoutListener implements org.cytoscape.view.model.events.NetworkViewAddedListener {
+public class NetworkViewAddedTroncoListener implements org.cytoscape.view.model.events.NetworkViewAddedListener {
 
 	private final CyLayoutAlgorithmManager layoutAlgorithmManager;
 	private final TaskManager taskManager;
 	
-	public NetworkViewAddedHierarchicLayoutListener(CyLayoutAlgorithmManager layoutAlgorithmManager, TaskManager taskManager) {
+	public NetworkViewAddedTroncoListener(CyLayoutAlgorithmManager layoutAlgorithmManager, TaskManager taskManager) {
 		this.layoutAlgorithmManager = layoutAlgorithmManager;
 		this.taskManager = taskManager;
 	}

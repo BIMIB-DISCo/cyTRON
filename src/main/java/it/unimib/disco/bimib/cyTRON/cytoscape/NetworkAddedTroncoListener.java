@@ -30,7 +30,7 @@ import org.cytoscape.view.vizmap.VisualStyleFactory;
 import org.cytoscape.view.vizmap.mappings.DiscreteMapping;
 import org.cytoscape.view.vizmap.mappings.PassthroughMapping;
 
-public class NetworkAddedTroncoVisualStyleListener implements NetworkAddedListener {
+public class NetworkAddedTroncoListener implements NetworkAddedListener {
 
     private final CyNetworkViewManager networkViewManager;
     private final CyNetworkViewFactory networkViewFactory;
@@ -39,7 +39,7 @@ public class NetworkAddedTroncoVisualStyleListener implements NetworkAddedListen
     private final VisualMappingFunctionFactory visualMappingFunctionFactoryDiscrete;
     private final VisualMappingFunctionFactory visualMappingFunctionFactoryPassthrough;
 
-    public NetworkAddedTroncoVisualStyleListener(CyNetworkViewManager networkViewManager, CyNetworkViewFactory networkViewFactory,
+    public NetworkAddedTroncoListener(CyNetworkViewManager networkViewManager, CyNetworkViewFactory networkViewFactory,
             VisualStyleFactory visualStyleFactory, VisualMappingManager visualMappingManager, VisualMappingFunctionFactory visualMappingFunctionFactoryDiscrete,
             VisualMappingFunctionFactory visualMappingFunctionFactoryPassthrough) {
         super();
